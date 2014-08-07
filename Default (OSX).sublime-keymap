@@ -1,0 +1,20 @@
+[
+    {
+        "keys": ["command+shift+r"], "command": "browser_refresh", "args": {
+            "auto_save": true,
+            "delay": 0,
+            "activate_browser": true,
+            "browser_name" : "Safari"
+        }
+    },
+    {
+    	"keys": ["j", "j"], "command": "_enter_normal_mode", "args": {
+    		"mode": "mode_insert"},
+    		 "context": [{"key": "vi_insert_mode_aware"}]
+    },
+    {
+        "keys": ["shift+space"], "command": "move", "args": {"by": "characters", "forward": true}
+    },
+    { "keys": ["ctrl+["], "command": "fold" },
+    { "keys": ["ctrl+]"], "command": "unfold" }
+]
