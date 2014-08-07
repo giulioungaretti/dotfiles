@@ -1,0 +1,3 @@
+alias mvim="reattach-to-user-namespace mvim"
+alias vim="reattach-to-user-namespace vim "
+alias light='/Applications/LightTable.app/Contents/MacOS/node-webkit'
