@@ -2,7 +2,6 @@
 "plain and simple
 "Basics -----------------------------------------------------------------
 set runtimepath+=~/Dropbox/Dotfiles/.vim
-set runtimepath+=~/Dropbox/Dotfiles/.vim
 vnoremap y "*y
 nnoremap y "*yy
 vnoremap p "*p
@@ -24,6 +23,7 @@ filetype plugin indent on    " enable loading indent file for filetype
 ""
 let &t_Co=256
 colorscheme base16-default
+let base16colorspace=256 
 "set background=dark
 set laststatus=2
 set number
@@ -89,4 +89,5 @@ let g:LatexBox_viewer = '/Applications/Skim.app/Contents/MacOS/Skim'
 let g:LatexBox_latexmk_async = 0
 let g:LatexBox_latexmk_preview_continuously = 1
 " }}}
+nnoremap <silent><leader>n :set relativenumber!<cr>
 " vim:foldmethod=marker:foldlevel=0
