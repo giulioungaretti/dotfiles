@@ -1,19 +1,20 @@
-"giulio 23-05-2014 
+"giulio 23-05-2014
 "plain and simple
 "Basics -----------------------------------------------------------------
+execute pathogen#infect()
+call pathogen#helptags()
 set runtimepath+=~/Dropbox/Dotfiles/.vim
 vnoremap y "*y
 nnoremap y "*yy
 vnoremap p "*p
 nnoremap p "*p
-execute pathogen#infect()
-call pathogen#helptags()
+
 set foldlevel=99
 "# cliboard issues on osx:
 if $TMUX == ''
 	set clipboard=unnamed
 endif
-"remap esec esc to save file 
+"remap esec esc to save file
 map <Esc><Esc> :w<CR>
 syntax on                           " syntax highlighing
 filetype on                          " try to detect filetypes
@@ -21,18 +22,18 @@ filetype plugin indent on    " enable loading indent file for filetype
 ""
 "nextline seems to work on osx, and on linux via sssh
 ""
+let base16colorspace=256
 let &t_Co=256
 colorscheme base16-default
-let base16colorspace=256 
 "set background=dark
 set laststatus=2
 set number
 "map jj to exit
 inoremap jj <Esc>
 "highlight current line
-set cursorline 
+set cursorline
  " visual autocomplete for command menu
-set wildmenu            
+set wildmenu
 "disable paowerline fonts---compatible everywhere!
 "let g:airline_powerline_fonts = 1
 """""""""""""""""""""""""""
@@ -42,7 +43,7 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-""""" easyer buffer navigation 
+""""" easyer buffer navigation
 " hides all the buffer so you can leave it without saving but keeping changes
 :set hidden
 nnoremap <Leader>h :bnext<CR>
@@ -58,13 +59,13 @@ set foldnestmax=10  " max 10 nested fold allower
 " }}}
 set foldmethod=indent " fold based on indent level
 "toogle gundo
-nnoremap <leader>u :GundoToggle<CR> 
+nnoremap <leader>u :GundoToggle<CR>
 " special mode line at end of file
 set modelines=1
 " pymode bidings and options{{{
 let g:pymode_doc = 1
-let g:pymode_trim_whitespaces = 1                                                           
-"enalbe python specific options 
+let g:pymode_trim_whitespaces = 1
+"enalbe python specific options
 "If this option is set to 1, pymode will enable the following options for
 "python buffers: >
     "setlocal complete+=t
