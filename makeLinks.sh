@@ -5,5 +5,5 @@
 ############################
 for f in ~/dotfiles/*
 do
-    ln -s "$f" "$HOME/.${f##*/}"
+    ln -sf "$f" "$HOME/.${f##*/}"
 done

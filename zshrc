@@ -81,3 +81,10 @@ bindkey -M viins 'jj' vi-cmd-mode
 # history search in vim mode
 # http://zshwiki.org./home/zle/bindkeys#why_isn_t_control-r_working_anymore
 bindkey -M viins '^s' history-incremental-search-backward
+
+
+##############
+BASE16_SCHEME="default"
+BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.light.sh"
+[[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
+
