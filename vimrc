@@ -1,4 +1,4 @@
-"giulio 23-05-2014
+"giulio 10/8/2014
 "plain and simple
 "Basics -----------------------------------------------------------------
 execute pathogen#infect()
@@ -90,5 +90,6 @@ let g:LatexBox_viewer = '/Applications/Skim.app/Contents/MacOS/Skim'
 let g:LatexBox_latexmk_async = 0
 let g:LatexBox_latexmk_preview_continuously = 1
 " }}}
+" toogle relative line numbers
 nnoremap <silent><leader>n :set relativenumber!<cr>
 " vim:foldmethod=marker:foldlevel=0
