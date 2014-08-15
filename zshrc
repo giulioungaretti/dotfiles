@@ -19,6 +19,10 @@ export PATH=~/anaconda/bin:$PATH
 export PATH=/usr/local/MATLAB/R2013b/bin:$PATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 export PATH="$HOME/.tmuxifier/bin:$PATH"
+
+export GIT_EDITOR=vim
+export VISUAL=macvim
+export EDITOR=vim
 ###############################################################
 #########################   aliases #########################
 alias server='python -m SimpleHTTPServer 8000'
