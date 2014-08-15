@@ -18,7 +18,7 @@ export PATH=$PATH:/home/giulio/.opt
 export PATH=~/anaconda/bin:$PATH
 export PATH=/usr/local/MATLAB/R2013b/bin:$PATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-
+export PATH="$HOME/.tmuxifier/bin:$PATH"
 ###############################################################
 #########################   aliases #########################
 alias server='python -m SimpleHTTPServer 8000'
@@ -88,6 +88,5 @@ BASE16_SCHEME="default"
 BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.light.sh"
 [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
 
-
-#tmuxifier allows to manage tmux session
 eval "$(tmuxifier init -)"
+
