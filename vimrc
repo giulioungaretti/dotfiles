@@ -1,9 +1,9 @@
 "giulio 10/8/2014
 "plain and simple
 "Basics -----------------------------------------------------------------
+set runtimepath+=~/Dropbox/Dotfiles/.vim
 execute pathogen#infect()
 call pathogen#helptags()
-set runtimepath+=~/Dropbox/Dotfiles/.vim
 vnoremap y "*y
 nnoremap y "*yy
 vnoremap p "*p
