@@ -19,13 +19,14 @@ export PATH=~/anaconda/bin:$PATH
 export PATH=/usr/local/MATLAB/R2013b/bin:$PATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 export PATH="$HOME/.tmuxifier/bin:$PATH"
-
-export GIT_EDITOR=vim
-export VISUAL=macvim
-export EDITOR=vim
+export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
+export GIT_EDITOR=subl
+export VISUAL=subl
+export EDITOR=subl
 ###############################################################
 #########################   aliases #########################
-alias server='python -m SimpleHTTPServer 8000'
+alias chrome="open -a Google\ Chrome --args --disable-web-security"
+alias server='python -m SimpleHTTPServer'
 alias win8='VBoxManage startvm win8 --type headless'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -47,8 +48,9 @@ alias r-x='chmod 755'
 alias workstation='ssh giulio@172.20.3.114'
 alias workstationX='ssh -X giulio@172.20.3.114'
 alias nb='ipython notebook --profile=nbserver'
-alias nbl='ipython notebook --profile=default-light'
-alias nbd='ipython notebook --profile=default-dark'
+#alias nbl='ipython notebook --profile=light'
+alias nbl='ipython notebook --profile=light_16'
+alias nbd='ipython notebook --profile=dark'
 alias mountsmb='~/Dropbox/Dotfiles/.mount.sh'
 alias notebook='~/Dropbox/Dotfiles/.notebook.sh'
 alias julia='/Applications/Julia-0.3.0-rd1-63c14c927f.app/Contents/Resources/julia/bin/julia'

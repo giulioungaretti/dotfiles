@@ -2,9 +2,9 @@
     {
         "keys": ["command+shift+r"], "command": "browser_refresh", "args": {
             "auto_save": true,
-            "delay": 0,
-            "activate_browser": true,
-            "browser_name" : "Safari"
+            "delay": 0.5,
+            "activate_browser": false,
+            "browser_name" : "Google Chrome"
         }
     },
     {
@@ -16,5 +16,6 @@
         "keys": ["shift+space"], "command": "move", "args": {"by": "characters", "forward": true}
     },
     { "keys": ["ctrl+["], "command": "fold" },
-    { "keys": ["ctrl+]"], "command": "unfold" }
+    { "keys": ["ctrl+]"], "command": "unfold" },
+    {"keys": ["super+shift+r"], "command": "swi_debug" }
 ]

@@ -6,11 +6,12 @@
 	"fade_fold_buttons": false,
 	"font_face": "PragmataPro for Powerline",
 	"font_size": 15,
-	"highlight_line": true,
 	"ignored_packages":
 	[
-		"Vintage"
+		"Vintage",
+		"Anaconda"
 	],
+	"inverse_caret_state": true,
 	"overlay_scroll_bars": "enabled",
 	"rulers":
 	[
@@ -18,7 +19,7 @@
 	],
 	"shift_tab_unindent": true,
 	"spell_check": true,
-	"theme": "Spacegray Light.sublime-theme",
+	"theme": "Soda Light 3.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"vintageous_use_ctrl_keys": true

@@ -1,1 +1,2 @@
 alias vim="reattach-to-user-namespace vim"
+alias julia="exec '/Applications/Julia-0.3.0.app/Contents/Resources/julia/bin/julia'"
