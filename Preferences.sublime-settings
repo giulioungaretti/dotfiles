@@ -1,15 +1,15 @@
 {
 	"bold_folder_labels": true,
 	"caret_style": "phase",
-	"color_scheme": "Packages/Base16 Color Schemes/base16-default.light.tmTheme",
+	"color_scheme": "Packages/Base16 Color Schemes/base16-default.dark.tmTheme",
 	"dictionary": "Packages/Language - English/en_US.dic",
 	"fade_fold_buttons": false,
 	"font_face": "PragmataPro for Powerline",
-	"font_size": 15,
+	"font_size": 13,
 	"ignored_packages":
 	[
-		"Vintage",
-		"Anaconda"
+		"Anaconda",
+		"Vintage"
 	],
 	"inverse_caret_state": true,
 	"overlay_scroll_bars": "enabled",
