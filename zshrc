@@ -54,16 +54,12 @@ alias mountsmb='~/Dropbox/Dotfiles/.mount.sh'
 alias notebook='~/Dropbox/Dotfiles/.notebook.sh'
 alias julia='/Applications/Julia-0.3.0-rd1-63c14c927f.app/Contents/Resources/julia/bin/julia'
 
-if [ -f ~/.osxalias ]; then
-	source ~/.osxalias
-else
-    :
-fi
 
-if [ -f ~/.ubuntualias ]; then
-	source ~/.ubuntualias
-else
-    :
+# os awareness
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    source ~/.ubuntualias
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    source ~/.osxalias
 fi
 
 # enable vim mode on commmand line
