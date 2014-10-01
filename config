@@ -40,7 +40,7 @@ new_float pixel 2
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal 
+bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+q kill
@@ -142,7 +142,7 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-bindsym $mod+Control+l exec i3lock -i ~/Dropbox/Pictures/Wallpapers/pix_scaled.png -p default -n     
+bindsym $mod+Control+l exec i3lock -i ~/Dropbox/Pictures/Wallpapers/pix_scaled.png -p default -n
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 
@@ -165,29 +165,29 @@ bindsym $mod+Control+l exec i3lock -i ~/Dropbox/Pictures/Wallpapers/pix_scaled.p
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        #status_command i3status 
+        #status_command i3status
 	status_command  ~/.i3/conky-i3bar
         #status_command python ~/i3pythonbar.py
-        font pango:Ubuntu Mono 10 9 
+        font pango:Ubuntu Mono 10 9
         position top
-   	mode dock 
+   	mode dock
 	tray_output       none
 
  colors {
         background #181512
-        statusline #8c644c                                                         
-        separator #666666                                                          
+        statusline #8c644c
+        separator #666666
 
-        focused_workspace  #181512 #900000 #ffffff                               
-        active_workspace   #181512 #181512 #bec17e                                 
-        inactive_workspace #181512 #181512 #332d29                                 
-        urgent_workspace   #2f343a #900000 #ffffff        
+        focused_workspace  #181512 #900000 #ffffff
+        active_workspace   #181512 #181512 #bec17e
+        inactive_workspace #181512 #181512 #332d29
+        urgent_workspace   #2f343a #900000 #ffffff
 	}
 }
 #load the gtk stuff from unity
 exec_always --no-startup-id ~/.start_synergy.sh
 exec --no-startup-id unity-settings-daemon
-exec --no-startup-id dropbox start 
+exec --no-startup-id dropbox start
 exec --no-startup-id nitrogen --restore
 exec_always --no-startup-id geary
 exec --no-startup-id thunar
