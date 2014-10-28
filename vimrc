@@ -4,6 +4,16 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+"""""""""""""""""""""""""""""""""""
+" 		plugins 
+"""""""""""""""""""""""""""""""""""
+ " {{{ 
+"tmux seamless movement
+Plugin 'christoomey/vim-tmux-navigator'
+"indent highlight
+Plugin 'Yggdroot/indentLine'
+"autoclose 
+Plugin 'Townk/vim-autoclose'
 " sublime like mutiple cursors
 Plugin 'terryma/vim-multiple-cursors'
 " let Vundle manage Vundle, required
@@ -34,6 +44,7 @@ Plugin 'mattn/gist-vim'
 Plugin 'ervandew/supertab'
 " add colorscheme
 Plugin 'chriskempson/base16-vim'
+"}}}
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -85,13 +96,21 @@ set clipboard=unnamed
 set tabstop=4   
 set clipboard=unnamed
 autocmd! bufwritepost .vimrc source %
+" allows cursor change in tmux mode
+ if exists('$TMUX')
+     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+         let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+     else
+            let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+            let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
 "Plugin 'terryma/vim-multiple-cursors' kill useless keys  {{{
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
-noremap <BS> <Nop>
-noremap <Del> <Nop>
+map <Up> <NOP>
+map <Down> <NOP>
+map <Left> <NOP>
+map <Right> <NOP>
+map <BS> <Nop>
+map <Del> <Nop>
 " }}}
 
 " special mode line at end of file
@@ -113,26 +132,23 @@ inoremap jj <Esc>
 " esc esc to save
 map <Esc><Esc> :w<CR>
 " toogle relative line numbers
-nnoremap <silent><leader>n :set relativenumber!<cr>
-"""""""""""""""""""""""""""
-"Easier split navitagions"
-"""""""""""""""""""""""""""
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-""""" easyer buffer navigation
-nnoremap <Leader>h :bnext<CR>
-nnoremap <leader>l :bprevious<CR>
+nnoremap <silent><leader>o :set relativenumber!<cr>
+map <silent><leader>bl :set background=light<cr>
+map  <silent><leader>bd :set background=dark<cr>
+" split right and below instead of default opposite
+set splitbelow
+set splitright
 """"""""" common typos""""""""""""
 command Q q
 command W w
 """"""""" plug ins  """"""""""""
-map <silent> <leader>n :NERDTreeFocus<CR>
+map <silent><leader>n :NERDTreeFocus<CR>
 nmap <F8> :TagbarToggle<CR>
 " fugitive git bindings
 nnoremap <leader>ga :Git add %:p<CR><CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit -v -q<CR>
 nnoremap <leader>gt :Gcommit -v -q %:p<CR>
-" vim:foldmethod=marker:foldlevel=0
+map <leader>td <Plug>TaskList
+let g:tagbar_autofocus = 1
+" vim:foldmethod=marker:foldlevel=1
