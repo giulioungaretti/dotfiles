@@ -1,41 +1,111 @@
-"giulio 10/8/2014
-"plain and simple
-"Basics -----------------------------------------------------------------
-set runtimepath+=~/Dropbox/Dotfiles/.vim
-execute pathogen#infect()
-call pathogen#helptags()
-vnoremap y "*y
-nnoremap y "*yy
-vnoremap p "*p
-nnoremap p "*p
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-set foldlevel=99
-"# cliboard issues on osx:
-if $TMUX == ''
-	set clipboard=unnamed
-endif
-"remap esec esc to save file
-map <Esc><Esc> :w<CR>
-syntax on                           " syntax highlighing
-filetype on                          " try to detect filetypes
-filetype plugin indent on    " enable loading indent file for filetype
-""
-"nextline seems to work on osx, and on linux via sssh
-""
-let base16colorspace=256
-let &t_Co=256
-colorscheme base16-default
-"set background=dark
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+" add git gutter
+Plugin 'airblade/vim-gitgutter' 
+" tree bar
+Plugin 'scrooloose/nerdtree'
+" cntrl p 
+Plugin 'kien/ctrlp.vim'
+" nerd commenter
+Plugin 'scrooloose/nerdcommenter'
+" Fugtive
+Plugin 'tpope/vim-fugitive'
+" tasklist leader-t 
+Plugin 'TaskList.vim'
+" new command ds, cs, and yss i	
+Plugin 'tpope/vim-surround'
+"file search
+Plugin 'wincent/Command-T'
+"nice status bar
+Plugin 'itchyny/lightline.vim'
+" structure of  file
+Plugin 'majutsushi/tagbar'
+" add :Gist command 
+Plugin 'mattn/gist-vim'
+"super tab
+Plugin 'ervandew/supertab'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+"""""""""""""""""""""""""""""""""""""""
+"	 Visual tweaks
+"""""""""""""""""""""""""""""""""""""""
+" turn on syntax highlight
+syntax on
+" show curret line
+:set cursorline 
+" customize appeararance to light grayish  bg
+hi CursorLine cterm=NONE ctermbg=234
+" turn on linenumbers
+:set number
+"remove ugly ass separator 
+set fillchars=""
+"show bar
 set laststatus=2
-set number
-"map jj to exit
-inoremap jj <Esc>
-"highlight current line
-set cursorline
  " visual autocomplete for command menu
 set wildmenu
-"disable paowerline fonts---compatible everywhere!
-"let g:airline_powerline_fonts = 1
+"""""""""""""""""""""""""""""""""""""""
+"	 		misc  tweaks
+"""""""""""""""""""""""""""""""""""""""
+set nobackup
+set noswapfile
+if $TMUX == ''
+		set clipboard=unnamed
+endif
+
+" tab is 4 spaces
+set clipboard=unnamed
+set tabstop=4   
+set clipboard=unnamed
+autocmd! bufwritepost .vimrc source %
+" kill useless keys  {{{
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+noremap <BS> <Nop>
+noremap <Del> <Nop>
+" }}}
+
+" special mode line at end of file
+set modelines=1
+"""""""""""""""""""""""""""""""""""""""
+" 			folding {{{
+set foldenable  " enalbe folding
+set foldlevelstart=10 " open most folds by default
+set foldnestmax=10  " max 10 nested fold allower
+ set foldmethod=indent " fold based on indent level
+" }}}
+
+"""""""""""""""""""""""""""""""""""""""
+"			 aliases  
+"""""""""""""""""""""""""""""""""""""""
+
+" 		 coveneient stuff 
+inoremap jj <Esc>
+" esc esc to save
+map <Esc><Esc> :w<CR>
+" toogle relative line numbers
+nnoremap <silent><leader>n :set relativenumber!<cr>
 """""""""""""""""""""""""""
 "Easier split navitagions"
 """""""""""""""""""""""""""
@@ -44,52 +114,13 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 """"" easyer buffer navigation
-" hides all the buffer so you can leave it without saving but keeping changes
-:set hidden
 nnoremap <Leader>h :bnext<CR>
 nnoremap <leader>l :bprevious<CR>
-"vim slime --> send text to a tmux session
-"shortcuts:
-"
-let g:slime_target = "tmux"
-" folding {{{
-set foldenable  " enalbe folding
-set foldlevelstart=10 " open most folds by default
-set foldnestmax=10  " max 10 nested fold allower
-" }}}
-set foldmethod=indent " fold based on indent level
-"toogle gundo
-nnoremap <leader>u :GundoToggle<CR>
-" special mode line at end of file
-set modelines=1
-" pymode bidings and options{{{
-let g:pymode_doc = 1
-let g:pymode_trim_whitespaces = 1
-"enalbe python specific options
-"If this option is set to 1, pymode will enable the following options for
-"python buffers: >
-    "setlocal complete+=t
-    "setlocal formatoptions-=t
-    "if v:version > 702 && !&relativenumber
-        "setlocal number
-    "endif
-    "setlocal nowrap
-    "setlocal textwidth=79
-    "setlocal commentstring=#%s
-    "setlocal define=^\s*\\(def\\\\|class\\)
-let g:pymode_options = 1
-"enable python motion through classes and functions
-let g:pymode_motion = 1
-"turun off slow rope autocompletion
-let g:pymode_rope_completion = 0
-"folding with zc-lose, zo-pen
-let g:pymode_folding = 1
-" }}}
-" latex-box settings {{{
-let g:LatexBox_viewer = '/Applications/Skim.app/Contents/MacOS/Skim'
-let g:LatexBox_latexmk_async = 0
-let g:LatexBox_latexmk_preview_continuously = 1
-" }}}
-" toogle relative line numbers
-nnoremap <silent><leader>n :set relativenumber!<cr>
+""""""""" common typos""""""""""""
+command Q q
+command W w
+""""""""" plug ins  """"""""""""
+map <silent> <leader>n :NERDTreeFocus<CR>
+nmap <F8> :TagbarToggle<CR>
+
 " vim:foldmethod=marker:foldlevel=0

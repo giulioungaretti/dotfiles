@@ -19,9 +19,9 @@ export PATH=/usr/local/MATLAB/R2013b/bin:$PATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
-export GIT_EDITOR=subl
-export VISUAL=subl
-export EDITOR=subl
+export GIT_EDITOR=vim
+export VISUAL=gvim
+export EDITOR=vim
 ###############################################################
 #########################   aliases #########################
 alias chrome="open -a Google\ Chrome --args --disable-web-security"
@@ -57,9 +57,13 @@ alias julia='/Applications/Julia-0.3.0-rd1-63c14c927f.app/Contents/Resources/jul
 
 # os awareness
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    source ~/.ubuntualias
+	if [ -f ~/.ubuntualias ]; then
+              source ~/.ubuntualias
+	  fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    source ~/.osxalias
+		if [ -f ~/.osxalias ]; then
+              source ~/.osxalias
+	  fi
 fi
 
 # enable vim mode on commmand line
