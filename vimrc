@@ -233,12 +233,12 @@ else
 endif
 "kill useless keys
 "{{{
-map <Up> <NOP>
-map <Down> <NOP>
-map <Left> <NOP>
-map <Right> <NOP>
-map <BS> <Nop>
-map <Del> <Nop>
+nnoremap <Up> <NOP>
+nnoremap <Down> <NOP>
+nnoremap <Left> <NOP>
+nnoremap <Right> <NOP>
+nnoremap <BS> <Nop>
+nnoremap <Del> <Nop>
 " }}}
 
 :setlocal spell
