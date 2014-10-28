@@ -1,4 +1,3 @@
-#
 # Executes commands at the start of an interactive session.
 #
 # Authors:
@@ -18,10 +17,15 @@ export PATH=$PATH:/home/giulio/.opt
 export PATH=~/anaconda/bin:$PATH
 export PATH=/usr/local/MATLAB/R2013b/bin:$PATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
+export GIT_EDITOR=subl
+export VISUAL=subl
+export EDITOR=subl
 ###############################################################
 #########################   aliases #########################
-alias server='python -m SimpleHTTPServer 8000'
+alias chrome="open -a Google\ Chrome --args --disable-web-security"
+alias server='python -m SimpleHTTPServer'
 alias win8='VBoxManage startvm win8 --type headless'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -43,22 +47,19 @@ alias r-x='chmod 755'
 alias workstation='ssh giulio@172.20.3.114'
 alias workstationX='ssh -X giulio@172.20.3.114'
 alias nb='ipython notebook --profile=nbserver'
-alias nbl='ipython notebook --profile=default-light'
-alias nbd='ipython notebook --profile=default-dark'
+#alias nbl='ipython notebook --profile=light'
+alias nbl='ipython notebook --profile=light_16'
+alias nbd='ipython notebook --profile=dark'
 alias mountsmb='~/Dropbox/Dotfiles/.mount.sh'
 alias notebook='~/Dropbox/Dotfiles/.notebook.sh'
 alias julia='/Applications/Julia-0.3.0-rd1-63c14c927f.app/Contents/Resources/julia/bin/julia'
 
-if [ -f ~/.osxalias ]; then
-	source ~/.osxalias
-else
-    :
-fi
 
-if [ -f ~/.ubuntualias ]; then
-	source ~/.ubuntualias
-else
-    :
+# os awareness
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    source ~/.ubuntualias
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    source ~/.osxalias
 fi
 
 # enable vim mode on commmand line
@@ -88,3 +89,38 @@ bindkey -M viins '^s' history-incremental-search-backward
 #BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.light.sh"
 #[[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
 
+#new vim mode
+# vim-mode.plugin.zsh
+#
+# Author: Ben White
+# URL: benjaminwhite.info
+
+bindkey -v
+
+# Multi-level undo
+bindkey -M vicmd 'u' undo
+bindkey -M vicmd '^R' redo
+
+# Allow backspacing past where you started in insert mode
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
+
+# Incrememntal search
+bindkey -M vicmd '/' history-incremental-search-backward
+bindkey -M viins '^R' history-incremental-search-backward
+
+# Allow Ctrl-P and Ctrl-N in insert mode
+bindkey '^P' history-search-backward
+bindkey '^N' history-search-forward
+
+# Edit in vim
+bindkey -M vicmd v edit-command-line
+
+# Allow in
+#bindkey -M vicmd 'ciw' 'bcw'
+#bindkey -M vicmd 'diw' 'bdw'
+
+# Stop weird behavior when hitting escape multiple times
+noop () {}
+zle -N noop
+bindkey -M vicmd '\E' noop
