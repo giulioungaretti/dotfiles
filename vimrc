@@ -8,6 +8,23 @@ call vundle#begin()
 " 		plugins
 """""""""""""""""""""""""""""""""""
  " {{{
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+ " autoformat
+ " exectute file
+:Plugin 'Bexec'
+" send line to tmux 
+Plugin 'jpalardy/vim-slime'
+" autofromat code
+Plugin 'Chiel92/vim-autoformat'
+ " emmet
+Plugin 'mattn/emmet-vim'
+" better js
+Plugin 'pangloss/vim-javascript'
+ " colorize css hexcodes
+Plugin 'ap/vim-css-color'
  " ptyhon pep8
 Plugin 'scrooloose/syntastic'
  " window managment
@@ -59,6 +76,7 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""
 "	 Visual tweaks
 """""""""""""""""""""""""""""""""""""""
+"{{{ 
 " turn on syntax highlight
 set timeoutlen=1000 ttimeoutlen=10
 syntax on
@@ -78,31 +96,34 @@ set wildmenu
 let base16colorspace=256
 let &t_Co=256
 colorscheme base16-default
-"""""""""""airline""""""""""""""""""""
-"{{{
+"}}}
+"""""""""""""""""""""""""""""""""""""""
+" 				airline
+"""""""""""""""""""""""""""""""""""""""
+" {{{
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
-      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'MyFugitive',
-      \   'filename': 'MyFilename',
-      \   'fileformat': 'MyFileformat',
-      \   'filetype': 'MyFiletype',
-      \   'fileencoding': 'MyFileencoding',
-      \   'mode': 'MyMode',
-      \   'ctrlpmark': 'CtrlPMark',
-      \ },
-      \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag',
-      \ },
-      \ 'component_type': {
-      \   'syntastic': 'error',
-      \ },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
-      \ }
+	  \ 'colorscheme': 'wombat',
+	  \ 'active': {
+	  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+	  \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+	  \ },
+	  \ 'component_function': {
+	  \   'fugitive': 'MyFugitive',
+	  \   'filename': 'MyFilename',
+	  \   'fileformat': 'MyFileformat',
+	  \   'filetype': 'MyFiletype',
+	  \   'fileencoding': 'MyFileencoding',
+	  \   'mode': 'MyMode',
+	  \   'ctrlpmark': 'CtrlPMark',
+	  \ },
+	  \ 'component_expand': {
+	  \   'syntastic': 'SyntasticStatuslineFlag',
+	  \ },
+	  \ 'component_type': {
+	  \   'syntastic': 'error',
+	  \ },
+	  \ 'subseparator': { 'left': '|', 'right': '|' }
+	  \ }
 
 function! MyModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -115,23 +136,23 @@ endfunction
 function! MyFilename()
   let fname = expand('%:t')
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
+		\ fname == '__Tagbar__' ? g:lightline.fname :
+		\ fname =~ '__Gundo\|NERD_tree' ? '' :
+		\ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+		\ &ft == 'unite' ? unite#get_status_string() :
+		\ &ft == 'vimshell' ? vimshell#get_status_string() :
+		\ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+		\ ('' != fname ? fname : '[No Name]') .
+		\ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
 function! MyFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ' Y '  " edit here for cool mark
-      let _ = fugitive#head()
-      return strlen(_) ? mark._ : ''
-    endif
+	if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+	  let mark = ' Y '  " edit here for cool mark
+	  let _ = fugitive#head()
+	  return strlen(_) ? mark._ : ''
+	endif
   catch
   endtry
   return ''
@@ -152,23 +173,23 @@ endfunction
 function! MyMode()
   let fname = expand('%:t')
   return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
+		\ fname == 'ControlP' ? 'CtrlP' :
+		\ fname == '__Gundo__' ? 'Gundo' :
+		\ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+		\ fname =~ 'NERD_tree' ? 'NERDTree' :
+		\ &ft == 'unite' ? 'Unite' :
+		\ &ft == 'vimfiler' ? 'VimFiler' :
+		\ &ft == 'vimshell' ? 'VimShell' :
+		\ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
 function! CtrlPMark()
   if expand('%:t') =~ 'ControlP'
-    call lightline#link('iR'[g:lightline.ctrlp_regex])
-    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-          \ , g:lightline.ctrlp_next], 0)
+	call lightline#link('iR'[g:lightline.ctrlp_regex])
+	return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
+		  \ , g:lightline.ctrlp_next], 0)
   else
-    return ''
+	return ''
   endif
 endfunction
 
@@ -192,7 +213,7 @@ endfunction
 let g:tagbar_status_func = 'TagbarStatusFunc'
 
 function! TagbarStatusFunc(current, sort, fname, ...) abort
-    let g:lightline.fname = a:fname
+	let g:lightline.fname = a:fname
   return lightline#statusline(0)
 endfunction
 
@@ -212,6 +233,7 @@ let g:vimshell_force_overwrite_statusline = 0
 """""""""""""""""""""""""""""""""""""""
 "	 		misc  tweaks
 """""""""""""""""""""""""""""""""""""""
+"{{{
 set nobackup
 set noswapfile
 " tmux copypaste integration
@@ -240,38 +262,45 @@ nnoremap <Right> <NOP>
 nnoremap <BS> <Nop>
 nnoremap <Del> <Nop>
 " }}}
-
 :setlocal spell
 :setlocal spell spelllang=en_us
 " special mode line at end of file
 set modelines=1
 " 			folding {{{
-set foldenable  " enalbe folding
+set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
 set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=indent " fold based on indent level
 " }}}
 
+"}}}
 """""""""""""""""""""""""""""""""""""""
 "			 aliases
 """""""""""""""""""""""""""""""""""""""
 " {{{
 "coveneient stuff
 inoremap jj <Esc>
-" esc esc to save
-map <Esc><Esc> :w<CR>
-" toogle relative line numbers
+" esc esc tosave
+inoremap  js <Esc>:w<CR>
+" toojse relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
-map <silent><leader>bl :set background=light<cr>
-map  <silent><leader>bd :set background=dark<cr>
+map <silent><leader>bgl :set background=light<cr>
+map  <silent><leader>bgd :set background=dark<cr>
 " split right and below instead of default opposite
 set splitbelow
 set splitright
+inoremap <C-Space> <C-x><C-o>
+inoremap <C-@> <C-Space>
 "}}}
 """"""""" common typos""""""""""""
+"{{{
 command Q q
 command W w
+"}}}
 """"""""" plug ins  """"""""""""
+"{{{
+"Enables HTML/CSS syntax highlighting in your JavaScript file.
+let g:javascript_enable_domhtmlcss = 1
 " map nerd tree to leader n
 map <silent><leader>n :NERDTreeFocus<CR>
 " remap jedi usage to leader u
@@ -289,8 +318,23 @@ nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 " open task list
 map <leader>td <Plug>TaskList
+"autoformat code iwth f3
+noremap <F3> :Autoformat<CR><CR>
 " tagbar autofous on open
 let g:tagbar_autofocus = 1
+"slime configuration
+let g:slime_target = "tmux"
+" let slime use the cpaste magic in python
+let g:slime_python_ipython = 1
+" snipppetss
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+" }}}
 "reload on save
 autocmd! bufwritepost .vimrc source %
-" vim:foldmethod=marker:foldlevel=1
+" vim: foldmethod=marker:foldlevel=0
