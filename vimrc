@@ -17,7 +17,6 @@ Plugin 'sjl/vitality.vim'
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
-" autoformat
 " exectute file
 :Plugin 'Bexec'
 " send line to tmux
@@ -54,14 +53,14 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 " nerd commenter
 Plugin 'scrooloose/nerdcommenter'
-" Fugtive
+" fuGITve
 Plugin 'tpope/vim-fugitive'
 " tasklist leader-t
 Plugin 'TaskList.vim'
 " new command ds, cs, and yss i
 Plugin 'tpope/vim-surround'
 "nice status bar
-Plugin 'itchyny/lightline.vim'
+"Plugin 'itchyny/lightline.vim'
 " structure of  file
 Plugin 'majutsushi/tagbar'
 " add :Gist command
@@ -232,6 +231,7 @@ let g:unite_force_overwrite_statusline = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 "}}}
+"
 """""""""""""""""""""""""""""""""""""""
 "	 		misc  tweaks
 """""""""""""""""""""""""""""""""""""""
@@ -257,7 +257,7 @@ set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=indent " fold based on indent level
 " use new plug in to do proper code folding
 au FileType javascript call JavaScriptFold()
-" }}}
+"  }}}
 
 "}}}
 """""""""""""""""""""""""""""""""""""""
@@ -266,8 +266,6 @@ au FileType javascript call JavaScriptFold()
 " {{{
 "coveneient stuff
 inoremap jj <Esc>
-" esc esc tosave
-inoremap  js <Esc>:w<CR>
 " toojse relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 map <silent><leader>bgl :set background=light<cr>
