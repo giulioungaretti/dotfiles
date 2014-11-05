@@ -8,7 +8,11 @@ call vundle#begin()
 " 		plugins
 """""""""""""""""""""""""""""""""""
  " {{{
+ " better  js 
+Plugin 'jelera/vim-javascript-syntax'
+" use that plugin to indent
 " Track the engine.
+"Plugin 'sjl/vitality.vim'
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
@@ -246,24 +250,8 @@ set clipboard=unnamed
 set tabstop=4
 set clipboard=unnamed
 " allows cursor change in tmux mode
- if exists('$TMUX')
-     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
-"kill useless keys
-"{{{
-nnoremap <Up> <NOP>
-nnoremap <Down> <NOP>
-nnoremap <Left> <NOP>
-nnoremap <Right> <NOP>
-nnoremap <BS> <Nop>
-nnoremap <Del> <Nop>
-" }}}
-:setlocal spell
-:setlocal spell spelllang=en_us
+setlocal spell
+setlocal spell spelllang=en_us
 " special mode line at end of file
 set modelines=1
 " 			folding {{{
@@ -271,6 +259,8 @@ set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
 set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=indent " fold based on indent level
+let javaScript_fold=1  " allow js folding 
+
 " }}}
 
 "}}}
@@ -334,7 +324,7 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-" }}}
+" }}} 
 "reload on save
 autocmd! bufwritepost .vimrc source %
 " vim: foldmethod=marker:foldlevel=0
