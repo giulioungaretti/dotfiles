@@ -9,8 +9,7 @@ call vundle#begin()
 """""""""""""""""""""""""""""""""""
 " {{{
 " better  js
-" use that plugin to indent as defined in the plugin section
-Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
 " makes iterm2 tmux and vim have sex
 Plugin 'sjl/vitality.vim'
 " Track the engine.
@@ -60,7 +59,7 @@ Plugin 'TaskList.vim'
 " new command ds, cs, and yss i
 Plugin 'tpope/vim-surround'
 "nice status bar
-Plugin 'itchyny/lightline.vim'
+"Plugin 'itchyny/lightline.vim'
 " structure of  file
 Plugin 'majutsushi/tagbar'
 " add :Gist command
@@ -255,8 +254,6 @@ set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
 set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=indent " fold based on indent level
-" use new plug in to do proper code folding
-au FileType javascript call JavaScriptFold()
 "  }}}
 
 "}}}
@@ -300,8 +297,8 @@ nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 " open task list
 map <leader>td <Plug>TaskList
-"autoformat code iwth f3
-noremap <F3> :Autoformat<CR><CR>
+"autoformat code with F7
+noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
 let g:tagbar_autofocus = 1
 "slime configuration
@@ -316,7 +313,9 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-let g:indentLine_char = '︙'
+"js stuff
+let javascript_enable_domhtmlcss=1
+let b:javascript_fold=1
 " }}}
 "reload on save
 autocmd! bufwritepost .vimrc source %
