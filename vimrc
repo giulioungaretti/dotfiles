@@ -8,11 +8,12 @@ call vundle#begin()
 " 		plugins
 """""""""""""""""""""""""""""""""""
  " {{{
- " better  js 
+ " better  js  
+" use that plugin to indent as defined in the plugin section
 Plugin 'jelera/vim-javascript-syntax'
-" use that plugin to indent
+" makes iterm2 tmux and vim have sex
+Plugin 'sjl/vitality.vim'
 " Track the engine.
-"Plugin 'sjl/vitality.vim'
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
@@ -25,8 +26,6 @@ Plugin 'jpalardy/vim-slime'
 Plugin 'Chiel92/vim-autoformat'
  " emmet
 Plugin 'mattn/emmet-vim'
-" better js
-Plugin 'pangloss/vim-javascript'
  " colorize css hexcodes
 Plugin 'ap/vim-css-color'
  " ptyhon pep8
