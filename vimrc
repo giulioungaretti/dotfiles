@@ -60,7 +60,7 @@ Plugin 'TaskList.vim'
 " new command ds, cs, and yss i
 Plugin 'tpope/vim-surround'
 "nice status bar
-"Plugin 'itchyny/lightline.vim'
+Plugin 'itchyny/lightline.vim'
 " structure of  file
 Plugin 'majutsushi/tagbar'
 " add :Gist command
@@ -316,6 +316,7 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+let g:indentLine_char = '︙'
 " }}}
 "reload on save
 autocmd! bufwritepost .vimrc source %
