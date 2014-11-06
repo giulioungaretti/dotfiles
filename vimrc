@@ -1,5 +1,4 @@
-" load vundle
-" {{{
+" load Vunlde" {{{
 " required bits for vundle
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -129,6 +128,7 @@ set foldmethod=indent " fold based on indent level
 " {{{
 "coveneient stuff
 inoremap jj <Esc>
+inoremap js <Esc> :w <CR>
 " esc esc tosave
 " toojse relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
@@ -166,6 +166,9 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 " add and commit current file
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
+" this should turn off the annothing random highlight
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
 " open task list
 map <leader>td <Plug>TaskList
 "autoformat code iwth f3
