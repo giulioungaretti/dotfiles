@@ -1,86 +1,88 @@
+" load Vunlde" {{{
+" required bits for vundle
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" }}}
 """""""""""""""""""""""""""""""""""
 " 		plugins
 """""""""""""""""""""""""""""""""""
-" {{{
-" better  js
-Plugin 'pangloss/vim-javascript'
+ " {{{
+ "
+"" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+"" eyecany bar
+Plugin 'bling/vim-airline'
 " makes iterm2 tmux and vim have sex
 Plugin 'sjl/vitality.vim'
 " Track the engine.
 Plugin 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
+"" Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
-" exectute file
+"" exectute file
 :Plugin 'Bexec'
-" send line to tmux
+"" send line to tmux
 Plugin 'jpalardy/vim-slime'
-" autofromat code
+"" autofromat code
 Plugin 'Chiel92/vim-autoformat'
-" emmet
+ "" emmet
 Plugin 'mattn/emmet-vim'
-" colorize css hexcodes
+"" better js
+Plugin 'pangloss/vim-javascript'
+ "" colorize css hexcodes
 Plugin 'ap/vim-css-color'
-" ptyhon pep8
+ "" ptyhon pep8
 Plugin 'scrooloose/syntastic'
-" window managment
+ "" window managment
 Plugin 'wesQ3/vim-windowswap'
-" undo treee
+"" undo treee
 Plugin 'sjl/gundo.vim'
-"remove and highlight trailing spaces
+""remove and highlight trailing spaces
 Plugin 'bronson/vim-trailing-whitespace'
-"tmux seamless movement
+""tmux seamless movement
 Plugin 'christoomey/vim-tmux-navigator'
-"indent highlight
+""indent highlight
 Plugin 'Yggdroot/indentLine'
-"autoclose
+""autoclose
 Plugin 'Townk/vim-autoclose'
-" sublime like mutiple cursors
+"" sublime like mutiple cursors
 Plugin 'terryma/vim-multiple-cursors'
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-" add git gutter
+"" add git gutter
 Plugin 'airblade/vim-gitgutter'
-" tree bar
+"" tree bar
 Plugin 'scrooloose/nerdtree'
-" cntrl p
+"" cntrl p
 Plugin 'kien/ctrlp.vim'
-" nerd commenter
+"" nerd commenter
 Plugin 'scrooloose/nerdcommenter'
 " fuGITve
 Plugin 'tpope/vim-fugitive'
-" tasklist leader-t
+ "tasklist leader-t
 Plugin 'TaskList.vim'
-" new command ds, cs, and yss i
+"" new command ds, cs, and yss i
 Plugin 'tpope/vim-surround'
-"nice status bar
-"Plugin 'itchyny/lightline.vim'
-" structure of  file
+"" structure of  file
 Plugin 'majutsushi/tagbar'
-" add :Gist command
+"" add :Gist command
 Plugin 'mattn/gist-vim'
-"super tab
+""super tab
 Plugin 'ervandew/supertab'
-" add colorscheme
+"" add colorscheme
 Plugin 'chriskempson/base16-vim'
-" jedi for ptyhon
+"" jedi for ptyhon
 Plugin 'davidhalter/jedi-vim'
 "}}}
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""
-"	 Visual tweaks
+"	 Visual vim tweaks
 """""""""""""""""""""""""""""""""""""""
-"{{{
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
-set timeoutlen=1000 ttimeoutlen=0
 " turn on syntax highlight
+set timeoutlen=1000 ttimeoutlen=0
 syntax on
 " show curret line
 :set cursorline
@@ -98,8 +100,7 @@ let &t_Co=256
 colorscheme base16-default
 "}}}
 """""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""
-"	 		misc  tweaks
+"	 		misc vim tweaks
 """""""""""""""""""""""""""""""""""""""
 "{{{
 set nobackup
@@ -108,7 +109,6 @@ set noswapfile
 if $TMUX == ''
 		set clipboard=unnamed
 endif
-
 " tab is 4 spaces
 set tabstop=4
 set clipboard=unnamed
@@ -121,15 +121,14 @@ set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
 set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=indent " fold based on indent level
-"  }}}
-
-"}}}
 """""""""""""""""""""""""""""""""""""""
-"			 aliases
+"			 vim aliases
 """""""""""""""""""""""""""""""""""""""
 " {{{
 "coveneient stuff
 inoremap jj <Esc>
+" esc esc tosave
+inoremap js <Esc> :w <CR>
 " toojse relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 map <silent><leader>bgl :set background=light<cr>
@@ -146,11 +145,14 @@ command Q q
 command W w
 "}}}
 """"""""" plug ins  """"""""""""
-"{{{
-" map nerd tree to leader n
+"enalbe cool fonts
+let g:airline_powerline_fonts = 1
+""Enables HTML/CSS syntax highlighting in your JavaScript file.
+let g:javascript_enable_domhtmlcss = 1
+"" map nerd tree to leader n
 map <silent><leader>n :NERDTreeFocus<CR>
-" remap jedi usage to leader u
-let g:jedi#usages_command = "<leader>u"
+"" remap jedi usage to leader u
+"let g:jedi#usages_command = "<leader>u"
 nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :GundoToggle<CR>
 " fugitive git bindings
@@ -162,23 +164,26 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 " add and commit current file
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
+" this should turn off the annothing random highlight
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
 " open task list
 map <leader>td <Plug>TaskList
-"autoformat code with F7
+"autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
 let g:tagbar_autofocus = 1
-"slime configuration
+""slime configuration
 let g:slime_target = "tmux"
-" let slime use the cpaste magic in python
+"" let slime use the cpaste magic in python
 let g:slime_python_ipython = 1
-" snipppetss
-" Trigger configuration. Do not use <tab> if you use
-" https://github.com/Valloric/YouCompleteMe.
+"" snipppetss
+"" Trigger configuration. Do not use <tab> if you use
+"" https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" If you want :UltiSnipsEdit to split your window.
+"" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 "js stuff
 let javascript_enable_domhtmlcss=1
