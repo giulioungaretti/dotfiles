@@ -130,7 +130,6 @@ set foldmethod=indent " fold based on indent level
 "coveneient stuff
 inoremap jj <Esc>
 " esc esc tosave
-inoremap  js <Esc>:w<CR>
 " toojse relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 map <silent><leader>bgl :set background=light<cr>
