@@ -12,10 +12,7 @@ export TERM
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin"
-# add imageJ and other apps in opt
-export PATH=$PATH:/home/giulio/.opt
 export PATH=~/anaconda/bin:$PATH
-export PATH=/usr/local/MATLAB/R2013b/bin:$PATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
