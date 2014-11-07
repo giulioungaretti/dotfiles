@@ -11,7 +11,7 @@ call vundle#begin()
 """""""""""""""""""""""""""""""""""
  " {{{
  "
- " align 
+ " align
 Plugin 'godlygeek/tabular'
 " markdown plugin
 Plugin 'plasticboy/vim-markdown'"
@@ -162,6 +162,8 @@ map <silent><leader>n :NERDTreeFocus<CR>
 nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :GundoToggle<CR>
 " fugitive git bindings
+" open diff)
+nnoremap <space>gd :Gdiff<CR>
 " add current file
 nnoremap <space>ga :Git add %:p<CR><CR>
 " status
@@ -170,6 +172,7 @@ nnoremap <space>gs :Gstatus<CR>
 nnoremap <space>gc :Gcommit -q<CR>
 " add and commit current file
 nnoremap <space>gt :Gcommit -v -q  %:p<CR>
+
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
