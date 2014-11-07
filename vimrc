@@ -11,6 +11,10 @@ call vundle#begin()
 """""""""""""""""""""""""""""""""""
  " {{{
  "
+ " align 
+Plugin 'godlygeek/tabular'
+" markdown plugin
+Plugin 'plasticboy/vim-markdown'"
 "" let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 "" eyecany bar
@@ -147,6 +151,8 @@ command W w
 """"""""" plug ins  """"""""""""
 "enalbe cool fonts
 let g:airline_powerline_fonts = 1
+"enable better tab
+let g:airline#extensions#tabline#enabled = 1
 ""Enables HTML/CSS syntax highlighting in your JavaScript file.
 let g:javascript_enable_domhtmlcss = 1
 "" map nerd tree to leader n
@@ -157,13 +163,13 @@ nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :GundoToggle<CR>
 " fugitive git bindings
 " add current file
-nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <space>ga :Git add %:p<CR><CR>
 " status
-nnoremap <leader>gs :Gstatus<CR>
+nnoremap <space>gs :Gstatus<CR>
 " commit added files
-nnoremap <leader>gc :Gcommit -q<CR>
+nnoremap <space>gc :Gcommit -q<CR>
 " add and commit current file
-nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
+nnoremap <space>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
