@@ -82,8 +82,9 @@ Plugin 'davidhalter/jedi-vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""
-"	 Visual vim tweaks
+"Visual vim tweaks
 """""""""""""""""""""""""""""""""""""""
+"{{{
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
 " turn on syntax highlight
 set timeoutlen=1000 ttimeoutlen=0
@@ -105,7 +106,7 @@ colorscheme base16-default
 set mousehide "Hide when characters are typed
 "}}}
 """""""""""""""""""""""""""""""""""""""
-"	 		misc vim tweaks
+"misc vim tweaks
 """""""""""""""""""""""""""""""""""""""
 "{{{
 set nobackup
@@ -121,13 +122,15 @@ set clipboard=unnamed
 setlocal spell spelllang=en_us
 " special mode line at end of file
 set modelines=1
-" 			folding {{{
+"folding {{{
 set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
 set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=indent " fold based on indent level
+" }}}
+" }}}
 """""""""""""""""""""""""""""""""""""""
-"			 vim aliases
+"vim aliases
 """""""""""""""""""""""""""""""""""""""
 " {{{
 " " tab shortcuts
@@ -156,12 +159,17 @@ set splitright
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
 "}}}
-""""""""" common typos""""""""""""
+"""""""""""""""""""""""""""""""""""""""
+" common typos
+"""""""""""""""""""""""""""""""""""""""
 "{{{
 command Q q
 command W w
 "}}}
-""""""""" plug ins  """"""""""""
+"""""""""""""""""""""""""""""""""""""""
+"  plug ins
+"""""""""""""""""""""""""""""""""""""""
+"{{{
 "enalbe cool fonts
 let g:airline_powerline_fonts = 1
 "enable better tab
@@ -185,7 +193,6 @@ nnoremap <space>gs :Gstatus<CR>
 nnoremap <space>gc :Gcommit -q<CR>
 " add and commit current file
 nnoremap <space>gt :Gcommit -v -q  %:p<CR>
-
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
