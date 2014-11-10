@@ -145,6 +145,7 @@ nnoremap <CR> G
 nnoremap <BS> gg
 "save a file
 nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
 "jj to esc
 inoremap jj <Esc>
 " esc esc tosave
