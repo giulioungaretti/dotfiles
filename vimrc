@@ -11,10 +11,12 @@ call vundle#begin()
 """""""""""""""""""""""""""""""""""
  " {{{
  "
+ " expand selection to region
+Plugin 'terryma/vim-expand-region'
  " align
 Plugin 'godlygeek/tabular'
 " markdown plugin
-Plugin 'plasticboy/vim-markdown'"
+Plugin 'plasticboy/vim-markdown'
 "" let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 "" eyecany bar
@@ -144,12 +146,11 @@ let mapleader = " "
 nnoremap <CR> G
 nnoremap <BS> gg
 "save a file
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>q :q<CR>
+map <Leader>w :w<CR>
+map <Leader>q :q<CR>
 "jj to esc
 inoremap jj <Esc>
 " esc esc tosave
-inoremap js <Esc> :w<CR>
 " toojse relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 map <silent><leader>bgl :set background=light<cr>
