@@ -20,15 +20,12 @@ export GIT_EDITOR=vim
 export VISUAL=gvim
 export EDITOR=vim
 ###############################################################
-#########################   aliases #########################
-alias chrome="open -a Google\ Chrome --args --disable-web-security"
+#########################   aliases ########################
 alias server='python -m SimpleHTTPServer'
 alias win8='VBoxManage startvm win8 --type headless'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
-#alias tmux='tmux  -u'
-#alias tmu='tmux -u'
 alias tmux="TERM=screen-256color-bce tmux"
 # files and mode manipulation
 alias r+='chmod +r'
@@ -43,10 +40,6 @@ alias r--='chmod 644'
 alias r-x='chmod 755'
 alias workstation='ssh giulio@172.20.3.114'
 alias workstationX='ssh -X giulio@172.20.3.114'
-alias nb='ipython notebook --profile=nbserver'
-#alias nbl='ipython notebook --profile=light'
-alias nbl='ipython notebook --profile=light_16'
-alias nbd='ipython notebook --profile=dark'
 alias mountsmb='~/Dropbox/Dotfiles/.mount.sh'
 alias notebook='~/Dropbox/Dotfiles/.notebook.sh'
 alias julia='/Applications/Julia-0.3.0-rd1-63c14c927f.app/Contents/Resources/julia/bin/julia'
