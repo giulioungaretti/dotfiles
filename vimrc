@@ -205,7 +205,7 @@ noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
 let g:tagbar_autofocus = 1
 " sort tags by file order and not by alphabetical order
-leg g:tagbar_sort = 0
+let g:tagbar_sort = 0
 ""slime configuration
 let g:slime_target = "tmux"
 "" let slime use the cpaste magic in python

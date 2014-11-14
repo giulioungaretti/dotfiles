@@ -2,4 +2,4 @@ eval "$(tmuxifier init -)"
 alias julia="exec '/Applications/Julia-0.3.0.app/Contents/Resources/julia/bin/julia'"
 alias vim="reattach-to-user-namespace vim"
 alias start='tmuxifier load-session my-awesome-session'
-
+alias ghub="mosh root@188.226.237.232 -- screen -dr"
