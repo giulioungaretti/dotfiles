@@ -92,7 +92,9 @@ filetype plugin indent on    " required
 set timeoutlen=1000 ttimeoutlen=0
 syntax on
 " show curret line
-:set cursorline
+set cursorline
+" set 79 long ruler 
+set colorcolumn=79
 " turn on linenumbers
 :set number
 "remove ugly ass  split separator
@@ -158,6 +160,8 @@ map  <silent><leader>bgd :set background=dark<cr>
 " split right and below instead of default opposite
 set splitbelow
 set splitright
+" folds
+nnoremap <silent> z1 :set foldlevel=1<CR>
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
 "}}}
@@ -168,10 +172,55 @@ inoremap <C-@> <C-Space>
 command Q q
 command W w
 "}}}
+"css stuff
+"{{{
+let g:tagbar_type_css = {
+\  'ctagstype' : 'css',
+\  'kinds' : [
+\    'v:variables',
+\    'c:classes',
+\    'i:identities',
+\    't:tags',
+\    'm:medias'
+\  ]
+\}
+
+let g:tagbar_type_less = {
+\  'ctagstype' : 'css',
+\  'kinds' : [
+\    'v:variables',
+\    'c:classes',
+\    'i:identities',
+\    't:tags',
+\    'm:medias'
+\  ]
+\}
+
+let g:tagbar_type_scss = {
+\  'ctagstype' : 'css',
+\  'kinds' : [
+\    'v:variables',
+\    'c:classes',
+\    'i:identities',
+\    't:tags',
+\    'm:medias'
+\  ]
+\}
+"}}}
 """""""""""""""""""""""""""""""""""""""
 "  plug ins
 """""""""""""""""""""""""""""""""""""""
 "{{{
+"mardkdown tagbar support
+let g:tagbar_type_markdown = {
+            \ 'ctagstype' : 'markdown',
+            \ 'kinds' : [
+                \ 'h:headings',
+                \ 'l:links',
+                \ 'i:images'
+            \ ],
+    \ "sort" : 0
+\ }
 "enalbe cool fonts
 let g:airline_powerline_fonts = 1
 "enable better tab
