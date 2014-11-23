@@ -10,9 +10,12 @@ call vundle#begin()
 " 		plugins
 """""""""""""""""""""""""""""""""""
  " {{{
- "
+ " blog with vim
+Plugin 'parkr/vim-jekyll'
  " expand selection to region
 Plugin 'terryma/vim-expand-region'
+" open markdown preview in marked2 app
+Plugin 'itspriddle/vim-marked'
  " align
 Plugin 'godlygeek/tabular'
 " markdown plugin
@@ -35,19 +38,19 @@ Plugin 'jpalardy/vim-slime'
 Plugin 'Chiel92/vim-autoformat'
  "" emmet
 Plugin 'mattn/emmet-vim'
-"" better js
+" better js
 Plugin 'pangloss/vim-javascript'
- "" colorize css hexcodes
+" colorize css hexcodes
 Plugin 'ap/vim-css-color'
- "" ptyhon pep8
+" ptyhon pep8
 Plugin 'scrooloose/syntastic'
- "" window managment
+" window managment
 Plugin 'wesQ3/vim-windowswap'
-"" undo treee
+" undo treee
 Plugin 'sjl/gundo.vim'
-""remove and highlight trailing spaces
+" remove and highlight trailing spaces
 Plugin 'bronson/vim-trailing-whitespace'
-""tmux seamless movement
+" tmux seamless movement
 Plugin 'christoomey/vim-tmux-navigator'
 ""indent highlight
 Plugin 'Yggdroot/indentLine'
@@ -73,12 +76,17 @@ Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
 "" add :Gist command
 Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
 ""super tab
 Plugin 'ervandew/supertab'
 "" add colorscheme
 Plugin 'chriskempson/base16-vim'
 "" jedi for ptyhon
 Plugin 'davidhalter/jedi-vim'
+"" go integration
+Plugin 'fatih/vim-go'
+""" zen writing
+Plugin 'junegunn/goyo.vim'
 "}}}
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -88,15 +96,15 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""
 "{{{
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
-" turn on syntax highlight
 set timeoutlen=1000 ttimeoutlen=0
+" turn on syntax highlight
 syntax on
 " show curret line
 set cursorline
-" set 79 long ruler 
+" set 79 long ruler
 set colorcolumn=79
 " turn on linenumbers
-:set number
+set number
 "remove ugly ass  split separator
 set fillchars=""
 "show bar
@@ -119,13 +127,15 @@ set noswapfile
 if $TMUX == ''
 		set clipboard=unnamed
 endif
+set clipboard=unnamed
 " tab is 4 spaces
 set tabstop=4
-set clipboard=unnamed
 " set spell check in english
 setlocal spell spelllang=en_us
 " special mode line at end of file
 set modelines=1
+" md files as markdown
+autocmd BufRead,BufNew *.md set filetype=markdown
 "folding {{{
 set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
@@ -231,7 +241,7 @@ let g:javascript_enable_domhtmlcss = 1
 map <silent><leader>n :NERDTreeFocus<CR>
 "" remap jedi usage to leader u
 let g:jedi#usages_command = "<leader>u"
-nmap <F8> :TagbarToggle<CR>
+nmap <F8> :TagbarOpen fj<CR>
 nnoremap <F5> :GundoToggle<CR>
 " fugitive git bindings
 " open diff)
@@ -263,14 +273,68 @@ let g:slime_python_ipython = 1
 "" Trigger configuration. Do not use <tab> if you use
 "" https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 "js stuff
 let javascript_enable_domhtmlcss=1
 let b:javascript_fold=1
 " }}}
+"""""""""""""""""""""""""""""""""""""""
+" go
+"""""""""""""""""""""""""""""""""""""""
+"{{{
+"Show a list of interfaces which is implemented by the type under your cursor with <leader>s
+au FileType go nmap <Leader>s <Plug>(go-implements)
+"Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
+au FileType go nmap <Leader>i <Plug>(go-info)
+"Open the relevant Godoc for the word under the cursor with <leader>gd or open it vertically with <leader>gv
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+"Or open the Godoc in browser
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+"Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+"By default the mapping gd is enabled which opens the target identifier in current buffer. You can also open the definition/declaration in a new vertical, horizontal or tab for the word under your cursor:
+
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+"Rename the identifier under the cursor to a new name
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+"}}}
 "reload on save
 autocmd! bufwritepost .vimrc source %
 " vim: foldmethod=marker:foldlevel=0
