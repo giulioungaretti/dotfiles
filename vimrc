@@ -102,7 +102,7 @@ syntax on
 " show curret line
 set cursorline
 " set 79 long ruler
-set colorcolumn=79
+au FileType python  set colorcolumn=79
 " turn on linenumbers
 set number
 "remove ugly ass  split separator
@@ -172,8 +172,10 @@ set splitbelow
 set splitright
 " folds
 nnoremap <silent> z1 :set foldlevel=1<CR>
-inoremap <C-Space> <C-x><C-o>
-inoremap <C-@> <C-Space>
+nnoremap <silent> z2 :set foldlevel=2<CR>
+nnoremap <silent> z3 :set foldlevel=3<CR>
+" supertab omtnicomplete
+let g:SuperTabDefaultCompletionType = "context""
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " common typos
@@ -263,7 +265,7 @@ map <leader>td <Plug>TaskList
 noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
 let g:tagbar_autofocus = 1
-" sort tags by file order and not by alphabetical order
+" sort tags by file zrder and not by alphabetical order
 let g:tagbar_sort = 0
 ""slime configuration
 let g:slime_target = "tmux"
