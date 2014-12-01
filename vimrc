@@ -243,7 +243,7 @@ let g:javascript_enable_domhtmlcss = 1
 map <silent><leader>n :NERDTreeFocus<CR>
 "" remap jedi usage to leader u
 let g:jedi#usages_command = "<leader>u"
-nmap <F8> :TagbarOpen fj<CR>
+nmap <c-t> :TagbarOpen fj<CR>
 nnoremap <F5> :GundoToggle<CR>
 " fugitive git bindings
 " open diff)
