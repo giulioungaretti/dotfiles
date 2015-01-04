@@ -10,6 +10,9 @@ call vundle#begin()
 " 		plugins
 """""""""""""""""""""""""""""""""""
  " {{{
+ " instant markdown needs extra installs
+ " http://vimawesome.com/plugin/vim-instant-markdown
+Plugin 'terryma/vim-instant-markdown'
  " blog with vim
 Plugin 'parkr/vim-jekyll'
  " expand selection to region
@@ -155,7 +158,6 @@ let mapleader = " "
 "Type 12<Enter> to go to line 12.
 "Hit Enter to go to end of file.
 "Hit Backspace to go to beginning of file.
-nnoremap <CR> G
 nnoremap <BS> gg
 "save a file
 map <Leader>w :w<CR>
@@ -259,8 +261,10 @@ nnoremap <space>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
-" open task list
+" open task list for todo single file 
 map <leader>td <Plug>TaskList
+" open task list for todo in current folder and subfolder
+noremap <Leader>t :noautocmd vimgrep /TODO/j ./**/*.*<CR>:cw<CR>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
