@@ -158,7 +158,6 @@ let mapleader = " "
 "Type 12<Enter> to go to line 12.
 "Hit Enter to go to end of file.
 "Hit Backspace to go to beginning of file.
-nnoremap <CR> G
 nnoremap <BS> gg
 "save a file
 map <Leader>w :w<CR>
