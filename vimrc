@@ -10,6 +10,8 @@ call vundle#begin()
 " 		plugins
 """""""""""""""""""""""""""""""""""
  " {{{
+ " smart start screen
+ Plugin 'mhinz/vim-startify'
  " instant markdown needs extra installs
  " http://vimawesome.com/plugin/vim-instant-markdown
 Plugin 'terryma/vim-instant-markdown'
@@ -179,25 +181,13 @@ nnoremap <silent> z3 :set foldlevel=3<CR>
 " supertab omtnicomplete
 let g:SuperTabDefaultCompletionType = "context""
 " nice maximixe split and go back to normal layout
-nnoremap <C-W>Z :call MaximizeToggle()<CR>
-nnoremap <C-W>z :call MaximizeToggle()<CR>
-nnoremap <C-W><C-z> :call MaximizeToggle()<CR>
-
-function! MaximizeToggle()
-  if exists("s:maximize_session")
-    exec "source " . s:maximize_session
-    call delete(s:maximize_session)
-    unlet s:maximize_session
-    let &hidden=s:maximize_hidden_save
-    unlet s:maximize_hidden_save
-  else
-    let s:maximize_hidden_save = &hidden
-    let s:maximize_session = tempname()
-    set hidden
-    exec "mksession! " . s:maximize_session
-    only
-  endif
-endfunction
+nnoremap <silent><C-W>m :tabedit %<CR>
+nnoremap <silent><C-W>c :tabclose<CR>
+nnoremap <silent><C-W>a :tabedit %<CR>
+nnoremap <silent><C-W><C-d> :bNext<CR>
+nnoremap <silent><C-W><C-a> :bprevious<CR>
+nnoremap <silent><C-W><C-q> :bd<CR>
+nnoremap <silent><Leader>f :Goyo <CR>
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " common typos
@@ -311,6 +301,9 @@ let b:javascript_fold=1
 " go
 """""""""""""""""""""""""""""""""""""""
 "{{{
+"fold by sytax and style 
+"
+au FileType go  set foldmethod=syntax foldnestmax=10 nofoldenable foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -323,7 +316,7 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
+"au FileType go nmap <leader>gt <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 "By default the mapping gd is enabled which opens the target identifier in current buffer. You can also open the definition/declaration in a new vertical, horizontal or tab for the word under your cursor:
 
@@ -361,6 +354,31 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 "}}}
+" startify options
+" {{{
+ let g:startify_custom_header = [
+ \                   '.                    '  ,
+ \   ' ##############..... ##############  ' ,
+ \   ' ##############......##############  ' ,
+ \     ' ##########..........##########    ' ,
+ \     ' ##########........##########      ' ,
+ \     ' ##########.......##########       ' ,
+ \     ' ##########.....##########..       ' ,
+ \     ' ##########....##########.....     ' ,
+ \   ' ..##########..##########.........   ',
+ \ '  ....##########.#########.............',
+ \   ' ..################JJJ............   ',
+ \     ' ################.............     ' ,
+ \     ' ##############.JJJ.JJJJJJJJJJ     ' ,
+ \     ' ############...JJ...JJ..JJ  JJ    ' ,
+ \     ' ##########....JJ...JJ..JJ  JJ     ' ,
+ \     ' ########......JJJ..JJJ JJJ JJJ    ' ,
+ \     ' ######    .........               ' ,
+ \                 ' .....                 ' ,
+ \                   ' .                   ' ,
+\]
+ "}}}
 "reload on save
 autocmd! bufwritepost .vimrc source %
+
 " vim: foldmethod=marker:foldlevel=0
