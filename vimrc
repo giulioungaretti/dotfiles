@@ -10,6 +10,10 @@ call vundle#begin()
 " 		plugins
 """""""""""""""""""""""""""""""""""
  " {{{
+ " show buffer bar in the bototm
+ Plugin 'bling/vim-bufferline'
+ "  easymotions
+Plugin 'Lokaltog/vim-easymotion'
  " smart start screen
  Plugin 'mhinz/vim-startify'
  " instant markdown needs extra installs
@@ -141,6 +145,9 @@ setlocal spell spelllang=en_us
 set modelines=1
 " md files as markdown
 autocmd BufRead,BufNew *.md set filetype=markdown
+" highlight as you type
+set incsearch
+set smartcase
 "folding {{{
 set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
@@ -246,7 +253,7 @@ let g:tagbar_type_markdown = {
     \ "sort" : 0
 \ }
 "enalbe cool fonts
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 "enable better tab
 let g:airline#extensions#tabline#enabled = 1
 ""Enables HTML/CSS syntax highlighting in your JavaScript file.
@@ -271,7 +278,7 @@ nnoremap <space>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
-" open task list for todo single file 
+" open task list for todo single file
 map <leader>td <Plug>TaskList
 " open task list for todo in current folder and subfolder
 noremap <Leader>t :noautocmd vimgrep /TODO/j ./**/*.*<CR>:cw<CR>
@@ -301,7 +308,7 @@ let b:javascript_fold=1
 " go
 """""""""""""""""""""""""""""""""""""""
 "{{{
-"fold by sytax and style 
+"fold by sytax and style
 "
 au FileType go  set foldmethod=syntax foldnestmax=10 nofoldenable foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
@@ -378,6 +385,27 @@ let g:tagbar_type_go = {
  \                   ' .                   ' ,
 \]
  "}}}
+"""""""""""""""""""""""""""""""""""""""
+" easymotion
+"""""""""""""""""""""""""""""""""""""""
+"{{{
+ let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Bi-directional find motion
+" " Jump to anywhere you want with minimal keystrokes, with just one key
+" binding.
+" " `s{char}{label}`
+ nmap s <Plug>(easymotion-s)
+
+" " Turn on case sensitive feature
+ let g:EasyMotion_smartcase = 1
+"
+"" JK motions: Line motions
+ map <Leader>l <Plug>(easymotion-lineforward)
+ map <Leader>j <Plug>(easymotion-j)
+ map <Leader>k <Plug>(easymotion-k)
+ map <Leader>h <Plug>(easymotion-linebackward)
+ " }}}
 "reload on save
 autocmd! bufwritepost .vimrc source %
 
