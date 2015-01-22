@@ -1,0 +1,12 @@
+startup_message off
+hardstatus alwayslastline
+hardstatus string "%{= b}>> ${USER}%{c}@%{b}%H: %L>%1`%? %?%{b}%u%? %-18=%?%{c} %{c}%-=%{c}%-w%{b}%n %t%{c}%+w %{b}${TIME}"
+
+autodetach on
+defscrollback 5000
+defnonblock on
+attrcolor b ".I"
+activity "%c activity -> %n%f %t"
+bell "%c bell -> %n%f %t^G"
+vbell_msg " *beep* "
+altscreen on
