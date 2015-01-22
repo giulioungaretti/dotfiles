@@ -7,11 +7,11 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " }}}
 """""""""""""""""""""""""""""""""""
-" 		plugins
+"    plugins
 """""""""""""""""""""""""""""""""""
  " {{{
- " show buffer bar in the bototm
- Plugin 'bling/vim-bufferline'
+ " Vim -processing
+ Plugin 'sophacles/vim-processing'
  "  easymotions
 Plugin 'Lokaltog/vim-easymotion'
  " smart start screen
@@ -125,6 +125,9 @@ let base16colorspace=256
 let &t_Co=256
 colorscheme base16-default
 set mousehide "Hide when characters are typed
+" 81 st colum highlight if line > 81
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
 "}}}
 """""""""""""""""""""""""""""""""""""""
 "misc vim tweaks
@@ -194,7 +197,9 @@ nnoremap <silent><C-W>a :tabedit %<CR>
 nnoremap <silent><C-W><C-d> :bNext<CR>
 nnoremap <silent><C-W><C-a> :bprevious<CR>
 nnoremap <silent><C-W><C-q> :bd<CR>
+
 nnoremap <silent><Leader>f :Goyo <CR>
+" always work with visual bock mode
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " common typos
@@ -242,6 +247,10 @@ let g:tagbar_type_scss = {
 "  plug ins
 """""""""""""""""""""""""""""""""""""""
 "{{{
+"Documentation lookup - pressing K in when over a keyword, type or function
+"defined by processing will open a browser to the relevant documentation.
+" Processing
+let processing_fold = 1
 "mardkdown tagbar support
 let g:tagbar_type_markdown = {
             \ 'ctagstype' : 'markdown',
@@ -363,27 +372,32 @@ let g:tagbar_type_go = {
 "}}}
 " startify options
 " {{{
- let g:startify_custom_header = [
- \                   '.                    '  ,
- \   ' ##############..... ##############  ' ,
- \   ' ##############......##############  ' ,
- \     ' ##########..........##########    ' ,
- \     ' ##########........##########      ' ,
- \     ' ##########.......##########       ' ,
- \     ' ##########.....##########..       ' ,
- \     ' ##########....##########.....     ' ,
- \   ' ..##########..##########.........   ',
- \ '  ....##########.#########.............',
- \   ' ..################JJJ............   ',
- \     ' ################.............     ' ,
- \     ' ##############.JJJ.JJJJJJJJJJ     ' ,
- \     ' ############...JJ...JJ..JJ  JJ    ' ,
- \     ' ##########....JJ...JJ..JJ  JJ     ' ,
- \     ' ########......JJJ..JJJ JJJ JJJ    ' ,
- \     ' ######    .........               ' ,
- \                 ' .....                 ' ,
- \                   ' .                   ' ,
-\]
+ "let g:startify_custom_header = [
+ "\                   '.                    '  ,
+ "\   ' ##############..... ##############  ' ,
+ "\   ' ##############......##############  ' ,
+ "\     ' ##########..........##########    ' ,
+ "\     ' ##########........##########      ' ,
+ "\     ' ##########.......##########       ' ,
+ "\     ' ##########.....##########..       ' ,
+ "\     ' ##########....##########.....     ' ,
+ "\   ' ..##########..##########.........   ',
+ "\ '  ....##########.#########.............',
+ "\   ' ..################JJJ............   ',
+ "\     ' ################.............     ' ,
+ "\     ' ##############.JJJ.JJJJJJJJJJ     ' ,
+ "\     ' ############...JJ...JJ..JJ  JJ    ' ,
+ "\     ' ##########....JJ...JJ..JJ  JJ     ' ,
+ "\     ' ########......JJJ..JJJ JJJ JJJ    ' ,
+ "\     ' ######    .........               ' ,
+ "\                 ' .....                 ' ,
+ "\                   ' .                   ' ,
+"\]
+let g:startify_custom_header =
+  \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
+ "
+" bookmark list
+let g:startify_bookmarks = [ '~/.vimrc' ]
  "}}}
 """""""""""""""""""""""""""""""""""""""
 " easymotion
