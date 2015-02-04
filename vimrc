@@ -10,12 +10,12 @@ call vundle#begin()
 "    plugins
 """""""""""""""""""""""""""""""""""
  " {{{
+ " evernote
+Plugin 'neilagabriel/vim-geeknote'
  " Vim -processing
- Plugin 'sophacles/vim-processing'
+Plugin 'sophacles/vim-processing'
  "  easymotions
 Plugin 'Lokaltog/vim-easymotion'
- " smart start screen
- Plugin 'mhinz/vim-startify'
  " instant markdown needs extra installs
  " http://vimawesome.com/plugin/vim-instant-markdown
 Plugin 'terryma/vim-instant-markdown'
@@ -264,6 +264,7 @@ let g:tagbar_type_markdown = {
 "enalbe cool fonts
 let g:airline_powerline_fonts = 0
 "enable better tab
+let g:airline_theme="powerlineish"
 let g:airline#extensions#tabline#enabled = 1
 ""Enables HTML/CSS syntax highlighting in your JavaScript file.
 let g:javascript_enable_domhtmlcss = 1
