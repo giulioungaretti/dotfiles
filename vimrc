@@ -126,7 +126,7 @@ let &t_Co=256
 colorscheme base16-default
 set mousehide "Hide when characters are typed
 " 81 st colum highlight if line > 81
-highlight ColorColumn ctermbg=magenta
+highlight ColorColumn
 call matchadd('ColorColumn', '\%81v', 100)
 "}}}
 """""""""""""""""""""""""""""""""""""""
