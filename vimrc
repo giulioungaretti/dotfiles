@@ -128,7 +128,7 @@ set wildmenu
 "256 color base 16 theme
 let base16colorspace=256
 let &t_Co=256
-colorscheme base16-flat
+colorscheme base16-default
 set mousehide "Hide when characters are typed
 "}}}
 """""""""""""""""""""""""""""""""""""""
