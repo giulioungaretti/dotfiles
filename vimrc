@@ -10,12 +10,16 @@ call vundle#begin()
 "    plugins
 """""""""""""""""""""""""""""""""""
  " {{{
+ " better buffer managment
+Plugin 'bufkill.vim'
+ " vim - evernote client
+Plugin 'neilagabriel/vim-geeknote' 
  " Vim -processing
  Plugin 'sophacles/vim-processing'
  "  easymotions
 Plugin 'Lokaltog/vim-easymotion'
  " smart start screen
- Plugin 'mhinz/vim-startify'
+ "Plugin 'mhinz/vim-startify'
  " instant markdown needs extra installs
  " http://vimawesome.com/plugin/vim-instant-markdown
 Plugin 'terryma/vim-instant-markdown'
@@ -94,6 +98,7 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'davidhalter/jedi-vim'
 "" go integration
 Plugin 'fatih/vim-go'
+Plugin 'dgryski/vim-godef'
 """ zen writing
 Plugin 'junegunn/goyo.vim'
 "}}}
@@ -123,11 +128,8 @@ set wildmenu
 "256 color base 16 theme
 let base16colorspace=256
 let &t_Co=256
-colorscheme base16-default
+colorscheme base16-flat
 set mousehide "Hide when characters are typed
-" 81 st colum highlight if line > 81
-highlight ColorColumn
-call matchadd('ColorColumn', '\%81v', 100)
 "}}}
 """""""""""""""""""""""""""""""""""""""
 "misc vim tweaks
@@ -167,10 +169,6 @@ map <leader>tn :tabnew<CR>
 map <leader>tc :tabclose<CR>
 "coveneient stuff
 let mapleader = " "
-"Type 12<Enter> to go to line 12.
-"Hit Enter to go to end of file.
-"Hit Backspace to go to beginning of file.
-nnoremap <BS> gg
 "save a file
 map <Leader>w :w<CR>
 map <Leader>q :q<CR>
@@ -261,10 +259,14 @@ let g:tagbar_type_markdown = {
             \ ],
     \ "sort" : 0
 \ }
-"enalbe cool fonts
-let g:airline_powerline_fonts = 0
 "enable better tab
 let g:airline#extensions#tabline#enabled = 1
+" use simple separators 
+let g:airline_left_alt_sep = '|'
+let g:airline_right_alt_sep = '|'''
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+
 ""Enables HTML/CSS syntax highlighting in your JavaScript file.
 let g:javascript_enable_domhtmlcss = 1
 "" map nerd tree to leader n
@@ -319,6 +321,7 @@ let b:javascript_fold=1
 "{{{
 "fold by sytax and style
 "
+let g:godef_split=3
 au FileType go  set foldmethod=syntax foldnestmax=10 nofoldenable foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
@@ -370,35 +373,6 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 "}}}
-" startify options
-" {{{
- "let g:startify_custom_header = [
- "\                   '.                    '  ,
- "\   ' ##############..... ##############  ' ,
- "\   ' ##############......##############  ' ,
- "\     ' ##########..........##########    ' ,
- "\     ' ##########........##########      ' ,
- "\     ' ##########.......##########       ' ,
- "\     ' ##########.....##########..       ' ,
- "\     ' ##########....##########.....     ' ,
- "\   ' ..##########..##########.........   ',
- "\ '  ....##########.#########.............',
- "\   ' ..################JJJ............   ',
- "\     ' ################.............     ' ,
- "\     ' ##############.JJJ.JJJJJJJJJJ     ' ,
- "\     ' ############...JJ...JJ..JJ  JJ    ' ,
- "\     ' ##########....JJ...JJ..JJ  JJ     ' ,
- "\     ' ########......JJJ..JJJ JJJ JJJ    ' ,
- "\     ' ######    .........               ' ,
- "\                 ' .....                 ' ,
- "\                   ' .                   ' ,
-"\]
-let g:startify_custom_header =
-  \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
- "
-" bookmark list
-let g:startify_bookmarks = [ '~/.vimrc' ]
- "}}}
 """""""""""""""""""""""""""""""""""""""
 " easymotion
 """""""""""""""""""""""""""""""""""""""
