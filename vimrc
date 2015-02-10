@@ -175,7 +175,7 @@ function! Minimze()
 endfunction
 " tab shortcuts
 map <leader>tn :tabnew<CR>
-nnoremap <silent><C-W>m :call Fullscreentab() <CR>
+nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
 "coveneient stuff
 let mapleader = " "
