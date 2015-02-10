@@ -133,6 +133,8 @@ set mousehide "Hide when characters are typed
 "misc vim tweaks
 """""""""""""""""""""""""""""""""""""""
 "{{{
+" use comma as leader
+map <space> <leader>
 set nobackup
 set noswapfile
 " tmux copypaste integration
@@ -173,15 +175,11 @@ function! Minimze()
 		tabclose
 		call cursor(line,0 )
 endfunction
+" }}}
 " tab shortcuts
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
-"coveneient stuff
-let mapleader = " "
-"save a file
-map <Leader>w :w<CR>
-map <Leader>q :q<CR>
 "jj to esc
 inoremap jj <Esc>
 " esc esc tosave
@@ -289,15 +287,15 @@ nmap <c-t> :TagbarOpen fj<CR>
 nnoremap <F5> :GundoToggle<CR>
 " fugitive git bindings
 " open diff)
-nnoremap <space>gd :Gdiff<CR>
+nnoremap <leader>gd :Gdiff<CR>
 " add current file
-nnoremap <space>ga :Git add %:p<CR><CR>
+nnoremap <leader>ga :Git add %:p<CR><CR>
 " status
-nnoremap <space>gs :Gstatus<CR>
+nnoremap <leader>gs :Gstatus<CR>
 " commit added files
-nnoremap <space>gc :Gcommit -q<CR>
+nnoremap <leader>gc :Gcommit -q<CR>
 " add and commit current file
-nnoremap <space>gt :Gcommit -v -q  %:p<CR>
+nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
@@ -394,7 +392,6 @@ let g:tagbar_type_go = {
 """""""""""""""""""""""""""""""""""""""
 "{{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
 " Bi-directional find motion
 " " Jump to anywhere you want with minimal keystrokes, with just one key
 " binding.
@@ -409,6 +406,17 @@ map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
+" Beginning of word forward and backward. See |w| & |b|.
+map <leader>w <Plug>(easymotion-bd-w)
+map <leader>e <Plug>(easymotion-bd-e)
+map <leader>q <Plug>(easymotion-jumptoanywhere)
+
+" customize color
+hi link EasyMotionTarget ErrorMsg
+hi link EasyMotionShade  Comment
+hi link EasyMotionTarget2First MatchParen
+hi link EasyMotionTarget2Second MatchParen
+
 " }}}
 "reload on save
 autocmd! bufwritepost .vimrc source %
