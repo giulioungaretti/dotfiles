@@ -9,23 +9,23 @@ call vundle#begin()
 """""""""""""""""""""""""""""""""""
 "    plugins
 """""""""""""""""""""""""""""""""""
- " {{{
- " evernote
-Plugin 'neilagabriel/vim-geeknote'
- " Vim -processing
+" {{{
+" vim - evernote client
+Plugin 'neilagabriel/vim-geeknote' 
+" Vim -processing
 Plugin 'sophacles/vim-processing'
- "  easymotions
+"  easymotions
 Plugin 'Lokaltog/vim-easymotion'
- " instant markdown needs extra installs
- " http://vimawesome.com/plugin/vim-instant-markdown
+" instant markdown needs extra installs
+" http://vimawesome.com/plugin/vim-instant-markdown
 Plugin 'terryma/vim-instant-markdown'
- " blog with vim
+" blog with vim
 Plugin 'parkr/vim-jekyll'
- " expand selection to region
+" expand selection to region
 Plugin 'terryma/vim-expand-region'
 " open markdown preview in marked2 app
 Plugin 'itspriddle/vim-marked'
- " align
+" align
 Plugin 'godlygeek/tabular'
 " markdown plugin
 Plugin 'plasticboy/vim-markdown'
@@ -45,7 +45,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'jpalardy/vim-slime'
 "" autofromat code
 Plugin 'Chiel92/vim-autoformat'
- "" emmet
+"" emmet
 Plugin 'mattn/emmet-vim'
 " better js
 Plugin 'pangloss/vim-javascript'
@@ -77,7 +77,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 " fuGITve
 Plugin 'tpope/vim-fugitive'
- "tasklist leader-t
+"tasklist leader-t
 Plugin 'TaskList.vim'
 "" new command ds, cs, and yss i
 Plugin 'tpope/vim-surround'
@@ -94,6 +94,7 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'davidhalter/jedi-vim'
 "" go integration
 Plugin 'fatih/vim-go'
+Plugin 'dgryski/vim-godef'
 """ zen writing
 Plugin 'junegunn/goyo.vim'
 "}}}
@@ -123,16 +124,15 @@ set wildmenu
 "256 color base 16 theme
 let base16colorspace=256
 let &t_Co=256
-colorscheme base16-default
+colorscheme base16-eighties
 set mousehide "Hide when characters are typed
-" 81 st colum highlight if line > 81
-highlight ColorColumn
-call matchadd('ColorColumn', '\%81v', 100)
 "}}}
 """""""""""""""""""""""""""""""""""""""
 "misc vim tweaks
 """""""""""""""""""""""""""""""""""""""
 "{{{
+" use comma as leader
+map <space> <leader>
 set nobackup
 set noswapfile
 " tmux copypaste integration
@@ -162,22 +162,26 @@ set foldmethod=indent " fold based on indent level
 "vim aliases
 """""""""""""""""""""""""""""""""""""""
 " {{{
-" " tab shortcuts
+function! Fullscreen()
+		let line = line(".")+0
+		tabedit %
+		call cursor(line,0 )
+endfunction
+
+function! Minimze()
+		let line = line(".")+0
+		tabclose
+		call cursor(line,0 )
+endfunction
+" }}}
+" tab shortcuts
 map <leader>tn :tabnew<CR>
-map <leader>tc :tabclose<CR>
-"coveneient stuff
-let mapleader = " "
-"Type 12<Enter> to go to line 12.
-"Hit Enter to go to end of file.
-"Hit Backspace to go to beginning of file.
-nnoremap <BS> gg
-"save a file
-map <Leader>w :w<CR>
-map <Leader>q :q<CR>
+nnoremap <silent><C-W>m :call Fullscreen() <CR>
+nnoremap <silent><C-W>c :call Minimze() <CR>
 "jj to esc
 inoremap jj <Esc>
 " esc esc tosave
-" toojse relative line numbers
+" toggle relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 map <silent><leader>bgl :set background=light<cr>
 map  <silent><leader>bgd :set background=dark<cr>
@@ -190,58 +194,60 @@ nnoremap <silent> z2 :set foldlevel=2<CR>
 nnoremap <silent> z3 :set foldlevel=3<CR>
 " supertab omtnicomplete
 let g:SuperTabDefaultCompletionType = "context""
-" nice maximixe split and go back to normal layout
-nnoremap <silent><C-W>m :tabedit %<CR>
-nnoremap <silent><C-W>c :tabclose<CR>
-nnoremap <silent><C-W>a :tabedit %<CR>
-nnoremap <silent><C-W><C-d> :bNext<CR>
+"buffers
+"{{{
+" nice maximize split and go back to normal layout
+nnoremap <silent><C-W><C-d> :bnext<CR>
 nnoremap <silent><C-W><C-a> :bprevious<CR>
 nnoremap <silent><C-W><C-q> :bd<CR>
+" close current buffer and moves back to the previous "
+nmap <leader>bq :bp <BAR> bd #<CR>
 
-nnoremap <silent><Leader>f :Goyo <CR>
-" always work with visual bock mode
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " common typos
 """""""""""""""""""""""""""""""""""""""
 "{{{
-command Q q
-command W w
+command! Q q
+command! W w
+
 "}}}
-"css stuff
+"""""""""""""""""""""""""""""""""""""""
+" css stuff
+"""""""""""""""""""""""""""""""""""""""
 "{{{
 let g:tagbar_type_css = {
-\  'ctagstype' : 'css',
-\  'kinds' : [
-\    'v:variables',
-\    'c:classes',
-\    'i:identities',
-\    't:tags',
-\    'm:medias'
-\  ]
-\}
+						\  'ctagstype' : 'css',
+						\  'kinds' : [
+						\    'v:variables',
+						\    'c:classes',
+						\    'i:identities',
+						\    't:tags',
+						\    'm:medias'
+						\  ]
+						\}
 
 let g:tagbar_type_less = {
-\  'ctagstype' : 'css',
-\  'kinds' : [
-\    'v:variables',
-\    'c:classes',
-\    'i:identities',
-\    't:tags',
-\    'm:medias'
-\  ]
-\}
+						\  'ctagstype' : 'css',
+						\  'kinds' : [
+						\    'v:variables',
+						\    'c:classes',
+						\    'i:identities',
+						\    't:tags',
+						\    'm:medias'
+						\  ]
+						\}
 
 let g:tagbar_type_scss = {
-\  'ctagstype' : 'css',
-\  'kinds' : [
-\    'v:variables',
-\    'c:classes',
-\    'i:identities',
-\    't:tags',
-\    'm:medias'
-\  ]
-\}
+						\  'ctagstype' : 'css',
+						\  'kinds' : [
+						\    'v:variables',
+						\    'c:classes',
+						\    'i:identities',
+						\    't:tags',
+						\    'm:medias'
+						\  ]
+						\}
 "}}}
 """""""""""""""""""""""""""""""""""""""
 "  plug ins
@@ -253,19 +259,23 @@ let g:tagbar_type_scss = {
 let processing_fold = 1
 "mardkdown tagbar support
 let g:tagbar_type_markdown = {
-            \ 'ctagstype' : 'markdown',
-            \ 'kinds' : [
-                \ 'h:headings',
-                \ 'l:links',
-                \ 'i:images'
-            \ ],
-    \ "sort" : 0
-\ }
-"enalbe cool fonts
-let g:airline_powerline_fonts = 0
+						\ 'ctagstype' : 'markdown',
+						\ 'kinds' : [
+						\ 'h:headings',
+						\ 'l:links',
+						\ 'i:images'
+						\ ],
+						\ "sort" : 0
+						\ }
 "enable better tab
 let g:airline_theme="powerlineish"
 let g:airline#extensions#tabline#enabled = 1
+" use simple separators 
+let g:airline_left_alt_sep = '|'
+let g:airline_right_alt_sep = '|'''
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+
 ""Enables HTML/CSS syntax highlighting in your JavaScript file.
 let g:javascript_enable_domhtmlcss = 1
 "" map nerd tree to leader n
@@ -276,15 +286,15 @@ nmap <c-t> :TagbarOpen fj<CR>
 nnoremap <F5> :GundoToggle<CR>
 " fugitive git bindings
 " open diff)
-nnoremap <space>gd :Gdiff<CR>
+nnoremap <leader>gd :Gdiff<CR>
 " add current file
-nnoremap <space>ga :Git add %:p<CR><CR>
+nnoremap <leader>ga :Git add %:p<CR><CR>
 " status
-nnoremap <space>gs :Gstatus<CR>
+nnoremap <leader>gs :Gstatus<CR>
 " commit added files
-nnoremap <space>gc :Gcommit -q<CR>
+nnoremap <leader>gc :Gcommit -q<CR>
 " add and commit current file
-nnoremap <space>gt :Gcommit -v -q  %:p<CR>
+nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
@@ -298,21 +308,25 @@ noremap <F6> :Autoformat<CR><CR>
 let g:tagbar_autofocus = 1
 " sort tags by file zrder and not by alphabetical order
 let g:tagbar_sort = 0
-""slime configuration
+" slime configuration
 let g:slime_target = "tmux"
 "" let slime use the cpaste magic in python
 let g:slime_python_ipython = 1
-"" snipppetss
-"" Trigger configuration. Do not use <tab> if you use
-"" https://github.com/Valloric/YouCompleteMe.
+" snipppetss
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-"js stuff
+"------------  js stuff
+"  show nice embedded js
 let javascript_enable_domhtmlcss=1
+" allow js folding
 let b:javascript_fold=1
+" zen mode with Goyo
+nnoremap <silent><Leader>f :Goyo <CR>
 " }}}
 """""""""""""""""""""""""""""""""""""""
 " go
@@ -320,6 +334,7 @@ let b:javascript_fold=1
 "{{{
 "fold by sytax and style
 "
+let g:godef_split=3
 au FileType go  set foldmethod=syntax foldnestmax=10 nofoldenable foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
@@ -344,83 +359,64 @@ au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 au FileType go nmap <Leader>e <Plug>(go-rename)
 
 let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
+						\ 'ctagstype' : 'go',
+						\ 'kinds'     : [
+						\ 'p:package',
+						\ 'i:imports:1',
+						\ 'c:constants',
+						\ 'v:variables',
+						\ 't:types',
+						\ 'n:interfaces',
+						\ 'w:fields',
+						\ 'e:embedded',
+						\ 'm:methods',
+						\ 'r:constructor',
+						\ 'f:functions'
+						\ ],
+						\ 'sro' : '.',
+						\ 'kind2scope' : {
+						\ 't' : 'ctype',
+						\ 'n' : 'ntype'
+						\ },
+						\ 'scope2kind' : {
+						\ 'ctype' : 't',
+						\ 'ntype' : 'n'
+						\ },
+						\ 'ctagsbin'  : 'gotags',
+						\ 'ctagsargs' : '-sort -silent'
+						\ }
 "}}}
-" startify options
-" {{{
- "let g:startify_custom_header = [
- "\                   '.                    '  ,
- "\   ' ##############..... ##############  ' ,
- "\   ' ##############......##############  ' ,
- "\     ' ##########..........##########    ' ,
- "\     ' ##########........##########      ' ,
- "\     ' ##########.......##########       ' ,
- "\     ' ##########.....##########..       ' ,
- "\     ' ##########....##########.....     ' ,
- "\   ' ..##########..##########.........   ',
- "\ '  ....##########.#########.............',
- "\   ' ..################JJJ............   ',
- "\     ' ################.............     ' ,
- "\     ' ##############.JJJ.JJJJJJJJJJ     ' ,
- "\     ' ############...JJ...JJ..JJ  JJ    ' ,
- "\     ' ##########....JJ...JJ..JJ  JJ     ' ,
- "\     ' ########......JJJ..JJJ JJJ JJJ    ' ,
- "\     ' ######    .........               ' ,
- "\                 ' .....                 ' ,
- "\                   ' .                   ' ,
-"\]
-let g:startify_custom_header =
-  \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
- "
-" bookmark list
-let g:startify_bookmarks = [ '~/.vimrc' ]
- "}}}
 """""""""""""""""""""""""""""""""""""""
 " easymotion
 """""""""""""""""""""""""""""""""""""""
 "{{{
- let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Bi-directional find motion
 " " Jump to anywhere you want with minimal keystrokes, with just one key
 " binding.
 " " `s{char}{label}`
- nmap s <Plug>(easymotion-s)
+nmap s <Plug>(easymotion-s)
 
 " " Turn on case sensitive feature
- let g:EasyMotion_smartcase = 1
+let g:EasyMotion_smartcase = 1
 "
 "" JK motions: Line motions
- map <Leader>l <Plug>(easymotion-lineforward)
- map <Leader>j <Plug>(easymotion-j)
- map <Leader>k <Plug>(easymotion-k)
- map <Leader>h <Plug>(easymotion-linebackward)
- " }}}
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+" Beginning of word forward and backward. See |w| & |b|.
+map <leader>w <Plug>(easymotion-bd-w)
+map <leader>e <Plug>(easymotion-bd-e)
+map <leader>q <Plug>(easymotion-jumptoanywhere)
+
+" customize color
+hi link EasyMotionTarget ErrorMsg
+hi link EasyMotionShade  Comment
+hi link EasyMotionTarget2First MatchParen
+hi link EasyMotionTarget2Second MatchParen
+
+" }}}
 "reload on save
 autocmd! bufwritepost .vimrc source %
 

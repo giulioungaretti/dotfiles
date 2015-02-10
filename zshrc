@@ -61,7 +61,7 @@ fi
 # https://coderwall.com/p/h63etq
 # https://github.com/pda/dotzsh/blob/master/keyboard.zsh#L10
 # 10ms for key sequences
-KEYTIMEOUT=0.1
+KEYTIMEOUT=0.01
 
 # add missing vim hotkeys
 # fixes backspace deletion issues
@@ -79,7 +79,7 @@ bindkey -M viins '^s' history-incremental-search-backward
 
 
 ##############
-BASE16_SCHEME="default"
+BASE16_SCHEME="eighties"
 BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
 [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
 
