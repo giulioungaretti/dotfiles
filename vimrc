@@ -1,15 +1,14 @@
-" load Vunlde" {{{
-" required bits for vundle
+" Vundle setup
 set nocompatible              " be iMproved, required
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" }}}
-"""""""""""""""""""""""""""""""""""
 "    plugins
 """""""""""""""""""""""""""""""""""
 " {{{
+" golang auto completion that does not seem to work
+Plugin 'nsf/gocode', {'rtp': 'vim/'}
 " vim - evernote client
 Plugin 'neilagabriel/vim-geeknote' 
 " Vim -processing
@@ -27,6 +26,8 @@ Plugin 'parkr/vim-jekyll'
 Plugin 'terryma/vim-expand-region'
 " open markdown preview in marked2 app
 Plugin 'itspriddle/vim-marked'
+" pomodoro manager vim
+Plugin 'gregsexton/Vomodoro'
 " align
 Plugin 'godlygeek/tabular'
 " markdown plugin
@@ -115,8 +116,9 @@ syntax on
 set cursorline
 " set 79 long ruler
 au FileType python  set colorcolumn=79
-" turn on linenumbers
-set number
+" turn on linenumbers, and make them relative except current line
+set relativenumber 
+set number          
 "remove ugly ass  split separator
 set fillchars=""
 "show bar
@@ -126,14 +128,17 @@ set wildmenu
 "256 color base 16 theme
 let base16colorspace=256
 let &t_Co=256
-colorscheme base16-eighties
+colorscheme base16-default 
 set mousehide "Hide when characters are typed
 "}}}
 """""""""""""""""""""""""""""""""""""""
 "misc vim tweaks
 """""""""""""""""""""""""""""""""""""""
 "{{{
-" use comma as leader
+" use space as leader
+set iskeyword-=.                    " '.' is an end of word designator
+set iskeyword-=#                    " '#' is an end of word designator
+set iskeyword-=-                    " '-' is an end of word designator
 map <space> <leader>
 set nobackup
 set noswapfile
@@ -152,12 +157,15 @@ set modelines=1
 autocmd BufRead,BufNew *.md set filetype=markdown
 " highlight as you type
 set incsearch
+" smart case when searching
 set smartcase
 "folding {{{
 set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
 set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=indent " fold based on indent level
+"reload on save
+autocmd! bufwritepost .vimrc source %
 " }}}
 " }}}
 """""""""""""""""""""""""""""""""""""""
@@ -195,7 +203,10 @@ nnoremap <silent> z1 :set foldlevel=1<CR>
 nnoremap <silent> z2 :set foldlevel=2<CR>
 nnoremap <silent> z3 :set foldlevel=3<CR>
 " supertab omtnicomplete
-let g:SuperTabDefaultCompletionType = "context""
+let g:SuperTabDefaultCompletionType = "context"
+" Map <Leader>ff to display all lines with keyword under cursor
+"     " and ask which one to jump to
+nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>]]
 "buffers
 "{{{
 " nice maximize split and go back to normal layout
@@ -212,7 +223,8 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 "{{{
 command! Q q
 command! W w
-
+command! Qa qa
+command! Wa wa
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " css stuff
@@ -271,6 +283,8 @@ let g:tagbar_type_markdown = {
 						\ }
 "enable better tab
 let g:airline#extensions#tabline#enabled = 1
+" use nice powerline line theme 
+let g:AirlineTheme="powerlineish"
 " use simple separators 
 let g:airline_left_alt_sep = '|'
 let g:airline_right_alt_sep = '|'''
@@ -302,7 +316,8 @@ let g:gitgutter_eager = 0
 " open task list for todo single file
 map <leader>td <Plug>TaskList
 " open task list for todo in current folder and subfolder
-noremap <Leader>t :noautocmd vimgrep /TODO/j ./**/*.*<CR>:cw<CR>
+noremap <Leader>tl :noautocmd vimgrep /TODO/ ./**/*.*<CR>:cw<CR>
+noremap <Leader>nl :noautocmd vimgrep /NOTE/ ./**/*.*<CR>:cw<CR>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
@@ -335,6 +350,7 @@ nnoremap <silent><Leader>f :Goyo <CR>
 "{{{
 "fold by sytax and style
 "
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 let g:godef_split=3
 au FileType go  set foldmethod=syntax foldnestmax=10 nofoldenable foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
@@ -407,18 +423,29 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 " Beginning of word forward and backward. See |w| & |b|.
-map <leader>w <Plug>(easymotion-bd-w)
-map <leader>e <Plug>(easymotion-bd-e)
-map <leader>q <Plug>(easymotion-jumptoanywhere)
+map <Leader>w <Plug>(easymotion-bd-w)
+map <Leader>W <Plug>(easymotion-bd-W)
+map <Leader>e <Plug>(easymotion-bd-e)
+map <Leader>E <Plug>(easymotion-bd-E)
+map <Leader>q <Plug>(easymotion-jumptoanywhere)
 
 " customize color
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
 hi link EasyMotionTarget2First MatchParen
 hi link EasyMotionTarget2Second MatchParen
-
 " }}}
-"reload on save
-autocmd! bufwritepost .vimrc source %
+" NerdTree {{{
+map <C-e> <plug>NERDTreeTabsToggle<CR>
+nmap <leader>nt :NERDTreeFind<CR>
 
+let NERDTreeShowBookmarks=1
+let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+let NERDTreeChDirMode=0
+let NERDTreeQuitOnOpen=1
+let NERDTreeMouseMode=2
+let NERDTreeShowHidden=1
+let NERDTreeKeepTreeInNewTab=1
+let g:nerdtree_tabs_open_on_gui_startup=0
+" }}}
 " vim: foldmethod=marker:foldlevel=0
