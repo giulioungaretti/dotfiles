@@ -1,34 +1,32 @@
 " Vundle setup
+"{{{
 set nocompatible              " be iMproved, required
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-"    plugins
+"}}}
+" Plugins
 """""""""""""""""""""""""""""""""""
 " {{{
-" golang auto completion that does not seem to work
-Plugin 'nsf/gocode', {'rtp': 'vim/'}
+" neocompchage
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
 " vim - evernote client
 Plugin 'neilagabriel/vim-geeknote' 
-" Vim -processing
-Plugin 'sophacles/vim-processing'
-"  easymotions
+" easymotions
 Plugin 'Lokaltog/vim-easymotion'
-" smart start screen
-"Plugin 'mhinz/vim-startify'
 " instant markdown needs extra installs
 " http://vimawesome.com/plugin/vim-instant-markdown
 Plugin 'terryma/vim-instant-markdown'
-" blog with vim
-Plugin 'parkr/vim-jekyll'
 " expand selection to region
 Plugin 'terryma/vim-expand-region'
 " open markdown preview in marked2 app
 Plugin 'itspriddle/vim-marked'
 " pomodoro manager vim
 Plugin 'gregsexton/Vomodoro'
-" align
+" align table
 Plugin 'godlygeek/tabular'
 " markdown plugin
 Plugin 'plasticboy/vim-markdown'
@@ -38,17 +36,13 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'bling/vim-airline'
 " makes iterm2 tmux and vim have sex
 Plugin 'sjl/vitality.vim'
-" Track the engine.
-Plugin 'SirVer/ultisnips'
-"" Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
-"" exectute file
+"" execute file
 :Plugin 'Bexec'
 "" send line to tmux
 Plugin 'jpalardy/vim-slime'
-"" autofromat code
+"" auto-format code
 Plugin 'Chiel92/vim-autoformat'
-"" emmet
+" emmet
 Plugin 'mattn/emmet-vim'
 " better js
 Plugin 'pangloss/vim-javascript'
@@ -89,27 +83,22 @@ Plugin 'majutsushi/tagbar'
 "" add :Gist command
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
-""super tab
-Plugin 'ervandew/supertab'
-"" add colorscheme
+" colorscheme
 Plugin 'chriskempson/base16-vim'
-"" jedi for ptyhon
+" jedi for ptyhon
 Plugin 'davidhalter/jedi-vim'
-"" go integration
+" go integration
 Plugin 'fatih/vim-go'
-Plugin 'dgryski/vim-godef'
-""" zen writing
+" zen writing
 Plugin 'junegunn/goyo.vim'
-"}}}
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+"}}}
 """""""""""""""""""""""""""""""""""""""
-"Visual vim tweaks
+" Visual
 """""""""""""""""""""""""""""""""""""""
 "{{{
-" zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
-set timeoutlen=1000 ttimeoutlen=0
 " turn on syntax highlight
 syntax on
 " show curret line
@@ -117,7 +106,6 @@ set cursorline
 " set 79 long ruler
 au FileType python  set colorcolumn=79
 " turn on linenumbers, and make them relative except current line
-set relativenumber 
 set number          
 "remove ugly ass  split separator
 set fillchars=""
@@ -132,14 +120,16 @@ colorscheme base16-default
 set mousehide "Hide when characters are typed
 "}}}
 """""""""""""""""""""""""""""""""""""""
-"misc vim tweaks
+" Settings
 """""""""""""""""""""""""""""""""""""""
 "{{{
+" zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
+set timeoutlen=1000 ttimeoutlen=0
 " use space as leader
 set iskeyword-=.                    " '.' is an end of word designator
 set iskeyword-=#                    " '#' is an end of word designator
 set iskeyword-=-                    " '-' is an end of word designator
-map <space> <leader>
+set iskeyword-=_                    " '_' is an end of word designator
 set nobackup
 set noswapfile
 " tmux copypaste integration
@@ -149,7 +139,9 @@ endif
 set clipboard=unnamed
 " tab is 4 spaces
 set tabstop=4
-" set spell check in english
+" always uses spaces instead of tab characters
+ set expandtab
+" set spell check in English
 setlocal spell spelllang=en_us
 " special mode line at end of file
 set modelines=1
@@ -163,15 +155,18 @@ set smartcase
 set foldenable  " enable folding
 set foldlevelstart=10 " open most folds by default
 set foldnestmax=10  " max 10 nested fold allower
-set foldmethod=indent " fold based on indent level
+set foldmethod=syntax " fold based on indent level
 "reload on save
 autocmd! bufwritepost .vimrc source %
 " }}}
 " }}}
 """""""""""""""""""""""""""""""""""""""
-"vim aliases
+" Aliases
 """""""""""""""""""""""""""""""""""""""
 " {{{
+" leader
+map <space> <leader>
+" fullscreen  {{{
 function! Fullscreen()
 		let line = line(".")+0
 		tabedit %
@@ -184,13 +179,12 @@ function! Minimze()
 		call cursor(line,0 )
 endfunction
 " }}}
-" tab shortcuts
+" tabs shortcuts
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
 "jj to esc
 inoremap jj <Esc>
-" esc esc tosave
 " toggle relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 map <silent><leader>bgl :set background=light<cr>
@@ -202,20 +196,15 @@ set splitright
 nnoremap <silent> z1 :set foldlevel=1<CR>
 nnoremap <silent> z2 :set foldlevel=2<CR>
 nnoremap <silent> z3 :set foldlevel=3<CR>
-" supertab omtnicomplete
-let g:SuperTabDefaultCompletionType = "context"
-" Map <Leader>ff to display all lines with keyword under cursor
-"     " and ask which one to jump to
-nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>]]
+nnoremap <silent> z4 :set foldlevel=4<CR>
+nnoremap <silent> z5 :set foldlevel=5<CR>
 "buffers
-"{{{
 " nice maximize split and go back to normal layout
 nnoremap <silent><C-W><C-d> :bnext<CR>
 nnoremap <silent><C-W><C-a> :bprevious<CR>
 nnoremap <silent><C-W><C-q> :bd<CR>
 " close current buffer and moves back to the previous "
 nmap <leader>bq :bp <BAR> bd #<CR>
-
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " common typos
@@ -227,9 +216,11 @@ command! Qa qa
 command! Wa wa
 "}}}
 """""""""""""""""""""""""""""""""""""""
-" css stuff
+"""""""""""""""""""""""""""""""""""""""
+"  Plug ins
 """""""""""""""""""""""""""""""""""""""
 "{{{
+" tag-bar css stuff  " {{{
 let g:tagbar_type_css = {
 						\  'ctagstype' : 'css',
 						\  'kinds' : [
@@ -263,15 +254,56 @@ let g:tagbar_type_scss = {
 						\  ]
 						\}
 "}}}
-"""""""""""""""""""""""""""""""""""""""
-"  plug ins
-"""""""""""""""""""""""""""""""""""""""
-"{{{
-"Documentation lookup - pressing K in when over a keyword, type or function
-"defined by processing will open a browser to the relevant documentation.
-" Processing
-let processing_fold = 1
-"mardkdown tagbar support
+" neocopmlete  {{{
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" mardkdown tagbar support
 let g:tagbar_type_markdown = {
 						\ 'ctagstype' : 'markdown',
 						\ 'kinds' : [
@@ -281,6 +313,22 @@ let g:tagbar_type_markdown = {
 						\ ],
 						\ "sort" : 0
 						\ }
+"}}}
+" neocoomplete snippts {{{
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+" }}}
+" airline {{{
 "enable better tab
 let g:airline#extensions#tabline#enabled = 1
 " use nice powerline line theme 
@@ -290,17 +338,16 @@ let g:airline_left_alt_sep = '|'
 let g:airline_right_alt_sep = '|'''
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-
-""Enables HTML/CSS syntax highlighting in your JavaScript file.
+"}}}
+" Enables HTML/CSS syntax highlighting in your JavaScript file.
 let g:javascript_enable_domhtmlcss = 1
-"" map nerd tree to leader n
+" map nerd tree to leader n
 map <silent><leader>n :NERDTreeFocus<CR>
-"" remap jedi usage to leader u
+" remap jedi usage to leader u
 let g:jedi#usages_command = "<leader>u"
-nmap <c-t> :TagbarOpen fj<CR>
 nnoremap <F5> :GundoToggle<CR>
-" fugitive git bindings
-" open diff)
+" gutter & fugitive git bindings {{{
+" open diff
 nnoremap <leader>gd :Gdiff<CR>
 " add current file
 nnoremap <leader>ga :Git add %:p<CR><CR>
@@ -313,30 +360,27 @@ nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
+"}}}
+" task and notes {{{
 " open task list for todo single file
 map <leader>td <Plug>TaskList
 " open task list for todo in current folder and subfolder
 noremap <Leader>tl :noautocmd vimgrep /TODO/ ./**/*.*<CR>:cw<CR>
 noremap <Leader>nl :noautocmd vimgrep /NOTE/ ./**/*.*<CR>:cw<CR>
+"}}}
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
+" tagbar behavior {{{
 " tagbar autofous on open
+nmap <c-t> :TagbarToggle <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file zrder and not by alphabetical order
 let g:tagbar_sort = 0
+"}}}
 " slime configuration
 let g:slime_target = "tmux"
 "" let slime use the cpaste magic in python
 let g:slime_python_ipython = 1
-" snipppetss
-" Trigger configuration. Do not use <tab> if you use
-" https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-"------------  js stuff
 "  show nice embedded js
 let javascript_enable_domhtmlcss=1
 " allow js folding
@@ -351,7 +395,6 @@ nnoremap <silent><Leader>f :Goyo <CR>
 "fold by sytax and style
 "
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-let g:godef_split=3
 au FileType go  set foldmethod=syntax foldnestmax=10 nofoldenable foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
@@ -365,16 +408,16 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
-"au FileType go nmap <leader>gt <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 "By default the mapping gd is enabled which opens the target identifier in current buffer. You can also open the definition/declaration in a new vertical, horizontal or tab for the word under your cursor:
-
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-"Rename the identifier under the cursor to a new name
+" Rename the identifier under the cursor to a new name
 au FileType go nmap <Leader>e <Plug>(go-rename)
-
+" format with goimports instead of gofmt
+let g:go_fmt_command = "goimports"
+" tabar tags
 let g:tagbar_type_go = {
 						\ 'ctagstype' : 'go',
 						\ 'kinds'     : [
@@ -413,8 +456,7 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " binding.
 " " `s{char}{label}`
 nmap s <Plug>(easymotion-s)
-
-" " Turn on case sensitive feature
+"Turn on case sensitive feature
 let g:EasyMotion_smartcase = 1
 "
 "" JK motions: Line motions
@@ -428,7 +470,6 @@ map <Leader>W <Plug>(easymotion-bd-W)
 map <Leader>e <Plug>(easymotion-bd-e)
 map <Leader>E <Plug>(easymotion-bd-E)
 map <Leader>q <Plug>(easymotion-jumptoanywhere)
-
 " customize color
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
@@ -438,7 +479,6 @@ hi link EasyMotionTarget2Second MatchParen
 " NerdTree {{{
 map <C-e> <plug>NERDTreeTabsToggle<CR>
 nmap <leader>nt :NERDTreeFind<CR>
-
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
 let NERDTreeChDirMode=0

@@ -1,0 +1,3 @@
+config windowHintsIgnoreHiddenWindows false
+config windowHintsShowIcons true
+config windowHintsSpread true

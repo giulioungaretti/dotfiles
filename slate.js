@@ -90,14 +90,14 @@ slate.bind("j:cmd,ctrl", function(win) {
         }
 });
 
-var three_count = 0;
+var rthree_count = 0;
 slate.bind("l:cmd,ctrl", function(win) {
-        three_count++;
-        if (three_count == 1) {
+        rthree_count++;
+        if (rthree_count == 1) {
                 win.doOperation(pushRight);
-        } else if (three_count == 2) {
+        } else if (rthree_count == 2) {
                 win.doOperation(pushRight3);
-                three_count = 0;
+                rthree_count = 0;
         }
 });
 
@@ -111,7 +111,175 @@ slate.bind("h:cmd,ctrl", function(win) {
                 three_count = 0;
         }
 });
+var pushRight = slate.operation("push", {
+  "direction": "right",
+  "style": "bar-resize:screenSizeX/2"
+});
 
+var pushLeft = slate.operation("push", {
+  "direction": "left",
+  "style": "bar-resize:screenSizeX/2"
+});
+
+var throwNextLeft = slate.operation("throw", {
+  "width": "screenSizeX/2",
+  "height": "screenSizeY",
+  "screen": "next"
+});
+
+var throwNextRight = slate.operation("throw", {
+  "x": "screenOriginX+(screenSizeX)/2",
+  "y": "screenOriginY",
+  "width": "screenSizeX/2",
+  "height": "screenSizeY",
+  "screen": "next"
+});
+
+var fullscreen = slate.operation("move", {
+  "x" : "screenOriginX",
+  "y" : "screenOriginY",
+  "width" : "screenSizeX",
+  "height" : "screenSizeY"
+});
+
+var throwNextFullscreen = slate.operation("throw", {
+  "x": "screenOriginX",
+  "y": "screenOriginY",
+  "width": "screenSizeX",
+  "height": "screenSizeY",
+  "screen": "next"
+});
+
+var throwNext = function(win) {
+  if (!win) {
+    return;
+  }
+  var winRect = win.rect();
+  var screen = win.screen().visibleRect();
+
+  var newX = (winRect.x - screen.x)/screen.width+"*screenSizeX+screenOriginX";
+  var newY = (winRect.y - screen.y)/screen.height+"*screenSizeY+screenOriginY";
+  var newWidth = winRect.width/screen.width+"*screenSizeX";
+  var newHeight = winRect.height/screen.height+"*screenSizeY";
+  var throwNext = slate.operation("throw", {
+    "x": newX,
+    "y": newY,
+    "width": newWidth,
+    "height": newHeight,
+    "screen": "next"
+  });
+  win.doOperation(throwNext);
+};
+
+var pushedLeft = function(win) {
+  if (!win) {
+    return false;
+  }
+  var winRect = win.rect();
+  var screen = win.screen().visibleRect();
+
+  if (winRect.x === screen.x &&
+      winRect.y === screen.y &&
+      winRect.width === screen.width/2 &&
+      winRect.height === screen.height
+    ) {
+    return true;
+  }
+  return false;
+};
+
+var pushedRight = function(win) {
+  if (!win) {
+    return false;
+  }
+  var winRect = win.rect();
+  var screen = win.screen().visibleRect();
+
+  if (winRect.x === screen.x + screen.width/2 &&
+      winRect.y === screen.y &&
+      winRect.width === screen.width/2 &&
+      winRect.height === screen.height
+    ) {
+    return true;
+  }
+  return false;
+};
+
+var isFullscreen = function(win) {
+  if (!win) {
+    return false;
+  }
+  var winRect = win.rect();
+  var screen = win.screen().visibleRect();
+  if (winRect.width === screen.width &&
+      winRect.height === screen.height
+    ) {
+    return true;
+  }
+  return false;
+};
+
+
+slate.bind("left:ctrl,cmd", function(win) {
+  if (!win) {
+    return;
+  }
+  if (pushedLeft(win)) {
+    win.doOperation(throwNextLeft);
+  } else {
+    win.doOperation(pushLeft);
+  }
+});
+
+slate.bind("right:ctrl,cmd", function(win) {
+  if (!win) {
+    return;
+  }
+
+  if (pushedRight(win)) {
+    win.doOperation(throwNextRight);
+  } else {
+    win.doOperation(pushRight);
+  }
+});
+
+slate.bind("up:ctrl,cmd", function(win) {
+  if (!win) {
+    return;
+  }
+
+  if (isFullscreen(win)) {
+    win.doOperation(throwNextFullscreen);
+  } else {
+    win.doOperation(fullscreen);
+  }
+});
+
+slate.bind("down:ctrl,cmd", function(win) {
+  if (!win) {
+    return;
+  }
+
+  if (pushedLeft(win)) {
+    win.doOperation(throwNextLeft);
+  } else if (pushedRight(win)) {
+    win.doOperation(throwNextRight);
+  } else if (isFullscreen(win)) {
+    win.doOperation(throwNextFullscreen);
+  } else {
+    throwNext(win);
+  }
+});
 slate.bind(";:shift,cmd", fullscreen);
 slate.bind("i:cmd,ctrl", pushCenter3);
 slate.bind("esc:cmd", hint);
+
+// ctrl + cmd + up  -> Maximize the window;If maximized, move it to the next screen.
+// ctrl + cmd + down -> Move the window to the next screen.
+// ctrl + cmd + left  -> Push window to the left with half size. If already done, move it to the next screen.
+// ctrl + cmd + right  -> Push window to the right with half size. If already done, move it to the next screen.
+// cmd + cntrl + h/l, move to left/right one press, 1/2 two presses 1/3
+// cmd + ctrl + i move 1/3 at the center  | |x| | 
+// cmd + cntrl + j/k, move to  corners
+// cmd + esc , show hints
+// cmd +  shit+ ; = full screen 
