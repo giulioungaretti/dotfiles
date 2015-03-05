@@ -330,6 +330,7 @@ endif
 " }}}
 " airline {{{
 "enable better tab
+let g:airline_theme="powerlineish"
 let g:airline#extensions#tabline#enabled = 1
 " use nice powerline line theme 
 let g:AirlineTheme="powerlineish"
