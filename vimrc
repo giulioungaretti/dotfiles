@@ -13,6 +13,7 @@ call vundle#begin()
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
+Plugin  'superbrothers/vim-vimperator'
 " vim - evernote client
 Plugin 'neilagabriel/vim-geeknote' 
 " easymotions
@@ -48,6 +49,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
 " colorize css hexcodes
 Plugin 'ap/vim-css-color'
+"
 " ptyhon pep8
 Plugin 'scrooloose/syntastic'
 " window managment
@@ -91,6 +93,8 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'fatih/vim-go'
 " zen writing
 Plugin 'junegunn/goyo.vim'
+" highlighcolors
+Plugin 'chrisbra/Colorizer' 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -99,6 +103,12 @@ filetype plugin indent on    " required
 " Visual
 """""""""""""""""""""""""""""""""""""""
 "{{{
+"  kill hte mouse:w
+if has("gui_running")
+        set mouse=a
+else
+        set mouse=c
+endif
 " turn on syntax highlight
 syntax on
 " show curret line
@@ -134,13 +144,13 @@ set nobackup
 set noswapfile
 " tmux copypaste integration
 if $TMUX == ''
-		set clipboard=unnamed
+        set clipboard=unnamed
 endif
 set clipboard=unnamed
 " tab is 4 spaces
 set tabstop=4
 " always uses spaces instead of tab characters
- set expandtab
+set expandtab
 " set spell check in English
 setlocal spell spelllang=en_us
 " special mode line at end of file
@@ -168,15 +178,15 @@ autocmd! bufwritepost .vimrc source %
 map <space> <leader>
 " fullscreen  {{{
 function! Fullscreen()
-		let line = line(".")+0
-		tabedit %
-		call cursor(line,0 )
+        let line = line(".")+0
+        tabedit %
+        call cursor(line,0 )
 endfunction
 
 function! Minimze()
-		let line = line(".")+0
-		tabclose
-		call cursor(line,0 )
+        let line = line(".")+0
+        tabclose
+        call cursor(line,0 )
 endfunction
 " }}}
 " tabs shortcuts
@@ -222,39 +232,41 @@ command! Wa wa
 "{{{
 " tag-bar css stuff  " {{{
 let g:tagbar_type_css = {
-						\  'ctagstype' : 'css',
-						\  'kinds' : [
-						\    'v:variables',
-						\    'c:classes',
-						\    'i:identities',
-						\    't:tags',
-						\    'm:medias'
-						\  ]
-						\}
+                        \  'ctagstype' : 'css',
+                        \  'kinds' : [
+                        \    'v:variables',
+                        \    'c:classes',
+                        \    'i:identities',
+                        \    't:tags',
+                        \    'm:medias'
+                        \  ]
+                        \}
 
 let g:tagbar_type_less = {
-						\  'ctagstype' : 'css',
-						\  'kinds' : [
-						\    'v:variables',
-						\    'c:classes',
-						\    'i:identities',
-						\    't:tags',
-						\    'm:medias'
-						\  ]
-						\}
+                        \  'ctagstype' : 'css',
+                        \  'kinds' : [
+                        \    'v:variables',
+                        \    'c:classes',
+                        \    'i:identities',
+                        \    't:tags',
+                        \    'm:medias'
+                        \  ]
+                        \}
 
 let g:tagbar_type_scss = {
-						\  'ctagstype' : 'css',
-						\  'kinds' : [
-						\    'v:variables',
-						\    'c:classes',
-						\    'i:identities',
-						\    't:tags',
-						\    'm:medias'
-						\  ]
-						\}
+                        \  'ctagstype' : 'css',
+                        \  'kinds' : [
+                        \    'v:variables',
+                        \    'c:classes',
+                        \    'i:identities',
+                        \    't:tags',
+                        \    'm:medias'
+                        \  ]
+                        \}
 "}}}
 " neocopmlete  {{{
+let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
+let g:neocomplete#data_directory = "$HOME/.vim/tmp/"
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
@@ -267,14 +279,14 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+                        \ 'default' : '',
+                        \ 'vimshell' : $HOME.'/.vimshell_hist',
+                        \ 'scheme' : $HOME.'/.gosh_completions'
+                        \ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+        let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
@@ -286,9 +298,9 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+        return neocomplete#close_popup() . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -305,32 +317,32 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " mardkdown tagbar support
 let g:tagbar_type_markdown = {
-						\ 'ctagstype' : 'markdown',
-						\ 'kinds' : [
-						\ 'h:headings',
-						\ 'l:links',
-						\ 'i:images'
-						\ ],
-						\ "sort" : 0
-						\ }
+                        \ 'ctagstype' : 'markdown',
+                        \ 'kinds' : [
+                        \ 'h:headings',
+                        \ 'l:links',
+                        \ 'i:images'
+                        \ ],
+                        \ "sort" : 0
+                        \ }
 "}}}
 " neocoomplete snippts {{{
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
+                        \ "\<Plug>(neosnippet_expand_or_jump)"
+                        \: pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
+                        \ "\<Plug>(neosnippet_expand_or_jump)"
+                        \: "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
-  set conceallevel=2 concealcursor=i
+        set conceallevel=2 concealcursor=i
 endif
 " }}}
 " airline {{{
 "enable better tab
-let g:airline_theme="powerlineish"
+let g:airline_theme="base16"
 let g:airline#extensions#tabline#enabled = 1
 " use nice powerline line theme 
 let g:AirlineTheme="powerlineish"
@@ -420,32 +432,32 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 let g:go_fmt_command = "goimports"
 " tabar tags
 let g:tagbar_type_go = {
-						\ 'ctagstype' : 'go',
-						\ 'kinds'     : [
-						\ 'p:package',
-						\ 'i:imports:1',
-						\ 'c:constants',
-						\ 'v:variables',
-						\ 't:types',
-						\ 'n:interfaces',
-						\ 'w:fields',
-						\ 'e:embedded',
-						\ 'm:methods',
-						\ 'r:constructor',
-						\ 'f:functions'
-						\ ],
-						\ 'sro' : '.',
-						\ 'kind2scope' : {
-						\ 't' : 'ctype',
-						\ 'n' : 'ntype'
-						\ },
-						\ 'scope2kind' : {
-						\ 'ctype' : 't',
-						\ 'ntype' : 'n'
-						\ },
-						\ 'ctagsbin'  : 'gotags',
-						\ 'ctagsargs' : '-sort -silent'
-						\ }
+                        \ 'ctagstype' : 'go',
+                        \ 'kinds'     : [
+                        \ 'p:package',
+                        \ 'i:imports:1',
+                        \ 'c:constants',
+                        \ 'v:variables',
+                        \ 't:types',
+                        \ 'n:interfaces',
+                        \ 'w:fields',
+                        \ 'e:embedded',
+                        \ 'm:methods',
+                        \ 'r:constructor',
+                        \ 'f:functions'
+                        \ ],
+                        \ 'sro' : '.',
+                        \ 'kind2scope' : {
+                        \ 't' : 'ctype',
+                        \ 'n' : 'ntype'
+                        \ },
+                        \ 'scope2kind' : {
+                        \ 'ctype' : 't',
+                        \ 'ntype' : 'n'
+                        \ },
+                        \ 'ctagsbin'  : 'gotags',
+                        \ 'ctagsargs' : '-sort -silent'
+                        \ }
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " easymotion
