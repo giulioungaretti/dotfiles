@@ -1,25 +1,31 @@
-# giulio conf 2014-04-26
-set $mod Mod1
- #super key for synergy
+# giulio capconf 2014-04-26
+set $mod Mod4
+focus_follows_mouse no
 font pango:Pragmata Pro 10
-#add the colors
+#wallpaper black solid color
+exec --no-startup-id xsetroot -solid "#181818"
+exec --no-startup-id unity-settings-daemon
+# new window default border
+# new_window 1pixel
+new_window pixel 1
+# new_float 1pixel
+new_float pixel 1
 # colors
-
-# class                 border  backgr.    text
+# class border backgr. text indicator
 ## LIME GREEN ACTIVE BORDER
-client.focused                  #9fbc00 #9fbc00  #111111
+#client.focused                  #9fbc00 #9fbc00  #111111
 ## BLUE ACTIVE BORDER
 #client.focused                 #2b6cc4 #2b6cc4  #111111
 ## RED ACTIVE BORDER
 #client.focused                 #bf3f34 #bf3f34  #111111
 ## LIGHTER RED ACTIVE BORDER
-#client.focused                 #cc5555 #cc5555  #111111
-client.unfocused                        #444444 #444444  #315858
-client.focused_inactive        #444444 #444444  #2c2c2f
-client.urgent                   #383a3b #383a3b  #ee0000
+client.focused                 #AB4642 #AB4642  #111111
+client.focused_inactive #282828 #686868 #585858 #181818
+client.unfocused #282828 #181818 #585858 #181818
+client.urgent #ab4642 #ab4642 #d8d8d8 #ab4642:
 # CHANGING BORDER STYLE
 bindsym $mod+t border normal
-bindsym $mod+y border 1pixel
+bindsym $mod+y border pixel 2
 bindsym $mod+u border none
 
 # BORDERLESS CONTAINER
@@ -29,13 +35,7 @@ bindsym $mod+u border none
 for_window [window_role="pop-up"] floating enable,move absolute center
 for_window [class='Wine' instance='TeamViewer.exe'] floating enable absolute center
 for_window [title="TeamViewer"] floating enable
-# new window default border
-#new_window 1pixel
-new_window pixel 2
-#new_float 1pixel
-new_float pixel 2
-##################################
-######binds and shortuchts
+# binds and shortuchts
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -44,6 +44,7 @@ bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+q kill
+
 #tab switching
 bindsym $MOD+Tab focus right
 
@@ -89,33 +90,29 @@ bindsym $mod+o split v
 bindsym $mod+v split h
 # switch to workspace
 
-bindsym $mod+1 workspace 1 www
-bindsym $mod+2 workspace 2 code
-bindsym $mod+3 workspace 3 ipython
-bindsym $mod+4 workspace 4 configs
-bindsym $mod+5 workspace 5 files
-bindsym $mod+6 workspace 6 mail
-bindsym $mod+7 workspace 7 tmvr
-bindsym $mod+8 workspace 8 matlab
-bindsym $mod+9 workspace 9 mathematica
+bindsym $mod+1 workspace 1 
+bindsym $mod+2 workspace 2 
+bindsym $mod+3 workspace 3 
+bindsym $mod+4 workspace 4 
+bindsym $mod+5 workspace 5 
+bindsym $mod+6 workspace 6 
+bindsym $mod+7 workspace 7 
+bindsym $mod+8 workspace 8 
+bindsym $mod+9 workspace 9 
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1 www
-bindsym $mod+Shift+2 move container to workspace 2 code
-bindsym $mod+Shift+3 move container to workspace 3 ipython
-bindsym $mod+Shift+4 move container to workspace 4 config
-bindsym $mod+Shift+5 move container to workspace 5 files
-bindsym $mod+Shift+6 move container to workspace 6 mail
-bindsym $mod+Shift+7 move container to workspace 7 tmvr
-bindsym $mod+Shift+8 move container to workspace 8 matlab
-bindsym $mod+Shift+9 move container to workspace 9 mathematica
+bindsym $mod+Shift+1 move container to workspace 1 
+bindsym $mod+Shift+2 move container to workspace 2 
+bindsym $mod+Shift+3 move container to workspace 3 
+bindsym $mod+Shift+4 move container to workspace 4 
+bindsym $mod+Shift+5 move container to workspace 5 
+bindsym $mod+Shift+6 move container to workspace 6 
+bindsym $mod+Shift+7 move container to workspace 7 
+bindsym $mod+Shift+8 move container to workspace 8 
+bindsym $mod+Shift+9 move container to workspace 9 
 bindsym $mod+Shift+0 move container to workspace 10
-assign [class="Firefox"] 1 www
-assign [class="Geary"] 6 mail
-assign [class="Thunar"] 5 files
-assign [class="Matlab"] 8 matlab
-# reload the configuration file
+#²³½¾{[]} reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
@@ -124,73 +121,63 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+# These bindings trigger as soon as you enter the resize mode
 
         bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-	# arrow keys #
-	# bindsym 113 right
+                bindsym j resize grow height 10 px or 10 ppt
+                bindsym k resize shrink height 10 px or 10 ppt
+                bindsym l resize grow width 10 px or 10 ppt
+# arrow keys #
+# bindsym 113 right
 #        bindsym 116 up
 #        bindsym 111 left
 #        bindsym 114 down
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+# back to normal: Enter or Escape
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
-bindsym $mod+Control+l exec i3lock -i ~/Dropbox/Pictures/Wallpapers/pix_scaled.png -p default -n
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-
 #bar {
-        #status_command $HOME/.i3/conky-i3bar
-        #tray_output none
-        #position top
-        #mode dock
-	#font pango:Ubuntu Mono 10
+#status_command $HOME/.i3/conky-i3bar
+#tray_output none
+#position top
+#mode dock
+#font pango:Ubuntu Mono 10
 #colors {
-        #statusline      #999999
-        #background      #252525
+#statusline      #999999
+#background      #252525
 ## class                         border          backgrd         text
-        #focused_workspace  #292929              #292929         #cccccc
-        #active_workspace   #252525              #252525         #696f89
-        #inactive_workspace #252525              #252525         #6b6b6b
-        #urgent_workspace   #252525              #252525         #c7a551
-   #}
+#focused_workspace  #292929              #292929         #cccccc
+#active_workspace   #252525              #252525         #696f89
+#inactive_workspace #252525              #252525         #6b6b6b
+#urgent_workspace   #252525              #252525         #c7a551
+#}
 #}
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        #status_command i3status
-	status_command  ~/.i3/conky-i3bar
-        #status_command python ~/i3pythonbar.py
-        font pango:Ubuntu Mono 10 9
-        position top
-   	mode dock
-	tray_output       none
-
- colors {
-        background #181512
-        statusline #8c644c
-        separator #666666
-
-        focused_workspace  #181512 #900000 #ffffff
-        active_workspace   #181512 #181512 #bec17e
-        inactive_workspace #181512 #181512 #332d29
-        urgent_workspace   #2f343a #900000 #ffffff
-	}
+        status_command i3status
+#status_command  ~/.i3/conky-i3bar
+#status_command python ~/i3pythonbar.py
+                font pango:Ubuntu Mono 10 9
+                position top
+                mode dock
+                colors {
+                        background #181818
+                                statusline #b8b8b8
+                                separator #585838
+                                focused_workspace  #181818 #AB4642 #ffffff
+                                active_workspace   #181818 #181818 #bec17e
+                                inactive_workspace #181818 #181818 #b8b8b8
+                                urgent_workspace   #2f343a #BA8BAf  #ffffff
+                }
 }
-#load the gtk stuff from unity
-exec_always --no-startup-id ~/.start_synergy.sh
-exec --no-startup-id unity-settings-daemon
-exec --no-startup-id dropbox start
-exec --no-startup-id nitrogen --restore
-exec_always --no-startup-id geary
-exec --no-startup-id thunar
-exec --no-startup-id teamviewer
-exec firefox
-
+set $sink alsa_output.pci-0000_00_1b.0.analog-stereo
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute $sink 0; pactl set-sink-volume $sink +2% "
+bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-mute $sink 0; pactl set-sink-volume $sink -- -2% "
+bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute $sink toggle "
