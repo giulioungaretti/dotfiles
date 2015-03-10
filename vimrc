@@ -146,7 +146,7 @@ set noswapfile
 if $TMUX == ''
         set clipboard=unnamed
 endif
-set clipboard=unnamed
+set clipboard=unnamedplus
 " tab is 4 spaces
 set tabstop=4
 " always uses spaces instead of tab characters
@@ -400,6 +400,14 @@ let javascript_enable_domhtmlcss=1
 let b:javascript_fold=1
 " zen mode with Goyo
 nnoremap <silent><Leader>f :Goyo <CR>
+" make contrlp faster
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ -g ""'
 " }}}
 """""""""""""""""""""""""""""""""""""""
 " go
