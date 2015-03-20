@@ -49,7 +49,6 @@ Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
 " colorize css hexcodes
 Plugin 'ap/vim-css-color'
-"
 " ptyhon pep8
 Plugin 'scrooloose/syntastic'
 " window managment
@@ -146,7 +145,7 @@ set noswapfile
 if $TMUX == ''
         set clipboard=unnamed
 endif
-set clipboard=unnamedplus
+set clipboard=unnamed
 " tab is 4 spaces
 set tabstop=4
 " always uses spaces instead of tab characters
@@ -298,14 +297,12 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-        return neocomplete#close_popup() . "\<CR>"
-        " For no inserting <CR> key.
-        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+        return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-g>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
