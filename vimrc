@@ -102,7 +102,7 @@ filetype plugin indent on    " required
 " Visual
 """""""""""""""""""""""""""""""""""""""
 "{{{
-"  kill hte mouse:w
+"  kill hte mouse
 if has("gui_running")
         set mouse=a
 else
@@ -122,6 +122,8 @@ set fillchars=""
 set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
+" redraw only when we need to 
+set lazyredraw
 "256 color base 16 theme
 let base16colorspace=256
 let &t_Co=256
@@ -158,11 +160,11 @@ set modelines=1
 autocmd BufRead,BufNew *.md set filetype=markdown
 " highlight as you type
 set incsearch
+set showmatch           " highlight matching [{()}]
 " smart case when searching
 set smartcase
 "folding {{{
 set foldenable  " enable folding
-set foldlevelstart=10 " open most folds by default
 set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=syntax " fold based on indent level
 "reload on save
