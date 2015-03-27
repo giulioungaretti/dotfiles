@@ -13,9 +13,10 @@ call vundle#begin()
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
-Plugin  'superbrothers/vim-vimperator'
+
+Plugin 'superbrothers/vim-vimperator'
 " vim - evernote client
-Plugin 'neilagabriel/vim-geeknote' 
+Plugin 'neilagabriel/vim-geeknote'
 " easymotions
 Plugin 'Lokaltog/vim-easymotion'
 " instant markdown needs extra installs
@@ -93,7 +94,7 @@ Plugin 'fatih/vim-go'
 " zen writing
 Plugin 'junegunn/goyo.vim'
 " highlighcolors
-Plugin 'chrisbra/Colorizer' 
+Plugin 'chrisbra/Colorizer'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -115,19 +116,19 @@ set cursorline
 " set 79 long ruler
 au FileType python  set colorcolumn=79
 " turn on linenumbers, and make them relative except current line
-set number          
+set number
 "remove ugly ass  split separator
 set fillchars=""
 "show bar
 set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
-" redraw only when we need to 
+" redraw only when we need to
 set lazyredraw
 "256 color base 16 theme
 let base16colorspace=256
 let &t_Co=256
-colorscheme base16-default 
+colorscheme base16-monokai
 set mousehide "Hide when characters are typed
 "}}}
 """""""""""""""""""""""""""""""""""""""
@@ -227,10 +228,8 @@ command! Qa qa
 command! Wa wa
 "}}}
 """""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""
 "  Plug ins
 """""""""""""""""""""""""""""""""""""""
-"{{{
 " tag-bar css stuff  " {{{
 let g:tagbar_type_css = {
                         \  'ctagstype' : 'css',
@@ -264,56 +263,6 @@ let g:tagbar_type_scss = {
                         \    'm:medias'
                         \  ]
                         \}
-"}}}
-" neocopmlete  {{{
-let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
-let g:neocomplete#data_directory = "$HOME/.vim/tmp/"
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-                        \ 'default' : '',
-                        \ 'vimshell' : $HOME.'/.vimshell_hist',
-                        \ 'scheme' : $HOME.'/.gosh_completions'
-                        \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-        return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-g>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " mardkdown tagbar support
 let g:tagbar_type_markdown = {
                         \ 'ctagstype' : 'markdown',
@@ -325,38 +274,28 @@ let g:tagbar_type_markdown = {
                         \ "sort" : 0
                         \ }
 "}}}
-" neocoomplete snippts {{{
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-                        \ "\<Plug>(neosnippet_expand_or_jump)"
-                        \: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-                        \ "\<Plug>(neosnippet_expand_or_jump)"
-                        \: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-        set conceallevel=2 concealcursor=i
-endif
-" }}}
+"{{{
 " airline {{{
 "enable better tab
 let g:airline_theme="base16"
 let g:airline#extensions#tabline#enabled = 1
-" use nice powerline line theme 
-let g:AirlineTheme="powerlineish"
-" use simple separators 
+" use nice powerline line theme
+"let g:AirlineTheme="powerlineish"
+" use simple separators
 let g:airline_left_alt_sep = '|'
 let g:airline_right_alt_sep = '|'''
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 "}}}
+" syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_python_exec = 'python3'
+
 " Enables HTML/CSS syntax highlighting in your JavaScript file.
 let g:javascript_enable_domhtmlcss = 1
-" map nerd tree to leader n
-map <silent><leader>n :NERDTreeFocus<CR>
-" remap jedi usage to leader u
-let g:jedi#usages_command = "<leader>u"
 nnoremap <F5> :GundoToggle<CR>
 " gutter & fugitive git bindings {{{
 " open diff
@@ -401,12 +340,12 @@ let b:javascript_fold=1
 nnoremap <silent><Leader>f :Goyo <CR>
 " make contrlp faster
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore .DS_Store
-      \ --ignore "**/*.pyc"
-      \ -g ""'
+                        \ --ignore .git
+                        \ --ignore .svn
+                        \ --ignore .hg
+                        \ --ignore .DS_Store
+                        \ --ignore "**/*.pyc"
+                        \ -g ""'
 " }}}
 """""""""""""""""""""""""""""""""""""""
 " go
@@ -414,15 +353,17 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 "{{{
 "fold by sytax and style
 "
+" auto show type info for world under cursor
+let g:go_auto_type_info = 0
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-au FileType go  set foldmethod=syntax foldnestmax=10 nofoldenable foldlevel=0
+au FileType go  set foldmethod=syntax foldnestmax=10 foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
 au FileType go nmap <Leader>i <Plug>(go-info)
 "Open the relevant Godoc for the word under the cursor with <leader>gd or open it vertically with <leader>gv
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gd <Plug>(go-doc)<cr><C-w>k<cr>
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)<cr><C-w>h<cr>
 "Or open the Godoc in browser
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
@@ -467,6 +408,35 @@ let g:tagbar_type_go = {
                         \ }
 "}}}
 """""""""""""""""""""""""""""""""""""""
+" python
+"""""""""""""""""""""""""""""""""""""""
+"{{{
+"let g:neocomplete#force_overwrite_completefunc=1
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns={}
+endif
+" overwrite omnifunc  with jedi
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:neocomplete#force_omni_input_patterns.python =
+                        \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+" alternative pattern: '\h\w*\|[^. \t]\.\w*'
+" alternative pattern: '\h\w*\|[^. \t]\.\w*'
+" remap jedi usage to leader u
+" map leaderu u to usage
+let g:jedi#usages_command = "<leader>u"
+"The call signatures can be displayed as a pop-up in the buffer (set to 1, the default), which has the advantage of being easier to refer to, or in Vim's command line aligned with the function call (set to 2), which can improve the integrity of Vim's undo history.   "
+let g:jedi#show_call_signatures = "1"
+let g:jedi#use_splits_not_buffers = "left"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
+"}}}
+"""""""""""""""""""""""""""""""""""""""
 " easymotion
 """""""""""""""""""""""""""""""""""""""
 "{{{
@@ -496,7 +466,80 @@ hi link EasyMotionShade  Comment
 hi link EasyMotionTarget2First MatchParen
 hi link EasyMotionTarget2Second MatchParen
 " }}}
-" NerdTree {{{
+"""""""""""""""""""""""""""""""""""""""
+" neocopmlete
+"""""""""""""""""""""""""""""""""""""""
+"{{{
+let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
+let g:neocomplete#data_directory = "$HOME/.vim/tmp/"
+let g:neocomplete#disable_auto_complete=1
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete()
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+                        \ 'default' : '',
+                        \ 'vimshell' : $HOME.'/.vimshell_hist',
+                        \ 'scheme' : $HOME.'/.gosh_completions'
+                        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+        return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-g>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType go setlocal omnifunc=gocomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" neocoomplete snippts {{{
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                        \ "\<Plug>(neosnippet_expand_or_jump)"
+                        \: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                        \ "\<Plug>(neosnippet_expand_or_jump)"
+                        \: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+        set conceallevel=2 concealcursor=i
+endif
+" }}}
+" }}}
+"""""""""""""""""""""""""""""""""""""""
+" NerdTree
+"""""""""""""""""""""""""""""""""""""""
+" {{{
+" map nerd tree to leader n
+map <silent><leader>n :NERDTreeFocus<CR>
 map <C-e> <plug>NERDTreeTabsToggle<CR>
 nmap <leader>nt :NERDTreeFind<CR>
 let NERDTreeShowBookmarks=1
