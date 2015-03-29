@@ -13,14 +13,13 @@ call vundle#begin()
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
-
+" open gvim from firefox
 Plugin 'superbrothers/vim-vimperator'
 " vim - evernote client
 Plugin 'neilagabriel/vim-geeknote'
 " easymotions
 Plugin 'Lokaltog/vim-easymotion'
 " instant markdown needs extra installs
-" http://vimawesome.com/plugin/vim-instant-markdown
 Plugin 'terryma/vim-instant-markdown'
 " expand selection to region
 Plugin 'terryma/vim-expand-region'
@@ -32,17 +31,17 @@ Plugin 'gregsexton/Vomodoro'
 Plugin 'godlygeek/tabular'
 " markdown plugin
 Plugin 'plasticboy/vim-markdown'
-"" let Vundle manage Vundle, required
+" let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-"" eyecany bar
+" eyecany bar
 Plugin 'bling/vim-airline'
 " makes iterm2 tmux and vim have sex
 Plugin 'sjl/vitality.vim'
-"" execute file
+" execute file
 :Plugin 'Bexec'
-"" send line to tmux
+" send line to tmux
 Plugin 'jpalardy/vim-slime'
-"" auto-format code
+" auto-format code
 Plugin 'Chiel92/vim-autoformat'
 " emmet
 Plugin 'mattn/emmet-vim'
@@ -60,33 +59,35 @@ Plugin 'sjl/gundo.vim'
 Plugin 'bronson/vim-trailing-whitespace'
 " tmux seamless movement
 Plugin 'christoomey/vim-tmux-navigator'
-""indent highlight
+"indent highlight
 Plugin 'Yggdroot/indentLine'
 ""autoclose
 Plugin 'Townk/vim-autoclose'
-"" sublime like mutiple cursors
+" sublime like mutiple cursors
 Plugin 'terryma/vim-multiple-cursors'
-"" add git gutter
+" add git gutter
 Plugin 'airblade/vim-gitgutter'
-"" tree bar
+" tree bar
 Plugin 'scrooloose/nerdtree'
-"" cntrl p
+" cntrl p
 Plugin 'kien/ctrlp.vim'
-"" nerd commenter
+" nerd commenter
 Plugin 'scrooloose/nerdcommenter'
 " fuGITve
 Plugin 'tpope/vim-fugitive'
 "tasklist leader-t
 Plugin 'TaskList.vim'
-"" new command ds, cs, and yss i
+" new command ds, cs, and yss i
 Plugin 'tpope/vim-surround'
-"" structure of  file
+" structure of  file
 Plugin 'majutsushi/tagbar'
-"" add :Gist command
+" add :Gist command
 Plugin 'mattn/gist-vim'
+" required
 Plugin 'mattn/webapi-vim'
 " colorscheme
 Plugin 'chriskempson/base16-vim'
+Plugin  'altercation/vim-colors-solarized'
 " jedi for ptyhon
 Plugin 'davidhalter/jedi-vim'
 " go integration
@@ -95,6 +96,8 @@ Plugin 'fatih/vim-go'
 Plugin 'junegunn/goyo.vim'
 " highlighcolors
 Plugin 'chrisbra/Colorizer'
+" use silver searcher
+Plugin 'rking/ag.vim'"
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -103,7 +106,7 @@ filetype plugin indent on    " required
 " Visual
 """""""""""""""""""""""""""""""""""""""
 "{{{
-"  kill hte mouse
+"  kill the mouse forever
 if has("gui_running")
         set mouse=a
 else
@@ -117,6 +120,7 @@ set cursorline
 set number
 "remove ugly ass  split separator
 set fillchars=""
+" nuke split background
 "show bar
 set laststatus=2
 " visual autocomplete for command menu
@@ -124,11 +128,13 @@ set wildmenu
 " redraw only when we need to
 set lazyredraw
 "256 color base 16 theme
-let base16colorspace=256
 let &t_Co=256
+let base16colorspace=256
+"hi Visual cterm=reverse
+set background=light
 colorscheme base16-solarized
+hi! VertSplit  ctermfg=9 ctermbg=21
 set mousehide "Hide when characters are typed
-hi Visual cterm=reverse
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " Settings
@@ -198,8 +204,21 @@ nnoremap <silent><C-W>c :call Minimze() <CR>
 inoremap jj <Esc>
 " toggle relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
-map <silent><leader>bgl :set background=light<cr>
-map  <silent><leader>bgd :set background=dark<cr>
+function! Light()
+        :set background=light
+        :hi! VertSplit  ctermfg=9 ctermbg=21
+        :redraw!
+        :AirlineRefresh
+endfunction
+map <silent><leader>bgl :call Light()<cr>
+
+function! Dark()
+        :set background=dark
+        :hi! VertSplit  ctermfg=9 ctermbg=18
+        :redraw!
+        :AirlineRefresh
+endfunction
+map  <silent><leader>bgd :call Dark()<cr>
 " split right and below instead of default opposite
 set splitbelow
 set splitright
@@ -216,6 +235,15 @@ nnoremap <silent><C-W><C-a> :bprevious<CR>
 nnoremap <silent><C-W><C-q> :bd<CR>
 " close current buffer and moves back to the previous "
 nmap <leader>bq :bp <BAR> bd #<CR>
+" zen mode with Goyo
+nnoremap <silent><Leader>f :Goyo <CR>
+" open task list for todo single file
+map <leader>td <Plug>TaskList
+" open task list for todo in current folder and subfolder
+noremap <Leader>tl  :Ag TODO <CR>
+" open task list for note in current folder and subfolder
+noremap <Leader>nl :Ag NOTE <CR>
+" TODO
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " common typos
@@ -229,74 +257,27 @@ command! Wa wa
 """""""""""""""""""""""""""""""""""""""
 "  Plug ins
 """""""""""""""""""""""""""""""""""""""
-" tag-bar css stuff  " {{{
-let g:tagbar_type_css = {
-                        \  'ctagstype' : 'css',
-                        \  'kinds' : [
-                        \    'v:variables',
-                        \    'c:classes',
-                        \    'i:identities',
-                        \    't:tags',
-                        \    'm:medias'
-                        \  ]
-                        \}
-
-let g:tagbar_type_less = {
-                        \  'ctagstype' : 'css',
-                        \  'kinds' : [
-                        \    'v:variables',
-                        \    'c:classes',
-                        \    'i:identities',
-                        \    't:tags',
-                        \    'm:medias'
-                        \  ]
-                        \}
-
-let g:tagbar_type_scss = {
-                        \  'ctagstype' : 'css',
-                        \  'kinds' : [
-                        \    'v:variables',
-                        \    'c:classes',
-                        \    'i:identities',
-                        \    't:tags',
-                        \    'm:medias'
-                        \  ]
-                        \}
-" mardkdown tagbar support
-let g:tagbar_type_markdown = {
-                        \ 'ctagstype' : 'markdown',
-                        \ 'kinds' : [
-                        \ 'h:headings',
-                        \ 'l:links',
-                        \ 'i:images'
-                        \ ],
-                        \ "sort" : 0
-                        \ }
-"}}}
 "{{{
+"""""""""""""""""""""""""""""""""""""""
 " airline {{{
-"enable better tab
 let g:airline_powerline_fonts = 1
-let g:airline_theme="base16"
 let g:airline#extensions#tabline#enabled = 1
-" use nice powerline line theme
-"let g:AirlineTheme="powerlineish"
 " use simple separators
-let g:airline_left_alt_sep = '|'
-let g:airline_right_alt_sep = '|'''
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
 let g:airline_left_sep=''
 let g:airline_right_sep=''
+let g:airline_theme="base16"
 "}}}
-" syntastic
+"""""""""""""""""""""""""""""""""""""""
+" syntastic {{{
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = 'python3'
-
-" Enables HTML/CSS syntax highlighting in your JavaScript file.
-let g:javascript_enable_domhtmlcss = 1
-nnoremap <F5> :GundoToggle<CR>
+"}}}
+"""""""""""""""""""""""""""""""""""""""
 " gutter & fugitive git bindings {{{
 " open diff
 nnoremap <leader>gd :Gdiff<CR>
@@ -312,50 +293,47 @@ nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 "}}}
-" task and notes {{{
-" open task list for todo single file
-map <leader>td <Plug>TaskList
-" open task list for todo in current folder and subfolder
-noremap <Leader>tl :noautocmd vimgrep /TODO/ ./**/*.*<CR>:cw<CR>
-noremap <Leader>nl :noautocmd vimgrep /NOTE/ ./**/*.*<CR>:cw<CR>
-"}}}
+"""""""""""""""""""""""""""""""""""""""
+" misc {{{
+nnoremap <F5> :GundoToggle<CR>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
-" tagbar behavior {{{
 " tagbar autofous on open
 nmap <c-t> :TagbarToggle <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file zrder and not by alphabetical order
 let g:tagbar_sort = 0
-"}}}
+" The Silver Searcher
+if executable('ag')
+        " Use ag over grep
+        set grepprg=ag\ --nogroup\ --nocolor
+        " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+        let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+                                \ --ignore .git
+                                \ --ignore .svn
+                                \ --ignore .hg
+                                \ --ignore .DS_Store
+                                \ --ignore "**/*.pyc"
+                                \ -g ""'
+
+        " ag is fast enough that CtrlP doesn't need to cache
+        let g:ctrlp_use_caching = 0
+else
+        echoerr "consider installing ag"
+endif
 " slime configuration
 let g:slime_target = "tmux"
-"" let slime use the cpaste magic in python
-let g:slime_python_ipython = 1
-"  show nice embedded js
-let javascript_enable_domhtmlcss=1
-" allow js folding
-let b:javascript_fold=1
-" zen mode with Goyo
-nnoremap <silent><Leader>f :Goyo <CR>
-" make contrlp faster
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-                        \ --ignore .git
-                        \ --ignore .svn
-                        \ --ignore .hg
-                        \ --ignore .DS_Store
-                        \ --ignore "**/*.pyc"
-                        \ -g ""'
 " }}}
+"}}}
 """""""""""""""""""""""""""""""""""""""
 " go
 """""""""""""""""""""""""""""""""""""""
 "{{{
 "fold by sytax and style
-"
-" auto show type info for world under cursor
-let g:go_auto_type_info = 0
+" set style for go files
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+" auto show type info for world under cursor
+let g:go_auto_type_info = 1
 au FileType go  set foldmethod=syntax foldnestmax=10 foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
@@ -413,6 +391,9 @@ let g:tagbar_type_go = {
 "{{{
 " set 79 long ruler
 au FileType python  set colorcolumn=79
+" expand tab to spaces
+au FileType python  set expandtab
+au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
 "let g:neocomplete#force_overwrite_completefunc=1
 if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns={}
@@ -437,6 +418,8 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
+"" let slime use the cpaste magic in python
+let g:slime_python_ipython = 1
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " easymotion
@@ -558,4 +541,59 @@ let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 " }}}
+"""""""""""""""""""""""""""""""""""""""
+" js and csss
+"""""""""""""""""""""""""""""""""""""""
+" {{{
+" tag-bar css stuff  " {{{
+let g:tagbar_type_css = {
+                        \  'ctagstype' : 'css',
+                        \  'kinds' : [
+                        \    'v:variables',
+                        \    'c:classes',
+                        \    'i:identities',
+                        \    't:tags',
+                        \    'm:medias'
+                        \  ]
+                        \}
+
+let g:tagbar_type_less = {
+                        \  'ctagstype' : 'css',
+                        \  'kinds' : [
+                        \    'v:variables',
+                        \    'c:classes',
+                        \    'i:identities',
+                        \    't:tags',
+                        \    'm:medias'
+                        \  ]
+                        \}
+
+let g:tagbar_type_scss = {
+                        \  'ctagstype' : 'css',
+                        \  'kinds' : [
+                        \    'v:variables',
+                        \    'c:classes',
+                        \    'i:identities',
+                        \    't:tags',
+                        \    'm:medias'
+                        \  ]
+                        \}
+" mardkdown tagbar support
+let g:tagbar_type_markdown = {
+                        \ 'ctagstype' : 'markdown',
+                        \ 'kinds' : [
+                        \ 'h:headings',
+                        \ 'l:links',
+                        \ 'i:images'
+                        \ ],
+                        \ "sort" : 0
+                        \ }
+"}}}
+" Enables HTML/CSS syntax highlighting in your JavaScript file.
+let g:javascript_enable_domhtmlcss = 1
+"  show nice embedded js
+let javascript_enable_domhtmlcss=1
+" allow js folding
+let b:javascript_fold=1
+"}}}
 " vim: foldmethod=marker:foldlevel=0
