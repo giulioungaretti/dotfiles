@@ -1,4 +1,3 @@
-#
 # Sets Prezto options.
 # Giulios Macbook Air
 # 2014-08-04
@@ -29,7 +28,9 @@ zstyle ':prezto:load' pmodule \
   'git'\
   'syntax-highlighting' \
   'history-substring-search' \
-  'prompt'
+  'prompt'\
+  'Python'\
+  'homebrew'
 
 #
 # Editor
@@ -60,7 +61,7 @@ zstyle ':prezto:module:history-substring-search:color' not-found ''
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'sorin'
+zstyle ':prezto:module:prompt' theme 'pure'
 
 
 #

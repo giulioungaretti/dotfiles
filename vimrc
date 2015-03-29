@@ -113,8 +113,6 @@ endif
 syntax on
 " show curret line
 set cursorline
-" set 79 long ruler
-au FileType python  set colorcolumn=79
 " turn on linenumbers, and make them relative except current line
 set number
 "remove ugly ass  split separator
@@ -128,8 +126,9 @@ set lazyredraw
 "256 color base 16 theme
 let base16colorspace=256
 let &t_Co=256
-colorscheme base16-monokai
+colorscheme base16-solarized
 set mousehide "Hide when characters are typed
+hi Visual cterm=reverse
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " Settings
@@ -277,6 +276,7 @@ let g:tagbar_type_markdown = {
 "{{{
 " airline {{{
 "enable better tab
+let g:airline_powerline_fonts = 1
 let g:airline_theme="base16"
 let g:airline#extensions#tabline#enabled = 1
 " use nice powerline line theme
@@ -411,6 +411,8 @@ let g:tagbar_type_go = {
 " python
 """""""""""""""""""""""""""""""""""""""
 "{{{
+" set 79 long ruler
+au FileType python  set colorcolumn=79
 "let g:neocomplete#force_overwrite_completefunc=1
 if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns={}
@@ -472,8 +474,6 @@ hi link EasyMotionTarget2Second MatchParen
 "{{{
 let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
 let g:neocomplete#data_directory = "$HOME/.vim/tmp/"
-let g:neocomplete#disable_auto_complete=1
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete()
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
@@ -507,7 +507,7 @@ function! s:my_cr_function()
         return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
-"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-g>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
@@ -520,19 +520,26 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType go setlocal omnifunc=gocomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " neocoomplete snippts {{{
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 " SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+imap <expr><leader> neosnippet#expandable_or_jumpable() ?
                         \ "\<Plug>(neosnippet_expand_or_jump)"
-                        \: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                        \: pumvisible() ? "\<C-n>" : "\<leader>"
+smap <expr><leader> neosnippet#expandable_or_jumpable() ?
                         \ "\<Plug>(neosnippet_expand_or_jump)"
-                        \: "\<TAB>"
+                        \: "\<leader>"
 
 " For snippet_complete marker.
 if has('conceal')
         set conceallevel=2 concealcursor=i
 endif
 " }}}
+let g:neocomplete#disable_auto_complete=1
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete()
+let g:neocomplete#enable_auto_select = 0
 " }}}
 """""""""""""""""""""""""""""""""""""""
 " NerdTree

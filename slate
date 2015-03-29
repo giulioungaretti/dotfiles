@@ -3,4 +3,4 @@ config windowHintsShowIcons true
 config windowHintsSpread true
 #direction = right|left|up|above|down|below|behind
 # app = an app name surrounded by quotes
-bind k:ctrl:cmd focus above
+#bind k:ctrl:cmd focus above

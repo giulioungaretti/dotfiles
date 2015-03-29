@@ -4,6 +4,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi #}}}
 # Exports # {{{
 TERM=xterm-256color
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin"
+export PATH=~/anacondaold/bin:$PATH
+#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 export TERM
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -13,7 +16,7 @@ export VISUAL=vim
 export EDITOR=vim
 #}}}
 # Aliases {{{
-alias server='python -m SimpleHTTPServer'
+alias server='python -m http.server'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -93,7 +96,7 @@ zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
 # Base 16 shell {{{
-BASE16_SCHEME="default"
+BASE16_SCHEME="solarized"
 BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
 [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
 # }}}
