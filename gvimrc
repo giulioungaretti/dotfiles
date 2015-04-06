@@ -1,1 +1,1 @@
-set guifont=PragmataPro\ for\ Powerline:h12
+set guifont=Liberation\ Mono\ Powerline:h12
