@@ -1,12 +1,14 @@
 # Source Prezto. {{{
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+        source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi #}}}
 # Exports # {{{
 TERM=xterm-256color
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin"
-export PATH=~/anacondaold/bin:$PATH
-#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+#export PYTHONPATH=/usr/local/lib/python3.4/site-packages:$PYTHONPATH
+# added by Miniconda3 3.9.1 installer
+export PATH="/Users/giulio/anaconda/bin:$PATH"
 export TERM
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -34,13 +36,13 @@ alias r-x='chmod 755'
 #}}}
 # OS awareness # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-	if [ -f ~/.ubuntualias ]; then
-              source ~/.ubuntualias
-	  fi
+        if [ -f ~/.ubuntualias ]; then
+                source ~/.ubuntualias
+        fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-		if [ -f ~/.osxalias ]; then
-              source ~/.osxalias
-	  fi
+        if [ -f ~/.osxalias ]; then
+                source ~/.osxalias
+        fi
 fi
 #}}}
 # vi mode {{{
@@ -100,4 +102,16 @@ BASE16_SCHEME="solarized"
 BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
 [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
 # }}}
+# ssh wrapper for tmux{{{
+ssh() {
+        tmux rename-window "$*"
+        command ssh "$@"
+        echo "Counting to 60"
+        sleep 60 && exit
+        tmux rename-window "bash (exited ssh)"
+}
+#}}}
+# conda tab complete
+zstyle ':completion::complete:*' use-cache 1
 #vim: foldmethod=marker:foldlevel=0
+#
