@@ -9,14 +9,16 @@ call vundle#begin()
 " Plugins
 """""""""""""""""""""""""""""""""""
 " {{{
+" py-doc
+Plugin 'fs111/pydoc.vim'
 " neocompchage
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 " open gvim from firefox
 Plugin 'superbrothers/vim-vimperator'
-" vim - evernote client
-Plugin 'neilagabriel/vim-geeknote'
+" vim - evernote client not py3 compatible
+" Plugin 'neilagabriel/vim-geeknote'
 " easymotions
 Plugin 'Lokaltog/vim-easymotion'
 " instant markdown needs extra installs
@@ -40,7 +42,8 @@ Plugin 'sjl/vitality.vim'
 " execute file
 :Plugin 'Bexec'
 " send line to tmux
-Plugin 'jpalardy/vim-slime'
+"Plugin 'jpalardy/vim-slime'
+Plugin 'ervandew/screen'
 " auto-format code
 Plugin 'Chiel92/vim-autoformat'
 " emmet
@@ -54,7 +57,8 @@ Plugin 'scrooloose/syntastic'
 " window managment
 Plugin 'wesQ3/vim-windowswap'
 " undo treee
-Plugin 'sjl/gundo.vim'
+" not py3 compatible.
+" Plugin 'sjl/gundo.vim'
 " remove and highlight trailing spaces
 Plugin 'bronson/vim-trailing-whitespace'
 " tmux seamless movement
@@ -140,6 +144,8 @@ set mousehide "Hide when characters are typed
 " Settings
 """""""""""""""""""""""""""""""""""""""
 "{{{
+" bybye ex mode
+nnoremap Q <nop>
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
 set timeoutlen=1000 ttimeoutlen=0
 " use space as leader
@@ -149,11 +155,7 @@ set iskeyword-=-                    " '-' is an end of word designator
 set iskeyword-=_                    " '_' is an end of word designator
 set nobackup
 set noswapfile
-" tmux copypaste integration
-if $TMUX == ''
-        set clipboard=unnamed
-endif
-set clipboard=unnamed
+set clipboard+=unnamed
 " tab is 4 spaces
 set tabstop=4
 " always uses spaces instead of tab characters
@@ -183,6 +185,15 @@ autocmd! bufwritepost .vimrc source %
 " {{{
 " leader
 map <space> <leader>
+" Toggle paste mode.
+function! TogglePasteMode()
+        if &paste
+                set nopaste
+        else
+                set paste
+        endif
+endfunction
+nnoremap <leader><leader>p :call TogglePasteMode()<CR>
 " fullscreen  {{{
 function! Fullscreen()
         let line = line(".")+0
@@ -228,6 +239,8 @@ nnoremap <silent> z2 :set foldlevel=2<CR>
 nnoremap <silent> z3 :set foldlevel=3<CR>
 nnoremap <silent> z4 :set foldlevel=4<CR>
 nnoremap <silent> z5 :set foldlevel=5<CR>
+" turn on and off spell checking.
+map <F10> :setlocal spell! spelllang=en_us<CR>
 "buffers
 " nice maximize split and go back to normal layout
 nnoremap <silent><C-W><C-d> :bnext<CR>
@@ -243,6 +256,8 @@ map <leader>td <Plug>TaskList
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
+" delete left
+imap <C-G> <BS> 
 " TODO
 "}}}
 """""""""""""""""""""""""""""""""""""""
@@ -273,7 +288,7 @@ let g:airline_theme="base16"
 " syntastic {{{
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = 'python3'
 "}}}
@@ -299,7 +314,7 @@ nnoremap <F5> :GundoToggle<CR>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
-nmap <c-t> :TagbarToggle <CR>
+nmap <c-t> :TagbarOpen fj <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file zrder and not by alphabetical order
 let g:tagbar_sort = 0
@@ -386,42 +401,6 @@ let g:tagbar_type_go = {
                         \ }
 "}}}
 """""""""""""""""""""""""""""""""""""""
-" python
-"""""""""""""""""""""""""""""""""""""""
-"{{{
-" set 79 long ruler
-au FileType python  set colorcolumn=79
-" expand tab to spaces
-au FileType python  set expandtab
-au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
-"let g:neocomplete#force_overwrite_completefunc=1
-if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns={}
-endif
-" overwrite omnifunc  with jedi
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:neocomplete#force_omni_input_patterns.python =
-                        \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-" alternative pattern: '\h\w*\|[^. \t]\.\w*'
-" alternative pattern: '\h\w*\|[^. \t]\.\w*'
-" remap jedi usage to leader u
-" map leaderu u to usage
-let g:jedi#usages_command = "<leader>u"
-"The call signatures can be displayed as a pop-up in the buffer (set to 1, the default), which has the advantage of being easier to refer to, or in Vim's command line aligned with the function call (set to 2), which can improve the integrity of Vim's undo history.   "
-let g:jedi#show_call_signatures = "1"
-let g:jedi#use_splits_not_buffers = "left"
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "<leader>r"
-"" let slime use the cpaste magic in python
-let g:slime_python_ipython = 1
-"}}}
-"""""""""""""""""""""""""""""""""""""""
 " easymotion
 """""""""""""""""""""""""""""""""""""""
 "{{{
@@ -482,7 +461,6 @@ let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
-
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -504,25 +482,40 @@ autocmd FileType go setlocal omnifunc=gocomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " neocoomplete snippts {{{
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <CR>     <Plug>(neosnippet_expand_or_jump)
+smap <CR>     <Plug>(neosnippet_expand_or_jump)
+xmap <CR>     <Plug>(neosnippet_expand_target)
 " SuperTab like snippets behavior.
-imap <expr><leader> neosnippet#expandable_or_jumpable() ?
-                        \ "\<Plug>(neosnippet_expand_or_jump)"
-                        \: pumvisible() ? "\<C-n>" : "\<leader>"
-smap <expr><leader> neosnippet#expandable_or_jumpable() ?
-                        \ "\<Plug>(neosnippet_expand_or_jump)"
-                        \: "\<leader>"
-
+"imap <expr><leader> neosnippet#expandable_or_jumpable() ?
+                        "\ "\<Plug>(neosnippet_expand_or_jump)"
+                        "\: pumvisible() ? "\<TAB>" : "\<leader>"
+"smap <expr><leader> neosnippet#expandable_or_jumpable() ?
+                        "\ "\<Plug>(neosnippet_expand_or_jump)"
+                        "\: "\<leader>"
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
 " For snippet_complete marker.
 if has('conceal')
         set conceallevel=2 concealcursor=i
 endif
 " }}}
-let g:neocomplete#disable_auto_complete=1
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete()
+let g:neocomplete#disable_auto_complete=0
+"inoremap <expr><Tab> pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete()
 let g:neocomplete#enable_auto_select = 0
+" NOTE testing smart tab completion
+" For smart TAB completion.
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" :
+                        \ <SID>check_back_space() ? "\<TAB>" :
+                        \ neocomplete#start_manual_complete()
+function! s:check_back_space() "{{{
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1] =~ '\s'
+endfunction"}}}
 " }}}
 """""""""""""""""""""""""""""""""""""""
 " NerdTree
@@ -596,4 +589,97 @@ let javascript_enable_domhtmlcss=1
 " allow js folding
 let b:javascript_fold=1
 "}}}
+" python
+"""""""""""""""""""""""""""""""""""""""
+"{{{
+" set 79 long ruler
+au FileType python  set colorcolumn=79
+" expand tab to spaces
+au FileType python  set expandtab
+au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
+" JEDI and auto complete {{{
+let g:neocomplete#force_overwrite_completefunc=1
+if !exists('g:neocomplete#force_omni_input_patterns')
+        "let g:neocomplete#force_omni_input_patterns={}
+endif
+"overwrite omnifunc  with jedi
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+"The call signatures can be displayed as a pop-up in the buffer (set to 1, the default), which has the advantage of being easier to refer to, or in Vim's command line aligned with the function call (set to 2), which can improve the integrity of Vim's undo history.   "
+let g:jedi#usages_command = "<leader>u"
+let g:jedi#show_call_signatures = "2"
+let g:jedi#use_splits_not_buffers = "winwidth"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<leader>c"
+let g:jedi#rename_command = "<leader>r"
+"}}} 
+" ipyhont tmux integration {{{
+let g:ScreenImpl = "Tmux"
+" Open an ipython3 shell.
+autocmd FileType python map <LocalLeader>p :ScreenShell! ipython<CR>
+"autocmd FileType python map <LocalLeader>p :IPython!  <CR>
+" Close whichever shell is running.
+autocmd FileType python map <LocalLeader>q :ScreenQuit<CR>
+" Send current line to python and move to next line.
+autocmd FileType python map <LocalLeader>rp V:ScreenSend<CR>j
+" Send visual selection to python and move to next line.
+autocmd FileType python map <LocalLeader>v :ScreenSend<CR>`>0j
+" Send a carriage return line to python.
+autocmd FileType python map <LocalLeader>a :call g:ScreenShellSend("\r")<CR>
+" Clear screen.
+autocmd FileType python map <LocalLeader>L
+\ :call g:ScreenShellSend('!clear')<CR>
+" Start a time block to execute code in.
+autocmd FileType python map <LocalLeader>t
+\ :call g:ScreenShellSend('%%time')<CR>
+" Start a timeit block to execute code in.
+autocmd FileType python map <LocalLeader>tt
+\ :call g:ScreenShellSend('%%timeit')<CR>
+" Start a debugger repl to execute code in.
+autocmd FileType python map <LocalLeader>db
+\ :call g:ScreenShellSend('%%debug')<CR>
+" Start a profiling block to execute code in.
+autocmd FileType python map <LocalLeader>pr
+\ :call g:ScreenShellSend('%%prun')<CR>
+" Print the current working directory.
+autocmd FileType python map <LocalLeader>gw
+\ :call g:ScreenShellSend('!pwd')<CR>
+" Set working directory to current file's folder.
+function SetWD()
+let wd = '!cd ' . expand('%:p:h')
+:call g:ScreenShellSend(wd)
+endfunction
+autocmd FileType python map <LocalLeader>sw :call SetWD()<CR>
+" Get ipython help for word under cursor. Complement it with Shift + K.
+function GetHelp()
+let w = expand("<cword>") . "??"
+:call g:ScreenShellSend(w)
+endfunction
+autocmd FileType python map <LocalLeader>h :call GetHelp()<CR>
+" Get `dir` help for word under cursor.
+function GetDir()
+let w = "dir(" . expand("<cword>") . ")"
+:call g:ScreenShellSend(w)
+endfunction
+autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
+" Get `dir` help for word under cursor.
+function GetLen()
+let w = "len(" . expand("<cword>") . ")"
+:call g:ScreenShellSend(w)
+endfunction
+autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
+"}}}
+" py-doc bindings
+let g:pydoc_open_cmd = 'vsplit' 
+let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc' 
+"}}}
+"""""""""""""""""""""""""""""""""""""""
 " vim: foldmethod=marker:foldlevel=0
