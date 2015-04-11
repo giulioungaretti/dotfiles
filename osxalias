@@ -1,15 +1,22 @@
-export PATH="$HOME/.tmuxifier/bin:$PATH"
 eval "$(tmuxifier init -)"
+# Aliases {{{
 alias vim="reattach-to-user-namespace vim"
 alias start='tmuxifier load-session my-awesome-session'
 alias ghub="mosh giulio@188.166.36.190-- screen -dr"
-# export go path variables
+#}}}
+# exports {{{
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+export PATH="/Users/giulio/anaconda/bin:$PATH"
+#  go path variables{{{
 export GOPATH=$HOME/Hack/go
 # add go executables to path
 export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$HOME/bin
+export GOROOT=/usr/local/go/
+export PATH=$PATH:/usr/local/go/bin
+#}}}
+#}}}
 
-
+#{{{
 function pomodoro {
   case $1 in
     start )
@@ -21,3 +28,6 @@ function pomodoro {
       ;;
   esac
 }
+#}}}
+
+# vim: foldmethod=marker:foldlevel=0: filetype=zsh

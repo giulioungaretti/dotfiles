@@ -9,6 +9,8 @@ call vundle#begin()
 " Plugins
 """""""""""""""""""""""""""""""""""
 " {{{
+" dahs integration
+Plugin 'rizzatti/dash.vim'
 " py-doc
 Plugin 'fs111/pydoc.vim'
 " neocompchage
@@ -136,7 +138,7 @@ let &t_Co=256
 let base16colorspace=256
 "hi Visual cterm=reverse
 set background=light
-colorscheme base16-solarized
+colorscheme base16-chalk
 hi! VertSplit  ctermfg=9 ctermbg=21
 set mousehide "Hide when characters are typed
 "}}}
@@ -144,6 +146,7 @@ set mousehide "Hide when characters are typed
 " Settings
 """""""""""""""""""""""""""""""""""""""
 "{{{
+set shell=/bin/sh
 " bybye ex mode
 nnoremap Q <nop>
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
@@ -193,6 +196,9 @@ function! TogglePasteMode()
                 set paste
         endif
 endfunction
+" move to right 
+inoremap ll  <Esc>la
+snoremap ll  <Esc>la
 nnoremap <leader><leader>p :call TogglePasteMode()<CR>
 " fullscreen  {{{
 function! Fullscreen()
@@ -207,6 +213,9 @@ function! Minimze()
         call cursor(line,0 )
 endfunction
 " }}}
+" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 " tabs shortcuts
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
@@ -257,8 +266,10 @@ noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
 " delete left
-imap <C-G> <BS> 
-" TODO
+imap <C-G> <BS>
+" move search highlight to the center of the screen
+nnoremap n nzz
+nnoremap N Nzz
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " common typos
@@ -310,7 +321,10 @@ let g:gitgutter_eager = 0
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " misc {{{
-nnoremap <F5> :GundoToggle<CR>
+" press esc to go back to normal mode instead of quitting multi cursor
+let g:multi_cursor_exit_from_insert_mode=0
+"autoformat code with F6
+noremap <F5> :FixWhitespace <CR><CR>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
@@ -347,9 +361,7 @@ let g:slime_target = "tmux"
 "fold by sytax and style
 " set style for go files
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-" auto show type info for world under cursor
-let g:go_auto_type_info = 1
-au FileType go  set foldmethod=syntax foldnestmax=10 foldlevel=0
+au FileType go  set foldmethod=syntax foldnestmax=10 foldlevel=3
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -362,6 +374,7 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 "By default the mapping gd is enabled which opens the target identifier in current buffer. You can also open the definition/declaration in a new vertical, horizontal or tab for the word under your cursor:
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
@@ -480,19 +493,12 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType go setlocal omnifunc=gocomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+"---------------------------
 " neocoomplete snippts {{{
 " Plugin key-mappings.
-imap <CR>     <Plug>(neosnippet_expand_or_jump)
-smap <CR>     <Plug>(neosnippet_expand_or_jump)
-xmap <CR>     <Plug>(neosnippet_expand_target)
-" SuperTab like snippets behavior.
-"imap <expr><leader> neosnippet#expandable_or_jumpable() ?
-                        "\ "\<Plug>(neosnippet_expand_or_jump)"
-                        "\: pumvisible() ? "\<TAB>" : "\<leader>"
-"smap <expr><leader> neosnippet#expandable_or_jumpable() ?
-                        "\ "\<Plug>(neosnippet_expand_or_jump)"
-                        "\: "\<leader>"
-" SuperTab like snippets behavior.
+imap <TAB>     <Plug>(neosnippet_expand_or_jump)
+smap <TAB>     <Plug>(neosnippet_expand_or_jump)
+xmap <TAB>     <Plug>(neosnippet_expand_target)
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)"
 \: pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -505,17 +511,9 @@ if has('conceal')
 endif
 " }}}
 let g:neocomplete#disable_auto_complete=0
-"inoremap <expr><Tab> pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete()
 let g:neocomplete#enable_auto_select = 0
-" NOTE testing smart tab completion
-" For smart TAB completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" :
-                        \ <SID>check_back_space() ? "\<TAB>" :
-                        \ neocomplete#start_manual_complete()
-function! s:check_back_space() "{{{
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1] =~ '\s'
-endfunction"}}}
+"" fix go ? seems to
+let g:neocomplete#sources#omni#functions = {'go': 'go#complete#Complete'}
 " }}}
 """""""""""""""""""""""""""""""""""""""
 " NerdTree
@@ -620,7 +618,7 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<leader>c"
 let g:jedi#rename_command = "<leader>r"
-"}}} 
+"}}}
 " ipyhont tmux integration {{{
 let g:ScreenImpl = "Tmux"
 " Open an ipython3 shell.
@@ -678,8 +676,8 @@ endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 "}}}
 " py-doc bindings
-let g:pydoc_open_cmd = 'vsplit' 
-let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc' 
+let g:pydoc_open_cmd = 'vsplit'
+let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc'
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " vim: foldmethod=marker:foldlevel=0
