@@ -4,10 +4,10 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi #}}}
 # Exports # {{{
 TERM=xterm-256color
+export TERM
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin"
 #export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 #export PYTHONPATH=/usr/local/lib/python3.4/site-packages:$PYTHONPATH
-export TERM
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
