@@ -9,6 +9,8 @@ call vundle#begin()
 " Plugins
 """""""""""""""""""""""""""""""""""
 " {{{
+" undo -trees
+Plugin 'mbbill/undotree'
 " dahs integration
 Plugin 'rizzatti/dash.vim'
 " py-doc
@@ -196,7 +198,7 @@ function! TogglePasteMode()
                 set paste
         endif
 endfunction
-" move to right 
+" move to right
 inoremap ll  <Esc>la
 snoremap ll  <Esc>la
 nnoremap <leader><leader>p :call TogglePasteMode()<CR>
@@ -325,6 +327,7 @@ let g:gitgutter_eager = 0
 let g:multi_cursor_exit_from_insert_mode=0
 "autoformat code with F6
 noremap <F5> :FixWhitespace <CR><CR>
+nnoremap <F7> :UndotreeToggle<cr>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
@@ -500,11 +503,11 @@ imap <TAB>     <Plug>(neosnippet_expand_or_jump)
 smap <TAB>     <Plug>(neosnippet_expand_or_jump)
 xmap <TAB>     <Plug>(neosnippet_expand_target)
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
+                        \ "\<Plug>(neosnippet_expand_or_jump)"
+                        \: pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
+                        \ "\<Plug>(neosnippet_expand_or_jump)"
+                        \: "\<TAB>"
 " For snippet_complete marker.
 if has('conceal')
         set conceallevel=2 concealcursor=i
@@ -634,44 +637,44 @@ autocmd FileType python map <LocalLeader>v :ScreenSend<CR>`>0j
 autocmd FileType python map <LocalLeader>a :call g:ScreenShellSend("\r")<CR>
 " Clear screen.
 autocmd FileType python map <LocalLeader>L
-\ :call g:ScreenShellSend('!clear')<CR>
+                        \ :call g:ScreenShellSend('!clear')<CR>
 " Start a time block to execute code in.
 autocmd FileType python map <LocalLeader>t
-\ :call g:ScreenShellSend('%%time')<CR>
+                        \ :call g:ScreenShellSend('%%time')<CR>
 " Start a timeit block to execute code in.
 autocmd FileType python map <LocalLeader>tt
-\ :call g:ScreenShellSend('%%timeit')<CR>
+                        \ :call g:ScreenShellSend('%%timeit')<CR>
 " Start a debugger repl to execute code in.
 autocmd FileType python map <LocalLeader>db
-\ :call g:ScreenShellSend('%%debug')<CR>
+                        \ :call g:ScreenShellSend('%%debug')<CR>
 " Start a profiling block to execute code in.
 autocmd FileType python map <LocalLeader>pr
-\ :call g:ScreenShellSend('%%prun')<CR>
+                        \ :call g:ScreenShellSend('%%prun')<CR>
 " Print the current working directory.
 autocmd FileType python map <LocalLeader>gw
-\ :call g:ScreenShellSend('!pwd')<CR>
+                        \ :call g:ScreenShellSend('!pwd')<CR>
 " Set working directory to current file's folder.
 function SetWD()
-let wd = '!cd ' . expand('%:p:h')
-:call g:ScreenShellSend(wd)
+        let wd = '!cd ' . expand('%:p:h')
+        :call g:ScreenShellSend(wd)
 endfunction
 autocmd FileType python map <LocalLeader>sw :call SetWD()<CR>
 " Get ipython help for word under cursor. Complement it with Shift + K.
 function GetHelp()
-let w = expand("<cword>") . "??"
-:call g:ScreenShellSend(w)
+        let w = expand("<cword>") . "??"
+        :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>h :call GetHelp()<CR>
 " Get `dir` help for word under cursor.
 function GetDir()
-let w = "dir(" . expand("<cword>") . ")"
-:call g:ScreenShellSend(w)
+        let w = "dir(" . expand("<cword>") . ")"
+        :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
 " Get `dir` help for word under cursor.
 function GetLen()
-let w = "len(" . expand("<cword>") . ")"
-:call g:ScreenShellSend(w)
+        let w = "len(" . expand("<cword>") . ")"
+        :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 "}}}
