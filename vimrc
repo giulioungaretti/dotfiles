@@ -9,6 +9,12 @@ call vundle#begin()
 " Plugins
 """""""""""""""""""""""""""""""""""
 " {{{
+" extend vim session managment
+Plugin 'xolox/vim-session'
+" required by the above
+Plugin 'xolox/vim-misc'
+" yankring
+Plugin 'vim-scripts/YankRing.vim'
 " undo -trees
 Plugin 'mbbill/undotree'
 " dahs integration
@@ -671,10 +677,21 @@ function GetDir()
         :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
+function! s:get_visual_selection()
+endfunction
+" Get `?` help for word under cursor.
+function GetHelpMagic()
+        let foo_tmp =  GetVisual()
+        let w = "?".foo_tmp
+        :call g:ScreenShellSend(w)
+endfunction
+autocmd FileType python map <LocalLeader>dc :call GetHelpMagic()<CR>
+
 " Get `dir` help for word under cursor.
 function GetLen()
         let w = "len(" . expand("<cword>") . ")"
         :call g:ScreenShellSend(w)
+        echo  w
 endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 "}}}
@@ -682,5 +699,14 @@ autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 let g:pydoc_open_cmd = 'vsplit'
 let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc'
 "}}}
+function! GetVisual()
+        " Why is this not a built-in Vim script function?!
+        let [lnum1, col1] = getpos("'<")[1:2]
+        let [lnum2, col2] = getpos("'>")[1:2]
+        let lines = getline(lnum1, lnum2)
+        let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+        let lines[0] = lines[0][col1 - 1:]
+        return join(lines, "\n")
+endfunction
 """""""""""""""""""""""""""""""""""""""
 " vim: foldmethod=marker:foldlevel=0
