@@ -9,8 +9,9 @@ call vundle#begin()
 " Plugins
 """""""""""""""""""""""""""""""""""
 " {{{
-" extend vim session managment
-Plugin 'xolox/vim-session'
+"
+Plugin 'tpope/vim-obsession.git'
+Plugin 'dhruvasagar/vim-prosession'
 " required by the above
 Plugin 'xolox/vim-misc'
 " yankring
@@ -699,6 +700,8 @@ autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 let g:pydoc_open_cmd = 'vsplit'
 let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc'
 "}}}
+" {{{ misc functinons
+" gets the selected text in visual mode
 function! GetVisual()
         " Why is this not a built-in Vim script function?!
         let [lnum1, col1] = getpos("'<")[1:2]
@@ -708,5 +711,6 @@ function! GetVisual()
         let lines[0] = lines[0][col1 - 1:]
         return join(lines, "\n")
 endfunction
+"}}}
 """""""""""""""""""""""""""""""""""""""
 " vim: foldmethod=marker:foldlevel=0
