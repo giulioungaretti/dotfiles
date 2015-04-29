@@ -12,8 +12,6 @@ call vundle#begin()
 "
 Plugin 'tpope/vim-obsession.git'
 Plugin 'dhruvasagar/vim-prosession'
-" required by the above
-Plugin 'xolox/vim-misc'
 " yankring
 Plugin 'vim-scripts/YankRing.vim'
 " undo -trees
@@ -182,6 +180,7 @@ autocmd BufRead,BufNew *.md set filetype=markdown
 set incsearch
 set showmatch           " highlight matching [{()}]
 " smart case when searching
+set ignorecase 
 set smartcase
 "folding {{{
 set foldenable  " enable folding
@@ -363,6 +362,8 @@ endif
 " slime configuration
 let g:slime_target = "tmux"
 " }}}
+" change ctrl p binding to ctrl-a
+let g:ctrlp_map = '<c-a>'
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " go
