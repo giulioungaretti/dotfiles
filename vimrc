@@ -12,8 +12,6 @@ call vundle#begin()
 "
 Plugin 'tpope/vim-obsession.git'
 Plugin 'dhruvasagar/vim-prosession'
-" required by the above
-Plugin 'xolox/vim-misc'
 " yankring
 Plugin 'vim-scripts/YankRing.vim'
 " undo -trees
@@ -155,6 +153,7 @@ set mousehide "Hide when characters are typed
 " Settings
 """""""""""""""""""""""""""""""""""""""
 "{{{
+"
 set shell=/bin/sh
 " bybye ex mode
 nnoremap Q <nop>
@@ -206,9 +205,9 @@ function! TogglePasteMode()
         endif
 endfunction
 " move to right
-inoremap ll  <Esc>la
-snoremap ll  <Esc>la
-nnoremap <leader><leader>p :call TogglePasteMode()<CR>
+inoremap l;  <Esc>la
+snoremap l;  <Esc>la
+nnoremap <leader>p :call TogglePasteMode()<CR>
 " fullscreen  {{{
 function! Fullscreen()
         let line = line(".")+0
@@ -342,6 +341,8 @@ nmap <c-t> :TagbarOpen fj <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file zrder and not by alphabetical order
 let g:tagbar_sort = 0
+" remap ctrlp to ctrla and use ctrlp for yankring
+let g:ctrlp_map = '<c-a>'
 " The Silver Searcher
 if executable('ag')
         " Use ag over grep
