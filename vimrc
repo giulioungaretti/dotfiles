@@ -9,6 +9,8 @@ call vundle#begin()
 " Plugins
 """""""""""""""""""""""""""""""""""
 " {{{
+" search in dict
+Plugin 'jonhiggs/MacDict.vim'
 "
 Plugin 'tpope/vim-obsession.git'
 Plugin 'dhruvasagar/vim-prosession'
@@ -181,7 +183,7 @@ autocmd BufRead,BufNew *.md set filetype=markdown
 set incsearch
 set showmatch           " highlight matching [{()}]
 " smart case when searching
-set ignorecase 
+set ignorecase
 set smartcase
 "folding {{{
 set foldenable  " enable folding
@@ -195,6 +197,12 @@ autocmd! bufwritepost .vimrc source %
 " Aliases
 """""""""""""""""""""""""""""""""""""""
 " {{{
+
+function GetDict()
+        let w = expand("<cword>")
+        :call g:MacDict(w)
+endfunction
+command Def :call GetDict()<cr>
 " leader
 map <space> <leader>
 " Toggle paste mode.
@@ -551,6 +559,14 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 """""""""""""""""""""""""""""""""""""""
 " {{{
 " tag-bar css stuff  " {{{
+let g:tagbar_type_html = {
+                        \  'ctagstype' : 'html',
+                        \  'kinds' : [
+                        \    'f:functions',
+                        \    'a:anchors',
+                        \  ]
+                        \}
+
 let g:tagbar_type_css = {
                         \  'ctagstype' : 'css',
                         \  'kinds' : [
