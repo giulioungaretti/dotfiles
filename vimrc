@@ -1,121 +1,109 @@
-" Vundle setup
+" Init
 "{{{
 set nocompatible              " be iMproved, required
-filetype off                  " required
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 "}}}
-" Plugins
+" Plugs
 """""""""""""""""""""""""""""""""""
 " {{{
-" search in dict
-Plugin 'jonhiggs/MacDict.vim'
-"
-Plugin 'tpope/vim-obsession.git'
-Plugin 'dhruvasagar/vim-prosession'
+" search in osx directory
+Plug 'jonhiggs/MacDict.vim'
+" session managment
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
 " yankring
-Plugin 'vim-scripts/YankRing.vim'
+Plug 'vim-scripts/YankRing.vim'
 " undo -trees
-Plugin 'mbbill/undotree'
+Plug 'mbbill/undotree'
 " dahs integration
-Plugin 'rizzatti/dash.vim'
+Plug 'rizzatti/dash.vim'
 " py-doc
-Plugin 'fs111/pydoc.vim'
+Plug 'fs111/pydoc.vim'
 " neocompchage
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
+Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 " open gvim from firefox
-Plugin 'superbrothers/vim-vimperator'
-" vim - evernote client not py3 compatible
-" Plugin 'neilagabriel/vim-geeknote'
+Plug 'superbrothers/vim-vimperator'
 " easymotions
-Plugin 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 " instant markdown needs extra installs
-Plugin 'terryma/vim-instant-markdown'
+Plug 'terryma/vim-instant-markdown'
 " expand selection to region
-Plugin 'terryma/vim-expand-region'
+Plug 'terryma/vim-expand-region'
 " open markdown preview in marked2 app
-Plugin 'itspriddle/vim-marked'
-" pomodoro manager vim
-Plugin 'gregsexton/Vomodoro'
+Plug 'itspriddle/vim-marked'
 " align table
-Plugin 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 " markdown plugin
-Plugin 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plug 'gmarik/Vundle.vim'
 " eyecany bar
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 " makes iterm2 tmux and vim have sex
-Plugin 'sjl/vitality.vim'
+Plug 'sjl/vitality.vim'
 " execute file
-:Plugin 'Bexec'
+:Plug 'Bexec'
 " send line to tmux
-"Plugin 'jpalardy/vim-slime'
-Plugin 'ervandew/screen'
+Plug 'ervandew/screen'
 " auto-format code
-Plugin 'Chiel92/vim-autoformat'
+Plug 'Chiel92/vim-autoformat'
 " emmet
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 " better js
-Plugin 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 " colorize css hexcodes
-Plugin 'ap/vim-css-color'
+Plug 'ap/vim-css-color'
 " ptyhon pep8
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 " window managment
-Plugin 'wesQ3/vim-windowswap'
-" undo treee
-" not py3 compatible.
-" Plugin 'sjl/gundo.vim'
+Plug 'wesQ3/vim-windowswap'
 " remove and highlight trailing spaces
-Plugin 'bronson/vim-trailing-whitespace'
+Plug 'bronson/vim-trailing-whitespace'
 " tmux seamless movement
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 "indent highlight
-Plugin 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 ""autoclose
-Plugin 'Townk/vim-autoclose'
+Plug 'Townk/vim-autoclose'
 " sublime like mutiple cursors
-Plugin 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors'
 " add git gutter
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " tree bar
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 " cntrl p
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 " nerd commenter
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 " fuGITve
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 "tasklist leader-t
-Plugin 'TaskList.vim'
+Plug 'TaskList.vim'
 " new command ds, cs, and yss i
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 " structure of  file
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 " add :Gist command
-Plugin 'mattn/gist-vim'
+Plug 'mattn/gist-vim'
 " required
-Plugin 'mattn/webapi-vim'
+Plug 'mattn/webapi-vim'
 " colorscheme
-Plugin 'chriskempson/base16-vim'
-Plugin  'altercation/vim-colors-solarized'
+Plug 'chriskempson/base16-vim'
+Plug  'altercation/vim-colors-solarized'
 " jedi for ptyhon
-Plugin 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 " go integration
-Plugin 'fatih/vim-go'
+Plug 'fatih/vim-go'
 " zen writing
-Plugin 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 " highlighcolors
-Plugin 'chrisbra/Colorizer'
+Plug 'chrisbra/Colorizer'
 " use silver searcher
-Plugin 'rking/ag.vim'"
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'rking/ag.vim'"
+" All of your Plugs must be added before the following line
+call plug#end()
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " Visual
@@ -493,7 +481,7 @@ if !exists('g:neocomplete#keyword_patterns')
         let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-" Plugin key-mappings.
+" Plug key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
 " Recommended key-mappings.
@@ -517,7 +505,7 @@ autocmd FileType go setlocal omnifunc=gocomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "---------------------------
 " neocoomplete snippts {{{
-" Plugin key-mappings.
+" Plug key-mappings.
 imap <TAB>     <Plug>(neosnippet_expand_or_jump)
 smap <TAB>     <Plug>(neosnippet_expand_or_jump)
 xmap <TAB>     <Plug>(neosnippet_expand_target)
