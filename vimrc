@@ -185,12 +185,15 @@ autocmd! bufwritepost .vimrc source %
 " Aliases
 """""""""""""""""""""""""""""""""""""""
 " {{{
-
-function GetDict()
+" delete char backwards insert mode 
+" search word under the cursor  in the apple dictionary.
+set backspace=indent,eol,start
+imap ^D <BS>
+function! GetDict()
         let w = expand("<cword>")
         :call g:MacDict(w)
 endfunction
-command Def :call GetDict()<cr>
+command! Def :call GetDict()<cr>
 " leader
 map <space> <leader>
 " Toggle paste mode.
@@ -669,19 +672,19 @@ autocmd FileType python map <LocalLeader>pr
 autocmd FileType python map <LocalLeader>gw
                         \ :call g:ScreenShellSend('!pwd')<CR>
 " Set working directory to current file's folder.
-function SetWD()
+function! SetWD()
         let wd = '!cd ' . expand('%:p:h')
         :call g:ScreenShellSend(wd)
 endfunction
 autocmd FileType python map <LocalLeader>sw :call SetWD()<CR>
 " Get ipython help for word under cursor. Complement it with Shift + K.
-function GetHelp()
+function! GetHelp()
         let w = expand("<cword>") . "??"
         :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>h :call GetHelp()<CR>
 " Get `dir` help for word under cursor.
-function GetDir()
+function! GetDir()
         let w = "dir(" . expand("<cword>") . ")"
         :call g:ScreenShellSend(w)
 endfunction
@@ -689,7 +692,7 @@ autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
 function! s:get_visual_selection()
 endfunction
 " Get `?` help for word under cursor.
-function GetHelpMagic()
+function! GetHelpMagic()
         let foo_tmp =  GetVisual()
         let w = "?".foo_tmp
         :call g:ScreenShellSend(w)
@@ -697,7 +700,7 @@ endfunction
 autocmd FileType python map <LocalLeader>dc :call GetHelpMagic()<CR>
 
 " Get `dir` help for word under cursor.
-function GetLen()
+function! GetLen()
         let w = "len(" . expand("<cword>") . ")"
         :call g:ScreenShellSend(w)
         echo  w
