@@ -4,13 +4,15 @@ alias start='tmuxifier load-session my-awesome-session'
 alias ghub="mosh giulio@188.166.36.190-- screen -dr"
 #}}}
 # exports {{{
-#export PATH="/Users/giulio/anaconda/bin:$PATH"
-export PATH="/Users/giulio/anacondaold/bin:$PATH"
+export PATH="/Users/giulio/anaconda/bin:$PATH"
+#export PATH="/Users/giulio/anacondaold/bin:$PATH"
+#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+#export PYTHONPATH=/usr/local/lib/python3.4/site-packages:$PYTHONPATH
 #  go path variables{{{
 export GOPATH=$HOME/Hack/go
 # add go executables to path
 export PATH=$PATH:$GOPATH/bin
-export GOROOT=/usr/local/go/
+#export GOROOT=/usr/local/go/
 export PATH=$PATH:/usr/local/go/bin
 #}}}
 #}}}

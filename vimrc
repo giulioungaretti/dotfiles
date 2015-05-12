@@ -73,7 +73,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter'
 " tree bar
 Plug 'scrooloose/nerdtree'
-" cntrl p
+" ctrl p
 Plug 'kien/ctrlp.vim'
 " nerd commenter
 Plug 'scrooloose/nerdcommenter'
@@ -173,6 +173,8 @@ set showmatch           " highlight matching [{()}]
 " smart case when searching
 set ignorecase
 set smartcase
+" better mousee interacation 
+set mouse=nicr
 "folding {{{
 set foldenable  " enable folding
 set foldnestmax=10  " max 10 nested fold allower
@@ -337,12 +339,14 @@ nnoremap <F7> :UndotreeToggle<cr>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " tagbar autofous on open
-nmap <c-t> :TagbarOpen fj <CR>
+"nmap <c-t> :TagbarOpen fj <CR>
+nmap <c-t> :TagbarToggle <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file zrder and not by alphabetical order
 let g:tagbar_sort = 0
 " remap ctrlp to ctrla and use ctrlp for yankring
 let g:ctrlp_map = '<c-a>'
+nmap <c-b> :CtrlPBuffer <CR>
 " The Silver Searcher
 if executable('ag')
         " Use ag over grep
@@ -639,6 +643,8 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<leader>c"
 let g:jedi#rename_command = "<leader>r"
+" open in split right
+let g:jedi#use_splits_not_buffers = "right"
 "}}}
 " ipyhont tmux integration {{{
 let g:ScreenImpl = "Tmux"
@@ -688,7 +694,7 @@ function! GetDir()
         let w = "dir(" . expand("<cword>") . ")"
         :call g:ScreenShellSend(w)
 endfunction
-autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
+"autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
 function! s:get_visual_selection()
 endfunction
 " Get `?` help for word under cursor.
@@ -711,6 +717,8 @@ autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 let g:pydoc_open_cmd = 'vsplit'
 let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc'
 "}}}
+" run file
+autocmd FileType python nnoremap  <buffer> <leader>r :exec '!python' shellescape(@%, 1)<cr>
 " {{{ misc functinons
 " gets the selected text in visual mode
 function! GetVisual()

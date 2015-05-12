@@ -6,8 +6,6 @@ fi #}}}
 TERM=xterm-256color
 export TERM
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin"
-#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-#export PYTHONPATH=/usr/local/lib/python3.4/site-packages:$PYTHONPATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
@@ -112,3 +110,5 @@ ssh() {
 # conda tab complete
 zstyle ':completion::complete:*' use-cache 1
 # vim: foldmethod=marker:foldlevel=0
+
+export PATH="/usr/local/p/versions/python:$PATH"
