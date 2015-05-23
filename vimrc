@@ -89,9 +89,9 @@ Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
-" colorscheme
+" colorschemes
 Plug 'chriskempson/base16-vim'
-Plug  'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 " jedi for ptyhon
 Plug 'davidhalter/jedi-vim'
 " go integration
@@ -303,7 +303,9 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-let g:airline_theme="base16"
+" Explode airline from preview windows
+let g:airline_exclude_preview = 1
+let g:airline#extensions#ctrlp#color_template = 'normal'
 "}}}
 """""""""""""""""""""""""""""""""""""""
 " syntastic {{{
