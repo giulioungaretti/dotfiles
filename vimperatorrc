@@ -104,6 +104,7 @@
   ignorekeys add 'drive.google.com'
   ignorekeys add 'www.google.com/calendar'
   ignorekeys add 'www.google.com/reader'
+  ignorekeys add 'http://localhost'
 "}}}
 " THEME {{{
 hi Normal background: #121112; color:#D0CFD0;

@@ -1,0 +1,24 @@
+[user]
+	name = Giulio Ungaretti
+	email = giulioungaretti@me.com
+[push]
+	default = matching
+[alias]
+	co = checkout
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+    cp = cherry-pick
+    st = status -s
+    cl = clone
+    ci = commit -m
+    co = checkout
+    br = branch
+    diff = diff --word-diff
+    dc = diff --cached
+    la = "!git config -l | grep alias | cut -c 7-"
+[github]
+	user = giulioungaretti
+[core]
+	excludesfile = /Users/giulio/.gitignore

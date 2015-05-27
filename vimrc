@@ -624,9 +624,6 @@ au FileType python  set expandtab
 au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
 " JEDI and auto complete {{{
 let g:neocomplete#force_overwrite_completefunc=1
-if !exists('g:neocomplete#force_omni_input_patterns')
-        "let g:neocomplete#force_omni_input_patterns={}
-endif
 "overwrite omnifunc  with jedi
 autocmd FileType python setlocal omnifunc=jedi#completions
 let g:jedi#completions_enabled = 0
