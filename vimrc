@@ -6,7 +6,9 @@ call plug#begin('~/.vim/plugged')
 " Plugs
 """""""""""""""""""""""""""""""""""
 " {{{
-" search in osx directory
+"
+Plug 'aperezdc/vim-template'
+" search in osx dictionary
 Plug 'jonhiggs/MacDict.vim'
 " session managment
 Plug 'tpope/vim-obsession'
@@ -295,6 +297,9 @@ command! Wa wa
 """""""""""""""""""""""""""""""""""""""
 "{{{
 """""""""""""""""""""""""""""""""""""""
+"templates
+let g:templates_directory = '~/dotfiles/templates'
+let g:email = "giulioungaretti@me.com"
 " airline {{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
