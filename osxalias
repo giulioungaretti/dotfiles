@@ -1,13 +1,16 @@
-# Aliases {{{
+#-------------------------------------------------------------------- Aliases{{{
 alias vim="reattach-to-user-namespace vim"
 alias start='tmuxifier load-session my-awesome-session'
 alias ghub="mosh giulio@188.166.36.190-- screen -dr"
 #}}}
-# exports {{{
+#-------------------------------------------------------------------- Exports{{{
+# python {{{ path
 export PATH="/Users/giulio/anaconda/bin:$PATH"
-#export PATH="/Users/giulio/anacondaold/bin:$PATH"
-#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+# anaconda virtual env location
+export ANACONDA_WORKON_HOME="$HOME/anaconda/envs/"
+# this should not be set but keep as ref
 #export PYTHONPATH=/usr/local/lib/python3.4/site-packages:$PYTHONPATH
+#}}}
 #  go path variables{{{
 export GOPATH=$HOME/Hack/go
 # add go executables to path
@@ -16,19 +19,30 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
 #}}}
 #}}}
+#------------------------------------------------------------------ Functions{{{
+# python env management {{{
+# turn on specified env
+venv()
+{
+        source activate $1
+        export VIRTUAL_ENV=$ANACONDA_WORKON_HOME$1
+}
 
-#{{{
-function pomodoro {
-  case $1 in
-    start )
-      echo 'terminal-notifier -title "🍅 Pomodoro Done" -message "Starting short break…"' | at + 25 minutes &> /dev/null
-      ;;
- 
-    break )
-      echo 'terminal-notifier -title "⌛ Short Break Done" -message "Start your next Pomodoro."' | at + 5 minutes &> /dev/null
-      ;;
-  esac
+#turn off current python env
+vkill()
+{
+        if [ $a ];then
+                echo "no acitve enviroment"
+        else
+                source deactivate
+                unset VIRTUAL_ENV
+        fi
+}
+# old python 2 path
+oldPython(){
+        export PATH="/Users/giulio/anacondaold/bin:$PATH"
+        export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 }
 #}}}
-
+#}}}
 # vim: foldmethod=marker:foldlevel=0: filetype=zsh
