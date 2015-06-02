@@ -46,7 +46,7 @@ var pushLeft23 = slate.operation("push", {
         "style": "bar-resize:2*screenSizeX/3"
 });
 var pushRigth23 = slate.operation("push", {
-        "direction": "left",
+        "direction": "right",
         "style": "bar-resize:2*screenSizeX/3"
 });
 var pushTop = slate.operation("push", {
@@ -289,8 +289,8 @@ slate.bind("m:ctrl,cmd", function(win) {
 slate.bind(";:shift,cmd", fullscreen);
 var zfoo = 0;
 slate.bind("i:cmd,ctrl",  pushCenter3);
-slate.bind("u:cmd,ctrl",  pushRigth23);
-slate.bind("o:cmd,ctrl",  pushLeft23);
+slate.bind("o:cmd,ctrl",  pushRigth23);
+slate.bind("u:cmd,ctrl",  pushLeft23);
 
 //slate.bind("esc:cmd", hint);
 //direction = right|left|up|above|down|below|behind
