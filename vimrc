@@ -1,12 +1,35 @@
-" Init
+" ---------------------------------------------------------------------- Init
 "{{{
 set nocompatible              " be iMproved, required
 call plug#begin('~/.vim/plugged')
 "}}}
-" Plugs
-"""""""""""""""""""""""""""""""""""
+" --------------------------------------------------------------------- Plugs
 " {{{
-"
+" virtual env mangment python
+" Add the virtualenv's site-packages to vim path
+if has('python')
+echo "Error: Required vim compiled with +python"
+py << EOF
+import os.path
+import sys
+import vim
+if "VIRTUAL_ENV" in os.environ:
+        venv_path = os.environ['VIRTUAL_ENV']
+        sys.path.insert(0, venv_path)
+EOF
+endif
+" headers
+Plug 'bimbalaszlo/vim-eightheader'
+" jekyll magic
+Plug 'parkr/vim-jekyll'
+" hide cursorline inactive buffer
+Plug 'vim-scripts/CursorLineCurrentWindow'
+" better search tools highglihg + match
+Plug 'inside/vim-search-pulse'
+Plug 'haya14busa/incsearch.vim'
+"auto gnerate docstring for python
+Plug 'heavenshell/vim-pydocstring'
+" templates for empty files
 Plug 'aperezdc/vim-template'
 " search in osx dictionary
 Plug 'jonhiggs/MacDict.vim'
@@ -107,16 +130,8 @@ Plug 'rking/ag.vim'"
 " All of your Plugs must be added before the following line
 call plug#end()
 "}}}
-"""""""""""""""""""""""""""""""""""""""
-" Visual
-"""""""""""""""""""""""""""""""""""""""
+" -------------------------------------------------------------------- Visual
 "{{{
-"  kill the mouse forever
-if has("gui_running")
-        set mouse=a
-else
-        set mouse=c
-endif
 " turn on syntax highlight
 syntax on
 " show curret line
@@ -141,11 +156,9 @@ colorscheme base16-chalk
 hi! VertSplit  ctermfg=9 ctermbg=21
 set mousehide "Hide when characters are typed
 "}}}
-"""""""""""""""""""""""""""""""""""""""
-" Settings
-"""""""""""""""""""""""""""""""""""""""
+" ------------------------------------------------------------------ Settings
 "{{{
-"
+"set sg
 set shell=/bin/sh
 " bybye ex mode
 nnoremap Q <nop>
@@ -175,7 +188,7 @@ set showmatch           " highlight matching [{()}]
 " smart case when searching
 set ignorecase
 set smartcase
-" better mousee interacation 
+" better mousee interacation
 set mouse=nicr
 "folding {{{
 set foldenable  " enable folding
@@ -185,11 +198,9 @@ set foldmethod=syntax " fold based on indent level
 autocmd! bufwritepost .vimrc source %
 " }}}
 " }}}
-"""""""""""""""""""""""""""""""""""""""
-" Aliases
-"""""""""""""""""""""""""""""""""""""""
+"-------------------------------------------------------------------- Aliases
 " {{{
-" delete char backwards insert mode 
+" delete char backwards insert mode
 " search word under the cursor  in the apple dictionary.
 set backspace=indent,eol,start
 imap ^D <BS>
@@ -283,22 +294,29 @@ imap <C-G> <BS>
 nnoremap n nzz
 nnoremap N Nzz
 "}}}
-"""""""""""""""""""""""""""""""""""""""
-" common typos
-"""""""""""""""""""""""""""""""""""""""
+"--------------------------------------------------------------- common typos
 "{{{
 command! Q q
 command! W w
 command! Qa qa
 command! Wa wa
 "}}}
-"""""""""""""""""""""""""""""""""""""""
-"  Plug ins
-"""""""""""""""""""""""""""""""""""""""
+"------------------------------------------------------------------- Plug ins
 "{{{
-"""""""""""""""""""""""""""""""""""""""
+
+" heading creator
+let g:EightHeader_comment   = 'call NERDComment( "n", "comment" )'
+let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
+" create heading from selected text
+command! Header call EightHeader( 78, 'right', 1, ['', '-', ''], '', '\=" ".s:str." "' ) '] )
+" better search
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 "templates
-let g:templates_directory = '~/dotfiles/templates'
+let g:templates_directory = 'Users/giulio/dotfiles/templates'
+let g:template_vim_template_dir = '/Users/giulio/dotfiles/templates/docstrings'
+nmap <silent> <C-d> <Plug>(pydocstring)
 let g:email = "giulioungaretti@me.com"
 " airline {{{
 let g:airline_powerline_fonts = 1
@@ -312,7 +330,7 @@ let g:airline_right_sep=''
 let g:airline_exclude_preview = 1
 let g:airline#extensions#ctrlp#color_template = 'normal'
 "}}}
-"""""""""""""""""""""""""""""""""""""""
+
 " syntastic {{{
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -320,7 +338,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = 'python3'
 "}}}
-"""""""""""""""""""""""""""""""""""""""
+
 " gutter & fugitive git bindings {{{
 " open diff
 nnoremap <leader>gd :Gdiff<CR>
@@ -336,7 +354,7 @@ nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 "}}}
-"""""""""""""""""""""""""""""""""""""""
+
 " misc {{{
 " press esc to go back to normal mode instead of quitting multi cursor
 let g:multi_cursor_exit_from_insert_mode=0
@@ -378,9 +396,7 @@ let g:slime_target = "tmux"
 " change ctrl p binding to ctrl-a
 let g:ctrlp_map = '<c-a>'
 "}}}
-"""""""""""""""""""""""""""""""""""""""
-" go
-"""""""""""""""""""""""""""""""""""""""
+"------------------------------------------------------------------------- go
 "{{{
 "fold by sytax and style
 " set style for go files
@@ -437,9 +453,7 @@ let g:tagbar_type_go = {
                         \ 'ctagsargs' : '-sort -silent'
                         \ }
 "}}}
-"""""""""""""""""""""""""""""""""""""""
-" easymotion
-"""""""""""""""""""""""""""""""""""""""
+"----------------------------------------------------------------- easymotion
 "{{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Bi-directional find motion
@@ -467,9 +481,7 @@ hi link EasyMotionShade  Comment
 hi link EasyMotionTarget2First MatchParen
 hi link EasyMotionTarget2Second MatchParen
 " }}}
-"""""""""""""""""""""""""""""""""""""""
-" neocopmlete
-"""""""""""""""""""""""""""""""""""""""
+"---------------------------------------------------------------- neocopmlete
 "{{{
 let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
 let g:neocomplete#data_directory = "$HOME/.vim/tmp/"
@@ -539,9 +551,7 @@ let g:neocomplete#enable_auto_select = 0
 "" fix go ? seems to
 let g:neocomplete#sources#omni#functions = {'go': 'go#complete#Complete'}
 " }}}
-"""""""""""""""""""""""""""""""""""""""
-" NerdTree
-"""""""""""""""""""""""""""""""""""""""
+"------------------------------------------------------------------- NerdTree
 " {{{
 " map nerd tree to leader n
 map <silent><leader>n :NERDTreeFocus<CR>
@@ -556,9 +566,7 @@ let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 " }}}
-"""""""""""""""""""""""""""""""""""""""
-" js and csss
-"""""""""""""""""""""""""""""""""""""""
+"---------------------------------------------------------------- js and csss
 " {{{
 " tag-bar css stuff  " {{{
 let g:tagbar_type_html = {
@@ -619,8 +627,7 @@ let javascript_enable_domhtmlcss=1
 " allow js folding
 let b:javascript_fold=1
 "}}}
-" python
-"""""""""""""""""""""""""""""""""""""""
+"--------------------------------------------------------------------- python
 "{{{
 " set 79 long ruler
 au FileType python  set colorcolumn=79
@@ -637,6 +644,7 @@ if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+let g:jedi#use_splits_not_buffers = "right"
 "The call signatures can be displayed as a pop-up in the buffer (set to 1, the default), which has the advantage of being easier to refer to, or in Vim's command line aligned with the function call (set to 2), which can improve the integrity of Vim's undo history.   "
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#show_call_signatures = "2"
@@ -648,11 +656,10 @@ let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<leader>c"
 let g:jedi#rename_command = "<leader>r"
 " open in split right
-let g:jedi#use_splits_not_buffers = "right"
 "}}}
-" ipyhont tmux integration {{{
+" IPython3 tmux integration {{{
 let g:ScreenImpl = "Tmux"
-" Open an ipython3 shell.
+" Open an IPython3 shell.
 autocmd FileType python map <LocalLeader>p :ScreenShell! ipython<CR>
 "autocmd FileType python map <LocalLeader>p :IPython!  <CR>
 " Close whichever shell is running.
@@ -661,12 +668,12 @@ autocmd FileType python map <LocalLeader>q :ScreenQuit<CR>
 autocmd FileType python map <LocalLeader>rp V:ScreenSend<CR>j
 " Send visual selection to python and move to next line.
 autocmd FileType python map <LocalLeader>v :ScreenSend<CR>`>0j
-" Send a carriage return line to python.
+" Send a <CR> to ipython.
 autocmd FileType python map <LocalLeader>a :call g:ScreenShellSend("\r")<CR>
-" Clear screen.
+" Clear the screen.
 autocmd FileType python map <LocalLeader>L
                         \ :call g:ScreenShellSend('!clear')<CR>
-" Start a time block to execute code in.
+" Start a time  block to execute code in.
 autocmd FileType python map <LocalLeader>t
                         \ :call g:ScreenShellSend('%%time')<CR>
 " Start a timeit block to execute code in.
@@ -698,7 +705,7 @@ function! GetDir()
         let w = "dir(" . expand("<cword>") . ")"
         :call g:ScreenShellSend(w)
 endfunction
-"autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
+autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
 function! s:get_visual_selection()
 endfunction
 " Get `?` help for word under cursor.
@@ -718,6 +725,7 @@ endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 "}}}
 " py-doc bindings
+"{{{
 let g:pydoc_open_cmd = 'vsplit'
 let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc'
 "}}}
@@ -735,5 +743,6 @@ function! GetVisual()
         return join(lines, "\n")
 endfunction
 "}}}
-"""""""""""""""""""""""""""""""""""""""
+"}}}
+
 " vim: foldmethod=marker:foldlevel=0
