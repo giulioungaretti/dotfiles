@@ -5,6 +5,10 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 " {{{
+" Rainbow paranthesis
+Plug 'kien/rainbow_parentheses.vim'
+" visual interactive replace
+Plug 'hwrod/interactive-replace'
 " virtual env mangment python
 " Add the virtualenv's site-packages to vim path
 if has('python')
@@ -152,6 +156,7 @@ let &t_Co=256
 let base16colorspace=256
 "hi Visual cterm=reverse
 set background=light
+"colorscheme base16-chalk
 colorscheme base16-chalk
 hi! VertSplit  ctermfg=9 ctermbg=21
 set mousehide "Hide when characters are typed
@@ -200,15 +205,11 @@ autocmd! bufwritepost .vimrc source %
 " }}}
 "-------------------------------------------------------------------- Aliases
 " {{{
+" bare vim {{{
 " delete char backwards insert mode
-" search word under the cursor  in the apple dictionary.
 set backspace=indent,eol,start
 imap ^D <BS>
-function! GetDict()
-        let w = expand("<cword>")
-        :call g:MacDict(w)
-endfunction
-command! Def :call GetDict()<cr>
+" search word under the cursor  in the apple dictionary.
 " leader
 map <space> <leader>
 " Toggle paste mode.
@@ -251,7 +252,9 @@ function! Light()
         :set background=light
         :hi! VertSplit  ctermfg=9 ctermbg=21
         :redraw!
-        :AirlineRefresh
+        if exists(':AirlineRefresh')
+                :AirlineRefresh
+        endif
 endfunction
 map <silent><leader>bgl :call Light()<cr>
 
@@ -259,7 +262,9 @@ function! Dark()
         :set background=dark
         :hi! VertSplit  ctermfg=9 ctermbg=18
         :redraw!
-        :AirlineRefresh
+        if exists(':AirlineRefresh')
+                :AirlineRefresh
+        endif
 endfunction
 map  <silent><leader>bgd :call Dark()<cr>
 " split right and below instead of default opposite
@@ -280,6 +285,18 @@ nnoremap <silent><C-W><C-a> :bprevious<CR>
 nnoremap <silent><C-W><C-q> :bd<CR>
 " close current buffer and moves back to the previous "
 nmap <leader>bq :bp <BAR> bd #<CR>
+" move search highlight to the center of the screen
+nnoremap n nzz
+nnoremap N Nzz
+" delete left
+imap <C-G> <BS>
+" }}}
+" plugins  {{{
+function! GetDict()
+        let w = expand("<cword>")
+        :call g:MacDict(w)
+endfunction
+command! Def :call GetDict()<cr>
 " zen mode with Goyo
 nnoremap <silent><Leader>f :Goyo <CR>
 " open task list for todo single file
@@ -288,11 +305,7 @@ map <leader>td <Plug>TaskList
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
-" delete left
-imap <C-G> <BS>
-" move search highlight to the center of the screen
-nnoremap n nzz
-nnoremap N Nzz
+" }}}
 "}}}
 "--------------------------------------------------------------- common typos
 "{{{
@@ -303,7 +316,10 @@ command! Wa wa
 "}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
-
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 " heading creator
 let g:EightHeader_comment   = 'call NERDComment( "n", "comment" )'
 let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
@@ -314,7 +330,7 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 "templates
-let g:templates_directory = 'Users/giulio/dotfiles/templates'
+let g:templates_directory = '/Users/giulio/dotfiles/templates'
 let g:template_vim_template_dir = '/Users/giulio/dotfiles/templates/docstrings'
 nmap <silent> <C-d> <Plug>(pydocstring)
 let g:email = "giulioungaretti@me.com"
@@ -356,21 +372,38 @@ let g:gitgutter_eager = 0
 "}}}
 
 " misc {{{
+" multiple cursors{{{
 " press esc to go back to normal mode instead of quitting multi cursor
 let g:multi_cursor_exit_from_insert_mode=0
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
+"}}}
 "autoformat code with F6
 noremap <F5> :FixWhitespace <CR><CR>
-nnoremap <F7> :UndotreeToggle<cr>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
+" show untodtreee
+nnoremap <F7> :UndotreeToggle<cr>
 " tagbar autofous on open
 "nmap <c-t> :TagbarOpen fj <CR>
 nmap <c-t> :TagbarToggle <CR>
 let g:tagbar_autofocus = 1
-" sort tags by file zrder and not by alphabetical order
+" sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 " remap ctrlp to ctrla and use ctrlp for yankring
 let g:ctrlp_map = '<c-a>'
+" use ctrl-b to show list of open buffer
 nmap <c-b> :CtrlPBuffer <CR>
 " The Silver Searcher
 if executable('ag')
@@ -392,9 +425,7 @@ else
 endif
 " slime configuration
 let g:slime_target = "tmux"
-" }}}
-" change ctrl p binding to ctrl-a
-let g:ctrlp_map = '<c-a>'
+"}}}
 "}}}
 "------------------------------------------------------------------------- go
 "{{{
@@ -519,8 +550,8 @@ endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-g>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-g>"
+"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 " Enable omni completion.
@@ -660,7 +691,7 @@ let g:jedi#rename_command = "<leader>r"
 " IPython3 tmux integration {{{
 let g:ScreenImpl = "Tmux"
 " Open an IPython3 shell.
-autocmd FileType python map <LocalLeader>p :ScreenShell! ipython<CR>
+autocmd FileType python map <LocalLeader>p :IPython!<CR>
 "autocmd FileType python map <LocalLeader>p :IPython!  <CR>
 " Close whichever shell is running.
 autocmd FileType python map <LocalLeader>q :ScreenQuit<CR>
@@ -744,5 +775,5 @@ function! GetVisual()
 endfunction
 "}}}
 "}}}
-
-" vim: foldmethod=marker:foldlevel=0
+" vim: foldmethod=marker foldlevel=0
+"
