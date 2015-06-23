@@ -77,7 +77,7 @@ Plug 'sjl/vitality.vim'
 " send line to tmux
 Plug 'ervandew/screen'
 " auto-format code
-Plug 'Chiel92/vim-autoformat'
+Plug 'chiel92/vim-autoformat', 'dev'
 " emmet
 Plug 'mattn/emmet-vim'
 " better js
@@ -155,9 +155,9 @@ set lazyredraw
 let &t_Co=256
 let base16colorspace=256
 "hi Visual cterm=reverse
-set background=light
+set background=dark
 "colorscheme base16-chalk
-colorscheme base16-chalk
+colorscheme base16-flat
 hi! VertSplit  ctermfg=9 ctermbg=21
 set mousehide "Hide when characters are typed
 "}}}
@@ -330,8 +330,8 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 "templates
-let g:templates_directory = '/Users/giulio/dotfiles/templates'
-let g:template_vim_template_dir = '/Users/giulio/dotfiles/templates/docstrings'
+let  g:templates_directory = '/Users/giulio/dotfiles/templates'
+let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
 nmap <silent> <C-d> <Plug>(pydocstring)
 let g:email = "giulioungaretti@me.com"
 " airline {{{
@@ -675,17 +675,17 @@ if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-let g:jedi#use_splits_not_buffers = "right"
 "The call signatures can be displayed as a pop-up in the buffer (set to 1, the default), which has the advantage of being easier to refer to, or in Vim's command line aligned with the function call (set to 2), which can improve the integrity of Vim's undo history.   "
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#show_call_signatures = "2"
-let g:jedi#use_splits_not_buffers = "winwidth"
+"let g:jedi#use_splits_not_buffers = " winwidth winwidth"
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<leader>c"
 let g:jedi#rename_command = "<leader>r"
+let g:jedi#use_splits_not_buffers = "right"
 " open in split right
 "}}}
 " IPython3 tmux integration {{{
@@ -776,4 +776,3 @@ endfunction
 "}}}
 "}}}
 " vim: foldmethod=marker foldlevel=0
-"
