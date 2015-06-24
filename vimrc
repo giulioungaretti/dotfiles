@@ -396,7 +396,7 @@ noremap <F6> :Autoformat<CR><CR>
 " show untodtreee
 nnoremap <F7> :UndotreeToggle<cr>
 " tagbar autofous on open
-"nmap <c-t> :TagbarOpen fj <CR>
+nmap <c-t> :TagbarOpen fj <CR>
 nmap <c-t> :TagbarToggle <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file order and not by alphabetical order
