@@ -6,6 +6,8 @@ call plug#begin('~/.vim/plugged')
 " Plugs
 """""""""""""""""""""""""""""""""""
 " {{{
+"browser in vim 
+Plug 'yuratomo/w3m.vim'
 " search in osx directory
 Plug 'jonhiggs/MacDict.vim'
 " session managment
