@@ -41,6 +41,14 @@ var pushLeft3 = slate.operation("push", {
         "direction": "left",
         "style": "bar-resize:screenSizeX/3"
 });
+var pushLeft23 = slate.operation("push", {
+        "direction": "left",
+        "style": "bar-resize:2*screenSizeX/3"
+});
+var pushRigth23 = slate.operation("push", {
+        "direction": "right",
+        "style": "bar-resize:2*screenSizeX/3"
+});
 var pushTop = slate.operation("push", {
         "direction": "top",
         "style": "bar-resize:screenSizeY/2"
@@ -75,6 +83,7 @@ var pushBottomLeft = slate.operation("corner", {
         "width": "screenSizeX/2",
         "height": "screenSizeY/2"
 });
+
 
 var l_count = 0;
 slate.bind("k:shift,cmd,ctrl", function(win) {
@@ -278,7 +287,11 @@ slate.bind("m:ctrl,cmd", function(win) {
 //}
 //});
 slate.bind(";:shift,cmd", fullscreen);
-slate.bind("i:cmd,ctrl", pushCenter3);
+var zfoo = 0;
+slate.bind("i:cmd,ctrl",  pushCenter3);
+slate.bind("o:cmd,ctrl",  pushRigth23);
+slate.bind("u:cmd,ctrl",  pushLeft23);
+
 //slate.bind("esc:cmd", hint);
 //direction = right|left|up|above|down|below|behind
 //app = an app name surrounded by quotes
@@ -349,7 +362,7 @@ S.bnda({
 // ctrl + cmd + left  -> Push window to the left with half size. If already done, move it to the next screen.
 // ctrl + cmd + right  -> Push window to the right with half size. If already done, move it to the next screen.
 // cmd + cntrl + h/l, move to left/right one press, 1/2 two presses 1/3
-// cmd + ctrl + i move 1/3 at the center  | |x| | 
+// cmd + ctrl + i move 1/3 at the center  | |x| |
 // cmd + cntrl + j/k, move to  corners
 // cmd + esc , show hints
 // cmd +  shit+ ; = full screen

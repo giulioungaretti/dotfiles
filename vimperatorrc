@@ -21,7 +21,7 @@
   " turn off the freakin' bell
   set novisualbell
  " remove the chrome
-  set gui=none,tabs
+  set gui=none
   " enable animation
   set animations
   set editor='bash -lc "mvim -f \$*" mvim '
@@ -104,6 +104,7 @@
   ignorekeys add 'drive.google.com'
   ignorekeys add 'www.google.com/calendar'
   ignorekeys add 'www.google.com/reader'
+  ignorekeys add 'http://localhost'
 "}}}
 " THEME {{{
 hi Normal background: #121112; color:#D0CFD0;
@@ -135,143 +136,16 @@ hi Number color: #005F87;
 hi NonText color: #B973FF; min-height: 16px; padding-left: 2px;
 hi Title background-color: #D7005F; color: #D0CFD0; font-weight: bold;
 hi Indicator color: #D7005F;
-  hi Hint               text-transform: uppercase; font-family : "Helvetica Neue", "Helvetica", "Arial", "Sans"; font-weight: bold; font-size: 11px; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); color: #302505; padding: 1px 3px 0px 3px; background: -moz-linear-gradient(top, #FFF785, #FFC542); border: 1px #E3BE23 solid; border-radius: 2px; -moz-box-shadow: 0 3px 7px 0px rgba(0,0,0,0.3);
-  hi HintElem           background-color: inherit !important;
-  hi HintActive	        background-color: inherit !important;
-  hi HintImage          opacity: .7 !important;
+hi Hint               text-transform: uppercase; font-family : "Helvetica Neue", "Helvetica", "Arial", "Sans"; font-weight: bold; font-size: 11px; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); color: #302505; padding: 1px 3px 0px 3px; background: -moz-linear-gradient(top, #FFF785, #FFC542); border: 1px #E3BE23 solid; border-radius: 2px; -moz-box-shadow: 0 3px 7px 0px rgba(0,0,0,0.3);
+hi HintElem           background-color: inherit !important;
+hi HintActive	        background-color: inherit !important;
+hi HintImage          opacity: .7 !important;
 " }}}
 "{{{
- mappings.addUserMap(
-    [modes.NORMAL], ["<C-w>e"], "tile tabs vertically",
-    function() {tileTabs.menuActions('new-2vert',null);}
-    ); 
+command! -nargs=0 -description="Tile Tabs..." sp emenu Tile.Tile New Tab.Above
+command! -nargs=0 -description="Tile Tabs..." vs emenu Tile.Tile New Tab.Right
+command! -nargs=0 -description="Sync now"     sync emenu Tools.Sync Now
 "}}}"
-" TESTING SMOOTH SCROLL {{{
-let self = liberator.plugins.smooziee = (function(){
-
-    var scroll_amount = liberator.globalVariables.smooth_scroll_amount || '30';
-
-    mappings.addUserMap(
-        [modes.NORMAL],
-        ["j"],
-        "Smooth scroll down",
-        function(count){
-            self.smoothScrollBy(getScrollAmount(scroll_amount * (count || 1)));
-        },
-        {
-            count: true
-        }
-        );
-    mappings.addUserMap(
-        [modes.NORMAL],
-        ["k"],
-        "Smooth scroll up",
-        function(count){
-            self.smoothScrollBy(getScrollAmount(scroll_amount * (count || 1)) * -1);
-        },
-        {
-            count: true
-        }
-        );
-    mappings.addUserMap(
-        [modes.NORMAL],
-        ["<C-d>"],
-        "Smooth scroll down",
-        function(count){
-            self.smoothScrollBy(getScrollAmount((screen.height / 4) * (count || 1)));
-        },
-        {
-            count: true
-        }
-        );
-    mappings.addUserMap(
-        [modes.NORMAL],
-        ["<C-u>"],
-        "Smooth scroll up",
-        function(count){
-            self.smoothScrollBy(getScrollAmount((screen.height / 4) * (count || 1)) * -1);
-        },
-        {
-            count: true
-        }
-        );
-    mappings.addUserMap(
-        [modes.NORMAL],
-        ["<C-f>"],
-        "Smooth scroll down",
-        function(count){
-            self.smoothScrollBy(getScrollAmount((screen.height / 2) * (count || 1)));
-        },
-        {
-            count: true
-        }
-        );
-    mappings.addUserMap(
-        [modes.NORMAL],
-        ["<C-b>"],
-        "Smooth scroll up",
-        function(count){
-            self.smoothScrollBy(getScrollAmount((screen.height / 2) * (count || 1)) * -1);
-        },
-        {
-            count: true
-        }
-        );
-
-    var next;
-    var win;
-    var interval;
-
-    var PUBLICS = {
-        smoothScrollBy: function(moment) {
-            win = Buffer.findScrollableWindow();
-            interval = window.eval(liberator.globalVariables.smooth_scroll_interval || '20');
-            clearTimeout(next);
-            smoothScroll(moment);
-        }
-    }
-
-    function logBase(x, y) {
-        // Logarithm of arbitrary base `x`
-        return Math.log(y) / Math.log(x);
-    }
-
-    function getScrollAmount(amount) {
-        // see recognition of Fibonacci Numbers (here approximation is used)
-        // http://en.wikipedia.org/wiki/Fibonacci_number#Recognizing_Fibonacci_numbers
-        phi = 1.618033;
-        sqrt5 = 2.236067;
-        fn = amount
-            n = Math.ceil(logBase(phi, (fn * sqrt5 + Math.sqrt(5 * Math.pow(fn, 2) + 4)) / 2))
-            return window.eval(n);
-    }
-
-    function fib(n){
-        // see optimized Binet's formula for Fibonacci sequence
-        // http://en.wikipedia.org/wiki/Fibonacci_number#Closed_form_expression
-        phi = 1.618033;
-        sqrt5 = 2.236067;
-        return Math.floor((Math.pow(phi, n) / sqrt5) + 0.5)
-    }
-
-    function smoothScroll(moment) {
-        if (moment > 0) {
-            moment = moment - 1;
-            win.scrollBy(0, fib(Math.abs(moment)));
-        } else {
-            moment = moment + 1;
-            win.scrollBy(0, -fib(Math.abs(moment)));
-        }
-
-        if (moment == 0)
-            return;
-
-        next = setTimeout(function() smoothScroll(moment), interval);
-    }
-
-    return PUBLICS;
-})();
-
 
 "}}}
 " vim: set fdm=marker:
