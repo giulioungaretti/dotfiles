@@ -5,8 +5,7 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 " {{{
-"
-" nice ref stuff
+" nice doc ref stuff
 Plug 'thinca/vim-ref'
 "----------------------------------------------------------------- ERLANG{{{
 Plug 'vim-erlang/vim-erlang-compiler'
