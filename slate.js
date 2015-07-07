@@ -162,7 +162,7 @@ var fullscreen = slate.operation("move", {
 var throwNextFullscreen = slate.operation("throw", {
         "x": "screenOriginX",
         "y": "screenOriginY",
-        "width": "screenSizeX",
+        "width": "windowSizeX ",
         "height": "screenSizeY",
         "screen": "next"
 });
@@ -237,16 +237,16 @@ var isFullscreen = function(win) {
 };
 
 
-//slate.bind("left:ctrl,cmd", function(win) {
-//if (!win) {
-//return;
-//}
-//if (pushedLeft(win)) {
-//win.doOperation(throwNextLeft);
-//} else {
-//win.doOperation(pushLeft);
-//}
-//});
+slate.bind("left:ctrl,cmd", function(win) {
+        if (!win) {
+                return;
+        }
+        if (pushedLeft(win)) {
+                win.doOperation(throwNextLeft);
+        } else {
+                win.doOperation(pushLeft);
+        }
+});
 
 //slate.bind("right:ctrl,cmd", function(win) {
 //if (!win) {
@@ -264,11 +264,7 @@ slate.bind("m:ctrl,cmd", function(win) {
         if (!win) {
                 return;
         }
-        if (isFullscreen(win)) {
-                win.doOperation(throwNextFullscreen);
-        } else {
-                win.doOperation(fullscreen);
-        }
+        win.doOperation(throwNextFullscreen);
 });
 
 //slate.bind("down:ctrl,cmd", function(win) {
@@ -288,9 +284,9 @@ slate.bind("m:ctrl,cmd", function(win) {
 //});
 slate.bind(";:shift,cmd", fullscreen);
 var zfoo = 0;
-slate.bind("i:cmd,ctrl",  pushCenter3);
-slate.bind("o:cmd,ctrl",  pushRigth23);
-slate.bind("u:cmd,ctrl",  pushLeft23);
+slate.bind("i:cmd,ctrl", pushCenter3);
+slate.bind("o:cmd,ctrl", pushRigth23);
+slate.bind("u:cmd,ctrl", pushLeft23);
 
 //slate.bind("esc:cmd", hint);
 //direction = right|left|up|above|down|below|behind
@@ -351,6 +347,7 @@ S.bnda({
         // Window Hints
         "esc:cmd": S.op("hint"),
 
+        //
         // Switch currently doesn't work well so I'm commenting it out until I fix it.
         //"tab:cmd" : S.op("switch"),
 

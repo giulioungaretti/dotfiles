@@ -5,10 +5,16 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 " {{{
+"
+" nice ref stuff
+Plug 'thinca/vim-ref'
+"----------------------------------------------------------------- ERLANG{{{
+Plug 'vim-erlang/vim-erlang-compiler'
+Plug 'vim-erlang/vim-erlang-runtime'
+Plug 'vim-erlang/vim-erlang-omnicomplete'
+" }}}
 " Rainbow paranthesis
 Plug 'kien/rainbow_parentheses.vim'
-" visual interactive replace
-Plug 'hwrod/interactive-replace'
 " virtual env mangment python
 " Add the virtualenv's site-packages to vim path
 if has('python')
@@ -31,6 +37,8 @@ Plug 'vim-scripts/CursorLineCurrentWindow'
 " better search tools highglihg + match
 Plug 'inside/vim-search-pulse'
 Plug 'haya14busa/incsearch.vim'
+" visual interactive replace
+Plug 'hwrod/interactive-replace'
 "auto gnerate docstring for python
 Plug 'heavenshell/vim-pydocstring'
 " templates for empty files
@@ -40,14 +48,15 @@ Plug 'jonhiggs/MacDict.vim'
 " session managment
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
-" yankring
-Plug 'vim-scripts/YankRing.vim'
 " undo -trees
 Plug 'mbbill/undotree'
 " dahs integration
 Plug 'rizzatti/dash.vim'
 " py-doc
 Plug 'fs111/pydoc.vim'
+" unite
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " neocompchage
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet'
@@ -103,7 +112,7 @@ Plug 'airblade/vim-gitgutter'
 " tree bar
 Plug 'scrooloose/nerdtree'
 " ctrl p
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 " nerd commenter
 Plug 'scrooloose/nerdcommenter'
 " fuGITve
@@ -155,10 +164,12 @@ set lazyredraw
 let &t_Co=256
 let base16colorspace=256
 "hi Visual cterm=reverse
-set background=dark
 "colorscheme base16-chalk
 colorscheme base16-flat
-hi! VertSplit  ctermfg=9 ctermbg=21
+set background=dark
+hi! VertSplit  ctermfg=9 ctermbg=18
+" uncommend for light bkg
+"hi! VertSplit  ctermfg=9 ctermbg=21
 set mousehide "Hide when characters are typed
 "}}}
 " ------------------------------------------------------------------ Settings
@@ -313,6 +324,8 @@ command! Q q
 command! W w
 command! Qa qa
 command! Wa wa
+command! Wq wq
+command! Wqa wqa
 "}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
@@ -326,23 +339,22 @@ let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
 " create heading from selected text
 command! Header call EightHeader( 78, 'right', 1, ['', '-', ''], '', '\=" ".s:str." "' ) '] )
 " better search
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+"map /  <Plug>(incsearch-forward)
+"map ?  <Plug>(incsearch-backward)
+"map g/ <Plug>(incsearch-stay)
 "templates
 let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
-nmap <silent> <C-d> <Plug>(pydocstring)
 let g:email = "giulioungaretti@me.com"
 " airline {{{
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 " use simple separators
 let g:airline_left_alt_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-" Explode airline from preview windows
+" exclude airline from preview windows
 let g:airline_exclude_preview = 1
 let g:airline#extensions#ctrlp#color_template = 'normal'
 "}}}
@@ -402,29 +414,27 @@ let g:tagbar_autofocus = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 " remap ctrlp to ctrla and use ctrlp for yankring
-let g:ctrlp_map = '<c-a>'
+" let g:ctrlp_map = '<c-a>'
 " use ctrl-b to show list of open buffer
-nmap <c-b> :CtrlPBuffer <CR>
+"  nmap <c-b> :CtrlPBuffer <CR>
 " The Silver Searcher
 if executable('ag')
         " Use ag over grep
         set grepprg=ag\ --nogroup\ --nocolor
         " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-        let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-                                \ --ignore .git
-                                \ --ignore .svn
-                                \ --ignore .hg
-                                \ --ignore .DS_Store
-                                \ --ignore "**/*.pyc"
-                                \ -g ""'
+        "let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+                                "\ --ignore .git
+                                "\ --ignore .svn
+                                "\ --ignore .hg
+                                "\ --ignore .DS_Store
+                                "\ --ignore "**/*.pyc"
+                                "\ -g ""'
 
-        " ag is fast enough that CtrlP doesn't need to cache
-        let g:ctrlp_use_caching = 0
+        "" ag is fast enough that CtrlP doesn't need to cache
+        "let g:ctrlp_use_caching = 0
 else
         echoerr "consider installing ag"
 endif
-" slime configuration
-let g:slime_target = "tmux"
 "}}}
 "}}}
 "------------------------------------------------------------------------- go
@@ -432,7 +442,7 @@ let g:slime_target = "tmux"
 "fold by sytax and style
 " set style for go files
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-au FileType go  set foldmethod=syntax foldnestmax=10 foldlevel=3
+au FileType go set foldmethod=indent foldnestmax=10 foldlevel=3
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -483,6 +493,12 @@ let g:tagbar_type_go = {
                         \ 'ctagsbin'  : 'gotags',
                         \ 'ctagsargs' : '-sort -silent'
                         \ }
+" Enable syntax highting on everything
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 "}}}
 "----------------------------------------------------------------- easymotion
 "{{{
@@ -578,7 +594,7 @@ if has('conceal')
 endif
 " }}}
 let g:neocomplete#disable_auto_complete=0
-let g:neocomplete#enable_auto_select = 0
+let g:neocomplete#enable_auto_select=0
 "" fix go ? seems to
 let g:neocomplete#sources#omni#functions = {'go': 'go#complete#Complete'}
 " }}}
@@ -660,6 +676,7 @@ let b:javascript_fold=1
 "}}}
 "--------------------------------------------------------------------- python
 "{{{
+autocmd FileType python nmap <silent> <C-d> <Plug>(pydocstring)
 " set 79 long ruler
 au FileType python  set colorcolumn=79
 " expand tab to spaces
@@ -774,5 +791,41 @@ function! GetVisual()
         return join(lines, "\n")
 endfunction
 "}}}
+"------------------------------------------------------------------ unite{{{
+if executable('ag')
+" Use ag in unite grep source.
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts =
+\ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+\  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+let g:unite_source_grep_recursive_opt = ''
+elseif executable('pt')
+" Use pt in unite grep source.
+" https://github.com/monochromegane/the_platinum_searcher
+let g:unite_source_grep_command = 'pt'
+let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+let g:unite_source_grep_recursive_opt = ''
+elseif executable('ack-grep')
+" Use ack in unite grep source.
+let g:unite_source_grep_command = 'ack-grep'
+let g:unite_source_grep_default_opts =
+\ '-i --no-heading --no-color -k -H'
+let g:unite_source_grep_recursive_opt = ''
+endif
 "}}}
+nnoremap <C-A> :Unite -quick-match file_rec/async<cr>
+nnoremap <C-a> :Unite  file_rec/async  -start-insert -default-action=vsplit<cr>
+nnoremap <leader>/ :Unite -quick-match grep:.  <cr>
+let g:unite_source_history_yank_enable = 1
+nnoremap <C-y> :Unite -quick-match  history/yank <cr>
+nnoremap <C-b> :Unite -quick-match buffer<cr>
+"}}}
+"--------------------------------------------------------------------- erlang
+ "{{{
+let g:ref_use_vimproc = 1
+let g:ref_open = 'split'
+let g:ref_cache_dir = expand('/tmp/vim_ref_cache/')
+autocmd FileType erlang nno <leader>K :<C-u>Unite ref/erlang
+            \ -vertical -default-action=split<CR>
+" }}}
 " vim: foldmethod=marker foldlevel=0

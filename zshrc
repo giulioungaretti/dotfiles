@@ -94,7 +94,7 @@ zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
 # Base 16 shell {{{
-BASE16_SCHEME="chalk"
+BASE16_SCHEME="flat"
 BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
 [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
 # }}}

@@ -41,7 +41,7 @@ vkill()
 # old python 2 path
 oldPython(){
         export PATH="/Users/giulio/anacondaold/bin:$PATH"
-        export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+        #export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 }
 #}}}
 #}}}
