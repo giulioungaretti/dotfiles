@@ -165,7 +165,7 @@ let base16colorspace=256
 colorscheme base16-bright
 set background=dark
 hi! VertSplit  ctermfg=9 ctermbg=18
-colorscheme base16-shapeshifter
+colorscheme base16-londontube
 let bkg=$term_bkg
 if bkg =="light"
         hi! VertSplit  ctermfg=9 ctermbg=18

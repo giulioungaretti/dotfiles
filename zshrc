@@ -104,14 +104,14 @@ dark(){
         term_bkg="dark"
         export term_bkg
         BASE16_SHELL="$HOME/.config/base16-shell/base16-$term_theme.$term_bkg.sh"
-        [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
+        [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL &&\
         echo "switching theme to :"$BASE16_SHELL
 }
 light(){
         term_bkg="light"
         export term_bkg
         BASE16_SHELL="$HOME/.config/base16-shell/base16-$term_theme.$term_bkg.sh"
-        [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
+        [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL &&\
         echo "switching theme to :"$BASE16_SHELL
 }
 #}}}
