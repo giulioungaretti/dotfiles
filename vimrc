@@ -127,7 +127,6 @@ Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 " colorschemes
 Plug 'chriskempson/base16-vim'
-Plug 'altercation/vim-colors-solarized'
 " jedi for ptyhon
 Plug 'davidhalter/jedi-vim'
 " go integration
@@ -161,13 +160,17 @@ set lazyredraw
 "256 color base 16 theme
 let &t_Co=256
 let base16colorspace=256
+" fli[ colors in visual selection
 "hi Visual cterm=reverse
-"colorscheme base16-chalk
-colorscheme base16-flat
-set background=dark
-hi! VertSplit  ctermfg=9 ctermbg=18
-" uncommend for light bkg
-"hi! VertSplit  ctermfg=9 ctermbg=21
+colorscheme base16-shapeshifter
+let bkg=$term_bkg
+if bkg =="light"
+        hi! VertSplit  ctermfg=9 ctermbg=18
+        set background=light
+elseif bkg=="dark"
+        hi! VertSplit  ctermfg=9 ctermbg=21
+        set background=dark
+endif
 set mousehide "Hide when characters are typed
 "}}}
 " ------------------------------------------------------------------ Settings
