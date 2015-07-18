@@ -17,6 +17,8 @@ export GOPATH=$HOME/Hack/go
 export PATH=$PATH:$GOPATH/bin
 #export GOROOT=/usr/local/go/
 export PATH=$PATH:/usr/local/go/bin
+# export tunnels for eta/shopgun
+export PATH=$PATH:/Users/giulio/eTilbudsavis/tunnels
 #}}}
 #}}}
 #------------------------------------------------------------------ Functions{{{

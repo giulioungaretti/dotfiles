@@ -164,7 +164,7 @@ let &t_Co=256
 let base16colorspace=256
 "hi Visual cterm=reverse
 "colorscheme base16-chalk
-colorscheme base16-flat
+colorscheme base16-bright
 set background=dark
 hi! VertSplit  ctermfg=9 ctermbg=18
 " uncommend for light bkg

@@ -94,7 +94,7 @@ zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
 # Base 16 shell {{{
-BASE16_SCHEME="flat"
+BASE16_SCHEME="bright"
 BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
 [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
 # }}}
@@ -108,7 +108,6 @@ ssh() {
 }
 #}}}
 # conda tab complete
-zstyle ':completion::complete:*' use-cache 1
-# vim: foldmethod=marker:foldlevel=0
-
-export PATH="/usr/local/p/versions/python:$PATH"
+# don'trember this
+# export PATH="/usr/local/p/versions/python:$PATH"
+# vim: foldmethod=marker foldlevel=0
