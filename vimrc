@@ -16,9 +16,8 @@ Plug 'vim-erlang/vim-erlang-omnicomplete'
 Plug 'kien/rainbow_parentheses.vim'
 " virtual env mangment python
 " Add the virtualenv's site-packages to vim path
-if has('python')
-echo "Error: Required vim compiled with +python"
-py << EOF
+if has('python3')
+py3 << EOF
 import os.path
 import sys
 import vim
@@ -85,7 +84,7 @@ Plug 'sjl/vitality.vim'
 " send line to tmux
 Plug 'ervandew/screen'
 " auto-format code
-Plug 'chiel92/vim-autoformat', 'dev'
+ Plug 'chiel92/vim-autoformat', 'dev'
 " emmet
 Plug 'mattn/emmet-vim'
 " better js
