@@ -1,7 +1,11 @@
+#
+# Executes commands at the start of an interactive session.
+#
 # Source Prezto. {{{
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
         source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi #}}}
+fi
+#}}}
 # Exports # {{{
 TERM=xterm-256color
 export TERM
@@ -93,21 +97,22 @@ noop () {}
 zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
-# Base 16 shell {{{
-BASE16_SCHEME="bright"
-BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
-[[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
-# }}}
-# ssh wrapper for tmux{{{
-ssh() {
-        tmux rename-window "$*"
-        command ssh "$@"
-        echo "Counting to 60"
-        sleep 60 && exit
-        tmux rename-window "bash (exited ssh)"
+term_theme="shapeshifter"
+export term_theme
+# function to make dark
+dark(){
+        term_bkg="dark"
+        export term_bkg
+        BASE16_SHELL="$HOME/.config/base16-shell/base16-$term_theme.$term_bkg.sh"
+        [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
+        echo "switching theme to :"$BASE16_SHELL
+}
+light(){
+        term_bkg="light"
+        export term_bkg
+        BASE16_SHELL="$HOME/.config/base16-shell/base16-$term_theme.$term_bkg.sh"
+        [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL
+        echo "switching theme to :"$BASE16_SHELL
 }
 #}}}
-# conda tab complete
-# don'trember this
-# export PATH="/usr/local/p/versions/python:$PATH"
-# vim: foldmethod=marker foldlevel=0
+#vim: foldmethod=marker:foldlevel=0
