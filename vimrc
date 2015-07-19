@@ -131,6 +131,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'davidhalter/jedi-vim'
 " go integration
 Plug 'fatih/vim-go'
+Plug 'garyburd/go-explorer'
 " zen writing
 Plug 'junegunn/goyo.vim'
 " highlighcolors
@@ -162,17 +163,18 @@ let &t_Co=256
 let base16colorspace=256
 " fli[ colors in visual selection
 "hi Visual cterm=reverse
-colorscheme base16-bright
 set background=dark
 hi! VertSplit  ctermfg=9 ctermbg=18
-colorscheme base16-londontube
+colorscheme base16-flat
 let bkg=$term_bkg
 if bkg =="light"
-        hi! VertSplit  ctermfg=9 ctermbg=18
         set background=light
-elseif bkg=="dark"
         hi! VertSplit  ctermfg=9 ctermbg=21
+        hi! CursorLine ctermbg=255 cterm=bold
+elseif bkg=="dark"
         set background=dark
+        hi! CursorLine cterm=bold ctermbg=233
+        hi! VertSplit  ctermfg=9 ctermbg=18
 endif
 set mousehide "Hide when characters are typed
 "}}}
@@ -259,28 +261,34 @@ vnoremap K :m '<-2<CR>gv=gv
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
-"jj to esc
-inoremap jj <Esc>
+"jk kj to  to esc
+inoremap jk <Esc>
+inoremap kj <Esc>
+vnoremap jk <Esc>
+vnoremap kj <Esc>
 " toggle relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 function! Light()
         :set background=light
         :hi! VertSplit  ctermfg=9 ctermbg=21
+        :hi! CursorLine ctermbg=255 cterm=bold
         :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh
         endif
 endfunction
-map <silent><leader>bgl :call Light()<cr>
 
 function! Dark()
         :set background=dark
         :hi! VertSplit  ctermfg=9 ctermbg=18
+        :hi! CursorLine ctermbg=233 cterm=bold
         :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh
         endif
 endfunction
+" map functions to bgl and bgd 
+map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
 " split right and below instead of default opposite
 set splitbelow
@@ -291,6 +299,8 @@ nnoremap <silent> z2 :set foldlevel=2<CR>
 nnoremap <silent> z3 :set foldlevel=3<CR>
 nnoremap <silent> z4 :set foldlevel=4<CR>
 nnoremap <silent> z5 :set foldlevel=5<CR>
+nnoremap <silent> z5 :set foldlevel=6<CR>
+nnoremap <silent> z5 :set foldlevel=7<CR>
 " turn on and off spell checking.
 map <F10> :setlocal spell! spelllang=en_us<CR>
 "buffers
@@ -300,13 +310,19 @@ nnoremap <silent><C-W><C-a> :bprevious<CR>
 nnoremap <silent><C-W><C-q> :bd<CR>
 " close current buffer and moves back to the previous "
 nmap <leader>bq :bp <BAR> bd #<CR>
-" move search highlight to the center of the screen
-nnoremap n nzz
-nnoremap N Nzz
-" delete left
-imap <C-G> <BS>
-" }}}
-" plugins  {{{
+"}}}
+"}}}
+"--------------------------------------------------------------- common typos
+"{{{
+command! Q q
+command! W w
+command! Qa qa
+command! Wa wa
+command! Wq wq
+command! Wqa wqa
+"}}}
+"------------------------------------------------------------------- Plug ins
+"{{{
 function! GetDict()
         let w = expand("<cword>")
         :call g:MacDict(w)
@@ -320,19 +336,7 @@ map <leader>td <Plug>TaskList
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
-" }}}
-"}}}
-"--------------------------------------------------------------- common typos
-"{{{
-command! Q q
-command! W w
-command! Qa qa
-command! Wa wa
-command! Wq wq
-command! Wqa wqa
-"}}}
-"------------------------------------------------------------------- Plug ins
-"{{{
+" rainbow_parentheses 
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
@@ -342,10 +346,25 @@ let g:EightHeader_comment   = 'call NERDComment( "n", "comment" )'
 let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
 " create heading from selected text
 command! Header call EightHeader( 78, 'right', 1, ['', '-', ''], '', '\=" ".s:str." "' ) '] )
-" better search
-"map /  <Plug>(incsearch-forward)
-"map ?  <Plug>(incsearch-backward)
-"map g/ <Plug>(incsearch-stay)
+"-------------------------------------------------- incsearch and search pulse
+" incsearch and vim search pulse
+let g:vim_search_pulse_disable_auto_mappings = 1
+let g:incsearch#auto_nohlsearch = 1
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+" Next or previous match is followed by a Pulse
+map n <Plug>(incsearch-nohl-n)<Plug>Pulse
+map N <Plug>(incsearch-nohl-N)<Plug>Pulse
+map * <Plug>(incsearch-nohl-*)<Plug>Pulse
+map # <Plug>(incsearch-nohl-#)<Plug>Pulse
+map g* <Plug>(incsearch-nohl-g*)<Plug>Pulse
+map g# <Plug>(incsearch-nohl-g#)<Plug>Pulse
+
+" Pulses the first match after hitting the enter keyan
+autocmd! User IncSearchExecute
+autocmd User IncSearchExecute :call search_pulse#Pulse()
 "templates
 let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
@@ -405,7 +424,7 @@ function! Multiple_cursors_after()
   endif
 endfunction
 "}}}
-"autoformat code with F6
+"remove trailing white spaces with 56
 noremap <F5> :FixWhitespace <CR><CR>
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
@@ -796,6 +815,7 @@ function! GetVisual()
 endfunction
 "}}}
 "------------------------------------------------------------------ unite{{{
+"set grep exex {{{
 if executable('ag')
 " Use ag in unite grep source.
 let g:unite_source_grep_command = 'ag'
@@ -817,11 +837,14 @@ let g:unite_source_grep_default_opts =
 let g:unite_source_grep_recursive_opt = ''
 endif
 "}}}
-nnoremap <C-A> :Unite -quick-match file_rec/async<cr>
-nnoremap <C-a> :Unite  file_rec/async  -start-insert -default-action=vsplit<cr>
-nnoremap <leader>/ :Unite -quick-match grep:.  <cr>
+" use fuzzy matching 
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" open in vsplit
+nnoremap <silent><leader>a :Unite  file_rec/async  -start-insert -default-action=vsplit<cr>
+nnoremap <silent><leader>/ :Unite -quick-match grep:.  <cr>
 let g:unite_source_history_yank_enable = 1
-nnoremap <C-y> :Unite -quick-match  history/yank <cr>
+nnoremap <silent><leader>y :Unite -quick-match  history/yank <cr>
+nnoremap <silent> <leader>b :<C-u>Unite buffer marks bookmark<CR>
 nnoremap <C-b> :Unite -quick-match buffer<cr>
 "}}}
 "--------------------------------------------------------------------- erlang

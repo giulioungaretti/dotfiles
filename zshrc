@@ -63,7 +63,7 @@ bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
 bindkey -v
 # remap jj to nesc
-bindkey -M viins 'jj' vi-cmd-mode
+bindkey -M viins 'jk' vi-cmd-mode
 # history search in vim mode
 # http://zshwiki.org./home/zle/bindkeys#why_isn_t_control-r_working_anymore
 bindkey -M viins '^s' history-incremental-search-backward
@@ -97,6 +97,10 @@ noop () {}
 zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
+# change iTerm profile
+# works only outside TMUX
+# TODO find out how to make it work inside tmux
+it2prof() { echo -e "\033]50;SetProfile=$1\a" }
 term_theme="shapeshifter"
 export term_theme
 # function to make dark
@@ -105,14 +109,16 @@ dark(){
         export term_bkg
         BASE16_SHELL="$HOME/.config/base16-shell/base16-$term_theme.$term_bkg.sh"
         [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL &&\
-        echo "switching theme to :"$BASE16_SHELL
+        echo -e "\033]50;SetProfile=dark\a" &&\
+        echo "switching theme to: "$term_theme "-"$term_bkg
 }
 light(){
         term_bkg="light"
         export term_bkg
         BASE16_SHELL="$HOME/.config/base16-shell/base16-$term_theme.$term_bkg.sh"
         [[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL &&\
-        echo "switching theme to :"$BASE16_SHELL
+        echo -e "\033]50;SetProfile=light\a" &&\
+        echo "switching theme to: "$term_theme"-"$term_bkg
 }
 #}}}
 #vim: foldmethod=marker:foldlevel=0
