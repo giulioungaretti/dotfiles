@@ -165,15 +165,15 @@ let base16colorspace=256
 "hi Visual cterm=reverse
 set background=dark
 hi! VertSplit  ctermfg=9 ctermbg=18
-colorscheme base16-flat
+colorscheme base16-default
 let bkg=$term_bkg
 if bkg =="light"
         set background=light
         hi! VertSplit  ctermfg=9 ctermbg=21
-        hi! CursorLine ctermbg=255 cterm=bold
+        "hi! CursorLine ctermbg=255 cterm=bold
 elseif bkg=="dark"
         set background=dark
-        hi! CursorLine cterm=bold ctermbg=233
+        "hi! CursorLine cterm=bold ctermbg=233
         hi! VertSplit  ctermfg=9 ctermbg=18
 endif
 set mousehide "Hide when characters are typed
@@ -271,7 +271,7 @@ nnoremap <silent><leader>o :set relativenumber!<cr>
 function! Light()
         :set background=light
         :hi! VertSplit  ctermfg=9 ctermbg=21
-        :hi! CursorLine ctermbg=255 cterm=bold
+        ":hi! CursorLine ctermbg=255 cterm=bold
         :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh
@@ -281,7 +281,7 @@ endfunction
 function! Dark()
         :set background=dark
         :hi! VertSplit  ctermfg=9 ctermbg=18
-        :hi! CursorLine ctermbg=233 cterm=bold
+        ":hi! CursorLine ctermbg=233 cterm=bold
         :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh

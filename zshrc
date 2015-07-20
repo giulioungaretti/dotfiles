@@ -9,13 +9,14 @@ fi
 # Exports # {{{
 TERM=xterm-256color
 export TERM
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
 export GIT_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
+# wor stuff
+export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
 #}}}
 # Aliases {{{
 alias server='python -m http.server'
@@ -101,7 +102,7 @@ bindkey -M vicmd '\E' noop
 # works only outside TMUX
 # TODO find out how to make it work inside tmux
 it2prof() { echo -e "\033]50;SetProfile=$1\a" }
-term_theme="shapeshifter"
+term_theme="default"
 export term_theme
 # function to make dark
 dark(){
