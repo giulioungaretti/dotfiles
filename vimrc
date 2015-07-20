@@ -261,11 +261,6 @@ vnoremap K :m '<-2<CR>gv=gv
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
-"jk kj to  to esc
-inoremap jk <Esc>
-inoremap kj <Esc>
-vnoremap jk <Esc>
-vnoremap kj <Esc>
 " toggle relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 function! Light()
