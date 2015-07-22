@@ -63,24 +63,17 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'superbrothers/vim-vimperator'
 " easymotions
 Plug 'Lokaltog/vim-easymotion'
-" instant markdown needs extra installs
-Plug 'terryma/vim-instant-markdown'
 " expand selection to region
 Plug 'terryma/vim-expand-region'
-" open markdown preview in marked2 app
-Plug 'itspriddle/vim-marked'
 " align table
 Plug 'godlygeek/tabular'
 " markdown plugin
 Plug 'plasticboy/vim-markdown'
-" let Vundle manage Vundle, required
-Plug 'gmarik/Vundle.vim'
+Plug 'terryma/vim-instant-markdown'
 " eyecany bar
 Plug 'bling/vim-airline'
 " makes iterm2 tmux and vim have sex
 Plug 'sjl/vitality.vim'
-" execute file
-:Plug 'Bexec'
 " send line to tmux
 Plug 'ervandew/screen'
 " auto-format code
@@ -91,7 +84,7 @@ Plug 'mattn/emmet-vim'
 Plug 'pangloss/vim-javascript'
 " colorize css hexcodes
 Plug 'ap/vim-css-color'
-" ptyhon pep8
+" syntax cheker
 Plug 'scrooloose/syntastic'
 " window managment
 Plug 'wesQ3/vim-windowswap'
@@ -238,6 +231,8 @@ function! TogglePasteMode()
         endif
 endfunction
 " move to right
+"
+inoremap fd  <Esc>
 inoremap l;  <Esc>la
 snoremap l;  <Esc>la
 nnoremap <leader>p :call TogglePasteMode()<CR>
