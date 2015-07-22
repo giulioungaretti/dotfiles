@@ -7,6 +7,7 @@ echo copying
 
 for f in ~/dotfiles/*
 do
+    echo "symlinking: "$f
     ln -sf "$f" "$HOME/.${f##*/}"
 done
 
@@ -16,9 +17,8 @@ rm -f ~/.makeLinks.sh
 rm -f ~/.README.md
 
 echo done
-
-echo set up wundle
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-echo installing plugins
-vim +PluginInstall +qall
+if [ !  "~/.vim/autoload/plug.vim " ]; then
+        echo set up plug
+        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
