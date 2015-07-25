@@ -256,6 +256,9 @@ vnoremap K :m '<-2<CR>gv=gv
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
+"jk kj to  to esc
+inoremap jk <Esc>
+inoremap kj <Esc>
 " toggle relative line numbers
 nnoremap <silent><leader>o :set relativenumber!<cr>
 function! Light()
@@ -299,7 +302,7 @@ nnoremap <silent><C-W><C-d> :bnext<CR>
 nnoremap <silent><C-W><C-a> :bprevious<CR>
 nnoremap <silent><C-W><C-q> :bd<CR>
 " close current buffer and moves back to the previous "
-nmap <leader>bq :bp <BAR> bd #<CR>
+nmap <silent><leader>q :bp <BAR> bd #<CR>
 "}}}
 "}}}
 "--------------------------------------------------------------- common typos
@@ -534,7 +537,6 @@ map <Leader>w <Plug>(easymotion-bd-w)
 map <Leader>W <Plug>(easymotion-bd-W)
 map <Leader>e <Plug>(easymotion-bd-e)
 map <Leader>E <Plug>(easymotion-bd-E)
-map <Leader>q <Plug>(easymotion-jumptoanywhere)
 " customize color
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
@@ -834,7 +836,7 @@ nnoremap <silent><leader>a :Unite  file_rec/async  -start-insert -default-action
 nnoremap <silent><leader>/ :Unite -quick-match grep:.  <cr>
 let g:unite_source_history_yank_enable = 1
 nnoremap <silent><leader>y :Unite -quick-match  history/yank <cr>
-nnoremap <silent> <leader>b :<C-u>Unite buffer marks bookmark<CR>
+nnoremap <silent> <leader>b :<C-u>Unite buffer bookmark<CR>
 nnoremap <C-b> :Unite -quick-match buffer<cr>
 "}}}
 "--------------------------------------------------------------------- erlang
