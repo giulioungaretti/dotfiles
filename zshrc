@@ -63,8 +63,6 @@ bindkey -a '^R' redo
 bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
 bindkey -v
-# remap jj to nesc
-bindkey -M viins 'jk' vi-cmd-mode
 # history search in vim mode
 # http://zshwiki.org./home/zle/bindkeys#why_isn_t_control-r_working_anymore
 bindkey -M viins '^s' history-incremental-search-backward
