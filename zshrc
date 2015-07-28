@@ -34,6 +34,13 @@ alias rw-='chmod 600'
 alias rwx='chmod 700'
 alias r--='chmod 644'
 alias r-x='chmod 755'
+
+if [ -f /usr/local/bin/agb ]; then
+        alias agb="source /usr/local/bin/agb"
+fi
+if [ -f /usr/local/bin/dgb ]; then
+        alias dgb="source /usr/local/bin/dgb"
+fi
 #}}}
 # OS awareness # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
