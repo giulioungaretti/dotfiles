@@ -17,6 +17,7 @@ rm -f ~/.makeLinks.sh
 rm -f ~/.README.md
 
 echo done
+
 if [ !  "~/.vim/autoload/plug.vim " ]; then
         echo set up plug
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
