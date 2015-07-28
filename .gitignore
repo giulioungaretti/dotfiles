@@ -1,1 +1,6 @@
-.DS_store
+.DS\_Store
+.ipynb_checkpoints/
+# vim session files
+Session.vim
+# golang coverage tests temp files
+coverage.out

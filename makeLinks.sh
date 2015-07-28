@@ -16,9 +16,3 @@ rm -f ~/.makeLinks.sh
 rm -f ~/.README.md
 
 echo done
-
-echo set up wundle
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-echo installing plugins
-vim +PluginInstall +qall

@@ -122,4 +122,13 @@ light(){
         echo "switching theme to: "$term_theme"-"$term_bkg
 }
 #}}}
+ #------------------------------------------------------- gb tooling helpers.{{{
+if [ -f /usr/local/bin/agb ]; then
+        alias agb="source /usr/local/bin/agb"
+fi
+if [ -f /usr/local/bin/dgb ]; then
+        alias dgb="source /usr/local/bin/dgb"
+fi
+
+#}}}
 #vim: foldmethod=marker:foldlevel=0
