@@ -34,13 +34,6 @@ alias rw-='chmod 600'
 alias rwx='chmod 700'
 alias r--='chmod 644'
 alias r-x='chmod 755'
-
-if [ -f /usr/local/bin/agb ]; then
-        alias agb="source /usr/local/bin/agb"
-fi
-if [ -f /usr/local/bin/dgb ]; then
-        alias dgb="source /usr/local/bin/dgb"
-fi
 #}}}
 # OS awareness # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -103,7 +96,7 @@ noop () {}
 zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
-# change iTerm profile
+# change iTerm profile{{{
 # works only outside TMUX
 # TODO find out how to make it work inside tmux
 it2prof() { echo -e "\033]50;SetProfile=$1\a" }
