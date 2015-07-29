@@ -170,6 +170,8 @@ elseif bkg=="dark"
         hi! VertSplit  ctermfg=9 ctermbg=18
 endif
 set mousehide "Hide when characters are typed
+" color of the current line number
+hi CursorLineNR cterm=bold ctermfg=01
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
