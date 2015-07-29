@@ -170,6 +170,8 @@ elseif bkg=="dark"
         hi! VertSplit  ctermfg=9 ctermbg=18
 endif
 set mousehide "Hide when characters are typed
+" color of the current line number
+hi CursorLineNR cterm=bold ctermfg=01
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
@@ -458,7 +460,7 @@ endif
 "fold by sytax and style
 " set style for go files
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-au FileType go set foldmethod=indent foldnestmax=10 foldlevel=3
+au FileType go set foldmethod=syntax foldnestmax=10 foldlevel=3
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
