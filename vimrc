@@ -26,6 +26,8 @@ if "VIRTUAL_ENV" in os.environ:
         sys.path.insert(0, venv_path)
 EOF
 endif
+" s3m browser plug in
+Plug 'yuratomo/w3m.vim'
 " headers
 Plug 'bimbalaszlo/vim-eightheader'
 " jekyll magic
@@ -43,9 +45,6 @@ Plug 'heavenshell/vim-pydocstring'
 Plug 'aperezdc/vim-template'
 " search in osx dictionary
 Plug 'jonhiggs/MacDict.vim'
-" session managment
-Plug 'tpope/vim-obsession'
-Plug 'dhruvasagar/vim-prosession'
 " undo -trees
 Plug 'mbbill/undotree'
 " dahs integration
@@ -55,6 +54,7 @@ Plug 'fs111/pydoc.vim'
 " unite
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'h1mesuke/unite-outline'
 " neocompchage
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet'
@@ -63,6 +63,7 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'superbrothers/vim-vimperator'
 " easymotions
 Plug 'Lokaltog/vim-easymotion'
+Plug 'unblevable/quick-scope'
 " expand selection to region
 Plug 'terryma/vim-expand-region'
 " align table
@@ -76,6 +77,8 @@ Plug 'bling/vim-airline'
 Plug 'sjl/vitality.vim'
 " send line to tmux
 Plug 'ervandew/screen'
+" tmux seamless movement
+Plug 'christoomey/vim-tmux-navigator'
 " auto-format code
  Plug 'chiel92/vim-autoformat', 'dev'
 " emmet
@@ -90,8 +93,6 @@ Plug 'scrooloose/syntastic'
 Plug 'wesQ3/vim-windowswap'
 " remove and highlight trailing spaces
 Plug 'bronson/vim-trailing-whitespace'
-" tmux seamless movement
-Plug 'christoomey/vim-tmux-navigator'
 "indent highlight
 Plug 'Yggdroot/indentLine'
 ""autoclose
@@ -282,7 +283,7 @@ function! Dark()
                 :AirlineRefresh
         endif
 endfunction
-" map functions to bgl and bgd 
+" map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
 " split right and below instead of default opposite
@@ -331,7 +332,7 @@ map <leader>td <Plug>TaskList
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
-" rainbow_parentheses 
+" rainbow_parentheses
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
@@ -472,7 +473,8 @@ au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)<cr><C-w>h<cr>
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
 au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
+"avoid clas with unite buffer navigator
+au FileType go nmap <leader>bu <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 "By default the mapping gd is enabled which opens the target identifier in current buffer. You can also open the definition/declaration in a new vertical, horizontal or tab for the word under your cursor:
@@ -526,7 +528,7 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " " Jump to anywhere you want with minimal keystrokes, with just one key
 " binding.
 " " `s{char}{label}`
-nmap s <Plug>(easymotion-s)
+"nmap s <Plug>(easymotion-s)
 "Turn on case sensitive feature
 let g:EasyMotion_smartcase = 1
 "
@@ -694,12 +696,12 @@ let b:javascript_fold=1
 "}}}
 "--------------------------------------------------------------------- python
 "{{{
-autocmd FileType python nmap <silent> <C-d> <Plug>(pydocstring)
 " set 79 long ruler
 au FileType python  set colorcolumn=79
 " expand tab to spaces
 au FileType python  set expandtab
 au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
+autocmd FileType python nmap <silent> <C-d> <Plug>(pydocstring)
 " JEDI and auto complete {{{
 let g:neocomplete#force_overwrite_completefunc=1
 "overwrite omnifunc  with jedi
@@ -713,15 +715,13 @@ let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*f
 "The call signatures can be displayed as a pop-up in the buffer (set to 1, the default), which has the advantage of being easier to refer to, or in Vim's command line aligned with the function call (set to 2), which can improve the integrity of Vim's undo history.   "
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#show_call_signatures = "2"
-"let g:jedi#use_splits_not_buffers = " winwidth winwidth"
+let g:jedi#use_splits_not_buffers = "winwidth" "this decides depending on the window length
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<leader>c"
 let g:jedi#rename_command = "<leader>r"
-let g:jedi#use_splits_not_buffers = "right"
-" open in split right
 "}}}
 " IPython3 tmux integration {{{
 let g:ScreenImpl = "Tmux"
@@ -797,6 +797,8 @@ let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc'
 "}}}
 " run file
 autocmd FileType python nnoremap  <buffer> <leader>r :exec '!python' shellescape(@%, 1)<cr>
+autocmd FileType python nno <leader>K :<C-u>Unite ref/pydoc
+            \ -vertical -default-action=split<CR>
 " {{{ misc functinons
 " gets the selected text in visual mode
 function! GetVisual()
@@ -832,7 +834,7 @@ let g:unite_source_grep_default_opts =
 let g:unite_source_grep_recursive_opt = ''
 endif
 "}}}
-" use fuzzy matching 
+" use fuzzy matching
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " open in vsplit
 nnoremap <silent><leader>a :Unite  file_rec/async  -start-insert -default-action=vsplit<cr>
@@ -850,4 +852,4 @@ let g:ref_cache_dir = expand('/tmp/vim_ref_cache/')
 autocmd FileType erlang nno <leader>K :<C-u>Unite ref/erlang
             \ -vertical -default-action=split<CR>
 " }}}
-" vim: foldmethod=marker foldlevel=0
+" vim: foldmethod=marker
