@@ -176,7 +176,6 @@ hi CursorLineNR cterm=bold ctermfg=01
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
-"set sg
 set shell=/bin/sh
 " bybye ex mode
 nnoremap Q <nop>
@@ -303,9 +302,10 @@ map <F10> :setlocal spell! spelllang=en_us<CR>
 " nice maximize split and go back to normal layout
 nnoremap <silent><C-W><C-d> :bnext<CR>
 nnoremap <silent><C-W><C-a> :bprevious<CR>
-nnoremap <silent><C-W><C-q> :bd<CR>
+" note that cntrl q never reaches vim in the first place.
+"nnoremap <silent><C-W><C-q> :bd<CR>
 " close current buffer and moves back to the previous "
-nmap <silent><leader>q :bp <BAR> bd #<CR>
+"nmap <silent><leader>q :bp <BAR> bd #<CR>
 "}}}
 "}}}
 "--------------------------------------------------------------- common typos
@@ -852,4 +852,15 @@ let g:ref_cache_dir = expand('/tmp/vim_ref_cache/')
 autocmd FileType erlang nno <leader>K :<C-u>Unite ref/erlang
             \ -vertical -default-action=split<CR>
 " }}}
+" If the current buffer has never been saved, it will have no name,
+" call the file browser to save it, otherwise just save it.
+command -nargs=0 -bar Update if &modified 
+                           \|    if empty(bufname('%'))
+                           \|        browse confirm write
+                           \|    else
+                           \|        confirm write
+                           \|    endif
+                           \|endif
+nnoremap <silent> <C-w> :<C-u>Update<CR>
+nnoremap <silent> <leader>q :q<CR>
 " vim: foldmethod=marker
