@@ -531,17 +531,12 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 "nmap s <Plug>(easymotion-s)
 "Turn on case sensitive feature
 let g:EasyMotion_smartcase = 1
-"
 "" JK motions: Line motions
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 " Beginning of word forward and backward. See |w| & |b|.
-map <Leader>w <Plug>(easymotion-bd-w)
-map <Leader>W <Plug>(easymotion-bd-W)
-map <Leader>e <Plug>(easymotion-bd-e)
-map <Leader>E <Plug>(easymotion-bd-E)
 " customize color
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
@@ -861,6 +856,6 @@ command -nargs=0 -bar Update if &modified
                            \|        confirm write
                            \|    endif
                            \|endif
-nnoremap <silent> <C-w> :<C-u>Update<CR>
+nnoremap <silent> <leader>w :<C-u>Update<CR>
 nnoremap <silent> <leader>q :q<CR>
 " vim: foldmethod=marker
