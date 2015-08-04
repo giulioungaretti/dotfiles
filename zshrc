@@ -54,7 +54,8 @@ fi
 # 10ms for key sequences
 KEYTIMEOUT=0.01
 #}}}
-
+# remap jj to nesc
+bindkey -M viins 'jk' vi-cmd-mode
 # add missing vim hotkeys
 # fixes backspace deletion issues
 # http://zshwiki.org/home/zle/vi-mode
