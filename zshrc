@@ -68,7 +68,7 @@ bindkey -v
 # http://zshwiki.org./home/zle/bindkeys#why_isn_t_control-r_working_anymore
 bindkey -M viins '^s' history-incremental-search-backward
 bindkey -v
-
+bindkey -M viins 'jk' vi-cmd-mode
 # Multi-level undo
 bindkey -M vicmd 'u' undo
 bindkey -M vicmd '^R' redo

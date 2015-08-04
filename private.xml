@@ -1,0 +1,8 @@
+<? version="1.0"?> <root>
+        <item>
+                <name>Flico minila magic.</name>
+                <identifier>private.Filco</identifier>
+                <autogen>__KeyToKey__ KeyCode::CURSOR_UP, KeyCode::SHIFT_R</autogen>
+                <autogen>__KeyToKey__ KeyCode::FORWARD_DELETE, KeyCode::CURSOR_UP</autogen>
+        </item>
+</root>
