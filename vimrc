@@ -120,7 +120,8 @@ Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
 " colorschemes
-Plug 'chriskempson/base16-vim'
+"Plug 'chriskempson/base16-vim'
+Plug 'altercation/vim-colors-solarized'
 " jedi for ptyhon
 Plug 'davidhalter/jedi-vim'
 " go integration
@@ -153,26 +154,52 @@ set wildmenu
 " redraw only when we need to
 set lazyredraw
 "256 color base 16 theme
-let &t_Co=256
-let base16colorspace=256
+"let &t_Co=256
+"let base16colorspace=256
 " fli[ colors in visual selection
 "hi Visual cterm=reverse
 set background=dark
-hi! VertSplit  ctermfg=9 ctermbg=18
-colorscheme base16-default
+hi! VertSplit ctermbg=8
+colorscheme solarized
 let bkg=$term_bkg
 if bkg =="light"
         set background=light
-        hi! VertSplit  ctermfg=9 ctermbg=21
-        "hi! CursorLine ctermbg=255 cterm=bold
+        colorscheme solarized
+        hi! VertSplit ctermbg=15
+        hi! CursorLineNR cterm=bold ctermfg=1
 elseif bkg=="dark"
         set background=dark
-        "hi! CursorLine cterm=bold ctermbg=233
-        hi! VertSplit  ctermfg=9 ctermbg=18
+        colorscheme solarized
+        hi! VertSplit ctermbg=8
+        hi! CursorLineNR cterm=bold ctermfg=1
 endif
+nnoremap <silent><leader>o :set relativenumber!<cr>
+function! Light()
+        set background=light
+        colorscheme solarized
+        hi! VertSplit ctermbg=15
+        hi! CursorLineNR cterm=bold ctermfg=1
+        :redraw!
+        if exists(':AirlineRefresh')
+                :AirlineRefresh
+        endif
+endfunction
+
+function! Dark()
+        set background=dark
+        colorscheme solarized
+        hi! VertSplit ctermbg=8
+        hi! CursorLineNR cterm=bold ctermfg=1
+        :redraw!
+        if exists(':AirlineRefresh')
+                :AirlineRefresh
+        endif
+endfunction
+" map functions to bgl and bgd
+map <silent><leader>bgl :call Light()<cr>
+map  <silent><leader>bgd :call Dark()<cr>
 set mousehide "Hide when characters are typed
 " color of the current line number
-hi CursorLineNR cterm=bold ctermfg=01
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
@@ -234,7 +261,6 @@ function! TogglePasteMode()
 endfunction
 " move to right
 "
-inoremap fd  <Esc>
 inoremap l;  <Esc>la
 snoremap l;  <Esc>la
 nnoremap <leader>p :call TogglePasteMode()<CR>
@@ -262,29 +288,6 @@ nnoremap <silent><C-W>c :call Minimze() <CR>
 inoremap jk <Esc>
 inoremap kj <Esc>
 " toggle relative line numbers
-nnoremap <silent><leader>o :set relativenumber!<cr>
-function! Light()
-        :set background=light
-        :hi! VertSplit  ctermfg=9 ctermbg=21
-        ":hi! CursorLine ctermbg=255 cterm=bold
-        :redraw!
-        if exists(':AirlineRefresh')
-                :AirlineRefresh
-        endif
-endfunction
-
-function! Dark()
-        :set background=dark
-        :hi! VertSplit  ctermfg=9 ctermbg=18
-        ":hi! CursorLine ctermbg=233 cterm=bold
-        :redraw!
-        if exists(':AirlineRefresh')
-                :AirlineRefresh
-        endif
-endfunction
-" map functions to bgl and bgd
-map <silent><leader>bgl :call Light()<cr>
-map  <silent><leader>bgd :call Dark()<cr>
 " split right and below instead of default opposite
 set splitbelow
 set splitright
@@ -304,7 +307,7 @@ nnoremap <silent><C-W><C-d> :bnext<CR>
 nnoremap <silent><C-W><C-a> :bprevious<CR>
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
-command -nargs=0 -bar Update if &modified 
+command -nargs=0 -bar Update if &modified
                            \|    if empty(bufname('%'))
                            \|        browse confirm write
                            \|    else
@@ -327,6 +330,28 @@ command! Wqa wqa
 "}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
+" enable quick_scope conditionally
+let g:qs_enable = 0
+let g:qs_enable_char_list = [ 'f', 'F', 't', 'T' ]
+
+function! Quick_scope_selective(movement)
+	let needs_disabling = 0
+	if !g:qs_enable
+		QuickScopeToggle
+		redraw!
+		let needs_disabling = 1
+	endif
+	let letter = nr2char(getchar())
+	if needs_disabling
+		QuickScopeToggle
+	endif
+	return a:movement . letter
+endfunction
+
+" quick_scope maps, operator-pending mode included (can do 'df' with hint)
+for i in g:qs_enable_char_list
+	execute 'noremap <expr> <silent>' . i . " Quick_scope_selective('". i . "')"
+endfor
 function! GetDict()
         let w = expand("<cword>")
         :call g:MacDict(w)

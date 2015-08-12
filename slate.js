@@ -282,11 +282,11 @@ slate.bind("m:ctrl,cmd", function(win) {
 //throwNext(win);
 //}
 //});
-slate.bind(";:shift,cmd", fullscreen);
 var zfoo = 0;
 slate.bind("i:cmd,ctrl", pushCenter3);
 slate.bind("o:cmd,ctrl", pushRigth23);
 slate.bind("u:cmd,ctrl", pushLeft23);
+slate.bind(";:ctrl,cmd", fullscreen);
 
 //slate.bind("esc:cmd", hint);
 //direction = right|left|up|above|down|below|behind
