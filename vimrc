@@ -1,17 +1,17 @@
 " ---------------------------------------------------------------------- Init
-"{{{
+
 set nocompatible              " be iMproved, required
 call plug#begin('~/.vim/plugged')
-"}}}
+
 " --------------------------------------------------------------------- Plugs
-" {{{
+"
 " nice doc ref stuff
 Plug 'thinca/vim-ref'
-"----------------------------------------------------------------- ERLANG{{{
+"----------------------------------------------------------------- ERLANG
 Plug 'vim-erlang/vim-erlang-compiler'
 Plug 'vim-erlang/vim-erlang-runtime'
 Plug 'vim-erlang/vim-erlang-omnicomplete'
-" }}}
+"
 " Rainbow paranthesis
 Plug 'kien/rainbow_parentheses.vim'
 " virtual env mangment python
@@ -135,9 +135,9 @@ Plug 'chrisbra/Colorizer'
 Plug 'rking/ag.vim'"
 " All of your Plugs must be added before the following line
 call plug#end()
-"}}}
+
 " -------------------------------------------------------------------- Visual
-"{{{
+
 " turn on syntax highlight
 syntax on
 " show curret line
@@ -146,33 +146,27 @@ set cursorline
 set number
 "remove ugly ass  split separator
 set fillchars=""
-" nuke split background
 "show bar
 set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
 set lazyredraw
-"256 color base 16 theme
-"let &t_Co=256
-"let base16colorspace=256
-" fli[ colors in visual selection
-"hi Visual cterm=reverse
+colorscheme solarized
+let g:solarized_termcolors=16
 set background=dark
 hi! VertSplit ctermbg=8
-colorscheme solarized
-let bkg=$term_bkg
-if bkg =="light"
-        set background=light
-        colorscheme solarized
-        hi! VertSplit ctermbg=15
-        hi! CursorLineNR cterm=bold ctermfg=1
-elseif bkg=="dark"
-        set background=dark
-        colorscheme solarized
-        hi! VertSplit ctermbg=8
-        hi! CursorLineNR cterm=bold ctermfg=1
-endif
+"if bkg =="light"
+        "set background=light
+        "colorscheme solarized
+        "hi! VertSplit ctermbg=15
+        "hi! CursorLineNR cterm=bold ctermfg=1
+"elseif bkg=="dark"
+        "set background=dark
+        "colorscheme solarized
+        "hi! VertSplit ctermbg=8
+        "hi! CursorLineNR cterm=bold ctermfg=1
+"endif
 nnoremap <silent><leader>o :set relativenumber!<cr>
 function! Light()
         set background=light
@@ -200,9 +194,9 @@ map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
 set mousehide "Hide when characters are typed
 " color of the current line number
-"}}}
+
 " ------------------------------------------------------------------ Settings
-"{{{
+
 set shell=/bin/sh
 " bybye ex mode
 nnoremap Q <nop>
@@ -234,21 +228,20 @@ set ignorecase
 set smartcase
 " better mousee interacation
 set mouse=nicr
-"folding {{{
+"folding
 set foldenable  " enable folding
 set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=syntax " fold based on indent level
 "reload on save
 autocmd! bufwritepost .vimrc source %
-" }}}
-" }}}
+"
+"
 "-------------------------------------------------------------------- Aliases
-" {{{
-" bare vim {{{
+"
+" bare vim
 " delete char backwards insert mode
 set backspace=indent,eol,start
 imap ^D <BS>
-" search word under the cursor  in the apple dictionary.
 " leader
 map <space> <leader>
 " Toggle paste mode.
@@ -260,11 +253,9 @@ function! TogglePasteMode()
         endif
 endfunction
 " move to right
-"
 inoremap l;  <Esc>la
-snoremap l;  <Esc>la
 nnoremap <leader>p :call TogglePasteMode()<CR>
-" fullscreen  {{{
+" fullscreen
 function! Fullscreen()
         let line = line(".")+0
         tabedit %
@@ -276,7 +267,7 @@ function! Minimze()
         tabclose
         call cursor(line,0 )
 endfunction
-" }}}
+"
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -317,19 +308,19 @@ command -nargs=0 -bar Update if &modified
 
 nnoremap <silent> <leader>w :<C-u>Update<CR>
 nnoremap <silent> <leader>q :q<CR>
-"}}}
-"}}}
+
+
 "--------------------------------------------------------------- common typos
-"{{{
+
 command! Q q
 command! W w
 command! Qa qa
 command! Wa wa
 command! Wq wq
 command! Wqa wqa
-"}}}
+
 "------------------------------------------------------------------- Plug ins
-"{{{
+
 " enable quick_scope conditionally
 let g:qs_enable = 0
 let g:qs_enable_char_list = [ 'f', 'F', 't', 'T' ]
@@ -398,7 +389,7 @@ autocmd User IncSearchExecute :call search_pulse#Pulse()
 let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
 let g:email = "giulioungaretti@me.com"
-" airline {{{
+" airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
 " use simple separators
@@ -409,17 +400,17 @@ let g:airline_right_sep=''
 " exclude airline from preview windows
 let g:airline_exclude_preview = 1
 let g:airline#extensions#ctrlp#color_template = 'normal'
-"}}}
 
-" syntastic {{{
+
+" syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = 'python3'
-"}}}
 
-" gutter & fugitive git bindings {{{
+
+" gutter & fugitive git bindings
 " open diff
 nnoremap <leader>gd :Gdiff<CR>
 " add current file
@@ -433,10 +424,10 @@ nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annothing random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
-"}}}
 
-" misc {{{
-" multiple cursors{{{
+
+" misc
+" multiple cursors
 " press esc to go back to normal mode instead of quitting multi cursor
 let g:multi_cursor_exit_from_insert_mode=0
 " Called once right before you start selecting multiple cursors
@@ -452,7 +443,7 @@ function! Multiple_cursors_after()
     exe 'NeoCompleteUnlock'
   endif
 endfunction
-"}}}
+
 "remove trailing white spaces with 56
 noremap <F5> :FixWhitespace <CR><CR>
 "autoformat code with F6
@@ -465,32 +456,10 @@ nmap <c-t> :TagbarToggle <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
-" remap ctrlp to ctrla and use ctrlp for yankring
-" let g:ctrlp_map = '<c-a>'
-" use ctrl-b to show list of open buffer
-"  nmap <c-b> :CtrlPBuffer <CR>
-" The Silver Searcher
-if executable('ag')
-        " Use ag over grep
-        set grepprg=ag\ --nogroup\ --nocolor
-        " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-        "let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-                                "\ --ignore .git
-                                "\ --ignore .svn
-                                "\ --ignore .hg
-                                "\ --ignore .DS_Store
-                                "\ --ignore "**/*.pyc"
-                                "\ -g ""'
 
-        "" ag is fast enough that CtrlP doesn't need to cache
-        "let g:ctrlp_use_caching = 0
-else
-        echoerr "consider installing ag"
-endif
-"}}}
-"}}}
+
 "------------------------------------------------------------------------- go
-"{{{
+
 "fold by sytax and style
 " set style for go files
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
@@ -553,9 +522,9 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 0
-"}}}
+
 "----------------------------------------------------------------- easymotion
-"{{{
+
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Bi-directional find motion
 " " Jump to anywhere you want with minimal keystrokes, with just one key
@@ -575,9 +544,9 @@ hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
 hi link EasyMotionTarget2First MatchParen
 hi link EasyMotionTarget2Second MatchParen
-" }}}
+"
 "---------------------------------------------------------------- neocopmlete
-"{{{
+
 let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
 let g:neocomplete#data_directory = "$HOME/.vim/tmp/"
 " Disable AutoComplPop.
@@ -625,7 +594,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType go setlocal omnifunc=gocomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "---------------------------
-" neocoomplete snippts {{{
+" neocoomplete snippts
 " Plug key-mappings.
 imap <TAB>     <Plug>(neosnippet_expand_or_jump)
 smap <TAB>     <Plug>(neosnippet_expand_or_jump)
@@ -640,14 +609,14 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
         set conceallevel=2 concealcursor=i
 endif
-" }}}
+"
 let g:neocomplete#disable_auto_complete=0
 let g:neocomplete#enable_auto_select=0
 "" fix go ? seems to
 let g:neocomplete#sources#omni#functions = {'go': 'go#complete#Complete'}
-" }}}
+"
 "------------------------------------------------------------------- NerdTree
-" {{{
+"
 " map nerd tree to leader n
 map <silent><leader>n :NERDTreeFocus<CR>
 map <C-e> <plug>NERDTreeTabsToggle<CR>
@@ -660,10 +629,10 @@ let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
 let g:nerdtree_tabs_open_on_gui_startup=0
-" }}}
+"
 "---------------------------------------------------------------- js and csss
-" {{{
-" tag-bar css stuff  " {{{
+"
+" tag-bar css stuff  "
 let g:tagbar_type_html = {
                         \  'ctagstype' : 'html',
                         \  'kinds' : [
@@ -714,23 +683,23 @@ let g:tagbar_type_markdown = {
                         \ ],
                         \ "sort" : 0
                         \ }
-"}}}
+
 " Enables HTML/CSS syntax highlighting in your JavaScript file.
 let g:javascript_enable_domhtmlcss = 1
 "  show nice embedded js
 let javascript_enable_domhtmlcss=1
 " allow js folding
 let b:javascript_fold=1
-"}}}
+
 "--------------------------------------------------------------------- python
-"{{{
+
 " set 79 long ruler
 au FileType python  set colorcolumn=79
 " expand tab to spaces
 au FileType python  set expandtab
 au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
 autocmd FileType python nmap <silent> <C-d> <Plug>(pydocstring)
-" JEDI and auto complete {{{
+" JEDI and auto complete
 let g:neocomplete#force_overwrite_completefunc=1
 "overwrite omnifunc  with jedi
 autocmd FileType python setlocal omnifunc=jedi#completions
@@ -750,8 +719,8 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<leader>c"
 let g:jedi#rename_command = "<leader>r"
-"}}}
-" IPython3 tmux integration {{{
+
+" IPython3 tmux integration
 let g:ScreenImpl = "Tmux"
 " Open an IPython3 shell.
 autocmd FileType python map <LocalLeader>p :IPython!<CR>
@@ -817,17 +786,17 @@ function! GetLen()
         echo  w
 endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
-"}}}
+
 " py-doc bindings
-"{{{
+
 let g:pydoc_open_cmd = 'vsplit'
 let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc'
-"}}}
+
 " run file
 autocmd FileType python nnoremap  <buffer> <leader>r :exec '!python' shellescape(@%, 1)<cr>
 autocmd FileType python nno <leader>K :<C-u>Unite ref/pydoc
             \ -vertical -default-action=split<CR>
-" {{{ misc functinons
+"  misc functinons
 " gets the selected text in visual mode
 function! GetVisual()
         " Why is this not a built-in Vim script function?!
@@ -838,11 +807,11 @@ function! GetVisual()
         let lines[0] = lines[0][col1 - 1:]
         return join(lines, "\n")
 endfunction
-"}}}
-"}}}
+
+
 "--- ------------------------------------------------------------------ unite
-"{{{
-"set grep exex {{{
+
+"set grep exex
 if executable('ag')
 " Use ag in unite grep source.
 let g:unite_source_grep_command = 'ag'
@@ -863,7 +832,7 @@ let g:unite_source_grep_default_opts =
 \ '-i --no-heading --no-color -k -H'
 let g:unite_source_grep_recursive_opt = ''
 endif
-"}}}
+
 " use fuzzy matching
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " open in vsplit
@@ -873,13 +842,13 @@ let g:unite_source_history_yank_enable = 1
 nnoremap <silent><leader>y :Unite -quick-match  history/yank <cr>
 nnoremap <silent> <leader>b :<C-u>Unite buffer bookmark<CR>
 nnoremap <C-b> :Unite -quick-match buffer<cr>
-"}}}
+
 " --------------------------------------------------------------------- erlang
- "{{{
+
 let g:ref_use_vimproc = 1
 let g:ref_open = 'split'
 let g:ref_cache_dir = expand('/tmp/vim_ref_cache/')
 autocmd FileType erlang nno <leader>K :<C-u>Unite ref/erlang
             \ -vertical -default-action=split<CR>
-" }}}
+"
 " vim: foldmethod=marker
