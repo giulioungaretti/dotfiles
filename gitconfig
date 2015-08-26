@@ -21,4 +21,10 @@
 [github]
 	user = giulioungaretti
 [core]
-	excludesfile = /Users/giulio/.gitignore
+	excludesfile = /Users/giulio/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Volumes/SourceTree/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
