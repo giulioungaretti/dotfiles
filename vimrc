@@ -1,19 +1,15 @@
+"┌─────────────────────────────────────────┐
+"│              _                          │
+"│       __   _(_)_ __ ___  _ __ ___       │
+"│       \ \ / / | '_ ` _ \| '__/ __|      │
+"│        \ V /| | | | | | | | | (__       │
+"│       (_)_/ |_|_| |_| |_|_|  \___|      │
+"│                                         │
+"└─────────────────────────────────────────┘
+" 15 Aug 2015
 " ---------------------------------------------------------------------- Init
-
+" {{{
 set nocompatible              " be iMproved, required
-call plug#begin('~/.vim/plugged')
-
-" --------------------------------------------------------------------- Plugs
-"
-" nice doc ref stuff
-Plug 'thinca/vim-ref'
-"----------------------------------------------------------------- ERLANG
-Plug 'vim-erlang/vim-erlang-compiler'
-Plug 'vim-erlang/vim-erlang-runtime'
-Plug 'vim-erlang/vim-erlang-omnicomplete'
-"
-" Rainbow paranthesis
-Plug 'kien/rainbow_parentheses.vim'
 " virtual env mangment python
 " Add the virtualenv's site-packages to vim path
 if has('python3')
@@ -26,8 +22,24 @@ if "VIRTUAL_ENV" in os.environ:
         sys.path.insert(0, venv_path)
 EOF
 endif
-" s3m browser plug in
-Plug 'yuratomo/w3m.vim'
+call plug#begin('~/.vim/plugged')
+"}}}
+" --------------------------------------------------------------------- Plugs
+"  {{{
+"  Arduino
+Plug 'sudar/vim-arduino-syntax'
+" snippets
+Plug 'sudar/vim-arduino-snippets'
+"  Processing syntax / run script and docs.
+Plug 'sophacles/vim-processing'
+" nice doc ref stuff
+Plug 'thinca/vim-ref'
+" elang plugs
+Plug 'vim-erlang/vim-erlang-compiler'
+Plug 'vim-erlang/vim-erlang-runtime'
+Plug 'vim-erlang/vim-erlang-omnicomplete'
+" Rainbow paranthesis
+Plug 'kien/rainbow_parentheses.vim'
 " headers
 Plug 'bimbalaszlo/vim-eightheader'
 " jekyll magic
@@ -37,8 +49,6 @@ Plug 'vim-scripts/CursorLineCurrentWindow'
 " better search tools highglihg + match
 Plug 'inside/vim-search-pulse'
 Plug 'haya14busa/incsearch.vim'
-" visual interactive replace
-Plug 'hwrod/interactive-replace'
 "auto gnerate docstring for python
 Plug 'heavenshell/vim-pydocstring'
 " templates for empty files
@@ -47,20 +57,15 @@ Plug 'aperezdc/vim-template'
 Plug 'jonhiggs/MacDict.vim'
 " undo -trees
 Plug 'mbbill/undotree'
-" dahs integration
-Plug 'rizzatti/dash.vim'
 " py-doc
 Plug 'fs111/pydoc.vim'
 " unite
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'h1mesuke/unite-outline'
 " neocompchage
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
-" open gvim from firefox
-Plug 'superbrothers/vim-vimperator'
 " easymotions
 Plug 'Lokaltog/vim-easymotion'
 Plug 'unblevable/quick-scope'
@@ -101,10 +106,6 @@ Plug 'Townk/vim-autoclose'
 Plug 'terryma/vim-multiple-cursors'
 " add git gutter
 Plug 'airblade/vim-gitgutter'
-" tree bar
-Plug 'scrooloose/nerdtree'
-" ctrl p
-" Plug 'kien/ctrlp.vim'
 " nerd commenter
 Plug 'scrooloose/nerdcommenter'
 " fuGITve
@@ -135,19 +136,17 @@ Plug 'chrisbra/Colorizer'
 Plug 'rking/ag.vim'"
 " All of your Plugs must be added before the following line
 call plug#end()
-
+"}}}
 " -------------------------------------------------------------------- Visual
-
+"{{{
 " turn on syntax highlight
 syntax on
 " show curret line
 set cursorline
-" turn on linenumbers, and make them relative except current line
-set number
 "remove ugly ass  split separator
 set fillchars=""
 "show bar
-set laststatus=2
+set laststatus=0
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
@@ -156,18 +155,6 @@ colorscheme solarized
 let g:solarized_termcolors=16
 set background=dark
 hi! VertSplit ctermbg=8
-"if bkg =="light"
-        "set background=light
-        "colorscheme solarized
-        "hi! VertSplit ctermbg=15
-        "hi! CursorLineNR cterm=bold ctermfg=1
-"elseif bkg=="dark"
-        "set background=dark
-        "colorscheme solarized
-        "hi! VertSplit ctermbg=8
-        "hi! CursorLineNR cterm=bold ctermfg=1
-"endif
-nnoremap <silent><leader>o :set relativenumber!<cr>
 function! Light()
         set background=light
         colorscheme solarized
@@ -194,15 +181,16 @@ map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
 set mousehide "Hide when characters are typed
 " color of the current line number
-
+nnoremap <silent><leader>o :set relativenumber!<cr>
+"}}}
 " ------------------------------------------------------------------ Settings
-
+"{{{
 set shell=/bin/sh
 " bybye ex mode
 nnoremap Q <nop>
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
 set timeoutlen=1000 ttimeoutlen=0
-" use space as leader
+"Extend word designators
 set iskeyword-=.                    " '.' is an end of word designator
 set iskeyword-=#                    " '#' is an end of word designator
 set iskeyword-=-                    " '-' is an end of word designator
@@ -234,10 +222,11 @@ set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=syntax " fold based on indent level
 "reload on save
 autocmd! bufwritepost .vimrc source %
-"
-"
+" scroll the viewport faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>"
 "-------------------------------------------------------------------- Aliases
-"
+"{{{
 " bare vim
 " delete char backwards insert mode
 set backspace=indent,eol,start
@@ -252,9 +241,9 @@ function! TogglePasteMode()
                 set paste
         endif
 endfunction
+nnoremap <leader>p :call TogglePasteMode()<CR>
 " move to right
 inoremap l;  <Esc>la
-nnoremap <leader>p :call TogglePasteMode()<CR>
 " fullscreen
 function! Fullscreen()
         let line = line(".")+0
@@ -268,9 +257,6 @@ function! Minimze()
         call cursor(line,0 )
 endfunction
 "
-" Move visual block
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
 " tabs shortcuts
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
@@ -278,7 +264,9 @@ nnoremap <silent><C-W>c :call Minimze() <CR>
 "jk kj to  to esc
 inoremap jk <Esc>
 inoremap kj <Esc>
-" toggle relative line numbers
+" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 " split right and below instead of default opposite
 set splitbelow
 set splitright
@@ -308,19 +296,18 @@ command -nargs=0 -bar Update if &modified
 
 nnoremap <silent> <leader>w :<C-u>Update<CR>
 nnoremap <silent> <leader>q :q<CR>
-
-
+"}}}
 "--------------------------------------------------------------- common typos
-
+"{{{
 command! Q q
 command! W w
 command! Qa qa
 command! Wa wa
 command! Wq wq
 command! Wqa wqa
-
+"}}}
 "------------------------------------------------------------------- Plug ins
-
+"{{{
 " enable quick_scope conditionally
 let g:qs_enable = 0
 let g:qs_enable_char_list = [ 'f', 'F', 't', 'T' ]
@@ -400,15 +387,12 @@ let g:airline_right_sep=''
 " exclude airline from preview windows
 let g:airline_exclude_preview = 1
 let g:airline#extensions#ctrlp#color_template = 'normal'
-
-
 " syntastic
-let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 let g:syntastic_python_python_exec = 'python3'
-
 
 " gutter & fugitive git bindings
 " open diff
@@ -446,6 +430,8 @@ endfunction
 
 "remove trailing white spaces with 56
 noremap <F5> :FixWhitespace <CR><CR>
+" ignore trailing whitespaces on unite and mkd filetype
+let g:extra_whitespace_ignored_filetypes = ['unite', 'mkd']
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " show untodtreee
@@ -456,14 +442,12 @@ nmap <c-t> :TagbarToggle <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
-
-
 "------------------------------------------------------------------------- go
-
-"fold by sytax and style
+" {{{
+" fold by sytax and style
 " set style for go files
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-au FileType go set foldmethod=syntax foldnestmax=10 foldlevel=3
+au FileType go set foldmethod=indent foldnestmax=10 foldlevel=3
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -522,31 +506,19 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 0
-
+"}}}
 "----------------------------------------------------------------- easymotion
-
+"{{{
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
-" Bi-directional find motion
-" " Jump to anywhere you want with minimal keystrokes, with just one key
-" binding.
-" " `s{char}{label}`
-"nmap s <Plug>(easymotion-s)
-"Turn on case sensitive feature
 let g:EasyMotion_smartcase = 1
 "" JK motions: Line motions
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
-" Beginning of word forward and backward. See |w| & |b|.
-" customize color
-hi link EasyMotionTarget ErrorMsg
-hi link EasyMotionShade  Comment
-hi link EasyMotionTarget2First MatchParen
-hi link EasyMotionTarget2Second MatchParen
-"
+"}}}
 "---------------------------------------------------------------- neocopmlete
-
+"{{{
 let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
 let g:neocomplete#data_directory = "$HOME/.vim/tmp/"
 " Disable AutoComplPop.
@@ -558,22 +530,17 @@ let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
                         \ 'default' : '',
                         \ 'vimshell' : $HOME.'/.vimshell_hist',
                         \ 'scheme' : $HOME.'/.gosh_completions'
                         \ }
-
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
         let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-" Plug key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -582,11 +549,6 @@ function! s:my_cr_function()
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-g>"
-"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -594,7 +556,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType go setlocal omnifunc=gocomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "---------------------------
-" neocoomplete snippts
+" neocoomplete snippet
 " Plug key-mappings.
 imap <TAB>     <Plug>(neosnippet_expand_or_jump)
 smap <TAB>     <Plug>(neosnippet_expand_or_jump)
@@ -612,26 +574,11 @@ endif
 "
 let g:neocomplete#disable_auto_complete=0
 let g:neocomplete#enable_auto_select=0
-"" fix go ? seems to
+"" seems to fix go 
 let g:neocomplete#sources#omni#functions = {'go': 'go#complete#Complete'}
-"
-"------------------------------------------------------------------- NerdTree
-"
-" map nerd tree to leader n
-map <silent><leader>n :NERDTreeFocus<CR>
-map <C-e> <plug>NERDTreeTabsToggle<CR>
-nmap <leader>nt :NERDTreeFind<CR>
-let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-let NERDTreeChDirMode=0
-let NERDTreeQuitOnOpen=1
-let NERDTreeMouseMode=2
-let NERDTreeShowHidden=1
-let NERDTreeKeepTreeInNewTab=1
-let g:nerdtree_tabs_open_on_gui_startup=0
-"
+"}}}
 "---------------------------------------------------------------- js and csss
-"
+" {{{
 " tag-bar css stuff  "
 let g:tagbar_type_html = {
                         \  'ctagstype' : 'html',
@@ -690,14 +637,15 @@ let g:javascript_enable_domhtmlcss = 1
 let javascript_enable_domhtmlcss=1
 " allow js folding
 let b:javascript_fold=1
-
+"}}}
 "--------------------------------------------------------------------- python
-
+"{{{
 " set 79 long ruler
 au FileType python  set colorcolumn=79
 " expand tab to spaces
 au FileType python  set expandtab
 au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
+" place  docstring template 
 autocmd FileType python nmap <silent> <C-d> <Plug>(pydocstring)
 " JEDI and auto complete
 let g:neocomplete#force_overwrite_completefunc=1
@@ -732,7 +680,7 @@ autocmd FileType python map <LocalLeader>rp V:ScreenSend<CR>j
 " Send visual selection to python and move to next line.
 autocmd FileType python map <LocalLeader>v :ScreenSend<CR>`>0j
 " Send a <CR> to ipython.
-autocmd FileType python map <LocalLeader>a :call g:ScreenShellSend("\r")<CR>
+autocmd FileType python map <LocalLeader>cr :call g:ScreenShellSend("\r")<CR>
 " Clear the screen.
 autocmd FileType python map <LocalLeader>L
                         \ :call g:ScreenShellSend('!clear')<CR>
@@ -807,11 +755,9 @@ function! GetVisual()
         let lines[0] = lines[0][col1 - 1:]
         return join(lines, "\n")
 endfunction
-
-
-"--- ------------------------------------------------------------------ unite
-
-"set grep exex
+" --------------------------------------------------------------------- unite
+"{{{
+"set grep exex {{{
 if executable('ag')
 " Use ag in unite grep source.
 let g:unite_source_grep_command = 'ag'
@@ -832,23 +778,33 @@ let g:unite_source_grep_default_opts =
 \ '-i --no-heading --no-color -k -H'
 let g:unite_source_grep_recursive_opt = ''
 endif
-
+"}}}
 " use fuzzy matching
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " open in vsplit
 nnoremap <silent><leader>a :Unite  file_rec/async  -start-insert -default-action=vsplit<cr>
+" search in current dir
 nnoremap <silent><leader>/ :Unite -quick-match grep:.  <cr>
 let g:unite_source_history_yank_enable = 1
 nnoremap <silent><leader>y :Unite -quick-match  history/yank <cr>
 nnoremap <silent> <leader>b :<C-u>Unite buffer bookmark<CR>
 nnoremap <C-b> :Unite -quick-match buffer<cr>
-
+" search with pt
+nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+if executable('pt')
+  let g:unite_source_grep_command = 'pt'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_encoding = 'utf-8'
+endif
+"}}}
 " --------------------------------------------------------------------- erlang
-
+"{{{
 let g:ref_use_vimproc = 1
 let g:ref_open = 'split'
 let g:ref_cache_dir = expand('/tmp/vim_ref_cache/')
 autocmd FileType erlang nno <leader>K :<C-u>Unite ref/erlang
             \ -vertical -default-action=split<CR>
-"
+"}}}
+"}}}
 " vim: foldmethod=marker
