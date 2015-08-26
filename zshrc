@@ -8,6 +8,8 @@ fi
 #}}}
 # Exports # {{{
 TERM=xterm-256color
+# make sure neovim can change the shape of its cursosr
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 export TERM
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=en_US.UTF-8
@@ -97,30 +99,7 @@ noop () {}
 zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
-
-## change iTerm profile{{{
-## works only outside TMUX
-## TODO find out how to make it work inside tmux
-#it2prof() { echo -e "\033]50;SetProfile=$1\a" }
-#term_theme="default"
-#export term_theme
-## function to make dark
-#dark(){
-        #term_bkg="dark"
-        #export term_bkg
-        #BASE16_SHELL="$HOME/.config/base16-shell/base16-$term_theme.$term_bkg.sh"
-        #[[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL &&\
-        #echo -e "\033]50;SetProfile=dark\a" &&\
-        #echo "switching theme to: "$term_theme "-"$term_bkg
-#}
-#light(){
-        #term_bkg="light"
-        #export term_bkg
-        #BASE16_SHELL="$HOME/.config/base16-shell/base16-$term_theme.$term_bkg.sh"
-        #[[ -s $BASE16_SHELL  ]] && . $BASE16_SHELL &&\
-        #echo -e "\033]50;SetProfile=light\a" &&\
-        #echo "switching theme to: "$term_theme"-"$term_bkg
-#}
+term_bkg="dark"
 #}}}
  #------------------------------------------------------- gb tooling helpers.{{{
 if [ -f /usr/local/bin/agb ]; then
