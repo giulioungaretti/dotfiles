@@ -6,7 +6,7 @@
 "│       (_)_/ |_|_| |_| |_|_|  \___|      │
 "│                                         │
 "└─────────────────────────────────────────┘
-" 15 Aug 2015
+" 01 Sep 2015
 " ---------------------------------------------------------------------- Init
 " {{{
 set nocompatible              " be iMproved, required
@@ -151,6 +151,7 @@ set laststatus=0
 set wildmenu
 " redraw only when we need to
 set lazyredraw
+" theme {{{
 colorscheme solarized
 let g:solarized_termcolors=16
 set background=dark
@@ -179,6 +180,7 @@ endfunction
 " map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
+"}}}
 set mousehide "Hide when characters are typed
 " color of the current line number
 nnoremap <silent><leader>o :set relativenumber!<cr>
