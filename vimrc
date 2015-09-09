@@ -26,6 +26,11 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 "  {{{
+"  NOTES
+Plug 'tpope/vim-speeddating'
+Plug 'mattn/calendar-vim'
+Plug 'jceb/vim-orgmode'
+Plug 'vim-scripts/utl.vim'
 "  Arduino
 Plug 'sudar/vim-arduino-syntax'
 " snippets
@@ -146,7 +151,7 @@ set cursorline
 "remove ugly ass  split separator
 set fillchars=""
 "show bar
-set laststatus=0
+set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
@@ -154,12 +159,11 @@ set lazyredraw
 " theme {{{
 colorscheme solarized
 let g:solarized_termcolors=16
-set background=dark
-hi! VertSplit ctermbg=8
+let bkg=$VIMBKG
 function! Light()
         set background=light
         colorscheme solarized
-        hi! VertSplit ctermbg=15
+        hi! VertSplit ctermbg=15 guibg=#fdf6e3
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
         if exists(':AirlineRefresh')
@@ -170,7 +174,7 @@ endfunction
 function! Dark()
         set background=dark
         colorscheme solarized
-        hi! VertSplit ctermbg=8
+        hi! VertSplit ctermbg=8 guibg=#002b36
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
         if exists(':AirlineRefresh')
@@ -180,6 +184,12 @@ endfunction
 " map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
+if bkg=="d"
+        call Dark()
+endif
+if bkg=="k"
+        call Ligh()
+endif
 "}}}
 set mousehide "Hide when characters are typed
 " color of the current line number
@@ -187,9 +197,10 @@ nnoremap <silent><leader>o :set relativenumber!<cr>
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
+"au FocusLost * :wa		" Set vim to save the file on focus out
 set shell=/bin/sh
-" bybye ex mode
-nnoremap Q <nop>
+" Don't use Ex mode, use Q for formatting
+map Q gq
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
 set timeoutlen=1000 ttimeoutlen=0
 "Extend word designators
@@ -380,7 +391,8 @@ let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/
 let g:email = "giulioungaretti@me.com"
 " airline
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 0
+" smart  tab bar
+let g:airline#extensions#tabline#enabled = 1
 " use simple separators
 let g:airline_left_alt_sep = ''
 let g:airline_right_alt_sep = ''
@@ -407,7 +419,7 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 " add and commit current file
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
-" this should turn off the annothing random highlight
+" this should turn off the annoying random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
@@ -440,7 +452,6 @@ noremap <F6> :Autoformat<CR><CR>
 nnoremap <F7> :UndotreeToggle<cr>
 " tagbar autofous on open
 nmap <c-t> :TagbarOpen fj <CR>
-nmap <c-t> :TagbarToggle <CR>
 let g:tagbar_autofocus = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
