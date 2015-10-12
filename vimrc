@@ -160,6 +160,7 @@ set lazyredraw
 colorscheme solarized
 let g:solarized_termcolors=16
 let bkg=$VIMBKG
+set background=dark
 function! Light()
         set background=light
         colorscheme solarized
@@ -232,7 +233,7 @@ set smartcase
 set mouse=nicr
 "folding
 set foldenable  " enable folding
-set foldnestmax=10  " max 10 nested fold allower
+set foldnestmax=10  " max 10 nested fold allowed
 set foldmethod=syntax " fold based on indent level
 "reload on save
 autocmd! bufwritepost .vimrc source %
@@ -327,6 +328,7 @@ command! Wqa wqa
 "{{{orgmode
 let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED', 'ARCHIVED']
 "}}}
+" search in osx dictionary
 function! GetDict()
         let w = expand("<cword>")
         :call g:MacDict(w)
