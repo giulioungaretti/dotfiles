@@ -68,6 +68,7 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " easymotions
 Plug 'Lokaltog/vim-easymotion'
+" TODO this kind of sucks
 Plug 'unblevable/quick-scope'
 " expand selection to region
 Plug 'terryma/vim-expand-region'
@@ -155,7 +156,7 @@ set lazyredraw
 colorscheme solarized
 let g:solarized_termcolors=16
 set background=dark
-hi! VertSplit ctermbg=8
+"hi! VertSplit ctermbg=8
 function! Light()
         set background=light
         colorscheme solarized
@@ -194,11 +195,11 @@ nnoremap Q <nop>
 set timeoutlen=1000 ttimeoutlen=0
 "Extend word designators
 set iskeyword-=.                    " '.' is an end of word designator
-set iskeyword-=#                    " '#' is an end of word designator
-set iskeyword-=-                    " '-' is an end of word designator
 set iskeyword-=_                    " '_' is an end of word designator
+" no backup and swap files.
 set nobackup
 set noswapfile
+" this should make it work with osx/tmux/madness
 set clipboard+=unnamed
 " tab is 4 spaces
 set tabstop=4
@@ -212,19 +213,21 @@ set modelines=1
 autocmd BufRead,BufNew *.md set filetype=markdown
 " highlight as you type
 set incsearch
-set showmatch           " highlight matching [{()}]
+" highlight matching [{()}]
+set showmatch
 " smart case when searching
 set ignorecase
 set smartcase
-" better mousee interacation
+" better mouse interaction
 set mouse=nicr
 "folding
 set foldenable  " enable folding
-set foldnestmax=10  " max 10 nested fold allower
+set foldnestmax=10  " max 10 nested fold allowed
 set foldmethod=syntax " fold based on indent level
 "reload on save
 autocmd! bufwritepost .vimrc source %
-" scroll the viewport faster
+autocmd! bufwritepost vimrc source %
+" scroll the view port faster
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>"
 "-------------------------------------------------------------------- Aliases
@@ -310,7 +313,7 @@ command! Wqa wqa
 "}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
-" enable quick_scope conditionally
+" enable quick_scope conditionally  ; and , to move 
 let g:qs_enable = 0
 let g:qs_enable_char_list = [ 'f', 'F', 't', 'T' ]
 
@@ -332,6 +335,7 @@ endfunction
 for i in g:qs_enable_char_list
 	execute 'noremap <expr> <silent>' . i . " Quick_scope_selective('". i . "')"
 endfor
+" search in osx dictionary
 function! GetDict()
         let w = expand("<cword>")
         :call g:MacDict(w)
@@ -518,6 +522,9 @@ map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
+" Gif config
+ nmap s <Plug>(easymotion-sl)
+ nmap t <Plug>(easymotion-tl)
 "}}}
 "---------------------------------------------------------------- neocopmlete
 "{{{

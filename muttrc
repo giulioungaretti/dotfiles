@@ -8,10 +8,11 @@ set record = +Sent
 
 ## Send options
 set my_user=giulioungaretti@me.com
-set smtp_url=smtps://$my_user:$imap_pass@smtp.me.com
+#set smtp_url=smtps://$my_user:$imap_pass@smtp.me.com
+set smtp_url=smtp://giulioungaretti@smtp.mail.me.com:587/
 set realname='Giulio Ungaretti'
 set from=giulioungaretti@me.com
-
+set smtp_authenticators = 'gssapi:login'
 ## Connection options
 set ssl_force_tls = yes
 set ssl_starttls = yes
@@ -41,10 +42,10 @@ color body          yellow          default         "(giulio|ungaretti)"
 color body          green          default         "(etilbudsavis|shopgun)"
 # custom index highlights ----------------------------------------------
 # messages which mention my name in the body
-#color index         yellow          default         "~b \"phil(_g|\!| gregory| gold)|pgregory\" !~N !~T !~F !~p !~P"
-#color index         J_cream         brightblack     "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~N !~T !~F !~p !~P"
-#color index         yellow          cyan            "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~T !~F !~p !~P"
-#color index         yellow          J_magent        "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~F !~p !~P"
+color index         yellow          default         "~b \"giulio(_g|\!| ungaretti| gold)|unga\" !~N !~T !~F !~p !~P"
+color index         brightyellow         brightblack     "~b \"giulio(_g|\!| ungaretti| gold)|unga\" ~N !~T !~F !~p !~P"
+color index         yellow          cyan            "~b \"giulio(_g|\!| ungaretti| gold)|unga\" ~T !~F !~p !~P"
+color index         yellow          magenta        "~b \"giulio\!| ungaretti| gold)|unga\" ~F !~p !~P"
 ## messages which are in reference to my mails
 #color index         J_magent        default         "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" !~N !~T !~F !~p !~P"
 #color index         J_magent        brightblack     "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" ~N !~T !~F !~p !~P"
