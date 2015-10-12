@@ -6,7 +6,7 @@
 "│       (_)_/ |_|_| |_| |_|_|  \___|      │
 "│                                         │
 "└─────────────────────────────────────────┘
-" 01 Sep 2015
+"12 Oct 2015
 " ---------------------------------------------------------------------- Init
 " {{{
 set nocompatible              " be iMproved, required
@@ -73,7 +73,6 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " easymotions
 Plug 'Lokaltog/vim-easymotion'
-Plug 'unblevable/quick-scope'
 " expand selection to region
 Plug 'terryma/vim-expand-region'
 " align table
@@ -144,6 +143,7 @@ call plug#end()
 "}}}
 " -------------------------------------------------------------------- Visual
 "{{{
+au VimLeave * :!clear
 " turn on syntax highlight
 syntax on
 " show curret line
@@ -238,6 +238,7 @@ autocmd! bufwritepost .vimrc source %
 " scroll the viewport faster
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>"
+"}}}
 "-------------------------------------------------------------------- Aliases
 "{{{
 " bare vim
@@ -321,28 +322,9 @@ command! Wqa wqa
 "}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
-" enable quick_scope conditionally
-let g:qs_enable = 0
-let g:qs_enable_char_list = [ 'f', 'F', 't', 'T' ]
-
-function! Quick_scope_selective(movement)
-	let needs_disabling = 0
-	if !g:qs_enable
-		QuickScopeToggle
-		redraw!
-		let needs_disabling = 1
-	endif
-	let letter = nr2char(getchar())
-	if needs_disabling
-		QuickScopeToggle
-	endif
-	return a:movement . letter
-endfunction
-
-" quick_scope maps, operator-pending mode included (can do 'df' with hint)
-for i in g:qs_enable_char_list
-	execute 'noremap <expr> <silent>' . i . " Quick_scope_selective('". i . "')"
-endfor
+"{{{orgmode
+let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED', 'ARCHIVED']
+"}}}
 function! GetDict()
         let w = expand("<cword>")
         :call g:MacDict(w)
@@ -442,7 +424,7 @@ function! Multiple_cursors_after()
   endif
 endfunction
 
-"remove trailing white spaces with 56
+"remove trailing white spaces with f5
 noremap <F5> :FixWhitespace <CR><CR>
 " ignore trailing whitespaces on unite and mkd filetype
 let g:extra_whitespace_ignored_filetypes = ['unite', 'mkd']
@@ -451,8 +433,9 @@ noremap <F6> :Autoformat<CR><CR>
 " show untodtreee
 nnoremap <F7> :UndotreeToggle<cr>
 " tagbar autofous on open
-nmap <c-t> :TagbarOpen fj <CR>
+nmap <c-t> :TagbarToggle  <CR>
 let g:tagbar_autofocus = 1
+let g:tagbar_autoclose  = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 "------------------------------------------------------------------------- go
@@ -482,8 +465,8 @@ au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 " Rename the identifier under the cursor to a new name
 au FileType go nmap <Leader>e <Plug>(go-rename)
-" format with goimports instead of gofmt
-let g:go_fmt_command = "goimports"
+" format with goimports instead of gofmt too slow
+"let g:go_fmt_command = "goimports"
 " tabar tags
 let g:tagbar_type_go = {
                         \ 'ctagstype' : 'go',
@@ -529,6 +512,9 @@ map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
+""  search to char back and forwad
+nmap s <Plug>(easymotion-s2)
+nmap t <Plug>(easymotion-t2)
 "}}}
 "---------------------------------------------------------------- neocopmlete
 "{{{
