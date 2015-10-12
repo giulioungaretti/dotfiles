@@ -205,11 +205,11 @@ map Q gq
 set timeoutlen=1000 ttimeoutlen=0
 "Extend word designators
 set iskeyword-=.                    " '.' is an end of word designator
-set iskeyword-=#                    " '#' is an end of word designator
-set iskeyword-=-                    " '-' is an end of word designator
 set iskeyword-=_                    " '_' is an end of word designator
+" no backup and swap files.
 set nobackup
 set noswapfile
+" this should make it work with osx/tmux/madness
 set clipboard+=unnamed
 " tab is 4 spaces
 set tabstop=4
@@ -223,11 +223,12 @@ set modelines=1
 autocmd BufRead,BufNew *.md set filetype=markdown
 " highlight as you type
 set incsearch
-set showmatch           " highlight matching [{()}]
+" highlight matching [{()}]
+set showmatch
 " smart case when searching
 set ignorecase
 set smartcase
-" better mousee interacation
+" better mouse interaction
 set mouse=nicr
 "folding
 set foldenable  " enable folding
@@ -235,7 +236,8 @@ set foldnestmax=10  " max 10 nested fold allower
 set foldmethod=syntax " fold based on indent level
 "reload on save
 autocmd! bufwritepost .vimrc source %
-" scroll the viewport faster
+autocmd! bufwritepost vimrc source %
+" scroll the view port faster
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>"
 "}}}
@@ -513,8 +515,8 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 ""  search to char back and forwad
-nmap s <Plug>(easymotion-s2)
-nmap t <Plug>(easymotion-t2)
+ nmap s <Plug>(easymotion-sl)
+ nmap t <Plug>(easymotion-tl)
 "}}}
 "---------------------------------------------------------------- neocopmlete
 "{{{
