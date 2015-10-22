@@ -54,7 +54,8 @@ fi
 # https://coderwall.com/p/h63etq
 # https://github.com/pda/dotzsh/blob/master/keyboard.zsh#L10
 # 10ms for key sequences
-KEYTIMEOUT=0.01
+KEYTIMEOUT=1
+export KEYTIMEOUT
 #}}}
 # remap jj to nesc
 bindkey -M viins 'jk' vi-cmd-mode
