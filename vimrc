@@ -125,7 +125,7 @@ Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
 " colorschemes
-"Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim'
 Plug 'altercation/vim-colors-solarized'
 " jedi for ptyhon
 Plug 'davidhalter/jedi-vim'
@@ -151,20 +151,24 @@ set cursorline
 "remove ugly ass  split separator
 set fillchars=""
 "show bar
+set noshowmode
+set noruler
 set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-colorscheme solarized
-let g:solarized_termcolors=16
+"colorscheme solarized
+"let g:solarized_termcolors=16
+"
+let g:airline_theme='base16'
+colorscheme base16-tomorrow
 let bkg=$VIMBKG
-set background=dark
 function! Light()
         set background=light
-        colorscheme solarized
-        hi! VertSplit ctermbg=15 guibg=#fdf6e3
+        "colorscheme solarized
+        hi! VertSplit ctermbg=15 guibg=#fefefe
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
         if exists(':AirlineRefresh')
@@ -174,8 +178,8 @@ endfunction
 
 function! Dark()
         set background=dark
-        colorscheme solarized
-        hi! VertSplit ctermbg=8 guibg=#002b36
+        "colorscheme solarized
+        hi! VertSplit ctermbg=0 guibg=#1c1f21
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
         if exists(':AirlineRefresh')
@@ -376,17 +380,19 @@ let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
 let g:email = "giulioungaretti@me.com"
 " airline
-let g:airline_powerline_fonts = 1
-" smart  tab bar
-let g:airline#extensions#tabline#enabled = 1
-" use simple separators
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-" exclude airline from preview windows
-let g:airline_exclude_preview = 1
-let g:airline#extensions#ctrlp#color_template = 'normal'
+if exists(':AirlineRefresh')
+        let g:airline_powerline_fonts = 1
+        " smart  tab bar
+        let g:airline#extensions#tabline#enabled = 1
+        " use simple separators
+        let g:airline_left_alt_sep = ''
+        let g:airline_right_alt_sep = ''
+        let g:airline_left_sep=''
+        let g:airline_right_sep=''
+        " exclude airline from preview windows
+        let g:airline_exclude_preview = 1
+        let g:airline#extensions#ctrlp#color_template = 'normal'
+endif
 " syntastic
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
@@ -505,7 +511,7 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-let g:go_auto_type_info = 0
+let g:go_auto_type_info = 1
 "}}}
 "----------------------------------------------------------------- easymotion
 "{{{
@@ -577,7 +583,7 @@ endif
 "
 let g:neocomplete#disable_auto_complete=0
 let g:neocomplete#enable_auto_select=0
-"" seems to fix go 
+"" seems to fix go
 let g:neocomplete#sources#omni#functions = {'go': 'go#complete#Complete'}
 "}}}
 "---------------------------------------------------------------- js and csss
@@ -648,7 +654,7 @@ au FileType python  set colorcolumn=79
 " expand tab to spaces
 au FileType python  set expandtab
 au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
-" place  docstring template 
+" place  docstring template
 autocmd FileType python nmap <silent> <C-d> <Plug>(pydocstring)
 " JEDI and auto complete
 let g:neocomplete#force_overwrite_completefunc=1
@@ -785,7 +791,7 @@ endif
 " use fuzzy matching
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " open in vsplit
-nnoremap <silent><leader>a :Unite  file_rec/async  -start-insert -default-action=vsplit<cr>
+nnoremap <silent><leader>a :Unite  file_rec  -start-insert -default-action=vsplit<cr>
 " search in current dir
 nnoremap <silent><leader>/ :Unite -quick-match grep:.  <cr>
 let g:unite_source_history_yank_enable = 1
