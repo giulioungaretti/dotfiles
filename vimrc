@@ -6,7 +6,7 @@
 "│       (_)_/ |_|_| |_| |_|_|  \___|      │
 "│                                         │
 "└─────────────────────────────────────────┘
-" 01 Sep 2015
+"12 Oct 2015
 " ---------------------------------------------------------------------- Init
 " {{{
 set nocompatible              " be iMproved, required
@@ -26,6 +26,11 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 "  {{{
+"  NOTES
+Plug 'tpope/vim-speeddating'
+Plug 'mattn/calendar-vim'
+Plug 'jceb/vim-orgmode'
+Plug 'vim-scripts/utl.vim'
 "  Arduino
 Plug 'sudar/vim-arduino-syntax'
 " snippets
@@ -68,8 +73,6 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " easymotions
 Plug 'Lokaltog/vim-easymotion'
-" TODO this kind of sucks
-Plug 'unblevable/quick-scope'
 " expand selection to region
 Plug 'terryma/vim-expand-region'
 " align table
@@ -122,7 +125,7 @@ Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
 " colorschemes
-"Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim'
 Plug 'altercation/vim-colors-solarized'
 " jedi for ptyhon
 Plug 'davidhalter/jedi-vim'
@@ -140,6 +143,7 @@ call plug#end()
 "}}}
 " -------------------------------------------------------------------- Visual
 "{{{
+au VimLeave * :!clear
 " turn on syntax highlight
 syntax on
 " show curret line
@@ -147,20 +151,24 @@ set cursorline
 "remove ugly ass  split separator
 set fillchars=""
 "show bar
-set laststatus=0
+set noshowmode
+set noruler
+set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-colorscheme solarized
-let g:solarized_termcolors=16
-set background=dark
-"hi! VertSplit ctermbg=8
+"colorscheme solarized
+"let g:solarized_termcolors=16
+"
+let g:airline_theme='base16'
+colorscheme base16-tomorrow
+let bkg=$VIMBKG
 function! Light()
         set background=light
-        colorscheme solarized
-        hi! VertSplit ctermbg=15
+        "colorscheme solarized
+        hi! VertSplit ctermbg=15 guibg=#fefefe
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
         if exists(':AirlineRefresh')
@@ -170,8 +178,8 @@ endfunction
 
 function! Dark()
         set background=dark
-        colorscheme solarized
-        hi! VertSplit ctermbg=8
+        "colorscheme solarized
+        hi! VertSplit ctermbg=0 guibg=#1c1f21
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
         if exists(':AirlineRefresh')
@@ -181,6 +189,12 @@ endfunction
 " map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
+if bkg=="d"
+        call Dark()
+endif
+if bkg=="k"
+        call Ligh()
+endif
 "}}}
 set mousehide "Hide when characters are typed
 " color of the current line number
@@ -188,9 +202,10 @@ nnoremap <silent><leader>o :set relativenumber!<cr>
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
+"au FocusLost * :wa		" Set vim to save the file on focus out
 set shell=/bin/sh
-" bybye ex mode
-nnoremap Q <nop>
+" Don't use Ex mode, use Q for formatting
+map Q gq
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
 set timeoutlen=1000 ttimeoutlen=0
 "Extend word designators
@@ -230,6 +245,7 @@ autocmd! bufwritepost vimrc source %
 " scroll the view port faster
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>"
+"}}}
 "-------------------------------------------------------------------- Aliases
 "{{{
 " bare vim
@@ -313,28 +329,9 @@ command! Wqa wqa
 "}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
-" enable quick_scope conditionally  ; and , to move 
-let g:qs_enable = 0
-let g:qs_enable_char_list = [ 'f', 'F', 't', 'T' ]
-
-function! Quick_scope_selective(movement)
-	let needs_disabling = 0
-	if !g:qs_enable
-		QuickScopeToggle
-		redraw!
-		let needs_disabling = 1
-	endif
-	let letter = nr2char(getchar())
-	if needs_disabling
-		QuickScopeToggle
-	endif
-	return a:movement . letter
-endfunction
-
-" quick_scope maps, operator-pending mode included (can do 'df' with hint)
-for i in g:qs_enable_char_list
-	execute 'noremap <expr> <silent>' . i . " Quick_scope_selective('". i . "')"
-endfor
+"{{{orgmode
+let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED', 'ARCHIVED']
+"}}}
 " search in osx dictionary
 function! GetDict()
         let w = expand("<cword>")
@@ -383,16 +380,19 @@ let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
 let g:email = "giulioungaretti@me.com"
 " airline
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 0
-" use simple separators
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-" exclude airline from preview windows
-let g:airline_exclude_preview = 1
-let g:airline#extensions#ctrlp#color_template = 'normal'
+if exists(':AirlineRefresh')
+        let g:airline_powerline_fonts = 1
+        " smart  tab bar
+        let g:airline#extensions#tabline#enabled = 1
+        " use simple separators
+        let g:airline_left_alt_sep = ''
+        let g:airline_right_alt_sep = ''
+        let g:airline_left_sep=''
+        let g:airline_right_sep=''
+        " exclude airline from preview windows
+        let g:airline_exclude_preview = 1
+        let g:airline#extensions#ctrlp#color_template = 'normal'
+endif
 " syntastic
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
@@ -411,7 +411,7 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 " add and commit current file
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
-" this should turn off the annothing random highlight
+" this should turn off the annoying random highlight
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
@@ -434,7 +434,7 @@ function! Multiple_cursors_after()
   endif
 endfunction
 
-"remove trailing white spaces with 56
+"remove trailing white spaces with f5
 noremap <F5> :FixWhitespace <CR><CR>
 " ignore trailing whitespaces on unite and mkd filetype
 let g:extra_whitespace_ignored_filetypes = ['unite', 'mkd']
@@ -443,9 +443,9 @@ noremap <F6> :Autoformat<CR><CR>
 " show untodtreee
 nnoremap <F7> :UndotreeToggle<cr>
 " tagbar autofous on open
-nmap <c-t> :TagbarOpen fj <CR>
-nmap <c-t> :TagbarToggle <CR>
+nmap <c-t> :TagbarToggle  <CR>
 let g:tagbar_autofocus = 1
+let g:tagbar_autoclose  = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 "------------------------------------------------------------------------- go
@@ -475,8 +475,8 @@ au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 " Rename the identifier under the cursor to a new name
 au FileType go nmap <Leader>e <Plug>(go-rename)
-" format with goimports instead of gofmt
-let g:go_fmt_command = "goimports"
+" format with goimports instead of gofmt too slow
+"let g:go_fmt_command = "goimports"
 " tabar tags
 let g:tagbar_type_go = {
                         \ 'ctagstype' : 'go',
@@ -511,7 +511,7 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-let g:go_auto_type_info = 0
+let g:go_auto_type_info = 1
 "}}}
 "----------------------------------------------------------------- easymotion
 "{{{
@@ -522,7 +522,7 @@ map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
-" Gif config
+""  search to char back and forwad
  nmap s <Plug>(easymotion-sl)
  nmap t <Plug>(easymotion-tl)
 "}}}
@@ -583,7 +583,7 @@ endif
 "
 let g:neocomplete#disable_auto_complete=0
 let g:neocomplete#enable_auto_select=0
-"" seems to fix go 
+"" seems to fix go
 let g:neocomplete#sources#omni#functions = {'go': 'go#complete#Complete'}
 "}}}
 "---------------------------------------------------------------- js and csss
@@ -654,7 +654,7 @@ au FileType python  set colorcolumn=79
 " expand tab to spaces
 au FileType python  set expandtab
 au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
-" place  docstring template 
+" place  docstring template
 autocmd FileType python nmap <silent> <C-d> <Plug>(pydocstring)
 " JEDI and auto complete
 let g:neocomplete#force_overwrite_completefunc=1
@@ -791,7 +791,7 @@ endif
 " use fuzzy matching
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " open in vsplit
-nnoremap <silent><leader>a :Unite  file_rec/async  -start-insert -default-action=vsplit<cr>
+nnoremap <silent><leader>a :Unite  file_rec  -start-insert -default-action=vsplit<cr>
 " search in current dir
 nnoremap <silent><leader>/ :Unite -quick-match grep:.  <cr>
 let g:unite_source_history_yank_enable = 1

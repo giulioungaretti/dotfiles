@@ -7,9 +7,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 #}}}
 # Exports # {{{
-TERM=xterm-256color
 # make sure neovim can change the shape of its cursosr
 export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+TERM=screen-256color
 export TERM
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=en_US.UTF-8
@@ -54,7 +54,8 @@ fi
 # https://coderwall.com/p/h63etq
 # https://github.com/pda/dotzsh/blob/master/keyboard.zsh#L10
 # 10ms for key sequences
-KEYTIMEOUT=0.01
+KEYTIMEOUT=1
+export KEYTIMEOUT
 #}}}
 # remap jj to nesc
 bindkey -M viins 'jk' vi-cmd-mode
@@ -99,7 +100,6 @@ noop () {}
 zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
-term_bkg="dark"
 #}}}
  #------------------------------------------------------- gb tooling helpers.{{{
 if [ -f /usr/local/bin/agb ]; then
@@ -108,6 +108,26 @@ fi
 if [ -f /usr/local/bin/dgb ]; then
         alias dgb="source /usr/local/bin/dgb"
 fi
-
 #}}}
+# testing vi-mode cursor change
+function zle-keymap-select zle-line-init
+{
+    # change cursor shape in iTerm2
+    case $KEYMAP in
+        vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
+        viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
+    esac
+
+    zle reset-prompt
+    zle -R
+}
+
+function zle-line-finish
+{
+    print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
+}
+
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
 #vim: foldmethod=marker:foldlevel=0
