@@ -29,7 +29,6 @@ client.urgent           #ab4642 #ab4642 #d8d8d8 #ab4642
 bindsym $mod+t border normal
 bindsym $mod+y border pixel 2
 bindsym $mod+u border none
-# BORDERLESS CONTAINER
 #######################################################################
 #                            bindings                                 #
 #######################################################################
@@ -135,7 +134,7 @@ bindsym $mod+r mode "resize"
 #######################################################################
 bar {
         tray_output none
-        status_command /home/unga/i3status.sh
+        status_command /home/unga/.i3status.sh
         font pango:Ubuntu Mono 16 14
         position top
         mode dock
