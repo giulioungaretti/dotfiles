@@ -1,29 +1,34 @@
 *customization: -color
 Xterm*termName: xterm-256color
 URxvt*termName: rxvt-256color
-URxvt.perl-ext-common:clipboard,keyboard-select
+URxvt.perl-ext-common:clipboard,keyboard-select,font-size
 URxvt.keysym.M-y: perl:keyboard-select:activate
 URxvt.keysym.M-s: perl:keyboard-select:search
-!Fonts {{{
+!----------------------------------------------------- increase size font{{{
+URxvt.keysym.C-+:     font-size:increase
+URxvt.keysym.C--:   font-size:decrease
+URxvt.keysym.M-S-Up:   font-size:incglobal
+URxvt.keysym.M-S-Down: font-size:decglobal
+!}}}
+!------------------------------------------------------------------ Fonts {{{
 Xft.hinting:   true
 Xft.hintstyle: hintfull
 Xft.antialias: true
 Xft.rgba:      rgb
 Xft.dpi:       96
-!}}}
-!
-!
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 URxvt.scrollBar:        false
 URxvt.imLocale:         en_US.UTF-8
 URxvt.cursorBlink:      true
+!}}}
+!--------------------------------------------------------------- cliboard {{{
+URxvt.clipboard.autocopy: true
 URxvt.keysym.M-c:   perl:clipboard:copy
 URxvt.keysym.M-v:   perl:clipboard:paste
 URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
-URxvt.clipboard.copycmd:  xclip -i -selection clipboard
-URxvt.clipboard.pastecmd: xclip -o -selection clipboard
-URxvt.clipboard.autocopy: true
+!URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+!URxvt.clipboard.pastecmd: xclip -o -selection clipboard
 URxvt.url-launcher: firefox
 
 !! colors and font
@@ -65,3 +70,4 @@ URxvt.iso14755: False
 *.color13:      base06
 *.color14:      base0F
 *.color15:      base07
+! vim: set fdm=marker
