@@ -83,7 +83,7 @@ Plug 'terryma/vim-instant-markdown'
 " eyecany bar
 Plug 'bling/vim-airline'
 " makes iterm2 tmux and vim have sex
-Plug 'sjl/vitality.vim'
+"Plug 'sjl/vitality.vim'
 " send line to tmux
 Plug 'ervandew/screen'
 " tmux seamless movement
@@ -125,6 +125,7 @@ Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
 " colorschemes
+Plug 'nanotech/jellybeans.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'altercation/vim-colors-solarized'
 " jedi for ptyhon

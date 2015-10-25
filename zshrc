@@ -9,7 +9,7 @@ fi
 # Exports # {{{
 # make sure neovim can change the shape of its cursosr
 export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-TERM=screen-256color
+TERM=screen
 export TERM
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=en_US.UTF-8
@@ -25,7 +25,7 @@ alias server='python -m http.server'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
-alias tmux="TERM=screen-256color-bce tmux"
+#alias tmux="TERM=screen-256color-bce tmux"
 alias r+='chmod +r'
 alias w+='chmod +w'
 alias x+='chmod +x'
@@ -109,25 +109,22 @@ if [ -f /usr/local/bin/dgb ]; then
         alias dgb="source /usr/local/bin/dgb"
 fi
 #}}}
-# testing vi-mode cursor change
-function zle-keymap-select zle-line-init
-{
-    # change cursor shape in iTerm2
-    case $KEYMAP in
-        vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
-        viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
-    esac
-
-    zle reset-prompt
-    zle -R
-}
-
-function zle-line-finish
-{
-    print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
-}
-
-zle -N zle-line-init
-zle -N zle-line-finish
-zle -N zle-keymap-select
+#TRY  color theme fix for tty
+    echo -en "\e]P0232323" #black
+    echo -en "\e]P82B2B2B" #darkgrey
+    echo -en "\e]P1D75F5F" #darkred
+    echo -en "\e]P9E33636" #red
+    echo -en "\e]P287AF5F" #darkgreen
+    echo -en "\e]PA98E34D" #green
+    echo -en "\e]P3D7AF87" #brown
+    echo -en "\e]PBFFD75F" #yellow
+    echo -en "\e]P48787AF" #darkblue
+    echo -en "\e]PC7373C9" #blue
+    echo -en "\e]P5BD53A5" #darkmagenta
+    echo -en "\e]PDD633B2" #magenta
+    echo -en "\e]P65FAFAF" #darkcyan
+    echo -en "\e]PE44C9C9" #cyan
+    echo -en "\e]P7E5E5E5" #lightgrey
+    echo -en "\e]PFFFFFFF" #white
+    clear #for background artifacting
 #vim: foldmethod=marker:foldlevel=0

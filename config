@@ -1,0 +1,159 @@
+#   _  _____
+#  (_)|____ |
+#   _     / /
+#  | |    \ \
+# _| |.___/ /
+#(_)_|\____/
+#######################################################################
+#                            25 Oct 2015                              #
+#######################################################################
+set $mod Mod4
+focus_follows_mouse no
+font pango:Ubuntu Mono 16 16
+#wallpaper black solid color
+exec --no-startup-id xsetroot -solid "#181818"
+exec --no-startup-id ~/.dropbox-dist/dropboxd
+# new window default border
+new_window pixel 1
+new_float pixel 1
+#######################################################################
+#                            colors                                   #
+#######################################################################
+# class border backgr. text indicator
+# LIGHTER #AB4642 RED ACTIVE BORDER
+client.focused         #AB4642 #AB4642 #111111  #181818
+client.focused_inactive #282828 #686868 #585858 #181818
+client.unfocused        #282828 #282828 #585858 #181818
+client.urgent           #ab4642 #ab4642 #d8d8d8 #ab4642
+# CHANGING BORDER STYLE
+bindsym $mod+t border normal
+bindsym $mod+y border pixel 2
+bindsym $mod+u border none
+# BORDERLESS CONTAINER
+#######################################################################
+#                            bindings                                 #
+#######################################################################
+# binds and shortuchts
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec urxvt
+
+# kill focused window
+bindsym $mod+q kill
+
+#tab switching
+bindsym $MOD+Tab focus right
+
+bindsym $mod+space exec --no-startup-id dmenu_run -b  -fn '-*-fixed-*-*-*-*-15-*-*-*-*-*-*-*' -nb '#111111' -nf '#555555' -sb '#111111' -sf '#aadb0f'
+
+
+#### layouts
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+p focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+d focus child
+# change folcus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+H move left
+bindsym $mod+Shift+J move down
+bindsym $mod+Shift+K move up
+bindsym $mod+Shift+L move right
+
+# split in horizontal orientation
+bindsym $mod+o split v
+
+# split in vertical orientation
+bindsym $mod+v split h
+# switch to workspace
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# EXIT I3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+# These bindings trigger as soon as you enter the resize mode
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+# back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+#######################################################################
+#                            status                                   #
+#######################################################################
+bar {
+        tray_output none
+        status_command /home/unga/i3status.sh
+        font pango:Ubuntu Mono 16 14
+        position top
+        mode dock
+        colors {
+                background #181818
+                        statusline #b8b8b8
+                        separator #585838
+                        focused_workspace  #181818 #AB4642 #ffffff
+                        active_workspace   #181818 #181818 #bec17e
+                        inactive_workspace #181818 #181818 #b8b8b8
+                        urgent_workspace   #2f343a #BA8BAf  #ffffff
+        }
+}
+#######################################################################
+#                            exec                                    #
+#######################################################################
+
+set $sink alsa_output.pci-0000_00_1b.0.analog-stereo
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute $sink 0; pactl set-sink-volume $sink +2% "
+bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-mute $sink 0; pactl set-sink-volume $sink -- -2% "
+bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute $sink toggle "
