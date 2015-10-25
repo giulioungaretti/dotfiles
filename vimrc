@@ -26,6 +26,7 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 "  {{{
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "  NOTES
 Plug 'tpope/vim-speeddating'
 Plug 'mattn/calendar-vim'
@@ -160,15 +161,11 @@ set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-"colorscheme solarized
-"let g:solarized_termcolors=16
-"
-let g:airline_theme='base16'
 colorscheme base16-tomorrow
+let g:airline_theme='base16'
 let bkg=$VIMBKG
 function! Light()
         set background=light
-        "colorscheme solarized
         hi! VertSplit ctermbg=15 guibg=#fefefe
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
@@ -179,7 +176,6 @@ endfunction
 
 function! Dark()
         set background=dark
-        "colorscheme solarized
         hi! VertSplit ctermbg=0 guibg=#1c1f21
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
@@ -193,8 +189,8 @@ map  <silent><leader>bgd :call Dark()<cr>
 if bkg=="d"
         call Dark()
 endif
-if bkg=="k"
-        call Ligh()
+if bkg=="l"
+        call Light()
 endif
 "}}}
 set mousehide "Hide when characters are typed
@@ -216,7 +212,7 @@ set iskeyword-=_                    " '_' is an end of word designator
 set nobackup
 set noswapfile
 " this should make it work with osx/tmux/madness
-set clipboard+=unnamed
+set clipboard=unnamedplus
 " tab is 4 spaces
 set tabstop=4
 " always uses spaces instead of tab characters
