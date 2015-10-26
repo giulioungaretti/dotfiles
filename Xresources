@@ -32,7 +32,7 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.url-launcher: firefox
 
 !! colors and font
-URxvt.font: xft:Source Code Pro:size=15:style=light
+URxvt.font: xft:Monospace:size=15
 URxvt.iso14755: False
 #define base00 #181818
 #define base01 #282828
@@ -70,4 +70,14 @@ URxvt.iso14755: False
 *.color13:      base06
 *.color14:      base0F
 *.color15:      base07
+!ROFI{{{
+rofi.font: Monospace 15
+rofi.bg: #222
+rofi.fg: #eee8d5
+rofi.hlbg: #f95346
+rofi.hlbg-urgent: #eee8d5
+rofi.hlfg-urgent: #222
+rofi.bgalt: #292929
+rofi.bc: #f95346
+}}}
 ! vim: set fdm=marker

@@ -17,7 +17,8 @@ export LANG=en_US.UTF-8
 export GIT_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
-# wor stuff
+export VIMBKG=d
+# work  stuff
 export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
 #}}}
 # Aliases {{{
@@ -145,12 +146,42 @@ echo -e "\e]PE$color14"
 echo -e "\e]PF$color15"
 clear #for background artifacting
 #}}}
-export VIMBKG=d
 #------------------------------------------------------------------- fzf  {{{
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #List all vagrant boxes available in the system including its status, and try to access the selected one via ssh
 vs(){
   cd $(cat ~/.vagrant.d/data/machine-index/index | jq '.machines[] | {name, vagrantfile_path, state}' | jq '.name + "," + .state  + "," + .vagrantfile_path'| sed 's/^"\(.*\)"$/\1/'| column -s, -t | sort -rk 2 | fzf | awk '{print $3}'); vagrant ssh
 }
+
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   -
+fe() {
+  local file
+  file=$(fzf --query="$1" --select-1 --exit-0)
+  [ -n "$file" ] && ${EDITOR:-vim} "$file"
+}
+# fd - cd to selected directory
+fd() {
+  local dir
+  dir=$(find ${1:-*} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+# cdf - cd into the directory of the selected file
+cdf() {
+   local file
+   local dir
+   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+}
+# fkill - kill process
+fkill() {
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    kill -${1:-9} $pid
+  fi
+}
 #}}}
-#vim: foldmethod=marker:foldlevel=0
+# vim: foldmethod=marker

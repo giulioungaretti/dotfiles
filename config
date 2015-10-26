@@ -9,14 +9,14 @@
 #######################################################################
 set $mod Mod4
 focus_follows_mouse no
-font pango:Ubuntu Mono 16 16
+font pango:Ubuntu Mono 16 18
 #wallpaper black solid color
 exec --no-startup-id xsetroot -solid "#1d1f21"
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id ~/.dropbox-dist/dropboxd
 # new window default border
-new_window pixel 1
-new_float pixel 1
+new_window pixel 2
+new_float pixel 2
 #######################################################################
 #                            colors                                   #
 #######################################################################
@@ -46,9 +46,7 @@ bindsym $mod+q kill
 #tab switching
 bindsym $MOD+Tab focus right
 
-bindsym $mod+space exec --no-startup-id dmenu_run -b  -fn '-*-fixed-*-*-*-*-15-*-*-*-*-*-*-*' -nb '#1d1f21' -nf '#555555' -sb '#1d1f21' -sf '#aadb0f'
-
-
+bindsym $mod+space exec rofi -show run
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -136,8 +134,8 @@ bindsym $mod+r mode "resize"
 #######################################################################
 bar {
         tray_output none
-        status_command /home/unga/.i3status.sh
-        font pango:Ubuntu Mono 16 14
+        status_command i3status
+        font pango:Monospace 16 18
         position top
         mode dock
         colors {
@@ -154,8 +152,15 @@ bar {
 #                            exec                                    #
 #######################################################################
 
+# lock 
 bindsym $mod+Shift+x exec ~/bin/lock
+
+# volume
 set $sink alsa_output.pci-0000_00_1b.0.analog-stereo
 bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute $sink 0; pactl set-sink-volume $sink +2% "
 bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-mute $sink 0; pactl set-sink-volume $sink -- -2% "
 bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute $sink toggle "
+
+#screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id "sudo /home/unga/bin/brdown"
+bindsym XF86MonBrightnessUp exec --no-startup-id "sudo /home/unga/bin/brup"
