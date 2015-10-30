@@ -126,9 +126,7 @@ Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
 " colorschemes
-Plug 'nanotech/jellybeans.vim'
 Plug 'chriskempson/base16-vim'
-Plug 'altercation/vim-colors-solarized'
 " jedi for ptyhon
 Plug 'davidhalter/jedi-vim'
 " go integration
@@ -161,8 +159,11 @@ set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-colorscheme base16-tomorrow
 let g:airline_theme='base16'
+let base16colorspace="256"
+set t_Co=256
+set background=dark
+colorscheme base16-tomorrow
 let bkg=$VIMBKG
 function! Light()
         set background=light
@@ -183,6 +184,7 @@ function! Dark()
                 :AirlineRefresh
         endif
 endfunction
+call Dark()
 " map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
@@ -231,7 +233,7 @@ set showmatch
 set ignorecase
 set smartcase
 " better mouse interaction
-set mouse=nicr
+set mouse=""
 "folding
 set foldenable  " enable folding
 set foldnestmax=10  " max 10 nested fold allowed
@@ -329,6 +331,13 @@ command! Wqa wqa
 "{{{orgmode
 let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED', 'ARCHIVED']
 "}}}
+" misc
+" {{{
+" UNDO
+if has("persistent_undo")
+    set undodir='~/.undodir/'
+    set undofile
+endif
 " search in osx dictionary
 function! GetDict()
         let w = expand("<cword>")
@@ -409,8 +418,9 @@ nnoremap <leader>gc :Gcommit -q<CR>
 " add and commit current file
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annoying random highlight
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
+
 
 
 " misc
@@ -434,7 +444,7 @@ endfunction
 "remove trailing white spaces with f5
 noremap <F5> :FixWhitespace <CR><CR>
 " ignore trailing whitespaces on unite and mkd filetype
-let g:extra_whitespace_ignored_filetypes = ['unite', 'mkd']
+let g:extra_whitespace_ignored_filetypes = ['unite', 'mkd','org', 'calendar']
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
 " show untodtreee
@@ -445,6 +455,7 @@ let g:tagbar_autofocus = 1
 let g:tagbar_autoclose  = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
+"}}}
 "------------------------------------------------------------------------- go
 " {{{
 " fold by sytax and style
@@ -473,7 +484,7 @@ au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 " Rename the identifier under the cursor to a new name
 au FileType go nmap <Leader>e <Plug>(go-rename)
 " format with goimports instead of gofmt too slow
-"let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "goimports"
 " tabar tags
 let g:tagbar_type_go = {
                         \ 'ctagstype' : 'go',
@@ -559,7 +570,6 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType go setlocal omnifunc=gocomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "---------------------------
 " neocoomplete snippet
@@ -580,8 +590,6 @@ endif
 "
 let g:neocomplete#disable_auto_complete=0
 let g:neocomplete#enable_auto_select=0
-"" seems to fix go
-let g:neocomplete#sources#omni#functions = {'go': 'go#complete#Complete'}
 "}}}
 "---------------------------------------------------------------- js and csss
 " {{{
