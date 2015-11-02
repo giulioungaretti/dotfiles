@@ -50,7 +50,8 @@ bindsym $mod+q kill
 
 #tab switching
 bindsym $MOD+Tab focus right
-bindsym $mod+space exec --no-startup-id dmenu_run -b  -fn '-*-fixed-*-*-*-*-25-*-*-*-*-*-*-*' -nb '#111111' -nf '#555555' -sb '#111111' -sf '#aadb0f'
+# dmenu
+bindsym $mod+space exec --no-startup-id dmenu_run -i  -y 600  -h 50 -l 8 -fn 'Hack-18' -nb '#1d1f21' -nf '#eddec9' -sb '#ab4642' -sf '#eddec9'
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -116,6 +117,8 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 assign [class="Firefox"] 1: www
 
+# move workspace around displays
+bindsym $mod+m move workspace to output right
 #bindsym $mod+1 workspace 1
 #bindsym $mod+2 workspace 2
 #bindsym $mod+3 workspace 3
