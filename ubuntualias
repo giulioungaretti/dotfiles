@@ -5,3 +5,9 @@ export PATH=$PATH:$HOME/bin
 
 alias feh='/usr/bin/feh -Z'
 alias rr='urxvt -e ranger $(pwd)&'
+alias tmux=/home/unga/bin/tmux -2
+
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME=/home/unga/Hack/python/Envs
+
+source /usr/local/bin/virtualenvwrapper.sh
