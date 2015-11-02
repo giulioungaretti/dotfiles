@@ -1,15 +1,16 @@
 #
 # Executes commands at the start of an interactive session.
 #
-# Source Prezto. {{{
+# Source. {{{
+# Prezto
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
         source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+# tmuxminator
+source ~/bin/tmuxinator.zsh
 #}}}
 # Exports # {{{
-# make sure neovim can change the shape of its cursosr
-export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-TERM=screen
+TERM=screen-256color
 export TERM
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=en_US.UTF-8
@@ -17,7 +18,10 @@ export LANG=en_US.UTF-8
 export GIT_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
+# black bg
 export VIMBKG=d
+#disable tmux in fzf
+export FZF_TMUX=0
 # work  stuff
 export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
 #}}}
@@ -26,7 +30,6 @@ alias server='python -m http.server'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
-#alias tmux="TERM=screen-256color-bce tmux"
 alias r+='chmod +r'
 alias w+='chmod +w'
 alias x+='chmod +x'
@@ -55,7 +58,7 @@ fi
 # https://coderwall.com/p/h63etq
 # https://github.com/pda/dotzsh/blob/master/keyboard.zsh#L10
 # 10ms for key sequences
-KEYTIMEOUT=1
+KEYTIMEOUT=11
 export KEYTIMEOUT
 #}}}
 # remap jj to nesc
@@ -72,7 +75,6 @@ bindkey -v
 # http://zshwiki.org./home/zle/bindkeys#why_isn_t_control-r_working_anymore
 bindkey -M viins '^s' history-incremental-search-backward
 bindkey -v
-bindkey -M viins 'jk' vi-cmd-mode
 # Multi-level undo
 bindkey -M vicmd 'u' undo
 bindkey -M vicmd '^R' redo
@@ -102,7 +104,7 @@ zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
 #}}}
- #------------------------------------------------------- gb tooling helpers.{{{
+#------------------------------------------------------- gb tooling helpers.{{{
 if [ -f /usr/local/bin/agb ]; then
         alias agb="source /usr/local/bin/agb"
 fi
@@ -110,7 +112,18 @@ if [ -f /usr/local/bin/dgb ]; then
         alias dgb="source /usr/local/bin/dgb"
 fi
 #}}}
- #------------------------------------------------------------ TTY colors {{{
+#------------------------------------------------------------ colors {{{
+# Base16 Shell
+dark(){
+        BASE16_SHELL="$HOME/.config/base16-shell/base16-tomorrow.dark.sh"
+        [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+}
+light(){
+        BASE16_SHELL="$HOME/.config/base16-shell/base16-tomorrow.light.sh"
+        [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+}
+dark
+# tty
 color00="1d1f21" # Base 00 - Black
 color01="cc6666" # Base 08 - Red
 color02="b5bd68" # Base 0B - Green
@@ -150,38 +163,38 @@ clear #for background artifacting
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #List all vagrant boxes available in the system including its status, and try to access the selected one via ssh
 vs(){
-  cd $(cat ~/.vagrant.d/data/machine-index/index | jq '.machines[] | {name, vagrantfile_path, state}' | jq '.name + "," + .state  + "," + .vagrantfile_path'| sed 's/^"\(.*\)"$/\1/'| column -s, -t | sort -rk 2 | fzf | awk '{print $3}'); vagrant ssh
+        cd $(cat ~/.vagrant.d/data/machine-index/index | jq '.machines[] | {name, vagrantfile_path, state}' | jq '.name + "," + .state  + "," + .vagrantfile_path'| sed 's/^"\(.*\)"$/\1/'| column -s, -t | sort -rk 2 | fzf | awk '{print $3}'); vagrant ssh
 }
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   -
 fe() {
-  local file
-  file=$(fzf --query="$1" --select-1 --exit-0)
-  [ -n "$file" ] && ${EDITOR:-vim} "$file"
+        local file
+        file=$(fzf --query="$1" --select-1 --exit-0)
+        [ -n "$file" ] && ${EDITOR:-vim} "$file"
 }
 # fd - cd to selected directory
 fd() {
-  local dir
-  dir=$(find ${1:-*} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
+        local dir
+        dir=$(find ${1:-*} -path '*/\.*' -prune \
+                -o -type d -print 2> /dev/null | fzf +m) &&
+                cd "$dir"
 }
 # cdf - cd into the directory of the selected file
 cdf() {
-   local file
-   local dir
-   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+        local file
+        local dir
+        file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 # fkill - kill process
 fkill() {
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
 
-  if [ "x$pid" != "x" ]
-  then
-    kill -${1:-9} $pid
-  fi
+        if [ "x$pid" != "x" ]
+        then
+                kill -${1:-9} $pid
+        fi
 }
 #}}}
 # vim: foldmethod=marker
