@@ -11,3 +11,7 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export WORKON_HOME=/home/unga/Hack/python/Envs
 
 source /usr/local/bin/virtualenvwrapper.sh
+alias irssi="mosh giulio@188.166.36.190 -- tmux attach"
+alias vim=/opt/vim74/bin/vim
+alias todo='org ~/Dropbox/ORG/TODO.org'
+alias org=/usr/bin/vim

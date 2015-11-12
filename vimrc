@@ -10,6 +10,13 @@
 " ---------------------------------------------------------------------- Init
 " {{{
 set nocompatible              " be iMproved, required
+let s:uname = system("uname -s")
+if s:uname == "Darwin"
+" Do Mac stuff here
+endif
+if s:uname == "Linux\n"
+" Do linux stuff here
+endif
 " virtual env mangment python
 " Add the virtualenv's site-packages to vim path
 if has('python3')
@@ -26,8 +33,11 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 "  {{{
+Plug 'jmcantrell/vim-virtualenv'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 "  NOTES
+Plug 'chrisbra/NrrwRgn'
 Plug 'tpope/vim-speeddating'
 Plug 'mattn/calendar-vim'
 Plug 'jceb/vim-orgmode'
@@ -63,11 +73,6 @@ Plug 'aperezdc/vim-template'
 Plug 'jonhiggs/MacDict.vim'
 " undo -trees
 Plug 'mbbill/undotree'
-" py-doc
-Plug 'fs111/pydoc.vim'
-" unite
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " neocompchage
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet'
@@ -90,7 +95,7 @@ Plug 'ervandew/screen'
 " tmux seamless movement
 Plug 'christoomey/vim-tmux-navigator'
 " auto-format code
- Plug 'chiel92/vim-autoformat', 'dev'
+ Plug 'chiel92/vim-autoformat', { 'branch': 'dev' }
 " emmet
 Plug 'mattn/emmet-vim'
 " better js
@@ -316,11 +321,14 @@ command -nargs=0 -bar Update if &modified
 
 nnoremap <silent> <leader>w :<C-u>Update<CR>
 nnoremap <silent> <leader>q :q<CR>
+nnoremap <C-q> :bd <CR>
 "}}}
 "--------------------------------------------------------------- common typos
 "{{{
 command! Q q
+command! Qq q
 command! W w
+command! Ww w
 command! Qa qa
 command! Wa wa
 command! Wq wq
@@ -404,7 +412,7 @@ let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
-let g:syntastic_python_python_exec = 'python3'
+let g:syntastic_python_python_exec = '/usr/bin/python3'
 
 " gutter & fugitive git bindings
 " open diff
@@ -461,7 +469,7 @@ let g:tagbar_sort = 0
 " fold by sytax and style
 " set style for go files
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-au FileType go set foldmethod=indent foldnestmax=10 foldlevel=3
+au FileType go set foldmethod=indent foldnestmax=10 foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -473,7 +481,7 @@ au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)<cr><C-w>h<cr>
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
 au FileType go nmap <leader>r <Plug>(go-run)
-"avoid clas with unite buffer navigator
+"avoid clash with unite buffer navigator
 au FileType go nmap <leader>bu <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
@@ -659,8 +667,8 @@ au FileType python  set colorcolumn=79
 " expand tab to spaces
 au FileType python  set expandtab
 au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
-" place  docstring template
-autocmd FileType python nmap <silent> <C-d> <Plug>(pydocstring)
+" place  docstring template does not seem to work properly
+nmap <silent> <C-d> <Plug>(pydocstring)
 " JEDI and auto complete
 let g:neocomplete#force_overwrite_completefunc=1
 "overwrite omnifunc  with jedi
@@ -749,15 +757,8 @@ function! GetLen()
 endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 
-" py-doc bindings
-
-let g:pydoc_open_cmd = 'vsplit'
-let g:pydoc_cmd = '/Users/giulio/anaconda/bin/python -m pydoc'
-
 " run file
 autocmd FileType python nnoremap  <buffer> <leader>r :exec '!python' shellescape(@%, 1)<cr>
-autocmd FileType python nno <leader>K :<C-u>Unite ref/pydoc
-            \ -vertical -default-action=split<CR>
 "  misc functinons
 " gets the selected text in visual mode
 function! GetVisual()
@@ -769,48 +770,35 @@ function! GetVisual()
         let lines[0] = lines[0][col1 - 1:]
         return join(lines, "\n")
 endfunction
-" --------------------------------------------------------------------- unite
-"{{{
-"set grep exex {{{
-if executable('ag')
-" Use ag in unite grep source.
-let g:unite_source_grep_command = 'ag'
-let g:unite_source_grep_default_opts =
-\ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-\  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-" Use pt in unite grep source.
-" https://github.com/monochromegane/the_platinum_searcher
-let g:unite_source_grep_command = 'pt'
-let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-" Use ack in unite grep source.
-let g:unite_source_grep_command = 'ack-grep'
-let g:unite_source_grep_default_opts =
-\ '-i --no-heading --no-color -k -H'
-let g:unite_source_grep_recursive_opt = ''
-endif
-"}}}
-" use fuzzy matching
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" open in vsplit
-nnoremap <silent><leader>a :Unite  file_rec  -start-insert -default-action=vsplit<cr>
-" search in current dir
-nnoremap <silent><leader>/ :Unite -quick-match grep:.  <cr>
-let g:unite_source_history_yank_enable = 1
-nnoremap <silent><leader>y :Unite -quick-match  history/yank <cr>
-nnoremap <silent> <leader>b :<C-u>Unite buffer bookmark<CR>
-nnoremap <C-b> :Unite -quick-match buffer<cr>
-" search with pt
-nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-if executable('pt')
-  let g:unite_source_grep_command = 'pt'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-  let g:unite_source_grep_recursive_opt = ''
-  let g:unite_source_grep_encoding = 'utf-8'
-endif
+"---------------------------------------------------------------------- fzf{{{
+" exec search  in curent dir
+nnoremap <silent> <leader>u :FZF! -x <CR>
+
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+
+function! s:tags()
+  if empty(tagfiles())
+    echohl WarningMsg
+    echom 'Preparing tags'
+    echohl None
+    call system('ctags -R')
+  endif
+
+  call fzf#run({
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  \            '| grep -v ^!',
+  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+  \ 'sink':    function('s:tags_sink')})
+endfunction
+
+command! Tags call s:tags()
 "}}}
 " --------------------------------------------------------------------- erlang
 "{{{

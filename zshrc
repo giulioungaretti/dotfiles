@@ -22,6 +22,8 @@ export EDITOR=vim
 export VIMBKG=d
 #disable tmux in fzf
 export FZF_TMUX=0
+#  use extended search  all the time
+export FZF_DEFAULT_OPTS="--extended"
 # work  stuff
 export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
 #}}}
@@ -171,7 +173,7 @@ vs(){
 #   -
 fe() {
         local file
-        file=$(fzf --query="$1" --select-1 --exit-0)
+        file=$(fzf -x --query="$1" --select-1 --exit-0)
         [ -n "$file" ] && ${EDITOR:-vim} "$file"
 }
 # fd - cd to selected directory
@@ -197,4 +199,3 @@ fkill() {
         fi
 }
 #}}}
-# vim: foldmethod=marker
