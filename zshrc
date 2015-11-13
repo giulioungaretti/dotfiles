@@ -7,11 +7,12 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
         source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 # tmuxminator
-source ~/bin/tmuxinator.zsh
+if [[ -s "$HOME/bin/tmuxinator.zsh" ]]; then
+        source "$HOME/bin/tmuxinator.zsh"
+fi
 #}}}
 # Exports # {{{
-TERM=screen-256color
-export TERM
+export TERM=screen-256color
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -177,3 +178,4 @@ fkill() {
         fi
 }
 #}}}
+# vim: foldmethod=marker

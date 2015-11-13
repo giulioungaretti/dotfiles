@@ -11,12 +11,6 @@
 " {{{
 set nocompatible              " be iMproved, required
 let s:uname = system("uname -s")
-if s:uname == "Darwin"
-" Do Mac stuff here
-endif
-if s:uname == "Linux\n"
-" Do linux stuff here
-endif
 " virtual env mangment python
 " Add the virtualenv's site-packages to vim path
 if has('python3')
@@ -33,23 +27,25 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 "  {{{
+if s:uname == "Darwin"
+"Mac specific plug ins
+" search in osx dictionary
+Plug 'jonhiggs/MacDict.vim'
+" makes iterm2 tmux and vim have sex
+Plug 'sjl/vitality.vim'
+endif
+if s:uname == "Linux\n"
+" Do linux stuff here
+endif
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-"  NOTES
-Plug 'chrisbra/NrrwRgn'
-Plug 'tpope/vim-speeddating'
-Plug 'mattn/calendar-vim'
-Plug 'jceb/vim-orgmode'
-Plug 'vim-scripts/utl.vim'
 "  Arduino
 Plug 'sudar/vim-arduino-syntax'
 " snippets
 Plug 'sudar/vim-arduino-snippets'
 "  Processing syntax / run script and docs.
 Plug 'sophacles/vim-processing'
-" nice doc ref stuff
-Plug 'thinca/vim-ref'
 " elang plugs
 Plug 'vim-erlang/vim-erlang-compiler'
 Plug 'vim-erlang/vim-erlang-runtime'
@@ -58,8 +54,6 @@ Plug 'vim-erlang/vim-erlang-omnicomplete'
 Plug 'kien/rainbow_parentheses.vim'
 " headers
 Plug 'bimbalaszlo/vim-eightheader'
-" jekyll magic
-Plug 'parkr/vim-jekyll'
 " hide cursorline inactive buffer
 Plug 'vim-scripts/CursorLineCurrentWindow'
 " better search tools highglihg + match
@@ -69,8 +63,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'heavenshell/vim-pydocstring'
 " templates for empty files
 Plug 'aperezdc/vim-template'
-" search in osx dictionary
-Plug 'jonhiggs/MacDict.vim'
 " undo -trees
 Plug 'mbbill/undotree'
 " neocompchage
@@ -88,8 +80,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'terryma/vim-instant-markdown'
 " eyecany bar
 Plug 'bling/vim-airline'
-" makes iterm2 tmux and vim have sex
-"Plug 'sjl/vitality.vim'
 " send line to tmux
 Plug 'ervandew/screen'
 " tmux seamless movement
@@ -766,7 +756,7 @@ endfunction
 "---------------------------------------------------------------------- fzf{{{
 " exec search  in curent dir
 nnoremap <silent> <leader>u :FZF! -x <CR>
-
+" browse tags
 function! s:tags_sink(line)
   let parts = split(a:line, '\t\zs')
   let excmd = matchstr(parts[2:], '^.*\ze;"\t')
