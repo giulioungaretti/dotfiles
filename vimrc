@@ -131,7 +131,7 @@ Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
 " colorschemes
-Plug 'chriskempson/base16-vim'
+Plug 'morhetz/gruvbox'
 " jedi for ptyhon
 Plug 'davidhalter/jedi-vim'
 " go integration
@@ -162,14 +162,14 @@ set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
+let g:gruvbox_contrast_light='hard'
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_vert_split='bg0'
+let g:gruvbox_sign_column='bg0'
+colorscheme gruvbox
+set background=dark
 set lazyredraw
 " theme {{{
-let g:airline_theme='base16'
-let base16colorspace="256"
-set t_Co=256
-set background=dark
-colorscheme base16-tomorrow
-let bkg=$VIMBKG
 function! Light()
         set background=light
         hi! VertSplit ctermbg=15 guibg=#fefefe
@@ -189,16 +189,9 @@ function! Dark()
                 :AirlineRefresh
         endif
 endfunction
-call Dark()
 " map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
-if bkg=="d"
-        call Dark()
-endif
-if bkg=="l"
-        call Light()
-endif
 "}}}
 set mousehide "Hide when characters are typed
 " color of the current line number
