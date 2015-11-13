@@ -1,4 +1,4 @@
-set guifont=Monospace:h10
+set guifont=Hack\ 20
 set guioptions-=r
 set guioptions-=L
 set guioptions-=T

@@ -19,20 +19,20 @@ exec --no-startup-id dispad
 # 1 pass deamon use alt+cmd + \ in this order to start
 exec --no-startup-id /home/unga/bin/1pass
 # new window default border
-new_window pixel 2
-new_float pixel 2
+new_window pixel 3
+new_float pixel 3
 #######################################################################
 #                            colors                                   #
 #######################################################################
 # class border backgr. text indicator
-# LIGHTER #AB4642 RED ACTIVE BORDER
-client.focused         #AB4642 #AB4642 #111111  #1d1f21
+# LIGHTER #fabd2f RED ACTIVE BORDER
+client.focused         #fabd2f #fabd2f #111111  #1d1f21
 client.focused_inactive #282828 #686868 #585858 #1d1f21
 client.unfocused        #282828 #282828 #585858 #1d1f21
-client.urgent           #ab4642 #ab4642 #d8d8d8 #ab4642
+client.urgent           #fabd2f #fabd2f #d8d8d8 #fabd2f
 # CHANGING BORDER STYLE
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 2
+bindsym $mod+y border pixel 3
 bindsym $mod+u border none
 #######################################################################
 #                            bindings                                 #
@@ -51,7 +51,7 @@ bindsym $mod+q kill
 #tab switching
 bindsym $MOD+Tab focus right
 # dmenu
-bindsym $mod+space exec --no-startup-id dmenu_run -i  -y 600  -h 50 -l 8 -fn 'Hack-18' -nb '#1d1f21' -nf '#eddec9' -sb '#ab4642' -sf '#eddec9'
+bindsym $mod+space exec --no-startup-id dmenu_run -i  -y 600  -h 50 -l 8 -fn 'Hack-18' -nb '#1d1f21' -nf '#eddec9' -sb '#fabd2f' -sf '#eddec9'
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -155,10 +155,10 @@ bar {
                         background #1d1f21
                         statusline #b8b8b8
                         separator #585838
-                        focused_workspace  #1d1f21 #AB4642 #ffffff
-                        active_workspace   #1d1f21 #1d1f21 #AB4642
+                        focused_workspace  #1d1f21 #fabd2f #ffffff
+                        active_workspace   #1d1f21 #1d1f21 #fabd2f
                         inactive_workspace #1d1f21 #1d1f21 #b8b8b8
-                        urgent_workspace   #2f343a #BA8BAf  #ffffff
+                        urgent_workspace   #2f343a #8ec07c  #ffffff
                 }
 }
 
