@@ -116,28 +116,50 @@ if [ -f /usr/local/bin/dgb ]; then
 fi
 #}}}
 #------------------------------------------------------------ colors {{{
-#Gruvbox
-#source 256 colors 
-source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh"
-# export tty colors
-echo -e "
-\e]P0ebdbb2
-\e]P1cc241d
-\e]P298971a
-\e]P3d79921
-\e]P4458588
-\e]P5b16286
-\e]P6689d6a
-\e]P7282828
-\e]P8ebdbb2
-\e]P9fb4934
-\e]PAb8bb26
-\e]PBfabd2f
-\e]PC83a598
-\e]PDd3869b
-\e]PE8ec07c
-\e]PF3c3836
-"
+# Base16 Shell
+dark(){
+        BASE16_SHELL="$HOME/.config/base16-shell/base16-tomorrow.dark.sh"
+        [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+}
+light(){
+        BASE16_SHELL="$HOME/.config/base16-shell/base16-tomorrow.light.sh"
+        [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+}
+dark
+# tty
+color00="1d1f21" # Base 00 - Black
+color01="cc6666" # Base 08 - Red
+color02="b5bd68" # Base 0B - Green
+color03="f0c674" # Base 0A - Yellow
+color04="81a2be" # Base 0D - Blue
+color05="b294bb" # Base 0E - Magenta
+color06="8abeb7" # Base 0C - Cyan
+color07="c5c8c6" # Base 05 - White
+color08="969896" # Base 03 - Bright Black
+color09=$color01 # Base 08 - Bright Red
+color10=$color02 # Base 0B - Bright Green
+color11=$color03 # Base 0A - Bright Yellow
+color12=$color04 # Base 0D - Bright Blue
+color13=$color05 # Base 0E - Bright Magenta
+color14=$color06 # Base 0C - Bright Cyan
+color15="ffffff" # Base 07 - Bright White
+# 16 color space
+echo -e "\e]P0$color00"
+echo -e "\e]P1$color01"
+echo -e "\e]P2$color02"
+echo -e "\e]P3$color03"
+echo -e "\e]P4$color04"
+echo -e "\e]P5$color05"
+echo -e "\e]P6$color06"
+echo -e "\e]P7$color07"
+echo -e "\e]P8$color08"
+echo -e "\e]P9$color09"
+echo -e "\e]PA$color10"
+echo -e "\e]PB$color11"
+echo -e "\e]PC$color12"
+echo -e "\e]PD$color13"
+echo -e "\e]PE$color14"
+echo -e "\e]PF$color15"
 clear #for background artifacting
 #}}}
 #------------------------------------------------------------------- fzf  {{{
@@ -163,7 +185,7 @@ fd() {
                 cd "$dir"
 }
 # cdf - cd into the directory of the selected file
-cdf() {
+ccdf() {
         local file
         local dir
         file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
