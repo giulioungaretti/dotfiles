@@ -6,7 +6,7 @@
 "│       (_)_/ |_|_| |_| |_|_|  \___|      │
 "│                                         │
 "└─────────────────────────────────────────┘
-"12 Oct 2015
+" 16 Nov 2015
 " ---------------------------------------------------------------------- Init
 " {{{
 set nocompatible              " be iMproved, required
@@ -34,8 +34,19 @@ if s:uname == "Linux\n"
 endif
 " manage virtual envs
 Plug 'jmcantrell/vim-virtualenv'
+" fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" unite
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/neoyank.vim'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/neomru.vim'
+Plug 'tsukkee/unite-help'
+Plug 'tacroe/unite-mark'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+" nice doc ref stuff
+Plug 'thinca/vim-ref'
 " Arduino
 Plug 'sudar/vim-arduino-syntax'
 " snippets
@@ -370,19 +381,17 @@ let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
 let g:email = "giulioungaretti@me.com"
 " airline
-if exists(':AirlineRefresh')
-        let g:airline_powerline_fonts = 1
-        " smart  tab bar
-        let g:airline#extensions#tabline#enabled = 1
-        " use simple separators
-        let g:airline_left_alt_sep = ''
-        let g:airline_right_alt_sep = ''
-        let g:airline_left_sep=''
-        let g:airline_right_sep=''
-        " exclude airline from preview windows
-        let g:airline_exclude_preview = 1
-        let g:airline#extensions#ctrlp#color_template = 'normal'
-endif
+let g:airline_powerline_fonts = 1
+" smart  tab bar
+let g:airline#extensions#tabline#enabled = 1
+" use simple separators
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_left_sep='  '
+let g:airline_right_sep='  '
+" exclude airline from preview windows
+let g:airline_exclude_preview = 1
+let g:airline#extensions#ctrlp#color_template = 'normal'
 " syntastic
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
@@ -747,8 +756,6 @@ function! GetVisual()
         return join(lines, "\n")
 endfunction
 "---------------------------------------------------------------------- fzf{{{
-" exec search  in curent dir
-nnoremap <silent> <leader>u :FZF! -x <CR>
 " browse tags
 function! s:tags_sink(line)
   let parts = split(a:line, '\t\zs')
@@ -775,6 +782,153 @@ function! s:tags()
 endfunction
 
 command! Tags call s:tags()
+
+ "----------------------------------------------------------------------Unite
+""set grep exex {{{
+if executable('ag')
+" Use ag in unite grep source.
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts =
+\ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
+\  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+let g:unite_source_grep_recursive_opt = ''
+elseif executable('pt')
+" Use pt in unite grep source.
+" https://github.com/monochromegane/the_platinum_searcher
+let g:unite_source_grep_command = 'pt'
+let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+let g:unite_source_grep_recursive_opt = ''
+elseif executable('ack-grep')
+" Use ack in unite grep source.
+let g:unite_source_grep_command = 'ack-grep'
+let g:unite_source_grep_default_opts =
+\ '-i --no-heading --no-color -k -H'
+let g:unite_source_grep_recursive_opt = ''
+endif
+"}}}
+" Start Insert
+let g:unite_enable_start_insert = 1
+let g:unite_enable_short_source_names = 1
+
+" Enable history yank source
+let g:unite_source_history_yank_enable = 1
+
+" Shorten the default update date of 500ms
+let g:unite_update_time = 300
+
+" set up mru limit
+let g:unite_source_file_mru_limit = 100
+
+" highlight like my vim
+let g:unite_cursor_line_highlight = 'CursorLine'
+
+" format mru
+let g:unite_source_file_mru_filename_format = ':~:.'
+let g:unite_source_file_mru_time_format = ''
+
+" set up coolguy arrow prompt
+let g:unite_prompt = '➜ '
+
+" Save session automatically.
+let g:unite_source_session_enable_auto_save = 1
+
+" Use the fuzzy matcher for everything
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+" Use the rank sorter for everything
+call unite#filters#sorter_default#use(['sorter_rank'])
+
+" Set up some custom ignores
+call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+      \ 'ignore_pattern', join([
+      \ '\.git/',
+      \ 'git5/.*/review/',
+      \ 'google/obj/',
+      \ 'tmp/',
+      \ 'lib/Cake/',
+      \ 'node_modules/',
+      \ 'vendor/',
+      \ 'Vendor/',
+      \ 'app_old/',
+      \ 'acf-laravel/',
+      \ 'plugins/',
+      \ 'bower_components/',
+      \ '.sass-cache',
+      \ 'web/wp',
+      \ ], '\|'))
+
+" Unite Commands ===============================================================
+
+" No prefix for unite, leader that bish
+nnoremap [unite] <Nop>
+
+" ;f Fuzzy Find Everything
+" files, Buffers, recursive async file search
+nnoremap <silent> <leader>f :<C-u>Unite
+      \ -buffer-name=files file_rec/async -default-action=vsplit<CR>
+
+" ;y Yank history
+" Shows all your yanks, when you accidentally overwrite
+nnoremap <silent> <leader>y :<C-u>Unite -buffer-name=yanks history/yank<CR>
+
+" ;o Quick outline, see an overview of this file
+nnoremap <silent> <leader>o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
+
+" ;m MRU All Vim buffers, not file buffer
+nnoremap <silent> <leader>m :<C-u>Unite -buffer-name=mru file_mru<CR>
+
+" ;b view open buffers
+nnoremap <silent> <leader>b :<C-u>Unite -buffer-name=buffer buffer<CR>
+
+" ;c Quick commands, lists all available vim commands
+nnoremap <silent> <leader>c :<C-u>Unite -buffer-name=commands command<CR>
+
+" search in current dir
+nnoremap <silent><leader>/ :Unite -quick-match grep:.  <cr>
+
+" Unite motions ================================================================
+
+" Function that only triggers when unite opens
+"autocmd MyAutoCmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+
+  " exit with esc
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+  imap <buffer> <ESC> <Plug>(unite_exit)
+
+  " Ctrl jk mappings
+  imap <buffer> <c-j> <Plug>(unite_insert_leave)
+  imap <buffer> <c-k> <Plug>(unite_insert_leave)
+  nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
+  nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
+
+  " jj becuase you're lazy, and leave insert mode
+  imap <buffer> jj <Plug>(unite_insert_leave)
+
+  " qq `` becuase you're lazy, and quit unite
+  imap <buffer> qq <Plug>(unite_exit)
+  imap <buffer> `` <Plug>(unite_exit)
+
+  " refresh unite
+  nmap <buffer> <C-r> <Plug>(unite_redraw)
+  imap <buffer> <C-r> <Plug>(unite_redraw)
+
+  " split control
+  inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
+  nnoremap <silent><buffer><expr> <C-s> unite#do_action('split')
+  inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+  nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+
+endfunction
+
+if has("autocmd")
+augroup UniteSettingsGroup
+    " Clear autocmds for this group
+    autocmd!
+
+    autocmd FileType unite call s:unite_settings()
+augroup end
+endif
 "}}}
 " --------------------------------------------------------------------- erlang
 "{{{
