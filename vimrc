@@ -10,41 +10,37 @@
 " ---------------------------------------------------------------------- Init
 " {{{
 set nocompatible              " be iMproved, required
+" grab os name
 let s:uname = system("uname -s")
-" virtual env mangment python
-" Add the virtualenv's site-packages to vim path
-if has('python3')
-py3 << EOF
-import os.path
-import sys
-import vim
-if "VIRTUAL_ENV" in os.environ:
-        venv_path = os.environ['VIRTUAL_ENV']
-        sys.path.insert(0, venv_path)
-EOF
-endif
 call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 "  {{{
-if s:uname == "Darwin"
+if s:uname == "Darwin\n"
 "Mac specific plug ins
 " search in osx dictionary
 Plug 'jonhiggs/MacDict.vim'
-" makes iterm2 tmux and vim have sex
-Plug 'sjl/vitality.vim'
+    " Support different cursor in insert mode.
+    if &term == "screen-256color"
+      let &t_SI = "\<Esc>[3 q"
+      let &t_EI = "\<Esc>[0 q"
+    endif
+    " this should make it work with osx/tmux/madness
+    set clipboard+=unnamed
 endif
 if s:uname == "Linux\n"
-" Do linux stuff here
+    " Do linux stuff here
+    set clipboard=unnamedplus
 endif
+" manage virtual envs
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-"  Arduino
+" Arduino
 Plug 'sudar/vim-arduino-syntax'
 " snippets
 Plug 'sudar/vim-arduino-snippets'
-"  Processing syntax / run script and docs.
+" Processing syntax / run script and docs.
 Plug 'sophacles/vim-processing'
 " elang plugs
 Plug 'vim-erlang/vim-erlang-compiler'
@@ -188,7 +184,7 @@ nnoremap <silent><leader>o :set relativenumber!<cr>
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
-"au FocusLost * :wa		" Set vim to save the file on focus out
+"au FocusLost * :wa     " Set vim to save the file on focus out
 set shell=/bin/sh
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -200,8 +196,6 @@ set iskeyword-=_                    " '_' is an end of word designator
 " no backup and swap files.
 set nobackup
 set noswapfile
-" this should make it work with osx/tmux/madness
-set clipboard=unnamedplus
 " tab is 4 spaces
 set tabstop=4
 " always uses spaces instead of tab characters
@@ -784,11 +778,6 @@ command! Tags call s:tags()
 "}}}
 " --------------------------------------------------------------------- erlang
 "{{{
-let g:ref_use_vimproc = 1
-let g:ref_open = 'split'
-let g:ref_cache_dir = expand('/tmp/vim_ref_cache/')
-autocmd FileType erlang nno <leader>K :<C-u>Unite ref/erlang
-            \ -vertical -default-action=split<CR>
 "}}}
 "}}}
-" vim: foldmethod=marker
+" vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78

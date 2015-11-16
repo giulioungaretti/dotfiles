@@ -11,6 +11,10 @@ export GOPATH=$HOME/Hack/go
 # add go executables to path
 export PATH=$PATH:$GOPATH/bin
 #}}}
+# python env{{{
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+export WORKON_HOME=$HOME/Hack/python/Envs
+#}}}
 #}}}
 #------------------------------------------------------------------ Functions
 #{{{
