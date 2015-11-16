@@ -18,5 +18,12 @@ export WORKON_HOME=$HOME/Hack/python/Envs
 #}}}
 #------------------------------------------------------------------ Functions
 #{{{
+#
 #}}}
+#
+#------------------------------------------------------------------ Source
+#{{{
+source /usr/local/bin/virtualenvwrapper.sh
+#}}}
+#
 # vim: foldmethod=marker:foldlevel=0: filetype=zsh
