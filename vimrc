@@ -31,7 +31,12 @@ endif
 if s:uname == "Linux\n"
     " Do linux stuff here
     set clipboard=unnamedplus
+    " sync vim clipboard to x clipboard
+    autocmd VimLeave * call system("xsel -ib", getreg('+'))
 endif
+"
+" nice start page
+Plug 'mhinz/vim-startify'
 " manage virtual envs
 Plug 'jmcantrell/vim-virtualenv'
 " fzf
@@ -392,7 +397,7 @@ let g:airline_right_sep='  '
 " exclude airline from preview windows
 let g:airline_exclude_preview = 1
 let g:airline#extensions#ctrlp#color_template = 'normal'
-" syntastic
+ "----------------------------------------------------------------- syntastic
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -454,7 +459,7 @@ let g:tagbar_sort = 0
 " fold by sytax and style
 " set style for go files
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-au FileType go set foldmethod=indent foldnestmax=10 foldlevel=0
+au FileType go set foldmethod=indent foldnestmax=10
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -467,9 +472,9 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
 au FileType go nmap <leader>r <Plug>(go-run)
 "avoid clash with unite buffer navigator
-au FileType go nmap <leader>bu <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap ;b <Plug>(go-build)
+au FileType go nmap ;t <Plug>(go-test)
+au FileType go nmap ;c <Plug>(go-coverage)
 "By default the mapping gd is enabled which opens the target identifier in current buffer. You can also open the definition/declaration in a new vertical, horizontal or tab for the word under your cursor:
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
@@ -513,6 +518,8 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 1
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 "}}}
 "----------------------------------------------------------------- easymotion
 "{{{
@@ -863,7 +870,6 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
 nnoremap [unite] <Nop>
 
 " ;f Fuzzy Find Everything
-" files, Buffers, recursive async file search
 nnoremap <silent> <leader>f :<C-u>Unite
       \ -buffer-name=files file_rec/async -default-action=vsplit<CR>
 
