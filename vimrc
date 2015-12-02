@@ -63,7 +63,7 @@ Plug 'vim-erlang/vim-erlang-compiler'
 Plug 'vim-erlang/vim-erlang-runtime'
 Plug 'vim-erlang/vim-erlang-omnicomplete'
 " Rainbow paranthesis
-Plug 'kien/rainbow_parentheses.vim'
+Plug 'junegunn/rainbow_parentheses.vim'
 " headers
 Plug 'bimbalaszlo/vim-eightheader'
 " hide cursorline inactive buffer
@@ -175,6 +175,7 @@ function! Light()
         set background=light
         hi! VertSplit ctermbg=15 guibg=#fefefe
         hi! CursorLineNR cterm=bold ctermfg=1
+        hi! StatusLine ctermbg=15
         :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh
@@ -184,6 +185,7 @@ endfunction
 function! Dark()
         set background=dark
         hi! VertSplit ctermbg=0 guibg=#1c1f21
+        hi! StatusLine ctermbg=0
         hi! CursorLineNR cterm=bold ctermfg=1
         :redraw!
         if exists(':AirlineRefresh')
@@ -352,11 +354,6 @@ map <leader>td <Plug>TaskList
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
-" rainbow_parentheses
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 " heading creator
 let g:EightHeader_comment   = 'call NERDComment( "n", "comment" )'
 let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
@@ -458,7 +455,7 @@ let g:tagbar_sort = 0
 " {{{
 " fold by sytax and style
 " set style for go files
-au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+"au FileType go set noet ts=4 sw=4 sts=4
 au FileType go set foldmethod=indent foldnestmax=10
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
@@ -518,7 +515,7 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 1
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck',"go"]
 "let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 "}}}
 "----------------------------------------------------------------- easymotion
@@ -898,15 +895,16 @@ nnoremap <silent><leader>/ :Unite -quick-match grep:.  <cr>
 "autocmd MyAutoCmd FileType unite call s:unite_settings()
 function! s:unite_settings()
 
-  " exit with esc
-  nmap <buffer> <ESC> <Plug>(unite_exit)
-  imap <buffer> <ESC> <Plug>(unite_exit)
-
   " Ctrl jk mappings
-  imap <buffer> <c-j> <Plug>(unite_insert_leave)
-  imap <buffer> <c-k> <Plug>(unite_insert_leave)
-  nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
-  nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
+  "imap <buffer> <c-j> <Plug>(unite_insert_leave)
+  "imap <buffer> <c-k> <Plug>(unite_insert_leave)
+  "nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
+  "nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
+
+  imap <buffer> <C-n> <Plug>(unite_insert_leave)
+  imap <buffer> <C-p> <Plug>(unite_insert_leave)
+  nmap <buffer> <C-n> <Plug>(unite_loop_cursor_down)
+  nmap <buffer> <C-p> <Plug>(unite_loop_cursor_up)
 
   " jj becuase you're lazy, and leave insert mode
   imap <buffer> jj <Plug>(unite_insert_leave)
