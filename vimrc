@@ -17,9 +17,9 @@ call plug#begin('~/.vim/plugged')
 " --------------------------------------------------------------------- Plugs
 "  {{{
 if s:uname == "Darwin\n"
-"Mac specific plug ins
-" search in osx dictionary
-Plug 'jonhiggs/MacDict.vim'
+    "Mac specific plug ins
+    " search in osx dictionary
+    Plug 'jonhiggs/MacDict.vim'
     " Support different cursor in insert mode.
     if &term == "screen-256color"
       let &t_SI = "\<Esc>[3 q"
@@ -34,7 +34,8 @@ if s:uname == "Linux\n"
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
 endif
-"
+" Fix tmux iterm vim cursor shape.
+Plug 'jszakmeister/vim-togglecursor'
 " nice start page
 Plug 'mhinz/vim-startify'
 " manage virtual envs
