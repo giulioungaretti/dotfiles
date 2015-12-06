@@ -160,7 +160,7 @@ set fillchars=""
 "show bar
 set noshowmode
 set noruler
-set laststatus=2
+set laststatus=0
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
@@ -385,7 +385,7 @@ let g:email = "giulioungaretti@me.com"
 " airline
 let g:airline_powerline_fonts = 1
 " smart  tab bar
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 " use simple separators
 let g:airline_left_alt_sep = ''
 let g:airline_right_alt_sep = ''
