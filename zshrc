@@ -26,7 +26,7 @@ export FZF_TMUX=0
 #  use extended search  all the time
 export FZF_DEFAULT_OPTS="--extended"
 # work  stuff
-export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
+#export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
 #}}}
 # Aliases {{{
 alias server='python -m http.server'
@@ -200,4 +200,5 @@ fkill() {
         fi
 }
 #}}}
+alias cover='go test -coverprofile=cover.out  && go tool cover -html=cover.out -o coverage.html'
 # vim: foldmethod=marker
