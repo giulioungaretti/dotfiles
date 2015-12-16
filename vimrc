@@ -20,11 +20,6 @@ if s:uname == "Darwin\n"
     "Mac specific plug ins
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
-    " Support different cursor in insert mode.
-    if &term == "screen-256color"
-      let &t_SI = "\<Esc>[3 q"
-      let &t_EI = "\<Esc>[0 q"
-    endif
     " this should make it work with osx/tmux/madness
     set clipboard+=unnamed
 endif
@@ -38,8 +33,6 @@ endif
 Plug 'jszakmeister/vim-togglecursor'
 " nice start page
 Plug 'mhinz/vim-startify'
-" manage virtual envs
-Plug 'jmcantrell/vim-virtualenv'
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -53,16 +46,6 @@ Plug 'tacroe/unite-mark'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " nice doc ref stuff
 Plug 'thinca/vim-ref'
-" Arduino
-Plug 'sudar/vim-arduino-syntax'
-" snippets
-Plug 'sudar/vim-arduino-snippets'
-" Processing syntax / run script and docs.
-Plug 'sophacles/vim-processing'
-" elang plugs
-Plug 'vim-erlang/vim-erlang-compiler'
-Plug 'vim-erlang/vim-erlang-runtime'
-Plug 'vim-erlang/vim-erlang-omnicomplete'
 " Rainbow paranthesis
 Plug 'junegunn/rainbow_parentheses.vim'
 " headers
@@ -98,22 +81,16 @@ Plug 'ervandew/screen'
 " tmux seamless movement
 Plug 'christoomey/vim-tmux-navigator'
 " auto-format code
- Plug 'chiel92/vim-autoformat', { 'branch': 'dev' }
-" emmet
-Plug 'mattn/emmet-vim'
-" better js
-Plug 'pangloss/vim-javascript'
-" colorize css hexcodes
 Plug 'ap/vim-css-color'
 " syntax cheker
 Plug 'scrooloose/syntastic'
-" window managment
+" window management
 Plug 'wesQ3/vim-windowswap'
 " remove and highlight trailing spaces
 Plug 'bronson/vim-trailing-whitespace'
-"indent highlight
+" indent highlight
 Plug 'Yggdroot/indentLine'
-""autoclose
+" autoclose
 Plug 'Townk/vim-autoclose'
 " sublime like mutiple cursors
 Plug 'terryma/vim-multiple-cursors'
@@ -123,7 +100,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdcommenter'
 " fuGITve
 Plug 'tpope/vim-fugitive'
-"tasklist leader-t
+" tasklist leader-t
 Plug 'TaskList.vim'
 " new command ds, cs, and yss i
 Plug 'tpope/vim-surround'
@@ -135,9 +112,36 @@ Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 " colorschemes
 Plug 'chriskempson/base16-vim'
-" jedi for ptyhon
+Plug 'morhetz/gruvbox' 
+
+"----------------------------------------------------------- language plugins
+"elixir
+Plug 'elixir-lang/vim-elixir'
+ " Arduino
+Plug 'sudar/vim-arduino-syntax'
+" snippets
+Plug 'sudar/vim-arduino-snippets'
+" Processing syntax / run script and docs.
+Plug 'sophacles/vim-processing'
+" elang plugs
+Plug 'vim-erlang/vim-erlang-compiler'
+Plug 'vim-erlang/vim-erlang-runtime'
+Plug 'vim-erlang/vim-erlang-omnicomplete'
+" web stuff js/html
+" emmet
+Plug 'mattn/emmet-vim'
+" better js
+Plug 'pangloss/vim-javascript'
+"Plug 'isRuslan/vim-es6'
+Plug 'mxw/vim-jsx'
+" better js syntax
+Plug 'othree/yajs.vim'
+" python
+" manage python virtual envs
+Plug 'jmcantrell/vim-virtualenv'
+" jedi
 Plug 'davidhalter/jedi-vim'
-" go integration
+" go 
 Plug 'fatih/vim-go'
 Plug 'garyburd/go-explorer'
 " zen writing
