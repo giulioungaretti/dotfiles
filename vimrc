@@ -15,11 +15,17 @@ let s:uname = system("uname -s")
 call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
-"  {{{
+" {{{
 if s:uname == "Darwin\n"
     "Mac specific plug ins
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
+    " search in osx dictionary
+    function! GetDict()
+            let w = expand("<cword>")
+            :call g:MacDict(w)
+    endfunction
+    command! Def :call GetDict()<cr>
     " this should make it work with osx/tmux/madness
     set clipboard+=unnamed
 endif
@@ -81,8 +87,8 @@ Plug 'ervandew/screen'
 " tmux seamless movement
 Plug 'christoomey/vim-tmux-navigator'
 " auto-format code
-Plug 'ap/vim-css-color'
-" syntax cheker
+Plug 'chiel92/vim-autoformat', { 'branch': 'dev' }
+" syntax checker
 Plug 'scrooloose/syntastic'
 " window management
 Plug 'wesQ3/vim-windowswap'
@@ -112,7 +118,7 @@ Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 " colorschemes
 Plug 'chriskempson/base16-vim'
-Plug 'morhetz/gruvbox' 
+Plug 'morhetz/gruvbox'
 
 "----------------------------------------------------------- language plugins
 "elixir
@@ -141,7 +147,7 @@ Plug 'othree/yajs.vim'
 Plug 'jmcantrell/vim-virtualenv'
 " jedi
 Plug 'davidhalter/jedi-vim'
-" go 
+" go
 Plug 'fatih/vim-go'
 Plug 'garyburd/go-explorer'
 " zen writing
@@ -155,33 +161,22 @@ call plug#end()
 "}}}
 " -------------------------------------------------------------------- Visual
 "{{{
-au VimLeave * :!clear
 " turn on syntax highlight
 syntax on
 " show curret line
 set cursorline
 "remove ugly ass  split separator
 set fillchars=""
-"show bar
-set noshowmode
-set noruler
-set laststatus=0
+set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-let g:airline_theme='base16'
-let base16colorspace="256"
-set t_Co=256
+colorscheme gruvbox
 set background=dark
-colorscheme base16-tomorrow
 function! Light()
         set background=light
-        hi! VertSplit ctermbg=15 guibg=#fefefe
-        hi! CursorLineNR cterm=bold ctermfg=1
-        hi! StatusLine ctermbg=15
-        :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh
         endif
@@ -189,25 +184,28 @@ endfunction
 
 function! Dark()
         set background=dark
-        hi! VertSplit ctermbg=0 guibg=#1c1f21
-        hi! StatusLine ctermbg=0
-        hi! CursorLineNR cterm=bold ctermfg=1
-        :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh
         endif
 endfunction
-" map functions to bgl and bgd
+"" map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
 "}}}
 set mousehide "Hide when characters are typed
 " color of the current line number
-nnoremap <silent><leader>o :set relativenumber!<cr>
+nnoremap <silent><leader>oo :set relativenumber!<cr>
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
-"au FocusLost * :wa     " Set vim to save the file on focus out
+-au VimLeave * :!clear
+" vim-sensible
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set smarttab
+set nrformats-=octal
+" use bash as shell
 set shell=/bin/sh
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -216,15 +214,10 @@ set timeoutlen=1000 ttimeoutlen=0
 "Extend word designators
 set iskeyword-=.                    " '.' is an end of word designator
 set iskeyword-=_                    " '_' is an end of word designator
+set iskeyword-=-                    " '_' is an end of word designator
 " no backup and swap files.
 set nobackup
 set noswapfile
-" tab is 4 spaces
-set tabstop=4
-" always uses spaces instead of tab characters
-set expandtab
-" set spell check in English
-setlocal spell spelllang=en_us
 " special mode line at end of file
 set modelines=1
 " md files as markdown
@@ -236,7 +229,7 @@ set showmatch
 " smart case when searching
 set ignorecase
 set smartcase
-" better mouse interaction
+" better mouse interaction is no mouse integration
 set mouse=""
 "folding
 set foldenable  " enable folding
@@ -252,11 +245,10 @@ nnoremap <C-y> 3<C-y>"
 "-------------------------------------------------------------------- Aliases
 "{{{
 " bare vim
-" delete char backwards insert mode
-set backspace=indent,eol,start
-imap ^D <BS>
 " leader
 map <space> <leader>
+" redo last colon command
+nmap @@ @:
 " Toggle paste mode.
 function! TogglePasteMode()
         if &paste
@@ -285,12 +277,17 @@ endfunction
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
-"jk kj to  to esc
-inoremap jk <Esc>
-inoremap kj <Esc>
+"jj to  to esc
+inoremap jj <Esc>
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+" merge and split
+" merge line below
+nnoremap M mzJ`z
+" Split line (sister to [M]merge lines above)
+" The normal use of S is covered by cc, so don't worry about shadowing it.
+nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 " split right and below instead of default opposite
 set splitbelow
 set splitright
@@ -317,7 +314,6 @@ command -nargs=0 -bar Update if &modified
                            \|        confirm write
                            \|    endif
                            \|endif
-
 nnoremap <silent> <leader>w :<C-u>Update<CR>
 nnoremap <silent> <leader>q :q<CR>
 nnoremap <C-q> :bd <CR>
@@ -335,9 +331,6 @@ command! Wqa wqa
 "}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
-"{{{orgmode
-let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED', 'ARCHIVED']
-"}}}
 " misc
 " {{{
 " UNDO
@@ -345,12 +338,6 @@ if has("persistent_undo")
     set undodir='~/.undodir/'
     set undofile
 endif
-" search in osx dictionary
-function! GetDict()
-        let w = expand("<cword>")
-        :call g:MacDict(w)
-endfunction
-command! Def :call GetDict()<cr>
 " zen mode with Goyo
 nnoremap <silent><Leader>f :Goyo <CR>
 " open task list for todo single file
@@ -456,12 +443,14 @@ let g:tagbar_autoclose  = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 "}}}
-"------------------------------------------------------------------------- go
+"-------------------------------------------------------------------------
+"golang
 " {{{
 " fold by sytax and style
 " set style for go files
-"au FileType go set noet ts=4 sw=4 sts=4
 au FileType go set foldmethod=indent foldnestmax=10
+" match gofmt style
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -648,19 +637,21 @@ let g:tagbar_type_markdown = {
                         \ }
 
 " Enables HTML/CSS syntax highlighting in your JavaScript file.
-let g:javascript_enable_domhtmlcss = 1
+" let g:javascript_enable_domhtmlcss = 1
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 "  show nice embedded js
 let javascript_enable_domhtmlcss=1
 " allow js folding
 let b:javascript_fold=1
+let g:syntastic_javascript_checkers = ['eslint']
 "}}}
 "--------------------------------------------------------------------- python
 "{{{
 " set 79 long ruler
 au FileType python  set colorcolumn=79
 " expand tab to spaces
-au FileType python  set expandtab
-au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
+au FileType python  set tabstop=4 expandtab shiftwidth=4 softtabstop=4
+au BufNewFile,BufRead *.py setlocal  tabstop=4 expandtab shiftwidth=4 softtabstop=4
 " place  docstring template does not seem to work properly
 nmap <silent> <C-d> <Plug>(pydocstring)
 " JEDI and auto complete
@@ -742,7 +733,6 @@ function! GetHelpMagic()
         :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>dc :call GetHelpMagic()<CR>
-
 " Get `dir` help for word under cursor.
 function! GetLen()
         let w = "len(" . expand("<cword>") . ")"
@@ -750,7 +740,6 @@ function! GetLen()
         echo  w
 endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
-
 " run file
 autocmd FileType python nnoremap  <buffer> <leader>r :exec '!python' shellescape(@%, 1)<cr>
 "  misc functinons
@@ -934,13 +923,9 @@ if has("autocmd")
 augroup UniteSettingsGroup
     " Clear autocmds for this group
     autocmd!
-
     autocmd FileType unite call s:unite_settings()
 augroup end
 endif
 "}}}
 " --------------------------------------------------------------------- erlang
-"{{{
-"}}}
-"}}}
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
