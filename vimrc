@@ -277,8 +277,9 @@ endfunction
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
-"jj to  to esc
-inoremap jj <Esc>
+"jk/kj to  to esc
+inoremap jk <Esc>
+inoremap kj <Esc>
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
