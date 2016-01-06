@@ -78,7 +78,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 			tab-color 160 255 160
 		    fi
 		else
-		    tab-color 160 160 255
+		    tab-color 031 031 031
 		fi
 	    }
 
