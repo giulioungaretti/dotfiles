@@ -929,4 +929,13 @@ augroup end
 endif
 "}}}
 " --------------------------------------------------------------------- erlang
+"  {{{
+augroup erlang
+  au!
+  au BufNewFile,BufRead *.erl setlocal tabstop=4
+  au BufNewFile,BufRead *.erl setlocal shiftwidth=4
+  au BufNewFile,BufRead *.erl setlocal softtabstop=4
+  au BufNewFile,BufRead relx.config setlocal filetype=erlang
+augroup END
+"  }}}
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
