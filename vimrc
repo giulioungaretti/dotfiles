@@ -168,7 +168,7 @@ set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-let g:hybrid_use_Xresources = 1
+let g:hybrid_custom_term_colors = 1
 set background=dark
 colorscheme hybrid
 function! Light()
