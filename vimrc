@@ -21,11 +21,6 @@ if s:uname == "Darwin\n"
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
     " search in osx dictionary
-    function! GetDict()
-            let w = expand("<cword>")
-            :call g:MacDict(w)
-    endfunction
-    command! Def :call GetDict()<cr>
     " this should make it work with osx/tmux/madness
     set clipboard+=unnamed
 endif
@@ -119,7 +114,7 @@ Plug 'mattn/webapi-vim'
 " colorschemes
 Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
-
+Plug 'w0ng/vim-hybrid'
 "----------------------------------------------------------- language plugins
 "elixir
 Plug 'elixir-lang/vim-elixir'
@@ -173,8 +168,9 @@ set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-colorscheme gruvbox
+let g:hybrid_use_Xresources = 1
 set background=dark
+colorscheme hybrid
 function! Light()
         set background=light
         if exists(':AirlineRefresh')
@@ -198,7 +194,7 @@ nnoremap <silent><leader>oo :set relativenumber!<cr>
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
--au VimLeave * :!clear
+au VimLeave * :!clear
 " vim-sensible
 set autoindent
 set backspace=indent,eol,start
@@ -283,8 +279,8 @@ inoremap kj <Esc>
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-" merge and split
 " merge line below
+" merge and split
 nnoremap M mzJ`z
 " Split line (sister to [M]merge lines above)
 " The normal use of S is covered by cc, so don't worry about shadowing it.
@@ -523,9 +519,14 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 ""  search to char back and forwad
- nmap s <Plug>(easymotion-sl)
- nmap t <Plug>(easymotion-tl)
+nmap s <Plug>(easymotion-sl)
+nmap t <Plug>(easymotion-tl)
 "}}}
+function! GetDict()
+        let w = expand("<cword>")
+        :call g:MacDict(w)
+endfunction
+command! Def :call GetDict()<cr>
 "---------------------------------------------------------------- neocopmlete
 "{{{
 let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
