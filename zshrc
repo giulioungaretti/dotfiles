@@ -1,4 +1,3 @@
-#
 # Executes commands at the start of an interactive session.
 #
 # Source. {{{
@@ -29,7 +28,7 @@ export FZF_DEFAULT_OPTS="--extended"
 export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
 #}}}
 # Aliases {{{
-alias server='python -m http.server'
+alias server='python3 -m http.server'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -53,6 +52,40 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         if [ -f ~/.osxalias ]; then
                 source ~/.osxalias
         fi
+	# ssh color change tab
+	# iTerm2 tab color commands
+	# http://code.google.com/p/iterm2/wiki/ProprietaryEscapeCodes
+	if [[ -n "$ITERM_SESSION_ID" ]]; then
+	    tab-color() {
+		echo -ne "\033]6;1;bg;red;brightness;$1\a"
+		echo -ne "\033]6;1;bg;green;brightness;$2\a"
+		echo -ne "\033]6;1;bg;blue;brightness;$3\a"
+	    }
+	    tab-red() { tab-color 255 0 0 }
+	    tab-green() { tab-color 0 255 0 }
+	    tab-blue() { tab-color 0 0 255 }
+	    tab-reset() { echo -ne "\033]6;1;bg;*;default\a" }
+
+	    function iterm2_tab_precmd() {
+		tab-reset
+	    }
+
+	    function iterm2_tab_preexec() {
+		if [[ "$1" =~ "^ssh " ]]; then
+		    if [[ "$1" =~ "prod" ]]; then
+			tab-color 255 160 160
+		    else
+			tab-color 160 255 160
+		    fi
+		else
+		    tab-color 031 031 031
+		fi
+	    }
+
+	    autoload -U add-zsh-hook
+	    add-zsh-hook precmd  iterm2_tab_precmd
+	    add-zsh-hook preexec iterm2_tab_preexec
+	fi
 fi
 #}}}
 # vi mode {{{
@@ -66,6 +99,7 @@ export KEYTIMEOUT
 #}}}
 # remap jj to nesc
 bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M viins 'kj' vi-cmd-mode
 # add missing vim hotkeys
 # fixes backspace deletion issues
 # http://zshwiki.org/home/zle/vi-mode
@@ -116,52 +150,8 @@ if [ -f /usr/local/bin/dgb ]; then
 fi
 #}}}
 #------------------------------------------------------------ colors {{{
-# Base16 Shell
-dark(){
-        BASE16_SHELL="$HOME/.config/base16-shell/base16-tomorrow.dark.sh"
-        [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
-}
-light(){
-        BASE16_SHELL="$HOME/.config/base16-shell/base16-tomorrow.light.sh"
-        [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
-}
-dark
-# tty
-color00="1d1f21" # Base 00 - Black
-color01="cc6666" # Base 08 - Red
-color02="b5bd68" # Base 0B - Green
-color03="f0c674" # Base 0A - Yellow
-color04="81a2be" # Base 0D - Blue
-color05="b294bb" # Base 0E - Magenta
-color06="8abeb7" # Base 0C - Cyan
-color07="c5c8c6" # Base 05 - White
-color08="969896" # Base 03 - Bright Black
-color09=$color01 # Base 08 - Bright Red
-color10=$color02 # Base 0B - Bright Green
-color11=$color03 # Base 0A - Bright Yellow
-color12=$color04 # Base 0D - Bright Blue
-color13=$color05 # Base 0E - Bright Magenta
-color14=$color06 # Base 0C - Bright Cyan
-color15="ffffff" # Base 07 - Bright White
-# 16 color space
-echo -e "\e]P0$color00"
-echo -e "\e]P1$color01"
-echo -e "\e]P2$color02"
-echo -e "\e]P3$color03"
-echo -e "\e]P4$color04"
-echo -e "\e]P5$color05"
-echo -e "\e]P6$color06"
-echo -e "\e]P7$color07"
-echo -e "\e]P8$color08"
-echo -e "\e]P9$color09"
-echo -e "\e]PA$color10"
-echo -e "\e]PB$color11"
-echo -e "\e]PC$color12"
-echo -e "\e]PD$color13"
-echo -e "\e]PE$color14"
-echo -e "\e]PF$color15"
-clear #for background artifacting
-#}}}
+#TODO fix for hybrind color scheme
+}}}
 #------------------------------------------------------------------- fzf  {{{
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #List all vagrant boxes available in the system including its status, and try to access the selected one via ssh
@@ -200,4 +190,11 @@ fkill() {
         fi
 }
 #}}}
+DIR=$HOME"/bin"
+if [ -f $DIR/agb ]; then
+        alias agb="source $DIR/agb"
+fi
+if [ -f $DIR/dgb ]; then
+        alias dgb="source $DIR/dgb"
+fi
 # vim: foldmethod=marker

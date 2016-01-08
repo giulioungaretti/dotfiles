@@ -6,7 +6,7 @@
 "│       (_)_/ |_|_| |_| |_|_|  \___|      │
 "│                                         │
 "└─────────────────────────────────────────┘
-"12 Oct 2015
+" 16 Nov 2015
 " ---------------------------------------------------------------------- Init
 " {{{
 set nocompatible              " be iMproved, required
@@ -15,39 +15,32 @@ let s:uname = system("uname -s")
 call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
-"  {{{
+" {{{
 if s:uname == "Darwin\n"
-"Mac specific plug ins
-" search in osx dictionary
-Plug 'jonhiggs/MacDict.vim'
-    " Support different cursor in insert mode.
-    if &term == "screen-256color"
-      let &t_SI = "\<Esc>[3 q"
-      let &t_EI = "\<Esc>[0 q"
-    endif
+    "Mac specific plug ins
+    " search in osx dictionary
+    Plug 'jonhiggs/MacDict.vim'
+    " search in osx dictionary
     " this should make it work with osx/tmux/madness
     set clipboard+=unnamed
 endif
 if s:uname == "Linux\n"
     " Do linux stuff here
     set clipboard=unnamedplus
+    " sync vim clipboard to x clipboard
+    autocmd VimLeave * call system("xsel -ib", getreg('+'))
 endif
-" manage virtual envs
-Plug 'jmcantrell/vim-virtualenv'
+" Fix tmux iterm vim cursor shape.
+Plug 'jszakmeister/vim-togglecursor'
+" nice start page
+Plug 'mhinz/vim-startify'
+" fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Arduino
-Plug 'sudar/vim-arduino-syntax'
-" snippets
-Plug 'sudar/vim-arduino-snippets'
-" Processing syntax / run script and docs.
-Plug 'sophacles/vim-processing'
-" elang plugs
-Plug 'vim-erlang/vim-erlang-compiler'
-Plug 'vim-erlang/vim-erlang-runtime'
-Plug 'vim-erlang/vim-erlang-omnicomplete'
+" nice doc ref stuff
+Plug 'thinca/vim-ref'
 " Rainbow paranthesis
-Plug 'kien/rainbow_parentheses.vim'
+Plug 'junegunn/rainbow_parentheses.vim'
 " headers
 Plug 'bimbalaszlo/vim-eightheader'
 " hide cursorline inactive buffer
@@ -81,22 +74,16 @@ Plug 'ervandew/screen'
 " tmux seamless movement
 Plug 'christoomey/vim-tmux-navigator'
 " auto-format code
- Plug 'chiel92/vim-autoformat', { 'branch': 'dev' }
-" emmet
-Plug 'mattn/emmet-vim'
-" better js
-Plug 'pangloss/vim-javascript'
-" colorize css hexcodes
-Plug 'ap/vim-css-color'
-" syntax cheker
+Plug 'chiel92/vim-autoformat', { 'branch': 'dev' }
+" syntax checker
 Plug 'scrooloose/syntastic'
-" window managment
+" window management
 Plug 'wesQ3/vim-windowswap'
 " remove and highlight trailing spaces
 Plug 'bronson/vim-trailing-whitespace'
-"indent highlight
+" indent highlight
 Plug 'Yggdroot/indentLine'
-""autoclose
+" autoclose
 Plug 'Townk/vim-autoclose'
 " sublime like mutiple cursors
 Plug 'terryma/vim-multiple-cursors'
@@ -106,7 +93,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdcommenter'
 " fuGITve
 Plug 'tpope/vim-fugitive'
-"tasklist leader-t
+" tasklist leader-t
 Plug 'TaskList.vim'
 " new command ds, cs, and yss i
 Plug 'tpope/vim-surround'
@@ -118,9 +105,36 @@ Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 " colorschemes
 Plug 'chriskempson/base16-vim'
-" jedi for ptyhon
+Plug 'morhetz/gruvbox'
+Plug 'w0ng/vim-hybrid'
+"----------------------------------------------------------- language plugins
+"elixir
+Plug 'elixir-lang/vim-elixir'
+ " Arduino
+Plug 'sudar/vim-arduino-syntax'
+" snippets
+Plug 'sudar/vim-arduino-snippets'
+" Processing syntax / run script and docs.
+Plug 'sophacles/vim-processing'
+" elang plugs
+Plug 'vim-erlang/vim-erlang-compiler'
+Plug 'vim-erlang/vim-erlang-runtime'
+Plug 'vim-erlang/vim-erlang-omnicomplete'
+" web stuff js/html
+" emmet
+Plug 'mattn/emmet-vim'
+" better js
+Plug 'pangloss/vim-javascript'
+"Plug 'isRuslan/vim-es6'
+Plug 'mxw/vim-jsx'
+" better js syntax
+Plug 'othree/yajs.vim'
+" python
+" manage python virtual envs
+Plug 'jmcantrell/vim-virtualenv'
+" jedi
 Plug 'davidhalter/jedi-vim'
-" go integration
+" go
 Plug 'fatih/vim-go'
 Plug 'garyburd/go-explorer'
 " zen writing
@@ -134,32 +148,25 @@ call plug#end()
 "}}}
 " -------------------------------------------------------------------- Visual
 "{{{
-au VimLeave * :!clear
 " turn on syntax highlight
 syntax on
+" show grammar on gitcommit
+autocmd FileType gitcommit setlocal spell
 " show curret line
 set cursorline
 "remove ugly ass  split separator
 set fillchars=""
-"show bar
-set noshowmode
-set noruler
 set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-let g:airline_theme='base16'
-let base16colorspace="256"
-set t_Co=256
+let g:hybrid_custom_term_colors = 1
 set background=dark
-colorscheme base16-tomorrow
+colorscheme hybrid
 function! Light()
         set background=light
-        hi! VertSplit ctermbg=15 guibg=#fefefe
-        hi! CursorLineNR cterm=bold ctermfg=1
-        :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh
         endif
@@ -167,24 +174,28 @@ endfunction
 
 function! Dark()
         set background=dark
-        hi! VertSplit ctermbg=0 guibg=#1c1f21
-        hi! CursorLineNR cterm=bold ctermfg=1
-        :redraw!
         if exists(':AirlineRefresh')
                 :AirlineRefresh
         endif
 endfunction
-" map functions to bgl and bgd
+"" map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
 "}}}
 set mousehide "Hide when characters are typed
 " color of the current line number
-nnoremap <silent><leader>o :set relativenumber!<cr>
+nnoremap <silent><leader>oo :set relativenumber!<cr>
 "}}}
 " ------------------------------------------------------------------ Settings
 "{{{
-"au FocusLost * :wa     " Set vim to save the file on focus out
+au VimLeave * :!clear
+" vim-sensible
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set smarttab
+set nrformats-=octal
+" use bash as shell
 set shell=/bin/sh
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -193,15 +204,10 @@ set timeoutlen=1000 ttimeoutlen=0
 "Extend word designators
 set iskeyword-=.                    " '.' is an end of word designator
 set iskeyword-=_                    " '_' is an end of word designator
+set iskeyword-=-                    " '_' is an end of word designator
 " no backup and swap files.
 set nobackup
 set noswapfile
-" tab is 4 spaces
-set tabstop=4
-" always uses spaces instead of tab characters
-set expandtab
-" set spell check in English
-setlocal spell spelllang=en_us
 " special mode line at end of file
 set modelines=1
 " md files as markdown
@@ -213,7 +219,7 @@ set showmatch
 " smart case when searching
 set ignorecase
 set smartcase
-" better mouse interaction
+" better mouse interaction is no mouse integration
 set mouse=""
 "folding
 set foldenable  " enable folding
@@ -229,11 +235,10 @@ nnoremap <C-y> 3<C-y>"
 "-------------------------------------------------------------------- Aliases
 "{{{
 " bare vim
-" delete char backwards insert mode
-set backspace=indent,eol,start
-imap ^D <BS>
 " leader
 map <space> <leader>
+" redo last colon command
+nmap @@ @:
 " Toggle paste mode.
 function! TogglePasteMode()
         if &paste
@@ -262,12 +267,18 @@ endfunction
 map <leader>tn :tabnew<CR>
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
-"jk kj to  to esc
+"jk/kj to  to esc
 inoremap jk <Esc>
 inoremap kj <Esc>
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+" merge line below
+" merge and split
+nnoremap M mzJ`z
+" Split line (sister to [M]merge lines above)
+" The normal use of S is covered by cc, so don't worry about shadowing it.
+nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 " split right and below instead of default opposite
 set splitbelow
 set splitright
@@ -294,7 +305,6 @@ command -nargs=0 -bar Update if &modified
                            \|        confirm write
                            \|    endif
                            \|endif
-
 nnoremap <silent> <leader>w :<C-u>Update<CR>
 nnoremap <silent> <leader>q :q<CR>
 nnoremap <C-q> :bd <CR>
@@ -312,9 +322,6 @@ command! Wqa wqa
 "}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
-"{{{orgmode
-let g:org_todo_keywords=['TODO', 'FEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED', 'ARCHIVED']
-"}}}
 " misc
 " {{{
 " UNDO
@@ -322,12 +329,6 @@ if has("persistent_undo")
     set undodir='~/.undodir/'
     set undofile
 endif
-" search in osx dictionary
-function! GetDict()
-        let w = expand("<cword>")
-        :call g:MacDict(w)
-endfunction
-command! Def :call GetDict()<cr>
 " zen mode with Goyo
 nnoremap <silent><Leader>f :Goyo <CR>
 " open task list for todo single file
@@ -336,11 +337,6 @@ map <leader>td <Plug>TaskList
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
-" rainbow_parentheses
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 " heading creator
 let g:EightHeader_comment   = 'call NERDComment( "n", "comment" )'
 let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
@@ -370,20 +366,18 @@ let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
 let g:email = "giulioungaretti@me.com"
 " airline
-if exists(':AirlineRefresh')
-        let g:airline_powerline_fonts = 1
-        " smart  tab bar
-        let g:airline#extensions#tabline#enabled = 1
-        " use simple separators
-        let g:airline_left_alt_sep = ''
-        let g:airline_right_alt_sep = ''
-        let g:airline_left_sep=''
-        let g:airline_right_sep=''
-        " exclude airline from preview windows
-        let g:airline_exclude_preview = 1
-        let g:airline#extensions#ctrlp#color_template = 'normal'
-endif
-" syntastic
+let g:airline_powerline_fonts = 1
+" smart  tab bar
+let g:airline#extensions#tabline#enabled = 0
+" use simple separators
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_left_sep='  '
+let g:airline_right_sep='  '
+" exclude airline from preview windows
+let g:airline_exclude_preview = 1
+let g:airline#extensions#ctrlp#color_template = 'normal'
+ "----------------------------------------------------------------- syntastic
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -440,12 +434,14 @@ let g:tagbar_autoclose  = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 "}}}
-"------------------------------------------------------------------------- go
+"-------------------------------------------------------------------------
+"golang
 " {{{
 " fold by sytax and style
 " set style for go files
+au FileType go set foldmethod=indent foldnestmax=10
+" match gofmt style
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-au FileType go set foldmethod=indent foldnestmax=10 foldlevel=0
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -458,9 +454,9 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
 au FileType go nmap <leader>r <Plug>(go-run)
 "avoid clash with unite buffer navigator
-au FileType go nmap <leader>bu <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap ;b <Plug>(go-build)
+au FileType go nmap ;t <Plug>(go-test)
+au FileType go nmap ;c <Plug>(go-coverage)
 "By default the mapping gd is enabled which opens the target identifier in current buffer. You can also open the definition/declaration in a new vertical, horizontal or tab for the word under your cursor:
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
@@ -504,6 +500,8 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 1
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck',"go"]
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 "}}}
 "----------------------------------------------------------------- easymotion
 "{{{
@@ -515,9 +513,14 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 ""  search to char back and forwad
- nmap s <Plug>(easymotion-sl)
- nmap t <Plug>(easymotion-tl)
+nmap s <Plug>(easymotion-sl)
+nmap t <Plug>(easymotion-tl)
 "}}}
+function! GetDict()
+        let w = expand("<cword>")
+        :call g:MacDict(w)
+endfunction
+command! Def :call GetDict()<cr>
 "---------------------------------------------------------------- neocopmlete
 "{{{
 let g:neocomplcache_temporary_dir = "$HOME/.vim/tmp/neocomplcache"
@@ -630,19 +633,21 @@ let g:tagbar_type_markdown = {
                         \ }
 
 " Enables HTML/CSS syntax highlighting in your JavaScript file.
-let g:javascript_enable_domhtmlcss = 1
+" let g:javascript_enable_domhtmlcss = 1
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 "  show nice embedded js
 let javascript_enable_domhtmlcss=1
 " allow js folding
 let b:javascript_fold=1
+let g:syntastic_javascript_checkers = ['eslint']
 "}}}
 "--------------------------------------------------------------------- python
 "{{{
 " set 79 long ruler
 au FileType python  set colorcolumn=79
 " expand tab to spaces
-au FileType python  set expandtab
-au BufNewFile,BufRead *.py setlocal noet ts=8 sw=4 sts=4
+au FileType python  set tabstop=4 expandtab shiftwidth=4 softtabstop=4
+au BufNewFile,BufRead *.py setlocal  tabstop=4 expandtab shiftwidth=4 softtabstop=4
 " place  docstring template does not seem to work properly
 nmap <silent> <C-d> <Plug>(pydocstring)
 " JEDI and auto complete
@@ -724,7 +729,6 @@ function! GetHelpMagic()
         :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>dc :call GetHelpMagic()<CR>
-
 " Get `dir` help for word under cursor.
 function! GetLen()
         let w = "len(" . expand("<cword>") . ")"
@@ -732,7 +736,6 @@ function! GetLen()
         echo  w
 endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
-
 " run file
 autocmd FileType python nnoremap  <buffer> <leader>r :exec '!python' shellescape(@%, 1)<cr>
 "  misc functinons
@@ -746,38 +749,14 @@ function! GetVisual()
         let lines[0] = lines[0][col1 - 1:]
         return join(lines, "\n")
 endfunction
-"---------------------------------------------------------------------- fzf{{{
-" exec search  in curent dir
-nnoremap <silent> <leader>u :FZF! -x <CR>
-" browse tags
-function! s:tags_sink(line)
-  let parts = split(a:line, '\t\zs')
-  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-  execute 'silent e' parts[1][:-2]
-  let [magic, &magic] = [&magic, 0]
-  execute excmd
-  let &magic = magic
-endfunction
-
-function! s:tags()
-  if empty(tagfiles())
-    echohl WarningMsg
-    echom 'Preparing tags'
-    echohl None
-    call system('ctags -R')
-  endif
-
-  call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-  \            '| grep -v ^!',
-  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-  \ 'sink':    function('s:tags_sink')})
-endfunction
-
-command! Tags call s:tags()
-"}}}
 " --------------------------------------------------------------------- erlang
-"{{{
-"}}}
-"}}}
+"  {{{
+augroup erlang
+  au!
+  au BufNewFile,BufRead *.erl setlocal tabstop=4
+  au BufNewFile,BufRead *.erl setlocal shiftwidth=4
+  au BufNewFile,BufRead *.erl setlocal softtabstop=4
+  au BufNewFile,BufRead relx.config setlocal filetype=erlang
+augroup END
+"  }}}
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
