@@ -150,6 +150,8 @@ call plug#end()
 "{{{
 " turn on syntax highlight
 syntax on
+" show grammar on gitcommit
+autocmd FileType gitcommit setlocal spell
 " show curret line
 set cursorline
 "remove ugly ass  split separator
