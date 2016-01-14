@@ -34,3 +34,5 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+[ghi]
+	token = 38a9592cfddd33f5e20cc0466fa366c95d2f8edf
