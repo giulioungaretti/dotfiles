@@ -30,15 +30,13 @@ if s:uname == "Linux\n"
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
 endif
-" Fix tmux iterm vim cursor shape.
+" Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
 Plug 'jszakmeister/vim-togglecursor'
 " nice start page
 Plug 'mhinz/vim-startify'
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" nice doc ref stuff
-Plug 'thinca/vim-ref'
 " Rainbow paranthesis
 Plug 'junegunn/rainbow_parentheses.vim'
 " headers
@@ -48,8 +46,6 @@ Plug 'vim-scripts/CursorLineCurrentWindow'
 " better search tools highglihg + match
 Plug 'inside/vim-search-pulse'
 Plug 'haya14busa/incsearch.vim'
-"auto gnerate docstring for python
-Plug 'heavenshell/vim-pydocstring'
 " templates for empty files
 Plug 'aperezdc/vim-template'
 " undo -trees
@@ -64,9 +60,6 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'terryma/vim-expand-region'
 " align table
 Plug 'godlygeek/tabular'
-" markdown plugin
-Plug 'plasticboy/vim-markdown'
-Plug 'terryma/vim-instant-markdown'
 " eyecany bar
 Plug 'bling/vim-airline'
 " send line to tmux
@@ -103,11 +96,16 @@ Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
+" use silver searcher
+Plug 'rking/ag.vim'"
 " colorschemes
 Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
 Plug 'w0ng/vim-hybrid'
 "----------------------------------------------------------- language plugins
+" markdown plugin
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'terryma/vim-instant-markdown', { 'for': 'markdown' }
 "elixir
 Plug 'elixir-lang/vim-elixir'
  " Arduino
@@ -117,9 +115,9 @@ Plug 'sudar/vim-arduino-snippets'
 " Processing syntax / run script and docs.
 Plug 'sophacles/vim-processing'
 " elang plugs
-Plug 'vim-erlang/vim-erlang-compiler'
-Plug 'vim-erlang/vim-erlang-runtime'
-Plug 'vim-erlang/vim-erlang-omnicomplete'
+Plug 'vim-erlang/vim-erlang-compiler', {'for': 'erlang'}    
+Plug 'vim-erlang/vim-erlang-runtime', {'for': 'erlang'}
+Plug 'vim-erlang/vim-erlang-omnicomplete', {'for': 'erlang'}
 " web stuff js/html
 " emmet
 Plug 'mattn/emmet-vim'
@@ -131,18 +129,18 @@ Plug 'mxw/vim-jsx'
 Plug 'othree/yajs.vim'
 " python
 " manage python virtual envs
-Plug 'jmcantrell/vim-virtualenv'
+Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 " jedi
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': 'python' } 
+"auto gnerate docstring for python
+Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
 " go
-Plug 'fatih/vim-go'
-Plug 'garyburd/go-explorer'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'garyburd/go-explorer', { 'for': 'go' }
 " zen writing
 Plug 'junegunn/goyo.vim'
 " highlighcolors
 Plug 'chrisbra/Colorizer'
-" use silver searcher
-Plug 'rking/ag.vim'"
 " All of your Plugs must be added before the following line
 call plug#end()
 "}}}
@@ -235,6 +233,9 @@ nnoremap <C-y> 3<C-y>"
 "-------------------------------------------------------------------- Aliases
 "{{{
 " bare vim
+" run os command and get results in quickfix window. 
+command -nargs=+ Run :cexpr system('<args>') | copen
+command! -nargs=+ SS :bufdo vimgrepadd <f-args> % | copen
 " leader
 map <space> <leader>
 " redo last colon command
@@ -382,7 +383,7 @@ let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
-let g:syntastic_python_python_exec = '/usr/bin/python3'
+"let g:syntastic_python_python_exec = '/usr/bin/python3'
 
 " gutter & fugitive git bindings
 " open diff
