@@ -5,10 +5,6 @@
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
         source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
-# tmuxminator
-if [[ -s "$HOME/bin/tmuxinator.zsh" ]]; then
-        source "$HOME/bin/tmuxinator.zsh"
-fi
 #}}}
 # Exports # {{{
 export TERM=screen-256color
@@ -21,7 +17,7 @@ export EDITOR=vim
 # black bg
 export VIMBKG=d
 #disable tmux in fzf
-export FZF_TMUX=0
+export FZF_TMUX=1
 #  use extended search  all the time
 export FZF_DEFAULT_OPTS="--extended"
 # work  stuff
