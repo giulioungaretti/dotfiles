@@ -20,6 +20,8 @@ if s:uname == "Darwin\n"
     "Mac specific plug ins
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
+    Plug 'rizzatti/dash.vim'
+    :nmap <silent> <leader>d <Plug>DashSearch
     " search in osx dictionary
     " this should make it work with osx/tmux/madness
     set clipboard+=unnamed
@@ -30,6 +32,8 @@ if s:uname == "Linux\n"
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
 endif
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 " Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
 Plug 'jszakmeister/vim-togglecursor'
 " nice start page
@@ -99,8 +103,10 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
-Plug 'chriskempson/base16-vim'
-Plug 'morhetz/gruvbox'
+Plug 'ikaros/smpl-vim'
+Plug 'noahfrederick/vim-hemisu'
+Plug 'robertmeta/nofrils'
+Plug 'fxn/vim-monochrome'
 Plug 'w0ng/vim-hybrid'
 "----------------------------------------------------------- language plugins
 " markdown plugin
@@ -115,7 +121,7 @@ Plug 'sudar/vim-arduino-snippets'
 " Processing syntax / run script and docs.
 Plug 'sophacles/vim-processing'
 " elang plugs
-Plug 'vim-erlang/vim-erlang-compiler', {'for': 'erlang'}    
+Plug 'vim-erlang/vim-erlang-compiler', {'for': 'erlang'}
 Plug 'vim-erlang/vim-erlang-runtime', {'for': 'erlang'}
 Plug 'vim-erlang/vim-erlang-omnicomplete', {'for': 'erlang'}
 " web stuff js/html
@@ -131,7 +137,7 @@ Plug 'othree/yajs.vim'
 " manage python virtual envs
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 " jedi
-Plug 'davidhalter/jedi-vim', { 'for': 'python' } 
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 "auto gnerate docstring for python
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
 " go
@@ -165,8 +171,10 @@ set background=dark
 colorscheme hybrid
 function! Light()
         set background=light
+        colorscheme hemisu
         if exists(':AirlineRefresh')
                 :AirlineRefresh
+                :AirlineTheme sol
         endif
 endfunction
 
@@ -325,6 +333,7 @@ command! Wqa wqa
 "{{{
 " misc
 " {{{
+map <C-p> :NERDTreeToggle<CR>
 " UNDO
 if has("persistent_undo")
     set undodir='~/.undodir/'
@@ -384,7 +393,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
 "let g:syntastic_python_python_exec = '/usr/bin/python3'
-
+"
+let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+"
 " gutter & fugitive git bindings
 " open diff
 nnoremap <leader>gd :Gdiff<CR>
@@ -651,7 +662,10 @@ au FileType python  set tabstop=4 expandtab shiftwidth=4 softtabstop=4
 au BufNewFile,BufRead *.py setlocal  tabstop=4 expandtab shiftwidth=4 softtabstop=4
 " place  docstring template does not seem to work properly
 nmap <silent> <C-d> <Plug>(pydocstring)
+
 " JEDI and auto complete
+" force jed ito use py3
+let g:jedi#force_py_version = 3
 let g:neocomplete#force_overwrite_completefunc=1
 "overwrite omnifunc  with jedi
 autocmd FileType python setlocal omnifunc=jedi#completions
@@ -662,8 +676,8 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 "The call signatures can be displayed as a pop-up in the buffer (set to 1, the default), which has the advantage of being easier to refer to, or in Vim's command line aligned with the function call (set to 2), which can improve the integrity of Vim's undo history.   "
-let g:jedi#usages_command = "<leader>u"
 let g:jedi#show_call_signatures = "2"
+let g:jedi#usages_command = "<leader>u"
 let g:jedi#use_splits_not_buffers = "winwidth" "this decides depending on the window length
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#goto_definitions_command = "<leader>d"
@@ -671,7 +685,8 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<leader>c"
 let g:jedi#rename_command = "<leader>r"
-
+" hide docstring window to popup during completion
+autocmd FileType python setlocal completeopt-=preview
 " IPython3 tmux integration
 let g:ScreenImpl = "Tmux"
 " Open an IPython3 shell.
