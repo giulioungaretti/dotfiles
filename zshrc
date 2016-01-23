@@ -8,7 +8,6 @@ fi
 #}}}
 # Exports # {{{
 export TERM=screen-256color
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export GIT_EDITOR=vim
