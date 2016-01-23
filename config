@@ -9,18 +9,11 @@
 #######################################################################
 set $mod Mod4
 focus_follows_mouse no
-font pango:Hack 16 18
-#wallpaper black solid color
-exec --no-startup-id xsetroot -solid "#1d1f21"
-exec --no-startup-id xmodmap ~/.Xmodmap
-exec --no-startup-id /home/unga/.dropbox-dist/dropboxd
-# disable touchpad on type
-exec --no-startup-id dispad
-# 1 pass deamon use alt+cmd + \ in this order to start
-exec --no-startup-id /home/unga/bin/1pass
+font pango:Hack 12 14
+exec --no-startup-id nitrogen --restore
 # new window default border
-new_window pixel 3
-new_float pixel 3
+new_window pixel 1
+new_float pixel 1
 #######################################################################
 #                            colors                                   #
 #######################################################################
@@ -32,7 +25,7 @@ client.unfocused        #282828 #282828 #585858 #1d1f21
 client.urgent           #fabd2f #fabd2f #d8d8d8 #fabd2f
 # CHANGING BORDER STYLE
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 3
+bindsym $mod+y border pixel 1
 bindsym $mod+u border none
 #######################################################################
 #                            bindings                                 #
@@ -42,8 +35,7 @@ bindsym $mod+u border none
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
-bindsym $mod+Shift+Return exec gnome-terminal --profile=Light
+bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+q kill
@@ -51,7 +43,8 @@ bindsym $mod+q kill
 #tab switching
 bindsym $MOD+Tab focus right
 # dmenu
-bindsym $mod+space exec --no-startup-id dmenu_run -i  -y 600  -h 50 -l 8 -fn 'Hack-18' -nb '#1d1f21' -nf '#eddec9' -sb '#fabd2f' -sf '#eddec9'
+# bindsym $mod+space exec rofi -show run
+bindsym $mod+space exec rofi -show run -terminal termite  -eh 1  -bw 1 -bc "#555555" -bg "#222222" -hlbg "#222222" -hlfg "#fabd2f" -fg "#ffffff" -font "Terminus 15"
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -148,7 +141,7 @@ bindsym $mod+r mode "resize"
 bar {
         tray_output none
                 status_command i3status
-                font pango:Hack 16 16
+                font pango:Hack 8 8
                 position top
                 mode dock
                 colors {
@@ -161,30 +154,3 @@ bar {
                         urgent_workspace   #2f343a #8ec07c  #ffffff
                 }
 }
-
-#######################################################################
-#                            exec                                    #
-#######################################################################
-
-# lock
-bindsym $mod+Shift+x exec ~/bin/lock
-
-# volume
-set $sink alsa_output.pci-0000_00_1b.0.analog-stereo
-bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute $sink 0; pactl set-sink-volume $sink +2% "
-bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-mute $sink 0; pactl set-sink-volume $sink -- -2% "
-bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute $sink toggle "
-
-#screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id "sudo /home/unga/bin/brdown"
-bindsym XF86MonBrightnessUp exec --no-startup-id "sudo /home/unga/bin/brup"
-
-#screen setup
-bindsym XF86LaunchA  exec  --no-startup-id dualscreen
-bindsym XF86LaunchB  exec  --no-startup-id homedual
-bindsym  XF86KbdBrightnessDown exec --no-startup-id sudo xrandr --auto
-
-#ncmpcppx
-bindsym  XF86AudioNext exec --no-startup-id  ncmpcpp next
-bindsym  XF86AudioPlay exec --no-startup-id  ncmpcpp toggle
-bindsym  XF86AudioPrev exec --no-startup-id  ncmpcpp prev
