@@ -29,6 +29,8 @@ if s:uname == "Linux\n"
     set clipboard=unnamedplus
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
+    " look up documentation
+    Plug 'KabbAmine/zeavim.vim'
 endif
 " Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
 Plug 'jszakmeister/vim-togglecursor'
@@ -99,9 +101,6 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
-Plug 'chriskempson/base16-vim'
-Plug 'morhetz/gruvbox'
-Plug 'w0ng/vim-hybrid'
 "----------------------------------------------------------- language plugins
 " markdown plugin
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -160,9 +159,7 @@ set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-let g:hybrid_custom_term_colors = 1
-set background=dark
-colorscheme hybrid
+set background=light
 function! Light()
         set background=light
         if exists(':AirlineRefresh')
