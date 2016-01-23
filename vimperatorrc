@@ -21,7 +21,7 @@
   " turn off the freakin' bell
   set novisualbell
  " remove the chrome
-  set gui=none
+  set gui=tabs
   " enable animation
   set animations
   set editor='bash -lc "gvim -f \$*" gvim '
