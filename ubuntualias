@@ -10,15 +10,12 @@ export WORKON_HOME=$HOME/Hack/python/Envs
 # ------------------------------------------------------------------- Aliases
  # {{{
 alias feh='/usr/bin/feh -Z'
-alias rr='urxvt -e ranger $(pwd)&'
-alias tmux=/home/unga/bin/tmux -2
 alias irssi="mosh giulio@188.166.36.190 -- tmux attach"
-# this is to use pyk3 compatiblity
-alias vim=/opt/vim74/bin/vim
-alias todoist='/usr/bin/chromium-browser --force-device-scale-factor=2 --enable-overlay-scrollbar --profile-directory=Default --app-id=bgjohebimpjdhhocbknplfelpmdhifhd&'
 #}}}
 #-------------------------------------------------------------------- source
 #{{{
-source /usr/local/bin/virtualenvwrapper.sh
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+	source /usr/local/bin/virtualenvwrapper.sh
+fi
 # }}}
 # vim: foldmethod=marker:foldlevel=0: filetype=zsh
