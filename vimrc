@@ -101,6 +101,7 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
+Plug 'NLKNguyen/papercolor-theme'
 "----------------------------------------------------------- language plugins
 " markdown plugin
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -160,6 +161,9 @@ set wildmenu
 set lazyredraw
 " theme {{{
 set background=light
+colorscheme PaperColor
+let g:airtline_theme='silver'
+set noshowmode
 function! Light()
         set background=light
         if exists(':AirlineRefresh')
