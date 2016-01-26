@@ -33,7 +33,10 @@ if s:uname == "Linux\n"
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
     " look up documentation
     Plug 'KabbAmine/zeavim.vim'
+    :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
+    :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)   
 endif
+Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
@@ -112,7 +115,7 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'terryma/vim-instant-markdown', { 'for': 'markdown' }
 "elixir
 Plug 'elixir-lang/vim-elixir'
- " Arduino
+" Arduino
 Plug 'sudar/vim-arduino-syntax'
 " snippets
 Plug 'sudar/vim-arduino-snippets'
@@ -169,17 +172,17 @@ colorscheme PaperColor
 let g:airtline_theme='silver'
 set noshowmode
 function! Light()
-        set background=light
-        if exists(':AirlineRefresh')
-                :AirlineRefresh
-        endif
+    set background=light
+    if exists(':AirlineRefresh')
+        :AirlineRefresh
+    endif
 endfunction
 
 function! Dark()
-        set background=dark
-        if exists(':AirlineRefresh')
-                :AirlineRefresh
-        endif
+    set background=dark
+    if exists(':AirlineRefresh')
+        :AirlineRefresh
+    endif
 endfunction
 "" map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
@@ -247,26 +250,26 @@ map <space> <leader>
 nmap @@ @:
 " Toggle paste mode.
 function! TogglePasteMode()
-        if &paste
-                set nopaste
-        else
-                set paste
-        endif
+    if &paste
+        set nopaste
+    else
+        set paste
+    endif
 endfunction
 nnoremap <leader>p :call TogglePasteMode()<CR>
 " move to right
 inoremap l;  <Esc>la
 " fullscreen
 function! Fullscreen()
-        let line = line(".")+0
-        tabedit %
-        call cursor(line,0 )
+    let line = line(".")+0
+    tabedit %
+    call cursor(line,0 )
 endfunction
 
 function! Minimze()
-        let line = line(".")+0
-        tabclose
-        call cursor(line,0 )
+    let line = line(".")+0
+    tabclose
+    call cursor(line,0 )
 endfunction
 "
 " tabs shortcuts
@@ -305,12 +308,12 @@ nnoremap <silent><C-W><C-a> :bprevious<CR>
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
 command -nargs=0 -bar Update if &modified
-                           \|    if empty(bufname('%'))
-                           \|        browse confirm write
-                           \|    else
-                           \|        confirm write
-                           \|    endif
-                           \|endif
+            \|    if empty(bufname('%'))
+                \|        browse confirm write
+                \|    else
+                    \|        confirm write
+                    \|    endif
+                    \|endif
 nnoremap <silent> <leader>w :<C-u>Update<CR>
 nnoremap <silent> <leader>q :q<CR>
 nnoremap <C-q> :bd <CR>
@@ -384,14 +387,17 @@ let g:airline_right_sep='  '
 " exclude airline from preview windows
 let g:airline_exclude_preview = 1
 let g:airline#extensions#ctrlp#color_template = 'normal'
- "----------------------------------------------------------------- syntastic
+"----------------------------------------------------------------- syntastic
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
-"let g:syntastic_python_python_exec = '/usr/bin/python3'
-"
-let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+if s:uname == "Darwin\n"
+    let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+endif
+if s:uname == "Linux\n"
+    let g:syntastic_python_python_exec = '/usr/bin/python3'
+endif
 "
 " gutter & fugitive git bindings
 " open diff
@@ -416,16 +422,16 @@ let g:gitgutter_eager = 1
 let g:multi_cursor_exit_from_insert_mode=0
 " Called once right before you start selecting multiple cursors
 function! Multiple_cursors_before()
-  if exists(':NeoCompleteLock')==2
-    exe 'NeoCompleteLock'
-  endif
+    if exists(':NeoCompleteLock')==2
+        exe 'NeoCompleteLock'
+    endif
 endfunction
 
 " Called once only when the multiple selection is canceled (default <Esc>)
 function! Multiple_cursors_after()
-  if exists(':NeoCompleteUnlock')==2
-    exe 'NeoCompleteUnlock'
-  endif
+    if exists(':NeoCompleteUnlock')==2
+        exe 'NeoCompleteUnlock'
+    endif
 endfunction
 
 "remove trailing white spaces with f5
@@ -476,32 +482,32 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 let g:go_fmt_command = "goimports"
 " tabar tags
 let g:tagbar_type_go = {
-                        \ 'ctagstype' : 'go',
-                        \ 'kinds'     : [
-                        \ 'p:package',
-                        \ 'i:imports:1',
-                        \ 'c:constants',
-                        \ 'v:variables',
-                        \ 't:types',
-                        \ 'n:interfaces',
-                        \ 'w:fields',
-                        \ 'e:embedded',
-                        \ 'm:methods',
-                        \ 'r:constructor',
-                        \ 'f:functions'
-                        \ ],
-                        \ 'sro' : '.',
-                        \ 'kind2scope' : {
-                        \ 't' : 'ctype',
-                        \ 'n' : 'ntype'
-                        \ },
-                        \ 'scope2kind' : {
-                        \ 'ctype' : 't',
-                        \ 'ntype' : 'n'
-                        \ },
-                        \ 'ctagsbin'  : 'gotags',
-                        \ 'ctagsargs' : '-sort -silent'
-                        \ }
+            \ 'ctagstype' : 'go',
+            \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+            \ ],
+            \ 'sro' : '.',
+            \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+            \ },
+            \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+            \ },
+            \ 'ctagsbin'  : 'gotags',
+            \ 'ctagsargs' : '-sort -silent'
+            \ }
 " Enable syntax highting on everything
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -526,8 +532,8 @@ nmap s <Plug>(easymotion-sl)
 nmap t <Plug>(easymotion-tl)
 "}}}
 function! GetDict()
-        let w = expand("<cword>")
-        :call g:MacDict(w)
+    let w = expand("<cword>")
+    :call g:MacDict(w)
 endfunction
 command! Def :call GetDict()<cr>
 "---------------------------------------------------------------- neocopmlete
@@ -545,20 +551,20 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-                        \ 'default' : '',
-                        \ 'vimshell' : $HOME.'/.vimshell_hist',
-                        \ 'scheme' : $HOME.'/.gosh_completions'
-                        \ }
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
+    let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-        return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -574,14 +580,14 @@ imap <TAB>     <Plug>(neosnippet_expand_or_jump)
 smap <TAB>     <Plug>(neosnippet_expand_or_jump)
 xmap <TAB>     <Plug>(neosnippet_expand_target)
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-                        \ "\<Plug>(neosnippet_expand_or_jump)"
-                        \: pumvisible() ? "\<C-n>" : "\<TAB>"
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-                        \ "\<Plug>(neosnippet_expand_or_jump)"
-                        \: "\<TAB>"
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: "\<TAB>"
 " For snippet_complete marker.
 if has('conceal')
-        set conceallevel=2 concealcursor=i
+    set conceallevel=2 concealcursor=i
 endif
 "
 let g:neocomplete#disable_auto_complete=0
@@ -591,55 +597,55 @@ let g:neocomplete#enable_auto_select=0
 " {{{
 " tag-bar css stuff  "
 let g:tagbar_type_html = {
-                        \  'ctagstype' : 'html',
-                        \  'kinds' : [
-                        \    'f:functions',
-                        \    'a:anchors',
-                        \  ]
-                        \}
+            \  'ctagstype' : 'html',
+            \  'kinds' : [
+            \    'f:functions',
+            \    'a:anchors',
+            \  ]
+            \}
 
 let g:tagbar_type_css = {
-                        \  'ctagstype' : 'css',
-                        \  'kinds' : [
-                        \    'v:variables',
-                        \    'c:classes',
-                        \    'i:identities',
-                        \    't:tags',
-                        \    'm:medias'
-                        \  ]
-                        \}
+            \  'ctagstype' : 'css',
+            \  'kinds' : [
+            \    'v:variables',
+            \    'c:classes',
+            \    'i:identities',
+            \    't:tags',
+            \    'm:medias'
+            \  ]
+            \}
 
 let g:tagbar_type_less = {
-                        \  'ctagstype' : 'css',
-                        \  'kinds' : [
-                        \    'v:variables',
-                        \    'c:classes',
-                        \    'i:identities',
-                        \    't:tags',
-                        \    'm:medias'
-                        \  ]
-                        \}
+            \  'ctagstype' : 'css',
+            \  'kinds' : [
+            \    'v:variables',
+            \    'c:classes',
+            \    'i:identities',
+            \    't:tags',
+            \    'm:medias'
+            \  ]
+            \}
 
 let g:tagbar_type_scss = {
-                        \  'ctagstype' : 'css',
-                        \  'kinds' : [
-                        \    'v:variables',
-                        \    'c:classes',
-                        \    'i:identities',
-                        \    't:tags',
-                        \    'm:medias'
-                        \  ]
-                        \}
+            \  'ctagstype' : 'css',
+            \  'kinds' : [
+            \    'v:variables',
+            \    'c:classes',
+            \    'i:identities',
+            \    't:tags',
+            \    'm:medias'
+            \  ]
+            \}
 " mardkdown tagbar support
 let g:tagbar_type_markdown = {
-                        \ 'ctagstype' : 'markdown',
-                        \ 'kinds' : [
-                        \ 'h:headings',
-                        \ 'l:links',
-                        \ 'i:images'
-                        \ ],
-                        \ "sort" : 0
-                        \ }
+            \ 'ctagstype' : 'markdown',
+            \ 'kinds' : [
+            \ 'h:headings',
+            \ 'l:links',
+            \ 'i:images'
+            \ ],
+            \ "sort" : 0
+            \ }
 
 " Enables HTML/CSS syntax highlighting in your JavaScript file.
 " let g:javascript_enable_domhtmlcss = 1
@@ -669,7 +675,7 @@ autocmd FileType python setlocal omnifunc=jedi#completions
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
+    let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 "The call signatures can be displayed as a pop-up in the buffer (set to 1, the default), which has the advantage of being easier to refer to, or in Vim's command line aligned with the function call (set to 2), which can improve the integrity of Vim's undo history.   "
@@ -699,54 +705,54 @@ autocmd FileType python map <LocalLeader>v :ScreenSend<CR>`>0j
 autocmd FileType python map <LocalLeader>cr :call g:ScreenShellSend("\r")<CR>
 " Clear the screen.
 autocmd FileType python map <LocalLeader>L
-                        \ :call g:ScreenShellSend('!clear')<CR>
+            \ :call g:ScreenShellSend('!clear')<CR>
 " Start a time  block to execute code in.
 autocmd FileType python map <LocalLeader>t
-                        \ :call g:ScreenShellSend('%%time')<CR>
+            \ :call g:ScreenShellSend('%%time')<CR>
 " Start a timeit block to execute code in.
 autocmd FileType python map <LocalLeader>tt
-                        \ :call g:ScreenShellSend('%%timeit')<CR>
+            \ :call g:ScreenShellSend('%%timeit')<CR>
 " Start a debugger repl to execute code in.
 autocmd FileType python map <LocalLeader>db
-                        \ :call g:ScreenShellSend('%%debug')<CR>
+            \ :call g:ScreenShellSend('%%debug')<CR>
 " Start a profiling block to execute code in.
 autocmd FileType python map <LocalLeader>pr
-                        \ :call g:ScreenShellSend('%%prun')<CR>
+            \ :call g:ScreenShellSend('%%prun')<CR>
 " Print the current working directory.
 autocmd FileType python map <LocalLeader>gw
-                        \ :call g:ScreenShellSend('!pwd')<CR>
+            \ :call g:ScreenShellSend('!pwd')<CR>
 " Set working directory to current file's folder.
 function! SetWD()
-        let wd = '!cd ' . expand('%:p:h')
-        :call g:ScreenShellSend(wd)
+    let wd = '!cd ' . expand('%:p:h')
+    :call g:ScreenShellSend(wd)
 endfunction
 autocmd FileType python map <LocalLeader>sw :call SetWD()<CR>
 " Get ipython help for word under cursor. Complement it with Shift + K.
 function! GetHelp()
-        let w = expand("<cword>") . "??"
-        :call g:ScreenShellSend(w)
+    let w = expand("<cword>") . "??"
+    :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>h :call GetHelp()<CR>
 " Get `dir` help for word under cursor.
 function! GetDir()
-        let w = "dir(" . expand("<cword>") . ")"
-        :call g:ScreenShellSend(w)
+    let w = "dir(" . expand("<cword>") . ")"
+    :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>d :call GetDir()<CR>
 function! s:get_visual_selection()
 endfunction
 " Get `?` help for word under cursor.
 function! GetHelpMagic()
-        let foo_tmp =  GetVisual()
-        let w = "?".foo_tmp
-        :call g:ScreenShellSend(w)
+    let foo_tmp =  GetVisual()
+    let w = "?".foo_tmp
+    :call g:ScreenShellSend(w)
 endfunction
 autocmd FileType python map <LocalLeader>dc :call GetHelpMagic()<CR>
 " Get `dir` help for word under cursor.
 function! GetLen()
-        let w = "len(" . expand("<cword>") . ")"
-        :call g:ScreenShellSend(w)
-        echo  w
+    let w = "len(" . expand("<cword>") . ")"
+    :call g:ScreenShellSend(w)
+    echo  w
 endfunction
 autocmd FileType python map <LocalLeader>l :call GetLen()<CR>
 " run file
@@ -754,22 +760,22 @@ autocmd FileType python nnoremap  <buffer> <leader>r :exec '!python' shellescape
 "  misc functinons
 " gets the selected text in visual mode
 function! GetVisual()
-        " Why is this not a built-in Vim script function?!
-        let [lnum1, col1] = getpos("'<")[1:2]
-        let [lnum2, col2] = getpos("'>")[1:2]
-        let lines = getline(lnum1, lnum2)
-        let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
-        let lines[0] = lines[0][col1 - 1:]
-        return join(lines, "\n")
+    " Why is this not a built-in Vim script function?!
+    let [lnum1, col1] = getpos("'<")[1:2]
+    let [lnum2, col2] = getpos("'>")[1:2]
+    let lines = getline(lnum1, lnum2)
+    let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][col1 - 1:]
+    return join(lines, "\n")
 endfunction
 " --------------------------------------------------------------------- erlang
 "  {{{
 augroup erlang
-  au!
-  au BufNewFile,BufRead *.erl setlocal tabstop=4
-  au BufNewFile,BufRead *.erl setlocal shiftwidth=4
-  au BufNewFile,BufRead *.erl setlocal softtabstop=4
-  au BufNewFile,BufRead relx.config setlocal filetype=erlang
+    au!
+    au BufNewFile,BufRead *.erl setlocal tabstop=4
+    au BufNewFile,BufRead *.erl setlocal shiftwidth=4
+    au BufNewFile,BufRead *.erl setlocal softtabstop=4
+    au BufNewFile,BufRead relx.config setlocal filetype=erlang
 augroup END
 "  }}}
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
