@@ -22,7 +22,7 @@ set imap_pipeline_depth=0
 # refresh syn mailbox
 bind index G imap-fetch-mail
 ## Add mailboxes
-mailboxes =Inbox =Sent =Trash
+mailboxes =Inbox =Sent =Trash =Danish =Home =Recepits
 macro index \cb |urlview 'call urlview to extract URLs out of a message'
 macro index \ea "<enter-command>unset resolve<enter><clear-flag>N<enter-command>set resolve<enter><save-message>=Trash<enter><sync-mailbox>" "mark read and delete"
 macro index,pager A "<save-message>=Archive<enter>" "Archive Message"
@@ -43,14 +43,9 @@ color body          green          default         "(etilbudsavis|shopgun)"
 # custom index highlights ----------------------------------------------
 # messages which mention my name in the body
 color index         yellow          default         "~b \"giulio(_g|\!| ungaretti| gold)|unga\" !~N !~T !~F !~p !~P"
-color index         brightyellow         brightblack     "~b \"giulio(_g|\!| ungaretti| gold)|unga\" ~N !~T !~F !~p !~P"
+color index         brightyellow    brightblack     "~b \"giulio(_g|\!| ungaretti| gold)|unga\" ~N !~T !~F !~p !~P"
 color index         yellow          cyan            "~b \"giulio(_g|\!| ungaretti| gold)|unga\" ~T !~F !~p !~P"
 color index         yellow          magenta        "~b \"giulio\!| ungaretti| gold)|unga\" ~F !~p !~P"
-## messages which are in reference to my mails
-#color index         J_magent        default         "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" !~N !~T !~F !~p !~P"
-#color index         J_magent        brightblack     "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" ~N !~T !~F !~p !~P"
-#color index         J_magent        cyan            "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" ~T !~F !~p !~P"
-#color index         J_magent        red             "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" ~F !~p !~P"
 
 # for background in 16 color terminal, valid background colors include:
 # base03, bg, black, any of the non brights
@@ -112,10 +107,10 @@ color index         green           white           "~N~v~(~F~N)"               
 color index         green           white           "~N~v~(~F)"                 # collapsed thread with unread parent, no unread inside, but some flagged
 color index         cyan            white           "~v~(~p)"                   # collapsed thread with unread parent, no unread inside, some to me directly
 color index         yellow          red             "~v~(~D)"                   # thread with deleted (doesn't differentiate between all or partial)
-#color index         yellow          default         "~(~N)"                    # messages in threads with some unread
-#color index         green           default         "~S"                       # superseded messages
-#color index         red             default         "~T"                       # tagged messages
-#color index         brightred       red             "~="                       # duplicated messages
+color index         yellow          default         "~(~N)"                    # messages in threads with some unread
+color index         green           default         "~S"                       # superseded messages
+color index         red             default         "~T"                       # tagged messages
+color index         brightred       red             "~="                       # duplicated messages
 
 # message headers ------------------------------------------------------
 
@@ -176,10 +171,19 @@ mono body          underline                       "(^|[[:space:][:punct:]])/[^/
 
 # Border lines.
 color body          blue            default         "( *[-+=#*~_]){6,}"
-
-#folder-hook .                  "color status        J_black         J_status        "
-#folder-hook gmail/inbox        "color status        J_black         yellow          "
-#folder-hook gmail/important    "color status        J_black         yellow          "
-
+# Sidebar Patch --------------------------------------
+set sidebar_delim   = '  │'
+set sidebar_visible = yes
+set sidebar_width   = 24
+# color of folders with new mail
+color sidebar_new color221 color233
+# ctrl-n, ctrl-p to select next, prev folder
+# ctrl-o to open selected folder
+bind index CP sidebar-prev
+bind index CN sidebar-next
+bind index CO sidebar-open
+bind pager CP sidebar-prev
+bind pager CN sidebar-next
+bind pager CO sidebar-open
 #vim: foldmethod=marker:foldlevel=10
 #vim: filetype=muttrc
