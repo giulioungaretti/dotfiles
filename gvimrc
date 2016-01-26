@@ -1,4 +1,4 @@
-set guifont=Hack\ 20
+set guifont=Hack\ 16
 set guioptions-=r
 set guioptions-=L
 set guioptions-=T
