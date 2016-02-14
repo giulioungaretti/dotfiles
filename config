@@ -7,6 +7,7 @@
 #######################################################################
 #                            27 Oct 2015                              #
 #######################################################################
+exec --no-startup-id gnome-settings-daemon
 set $mod Mod4
 focus_follows_mouse no
 font pango:Hack 12 14
@@ -35,7 +36,7 @@ bindsym $mod+u border none
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec termite
+bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+q kill
