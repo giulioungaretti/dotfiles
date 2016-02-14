@@ -34,8 +34,14 @@ if s:uname == "Linux\n"
     " look up documentation
     Plug 'KabbAmine/zeavim.vim'
     :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
-    :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)   
+    :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
+" scala plugin
+Plug 'derekwyatt/vim-scala'
+" add elm stuff
+Plug 'elmcast/elm-vim', { 'do': 'npm install -g elm-oracle' }
+" add session stufff for tmux ressurect
+Plug 'tpope/vim-obsession'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -53,7 +59,6 @@ Plug 'bimbalaszlo/vim-eightheader'
 " hide cursorline inactive buffer
 Plug 'vim-scripts/CursorLineCurrentWindow'
 " better search tools highglihg + match
-Plug 'inside/vim-search-pulse'
 Plug 'haya14busa/incsearch.vim'
 " templates for empty files
 Plug 'aperezdc/vim-template'
@@ -71,6 +76,7 @@ Plug 'terryma/vim-expand-region'
 Plug 'godlygeek/tabular'
 " eyecany bar
 Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " send line to tmux
 Plug 'ervandew/screen'
 " tmux seamless movement
@@ -109,6 +115,7 @@ Plug 'mattn/webapi-vim'
 Plug 'rking/ag.vim'"
 " colorschemes
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'antonshulgin/vim.colors'
 "----------------------------------------------------------- language plugins
 " markdown plugin
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -169,7 +176,6 @@ set lazyredraw
 " theme {{{
 set background=light
 colorscheme PaperColor
-let g:airtline_theme='silver'
 set noshowmode
 function! Light()
     set background=light
@@ -241,7 +247,7 @@ nnoremap <C-y> 3<C-y>"
 "-------------------------------------------------------------------- Aliases
 "{{{
 " bare vim
-" run os command and get results in quickfix window. 
+" run os command and get results in quickfix window.
 command -nargs=+ Run :cexpr system('<args>') | copen
 command! -nargs=+ SS :bufdo vimgrepadd <f-args> % | copen
 " leader
