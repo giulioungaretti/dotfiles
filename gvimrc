@@ -1,4 +1,4 @@
-set guifont=Hack\ 16
+set guifont=Sauce\ Code\ Pro\ Light:h13
 set guioptions-=r
 set guioptions-=L
 set guioptions-=T
