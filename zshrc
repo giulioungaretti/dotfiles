@@ -194,4 +194,42 @@ if [ -f $DIR/dgb ]; then
 fi
 zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 alias ll='ls -lG'
+function print_dcs
+{
+  print -n -- "\EP$1;\E$2\E\\"
+}
+
+function set_cursor_shape
+{
+  if [ -n "$TMUX" ]; then
+    # tmux will only forward escape sequences to the terminal if surrounded by
+    # a DCS sequence
+    print_dcs tmux "\E]50;CursorShape=$1\C-G"
+  else
+    print -n -- "\E]50;CursorShape=$1\C-G"
+  fi
+}
+
+function zle-keymap-select zle-line-init
+{
+  case $KEYMAP in
+    vicmd)
+      set_cursor_shape 0 # block cursor
+      ;;
+    viins|main)
+      set_cursor_shape 1 # line cursor
+      ;;
+  esac
+  zle reset-prompt
+  zle -R
+}
+
+function zle-line-finish
+{
+  set_cursor_shape 0 # block cursor
+}
+
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
 # vim: foldmethod=marker
