@@ -4,6 +4,5 @@ dotfiles
 Giulio's dotfile
 
 
-osx4hackers contains some nice tweaks for default values of osx.
+osx4hackers contains some nice tweaks for default values of osx TODO it actually sucks
 
-This readme sucks.
