@@ -27,14 +27,31 @@ if s:uname == "Linux\n"
     :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
     :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
+
+" easymotion
+Plug 'easymotion/vim-easymotion'
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1
+"" JK motions: Line motions
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+" snip enging
 Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
 " neomake
 Plug 'benekastah/neomake'
 " and run neomake on save
 autocmd! BufWritePost * Neomake
+" open location list if errors are there
+let g:neomake_open_list=1
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
-Plug 'ryanoasis/vim-devicons'
+"Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
@@ -44,6 +61,14 @@ Plug 'mhinz/vim-startify'
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-p> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
 " Rainbow paranthesis
 Plug 'junegunn/rainbow_parentheses.vim'
 " headers
@@ -55,7 +80,7 @@ Plug 'aperezdc/vim-template'
 " align table
 Plug 'godlygeek/tabular'
 " eyecany bar
-"Plug 'bling/vim-airline'
+Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " send line to tmux
 Plug 'ervandew/screen'
@@ -65,10 +90,23 @@ Plug 'christoomey/vim-tmux-navigator'
 if has('nvim')
     nmap <silent><bs> :<c-u>TmuxNavigateLeft<cr>
 endif
+" todo
+" tasklist leader-t
+Plug 'TaskList.vim'
+" open task list for todo single file
+map <leader>td <Plug>TaskList
+" open task list for todo in current folder and subfolder
+noremap <Leader>tl  :Ag TODO <CR>
+" open task list for note in current folder and subfolder
+noremap <Leader>nl :Ag NOTE <CR>
 " remove and highlight trailing spaces
 Plug 'bronson/vim-trailing-whitespace'
 " indent highlight
 Plug 'Yggdroot/indentLine'
+" auto-format code
+Plug 'chiel92/vim-autoformat'
+"autoformat code with F6
+noremap <F6> :Autoformat<CR><CR>
 " autoclose
 Plug 'Townk/vim-autoclose'
 " sublime like mutiple cursors
@@ -91,262 +129,35 @@ Plug 'mattn/webapi-vim'
 Plug 'rking/ag.vim'"
 " colorschemes
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'morhetz/gruvbox'
 Plug 'antonshulgin/vim.colors'
 " zen writing
 Plug 'junegunn/goyo.vim'
 " highlighcolors
 Plug 'chrisbra/Colorizer'
-"----------------------------------------------------------- language plugins
-" golang
-Plug 'fatih/vim-go', { 'for': 'go' }
-" All of your Plugs must be added before the following line
-call plug#end()
-"}}}
-" -------------------------------------------------------------------- Visual
-"{{{
-" turn on syntax highlight
-syntax on
-" show grammar on gitcommit
-autocmd FileType gitcommit setlocal spell
-" show curret line
-set cursorline
-"remove ugly ass  split separator
-set fillchars=""
-set laststatus=0
-" visual autocomplete for command menu
-set wildmenu
-" redraw only when we need to
-set lazyredraw
-" theme {{{
-set background=light
-colorscheme PaperColor
-set noshowmode
-function! Light()
-    set background=light
-    if exists(':AirlineRefresh')
-        :AirlineRefresh
-    endif
-endfunction
+"----------------------------------------------------------- language specifci
+" elm
+Plug 'elmcast/elm-vim'
+au FileType elm nmap <leader>b <Plug>(elm-make)
+au FileType elm nmap <leader>m <Plug>(elm-make-main)
+au FileType elm nmap <leader>t <Plug>(elm-test)
+au FileType elm nmap <leader>r <Plug>(elm-repl)
+au FileType elm nmap <leader>e <Plug>(elm-error-detail)
+au FileType elm nmap <leader>d <Plug>(elm-show-docs)
+au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 
-function! Dark()
-    set background=dark
-    if exists(':AirlineRefresh')
-        :AirlineRefresh
-    endif
-endfunction
-"" map functions to bgl and bgd
-map <silent><leader>bgl :call Light()<cr>
-map  <silent><leader>bgd :call Dark()<cr>
-"}}}
-set mousehide "Hide when characters are typed
-" color of the current line number
-nnoremap <silent><leader>oo :set relativenumber!<cr>
-"}}}
-" ------------------------------------------------------------------ Settings
-"{{{
-au VimLeave * :!clear
-" vim-sensible
-set autoindent
-set backspace=indent,eol,start
-set complete-=i
-set smarttab
-set nrformats-=octal
-" use bash as shell
-set shell=/bin/sh
-" Don't use Ex mode, use Q for formatting
-map Q gq
-" zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
-set timeoutlen=1000 ttimeoutlen=0
-"Extend word designators
-set iskeyword-=.                    " '.' is an end of word designator
-set iskeyword-=_                    " '_' is an end of word designator
-set iskeyword-=-                    " '_' is an end of word designator
-" no backup and swap files.
-set nobackup
-set noswapfile
-" special mode line at end of file
-set modelines=1
-" md files as markdown
-autocmd BufRead,BufNew *.md set filetype=markdown
-" highlight as you type
-" smart case when searching
-set ignorecase
-set incsearch
-nnoremap <silent><esc> :noh<return><esc>
-" highlight matching [{()}]
-set showmatch
-set smartcase
-" better mouse interaction is no mouse integration
-set mouse=""
-"folding
-set foldenable  " enable folding
-set foldnestmax=10  " max 10 nested fold allowed
-set foldmethod=syntax " fold based on indent level
-"reload on save
-autocmd! bufwritepost .vimrc source %
-autocmd! bufwritepost vimrc source %
-" scroll the view port faster
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>"
-"}}}
-"-------------------------------------------------------------------- Aliases
-"{{{
-" bare vim
-" run os command and get results in quickfix window.
-command -nargs=+ Run :cexpr system('<args>') | copen
-command! -nargs=+ SS :bufdo vimgrepadd <f-args> % | copen
-command! -nargs=* SA :!grep -n -R <f-args> | copen
-" leader
-map <space> <leader>
-" redo last colon command
-nmap @@ @:
-nmap <silent>; :Commands <cr>
-" Toggle paste mode.
-function! TogglePasteMode()
-    if &paste
-        set nopaste
-    else
-        set paste
-    endif
-endfunction
-nnoremap <leader>p :call TogglePasteMode()<CR>
-" move to right
-inoremap l;  <Esc>la
-" fullscreen
-function! Fullscreen()
-    let line = line(".")+0
-    tabedit %
-    call cursor(line,0 )
-endfunction
-
-function! Minimze()
-    let line = line(".")+0
-    tabclose
-    call cursor(line,0 )
-endfunction
-"
-" tabs shortcuts
-map <leader>tn :tabnew<CR>
-nnoremap <silent><C-W>m :call Fullscreen() <CR>
-nnoremap <silent><C-W>c :call Minimze() <CR>
-"jk/kj to  to esc
-inoremap jk <Esc>
-inoremap kj <Esc>
-" Move visual block
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
-" merge line below
-" merge and split
-nnoremap M mzJ`z
-" Split line (sister to [M]merge lines above)
-" The normal use of S is covered by cc, so don't worry about shadowing it.
-nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
-" split right and below instead of default opposite
-set splitbelow
-set splitright
-" folds
-nnoremap <silent> z1 :set foldlevel=1<CR>
-nnoremap <silent> z2 :set foldlevel=2<CR>
-nnoremap <silent> z3 :set foldlevel=3<CR>
-nnoremap <silent> z4 :set foldlevel=4<CR>
-nnoremap <silent> z5 :set foldlevel=5<CR>
-nnoremap <silent> z5 :set foldlevel=6<CR>
-nnoremap <silent> z5 :set foldlevel=7<CR>
-" turn on and off spell checking.
-map <F10> :setlocal spell! spelllang=en_us<CR>
-"buffers
-" nice maximize split and go back to normal layout
-nnoremap <silent><C-W><C-d> :bnext<CR>
-nnoremap <silent><C-W><C-a> :bprevious<CR>
-" If the current buffer has never been saved, it will have no name,
-" call the file browser to save it, otherwise just save it.
-command -nargs=0 -bar Update if &modified
-            \|    if empty(bufname('%'))
-                \|        browse confirm write
-                \|    else
-                    \|        confirm write
-                    \|    endif
-                    \|endif
-nnoremap <silent> <leader>w :<C-u>Update<CR>
-nnoremap <silent> <leader>q :q<CR>
-nnoremap <C-q> :bd <CR>
-"}}}
-"--------------------------------------------------------------- common typos
-"{{{
-command! Q q
-command! Qq q
-command! W w
-command! Ww w
-command! Qa qa
-command! Wa wa
-command! Wq wq
-command! Wqa wqa
-"}}}
-"------------------------------------------------------------------- Plug ins
-map <C-p> :NERDTreeToggle<CR>
-" UNDO
-if has("persistent_undo")
-    set undodir=.undodir/
-    set undofile
-endif
-" zen mode with Goyo
-nnoremap <silent><Leader>f :Goyo <CR>
-" open task list for todo single file
-map <leader>td <Plug>TaskList
-" open task list for todo in current folder and subfolder
-noremap <Leader>tl  :Ag TODO <CR>
-" open task list for note in current folder and subfolder
-noremap <Leader>nl :Ag NOTE <CR>
-" heading creator
-let g:EightHeader_comment   = 'call NERDComment( "n", "comment" )'
-let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
-" create heading from selected text
-command! Header call EightHeader( 78, 'right', 1, ['', '-', ''], '', '\=" ".s:str." "' ) '] )
-"templates
-let  g:templates_directory = '/Users/giulio/dotfiles/templates'
-let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
-let g:email = "giulioungaretti@me.com"
-" airline
-let g:airline_powerline_fonts = 1
-" smart  tab bar
-let g:airline#extensions#tabline#enabled = 0
-" use simple separators
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_left_sep='  '
-let g:airline_right_sep='  '
-" exclude airline from preview windows
-let g:airline_exclude_preview = 1
-let g:airline#extensions#ctrlp#color_template = 'normal'
-" gutter & fugitive git bindings
-" open diff
-nnoremap <leader>gd :Gdiff<CR>
-" add current file
-nnoremap <leader>ga :Git add %:p<CR><CR>
-" status
-nnoremap <leader>gs :Gstatus<CR>
-" commit added files
-nnoremap <leader>gc :Gcommit -q<CR>
-" add and commit current file
-nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
-" this should turn off the annoying random highlight
-let g:gitgutter_realtime = 1
-let g:gitgutter_eager = 1
-" multiple cursors
-" press esc to go back to normal mode instead of quitting multi cursor
-let g:multi_cursor_exit_from_insert_mode=0
-"remove trailing white spaces with f5
-noremap <F5> :FixWhitespace <CR><CR>
-" ignore trailing whitespaces on unite and mkd filetype
-let g:extra_whitespace_ignored_filetypes = ['unite', 'mkd','org', 'calendar']
-" tagbar autofous on open
-nmap <c-t> :TagbarToggle  <CR>
-let g:tagbar_autofocus = 1
-let g:tagbar_autoclose  = 1
-" sort tags by file order and not by alphabetical order
-let g:tagbar_sort = 0
+au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
+"python {{{
+" jedi autocpmletion and smart code fu
+Plug 'davidhalter/jedi-vim'
+let g:jedi#force_py_version = 3
 "}}}
 "-------------------------------------------------------------------------golang {{{
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'garyburd/go-explorer'
+" open in term
+let g:go_term_enabled = 1
+let g:go_term_mode = "vsplit"
 " fold by sytax and style
 " set style for go files
 au FileType go set foldmethod=indent foldnestmax=10
@@ -411,14 +222,290 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 0
 "}}}
+" All of your Plugs must be added before the following line
+call plug#end()
+"}}}
+" -------------------------------------------------------------------- Visual
+"{{{
+" turn on syntax highlight
+syntax on
+" show grammar on gitcommit
+autocmd FileType gitcommit setlocal spell
+" hide curret line
+" set cursorline
+"remove ugly ass  split separator
+set fillchars=""
+set laststatus=2
+" visual autocomplete for command menu
+set wildmenu
+" redraw only when we need to
+set lazyredraw
+" theme {{{
+set background=dark
+colorscheme gruvbox
+"let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_light='hard'
+"let g:gruvbox_color_column='bg0'
+"let g:gruvbox_sign_column='bg0'
+let g:gitgutter_override_sign_column_highlight = 0
+highlight clear SignColumn
+set noshowmode
+function! Light()
+    set background=light
+    colorscheme monokromatik
+    if exists(':AirlineRefresh')
+        :AirlineTheme monochrome
+        :AirlineRefresh
+    endif
+endfunction
 
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-p> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
+function! Dark()
+    set background=dark
+    colorscheme kitamorkonom
+    if exists(':AirlineRefresh')
+        :AirlineTheme powerlineish
+        :AirlineRefresh
+    endif
+endfunction
+map <silent><leader>bgf :if exists("g:syntax_on") <Bar>
+	\   syntax off <Bar>
+	\ else <Bar>
+	\   syntax enable <Bar>
+	\ endif <CR>
+"" map functions to bgl and bgd
+map <silent><leader>bgl :call Light()<cr>
+map  <silent><leader>bgd :call Dark()<cr>
+:call Light()
+"}}}
+set mousehide "Hide when characters are typed
+" color of the current line number
+nnoremap <silent><leader>oo :set relativenumber!<cr>
+"}}}
+" ------------------------------------------------------------------ Settings
+"{{{
+"The above command will change the 'completeopt' option so that Vim's popup menu doesn't select the first completion item, but rather just inserts the longest common text of all matches; and the menu will come up even if there's only one match. (The longest setting is responsible for the former effect and the menuone is responsible for the latter.)
+set completeopt=longest,menuone
+"change the behavior of the <Enter> key when the popup menu is visible. In that case the Enter key will simply select the highlighted menu item, just as <C-Y> does.
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+ "make <C-N> work the way it normally does; however, when the menu appears, the <Down> key will be simulated. What this accomplishes is it keeps a menu item always highlighted. This way you can keep typing characters to narrow the matches, and the nearest match will be selected so that you can hit Enter at any time to insert it. In the above mappings, the second one is a little more exotic: it simulates <C-X><C-O> to bring up the omni completion menu, then it simulates <C-N><C-P> to remove the longest common text, and finally it simulates <Down> again to keep a match highlighted.
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" vim-sensible
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set smarttab
+set nrformats-=octal
+" use bash as shell
+set shell=/bin/sh
+" Don't use Ex mode, use Q for formatting
+map Q gq
+" zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
+set timeoutlen=1000 ttimeoutlen=0
+"Extend word designators
+set iskeyword-=.                    " '.' is an end of word designator
+set iskeyword-=_                    " '_' is an end of word designator
+set iskeyword-=-                    " '_' is an end of word designator
+" no backup and swap files.
+set nobackup
+set noswapfile
+" special mode line at end of file
+set modelines=1
+" md files as markdown
+autocmd BufRead,BufNew *.md set filetype=markdown
+" highlight as you type
+" smart case when searching
+set ignorecase
+set incsearch
+nnoremap <silent><esc> :noh<return><esc>
+" highlight matching [{()}]
+set showmatch
+set smartcase
+" better mouse interaction is no mouse integration
+set mouse=""
+"folding
+set foldenable  " enable folding
+set foldnestmax=10  " max 10 nested fold allowed
+set foldmethod=syntax " fold based on indent level
+"reload on save
+autocmd! bufwritepost .vimrc source %
+autocmd! bufwritepost vimrc source %
+autocmd! bufwritepost init.vim source %
+" always start terminal in insert mode
+autocmd BufWinEnter,WinEnter term://* startinsert
+" scroll the view port faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>"
+"}}}
+"-------------------------------------------------------------------- Aliases
+"{{{
+" bare vim
+" run os command and get results in quickfix window.
+command! -nargs=+ Run :cexpr system('<args>') | copen
+command! -nargs=+ SS :bufdo vimgrepadd <f-args> % | copen
+command! -nargs=* SA :!grep -n -R <f-args> | copen
+" Call a user function (example of <f-args>)
+com! -nargs=* SR call SearchReplaceBuffers(<f-args>)
+:function! SearchReplaceBuffers(search, replace)
+   :exec "bufdo! %s/" . a:search . "/" . a:replace . "/ge"
+:endfunctio
+" leader
+map <space> <leader>
+" redo last colon command
+nmap @@ @:
+nmap <silent>; :Commands <cr>
+" Toggle paste mode.
+function! TogglePasteMode()
+    if &paste
+        set nopaste
+    else
+        set paste
+    endif
+endfunction
+nnoremap <leader>p :call TogglePasteMode()<CR>
+" move to right
+inoremap l;  <Esc>la
+" fullscreen
+function! Fullscreen()
+    let line = line(".")+0
+    tabedit %
+    call cursor(line,0 )
+endfunction
+
+function! Minimze()
+    let line = line(".")+0
+    tabclose
+    call cursor(line,0 )
+endfunction
+"
+" tabs shortcuts
+map <leader>tn :tabnew<CR>
+nnoremap <silent><C-W>m :call Fullscreen() <CR>
+nnoremap <silent><C-W>c :call Minimze() <CR>
+"jk/kj to  to esc
+inoremap jk <Esc>
+inoremap kj <Esc>
+" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+" merge line below
+" merge and split
+nnoremap M mzJ`z
+" Split line (sister to [M]merge lines above)
+" The normal use of S is covered by cc, so don't worry about shadowing it.
+nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+" split right and below instead of default opposite
+set splitbelow
+set splitright
+" folds
+nnoremap <silent> z1 :set foldlevel=1<CR>
+nnoremap <silent> z2 :set foldlevel=2<CR>
+nnoremap <silent> z3 :set foldlevel=3<CR>
+nnoremap <silent> z4 :set foldlevel=4<CR>
+nnoremap <silent> z5 :set foldlevel=5<CR>
+nnoremap <silent> z5 :set foldlevel=6<CR>
+nnoremap <silent> z5 :set foldlevel=7<CR>
+" turn on and off spell checking.
+map <F10> :setlocal spell! spelllang=en_us<CR>
+"buffers
+" nice maximize split and go back to normal layout
+nnoremap <silent><C-W><C-d> :bnext<CR>
+nnoremap <silent><C-W><C-a> :bprevious<CR>
+" If the current buffer has never been saved, it will have no name,
+" call the file browser to save it, otherwise just save it.
+command! -nargs=0 -bar Update if &modified
+            \|    if empty(bufname('%'))
+                \|        browse confirm write
+                \|    else
+                    \|        confirm write
+                    \|    endif
+                    \|endif
+nnoremap <silent> <leader>w :<C-u>Update<CR>
+nnoremap <silent> <leader>q :q<CR>
+nnoremap <C-q> :bd <CR>
+"}}}
+"--------------------------------------------------------------- common typos
+"{{{
+command! Q q
+command! Qq q
+command! W w
+command! Ww w
+command! Qa qa
+command! Wa wa
+command! Wq wq
+command! Wqa wqa
+"}}}
+"------------------------------------------------------------------- Plug ins
+"{{{
+map <C-p> :NERDTreeToggle<CR>
+" UNDO
+if has("persistent_undo")
+    set undodir=.undodir/
+    set undofile
+endif
+" zen mode with Goyo
+nnoremap <silent><Leader>f :Goyo <CR>
+" open task list for todo single file
+map <leader>td <Plug>TaskList
+" open task list for todo in current folder and subfolder
+noremap <Leader>tl  :Ag TODO <CR>
+" open task list for note in current folder and subfolder
+noremap <Leader>nl :Ag NOTE <CR>
+" heading creator
+let g:EightHeader_comment   = 'call NERDComment( "n", "comment" )'
+let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
+" create heading from selected text
+command! Header call EightHeader( 78, 'right', 1, ['', '-', ''], '', '\=" ".s:str." "' ) '] )
+"templates
+let  g:templates_directory = '/Users/giulio/dotfiles/templates'
+let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
+let g:email = "giulioungaretti@me.com"
+" airline
+let g:airline_powerline_fonts = 1
+" smart  tab bar
+let g:airline#extensions#tabline#enabled = 0
+" use simple separators
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_left_sep='  '
+let g:airline_right_sep='  '
+" exclude airline from preview windows
+let g:airline_exclude_preview = 1
+" gutter & fugitive git bindings
+" open diff
+nnoremap <leader>gd :Gdiff<CR>
+" add current file
+nnoremap <leader>ga :Git add %:p<CR><CR>
+" status
+nnoremap <leader>gs :Gstatus<CR>
+" commit added files
+nnoremap <leader>gc :Gcommit -q<CR>
+" add and commit current file
+nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
+" this should turn off the annoying random highlight
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
+" multiple cursors
+" press esc to go back to normal mode instead of quitting multi cursor
+let g:multi_cursor_exit_from_insert_mode=0
+"remove trailing white spaces with f5
+noremap <F5> :FixWhitespace <CR><CR>
+" ignore trailing whitespaces on unite and mkd filetype
+let g:extra_whitespace_ignored_filetypes = ['unite', 'mkd','org', 'calendar']
+" tagbar autofous on open
+nmap <c-t> :TagbarToggle  <CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose  = 1
+" sort tags by file order and not by alphabetical order
+let g:tagbar_sort = 0
+"}}}
+
+
+autocmd! bufwritepost init.vim source %
+au VimLeave * :!clear
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
-
