@@ -75,7 +75,7 @@ Plug 'terryma/vim-expand-region'
 " align table
 Plug 'godlygeek/tabular'
 " eyecany bar
-Plug 'bling/vim-airline'
+"Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " send line to tmux
 Plug 'ervandew/screen'
@@ -114,6 +114,7 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
+Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'antonshulgin/vim.colors'
 "----------------------------------------------------------- language plugins
@@ -150,7 +151,6 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
 " go
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'garyburd/go-explorer', { 'for': 'go' }
 " zen writing
 Plug 'junegunn/goyo.vim'
 " highlighcolors
@@ -168,7 +168,7 @@ autocmd FileType gitcommit setlocal spell
 set cursorline
 "remove ugly ass  split separator
 set fillchars=""
-set laststatus=2
+set laststatus=0
 " visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to
@@ -520,8 +520,8 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-let g:go_auto_type_info = 1
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck',"go"]
+let g:go_auto_type_info = 0
+"let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck',"go"]
 "let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 "}}}
 "----------------------------------------------------------------- easymotion
