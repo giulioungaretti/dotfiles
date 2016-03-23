@@ -144,9 +144,6 @@ if [ -f /usr/local/bin/dgb ]; then
         alias dgb="source /usr/local/bin/dgb"
 fi
 #}}}
-#------------------------------------------------------------ colors {{{
-#TODO fix for hybrind color scheme
-# }}}
 #------------------------------------------------------------------- fzf  {{{
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #List all vagrant boxes available in the system including its status, and try to access the selected one via ssh
