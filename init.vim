@@ -251,12 +251,8 @@ set wildmenu
 " redraw only when we need to
 set lazyredraw
 " theme {{{
+colorscheme PaperColor
 set background=dark
-colorscheme gruvbox
-"let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='hard'
-"let g:gruvbox_color_column='bg0'
-"let g:gruvbox_sign_column='bg0'
 let g:gitgutter_override_sign_column_highlight = 0
 highlight clear SignColumn
 set noshowmode
@@ -288,7 +284,6 @@ map <silent><leader>bgf :call ToggleSyntax()<cr>
 "" map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
-:call Light()
 "}}}
 set mousehide "Hide when characters are typed
 " color of the current line number
@@ -301,12 +296,12 @@ set completeopt=longest,menuone
 "change the behavior of the <Enter> key when the popup menu is visible. In that case the Enter key will simply select the highlighted menu item, just as <C-Y> does.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
- "make <C-N> work the way it normally does; however, when the menu appears, the <Down> key will be simulated. What this accomplishes is it keeps a menu item always highlighted. This way you can keep typing characters to narrow the matches, and the nearest match will be selected so that you can hit Enter at any time to insert it. In the above mappings, the second one is a little more exotic: it simulates <C-X><C-O> to bring up the omni completion menu, then it simulates <C-N><C-P> to remove the longest common text, and finally it simulates <Down> again to keep a match highlighted.
+"make <C-N> work the way it normally does; however, when the menu appears, the <Down> key will be simulated. What this accomplishes is it keeps a menu item always highlighted. This way you can keep typing characters to narrow the matches, and the nearest match will be selected so that you can hit Enter at any time to insert it. In the above mappings, the second one is a little more exotic: it simulates <C-X><C-O> to bring up the omni completion menu, then it simulates <C-N><C-P> to remove the longest common text, and finally it simulates <Down> again to keep a match highlighted.
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+            \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+            \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " vim-sensible
 set autoindent
@@ -365,7 +360,7 @@ command! -nargs=* SA :!grep -n -R <f-args> | copen
 " Call a user function (example of <f-args>)
 com! -nargs=* SR call SearchReplaceBuffers(<f-args>)
 :function! SearchReplaceBuffers(search, replace)
-   :exec "bufdo! %s/" . a:search . "/" . a:replace . "/ge"
+:exec "bufdo! %s/" . a:search . "/" . a:replace . "/ge"
 :endfunctio
 " leader
 map <space> <leader>
