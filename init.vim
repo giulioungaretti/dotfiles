@@ -277,11 +277,14 @@ function! Dark()
         :AirlineRefresh
     endif
 endfunction
-map <silent><leader>bgf :if exists("g:syntax_on") <Bar>
-	\   syntax off <Bar>
-	\ else <Bar>
-	\   syntax enable <Bar>
-	\ endif <CR>
+function! ToggleSyntax()
+    if exists("g:syntax_on")
+        syntax off
+    else
+        syntax enable
+    endif
+endfunction
+map <silent><leader>bgf :call ToggleSyntax()<cr>
 "" map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
