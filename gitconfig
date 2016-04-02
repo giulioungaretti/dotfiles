@@ -1,5 +1,5 @@
 [user]
-	name = giulio
+	name = giulio ungaretti
 	email = giulioungaretti@me.com
 [push]
 	default = matching
@@ -23,10 +23,10 @@
 [github]
 	user = giulioungaretti
 [core]
-	excludesfile = /Users/giulio/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
 [commit]
-	template = /Users/giulio/.git_commit_msg.txt
+	template = ~/.git_commit_msg.txt
