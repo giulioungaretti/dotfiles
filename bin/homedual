@@ -1,0 +1,17 @@
+#! /bin/sh
+#
+# Copyright (C) 2015 unga <giulioungaretti@me.com>
+#
+# Distributed under terms of the MIT license.
+# retina AxB
+# external  CxD
+# scale ExF
+# xrandr --output eDP1 --auto --output HDMI1 --auto --panning [C*E]x[D*F]+[A]+0 --scale [E]x[F] --right-of eDP1
+if (xrandr| grep -w DP-1 | grep -w connected); then
+        xrandr --output eDP-1 --auto --output DP-1 --panning 3840x2160+2880+0  --auto --scale 2x2 --right-of eDP-1
+elif xrandr| grep -w DP-2 | grep -w connected; then
+        xrandr --output eDP-2 --auto --output DP-2 --panning 3840x2160+2880+0  --auto --scale 2x2 --right-of eDP-1
+elif xrandr| grep -w HDMI-1 | grep -w connected; then
+        xrandr --output HDMI-1 --auto --output DP-2 --panning 3840x2160+2880+0  --auto --scale 2x2 --right-of eDP-1
+fi
+# last restore retina display

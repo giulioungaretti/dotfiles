@@ -1,0 +1,8 @@
+#! /bin/sh
+#
+# retina.sh
+# Copyright (C) 2015 unga <giulioungaretti@me.com>
+#
+# Distributed under terms of the MIT license.
+#
+xrandr --output eDP-1 --mode  2880x1800
