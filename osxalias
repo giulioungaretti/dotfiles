@@ -1,6 +1,5 @@
 #-------------------------------------------------------------------- Aliases
 #{{{
-alias vim="reattach-to-user-namespace vim"
 alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
 alias vim='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
 export VISUAL=nvim
@@ -20,15 +19,6 @@ export PATH=$PATH:$HOME/bin
 # python env{{{
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 export WORKON_HOME=$HOME/Hack/python/Envs
-#}}}
-#}}}
-#------------------------------------------------------------------ Functions
-#{{{
-#
-#}}}
-#
-#------------------------------------------------------------------ Source
-#{{{
 source /usr/local/bin/virtualenvwrapper.sh
 #}}}
 #
