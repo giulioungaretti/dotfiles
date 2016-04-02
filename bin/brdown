@@ -1,0 +1,6 @@
+# reduce brigthnss
+val=$(cat /sys/class/backlight/gmux_backlight/brightness)
+up=$(($val - 50))
+if [ "$up" -le  1023 ]; then
+        echo $up  |  tee  /sys/class/backlight/gmux_backlight/brightness
+fi
