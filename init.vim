@@ -28,6 +28,8 @@ if s:uname == "Linux\n"
     :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
 
+"
+Plug 'Tpope/vim-unimpaired'
 " easymotion
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -69,6 +71,20 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-p> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+nnoremap <silent> <leader><space> :Files<CR>
+nnoremap <silent> <leader>a :Buffers<CR>
+nnoremap <silent> <leader>A :Windows<CR>
+nnoremap <silent> <leader>; :BLines<CR>
+nnoremap <silent> <leader>. :Lines<CR>
+nnoremap <silent> <leader>o :BTags<CR>
+nnoremap <silent> <leader>O :Tags<CR>
+nnoremap <silent> <leader>? :History<CR>
+nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> K :call SearchWordWithAg()<CR>
+vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
+nnoremap <silent> <leader>gl :Commits<CR>
+nnoremap <silent> <leader>ga :BCommits<CR>
 " Rainbow paranthesis
 Plug 'junegunn/rainbow_parentheses.vim'
 " headers
@@ -161,6 +177,22 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
+" screen stuff
+let g:ScreenImpl = "Tmux"
+" Open an IPython3 shell.
+autocmd FileType python map <LocalLeader>p :IPython!<CR>
+"autocmd FileType python map <LocalLeader>p :IPython!  <CR>
+" Close whichever shell is running.
+autocmd FileType python map <LocalLeader>q :ScreenQuit<CR>
+" Send current line to python and move to next line.
+autocmd FileType python map <LocalLeader>rp V:ScreenSend<CR>j
+" Send visual selection to python and move to next line.
+autocmd FileType python map <LocalLeader>v :ScreenSend<CR>`>0j
+" Send a <CR> to ipython.
+autocmd FileType python map <LocalLeader>cr :call g:ScreenShellSend("\r")<CR>
+" Clear the screen.
+autocmd FileType python map <LocalLeader>L
+            \ :call g:ScreenShellSend('!clear')<CR>
 "}}}
 "-------------------------------------------------------------------------golang {{{
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -248,10 +280,16 @@ set fillchars=""
 set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
+" ignore pattern for wildmenu
+set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
+
+"set list " show hidden characters
+"set listchars=tab:·,trail:·,extends:❯,precedes:❮,nbsp:×
+
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-colorscheme PaperColor
+colorscheme  PaperColor
 set background=dark
 let g:gitgutter_override_sign_column_highlight = 0
 highlight clear SignColumn
@@ -284,7 +322,6 @@ map <silent><leader>bgf :call ToggleSyntax()<cr>
 "" map functions to bgl and bgd
 map <silent><leader>bgl :call Light()<cr>
 map  <silent><leader>bgd :call Dark()<cr>
-"}}}
 set mousehide "Hide when characters are typed
 " color of the current line number
 nnoremap <silent><leader>oo :set relativenumber!<cr>
