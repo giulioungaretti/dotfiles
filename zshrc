@@ -11,16 +11,16 @@ export TERM=screen-256color
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export GIT_EDITOR=vim
-export VISUAL=vim
-export EDITOR=vim
+alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
+alias vim='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
+export VISUAL=nvim
+export EDITOR=nvim
 # black bg
 export VIMBKG=d
 #disable tmux in fzf
 export FZF_TMUX=1
 #  use extended search  all the time
 export FZF_DEFAULT_OPTS="--extended"
-# work  stuff
-export AWS_CREDENTIAL_FILE="/Users/giulio/.aws/config"
 #}}}
 # Aliases {{{
 alias server='python3 -m http.server'
