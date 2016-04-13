@@ -20,6 +20,7 @@
     diff = diff --word-diff
     dc = diff --cached
     la = "!git config -l | grep alias | cut -c 7-"
+	d = difftool
 [github]
 	user = giulioungaretti
 [core]
@@ -30,3 +31,7 @@
 	required = true
 [commit]
 	template = ~/.git_commit_msg.txt
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
