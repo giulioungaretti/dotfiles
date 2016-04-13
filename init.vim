@@ -264,6 +264,23 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 0
 "}}}
+" --------------------------------------------------------------------------js
+" {{{{
+au BufNewFile,BufRead *.js setlocal noet ts=2 sw=2 sts=2 expandtab
+Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+" emmet
+Plug 'mattn/emmet-vim'
+Plug 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
+" better js syntax
+Plug 'othree/yajs.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'gavocanov/vim-js-indent'
+let g:neomake_javascript_enabled_makers = ['eslint']
+Plug 'mephux/vim-jsfmt', { 'do': 'npm install -g jsfmt' }
+" like go fmt
+let g:js_fmt_autosave = 0
+" }}}
 " All of your Plugs must be added before the following line
 call plug#end()
 "}}}
