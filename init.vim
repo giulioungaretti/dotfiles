@@ -300,10 +300,11 @@ set laststatus=2
 set wildmenu
 " ignore pattern for wildmenu
 set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
-
-"set list " show hidden characters
-"set listchars=tab:·,trail:·,extends:❯,precedes:❮,nbsp:×
-
+set list " show hidden characters
+:set list listchars=tab:»·,trail:·
+:set tabstop=4
+:set shiftwidth=4
+:set expandtab
 " redraw only when we need to
 set lazyredraw
 " theme {{{
