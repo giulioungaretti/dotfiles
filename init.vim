@@ -29,6 +29,7 @@ if s:uname == "Linux\n"
 endif
 
 "
+Plug 'kylef/apiblueprint.vim'
 Plug 'Tpope/vim-unimpaired'
 " easymotion
 Plug 'easymotion/vim-easymotion'
