@@ -1,9 +1,10 @@
+" ---------------------------------------------------------------------- init
 " {{{
 " grab os name
 let s:uname = system("uname -s")
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.nvim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 " {{{
@@ -11,9 +12,6 @@ if s:uname == "Darwin\n"
     "Mac specific plug ins
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
-    Plug 'rizzatti/dash.vim'
-    :nmap <silent> <leader>d <Plug>DashSearch
-    " search in osx dictionary
     " this should make it work with osx/tmux/madness
     set clipboard+=unnamed
 endif
@@ -28,7 +26,7 @@ if s:uname == "Linux\n"
     :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
 
-"
+" api blueprint syntax hilight
 Plug 'kylef/apiblueprint.vim'
 Plug 'Tpope/vim-unimpaired'
 " easymotion
@@ -72,7 +70,6 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-p> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-
 nnoremap <silent> <leader><space> :Files<CR>
 nnoremap <silent> <leader>a :Buffers<CR>
 nnoremap <silent> <leader>A :Windows<CR>
@@ -153,6 +150,8 @@ Plug 'junegunn/goyo.vim'
 " highlighcolors
 Plug 'chrisbra/Colorizer'
 "----------------------------------------------------------- language specifci
+"elixir
+Plug 'elixir-lang/vim-elixir'
 " elm
 Plug 'elmcast/elm-vim'
 au FileType elm nmap <leader>b <Plug>(elm-make)
@@ -162,9 +161,10 @@ au FileType elm nmap <leader>r <Plug>(elm-repl)
 au FileType elm nmap <leader>e <Plug>(elm-error-detail)
 au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
-
+let g:elm_format_autosave = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 "python {{{
+"# turn on virtualenvs
 Plug 'jmcantrell/vim-virtualenv'
 " jedi autocpmletion and smart code fu
 Plug 'davidhalter/jedi-vim'
@@ -301,17 +301,17 @@ set wildmenu
 " ignore pattern for wildmenu
 set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
 set list " show hidden characters
-:set list listchars=tab:»·,trail:·
-:set tabstop=4
-:set shiftwidth=4
-:set expandtab
+set list listchars=tab:»·,trail:·
+set tabstop=4
+set shiftwidth=4
+set expandtab
 " redraw only when we need to
 set lazyredraw
 " theme {{{
 colorscheme  PaperColor
 set background=dark
 let g:gitgutter_override_sign_column_highlight = 0
-highlight clear SignColumn
+highlight clear signcolumn
 set noshowmode
 function! Light()
     set background=light
@@ -509,7 +509,7 @@ command! Wqa wqa
 map <C-p> :NERDTreeToggle<CR>
 " UNDO
 if has("persistent_undo")
-    set undodir=.undodir/
+    set undodir=$HOME/.undodir/
     set undofile
 endif
 " zen mode with Goyo
