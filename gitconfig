@@ -24,7 +24,7 @@
 [github]
 	user = giulioungaretti
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/giulio/.gitignore_global
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
