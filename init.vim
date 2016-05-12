@@ -568,8 +568,6 @@ let g:tagbar_autoclose  = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 "}}}
-
-
 autocmd! bufwritepost init.vim source %
 au VimLeave * :!clear
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78

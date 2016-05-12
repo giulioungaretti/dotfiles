@@ -12,7 +12,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export GIT_EDITOR=vim
 alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
-alias vim='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
 export VISUAL=nvim
 export EDITOR=nvim
 # black bg

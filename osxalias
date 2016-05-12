@@ -1,7 +1,6 @@
 #-------------------------------------------------------------------- Aliases
 #{{{
 alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
-alias vim='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
 export VISUAL=nvim
 export EDITOR=nvim
 alias start='tmuxifier load-session my-awesome-session'
