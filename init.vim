@@ -297,7 +297,6 @@ autocmd FileType gitcommit setlocal spell
 " set cursorline
 "remove ugly ass  split separator
 set fillchars=""
-set laststatus=2
 " visual autocomplete for command menu
 set wildmenu
 " ignore pattern for wildmenu
@@ -610,7 +609,7 @@ set statusline+=%*
 set statusline+=%=      "left/right separator
 set statusline+=%c:     "cursor column
 set statusline+=%l/%L   "cursor line/total lines
-set laststatus=2
+set laststatus=0
 
 "recalculate the trailing whitespace warning when idle, and after saving
 autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
