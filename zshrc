@@ -10,12 +10,14 @@ fi
 export TERM=screen-256color
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export GIT_EDITOR=vim
-alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
-export VISUAL=nvim
-export EDITOR=nvim
-# black bg
-export VIMBKG=d
+if [ -x  "$(command -v nvim)" ]; then
+  export GIT_EDITOR=nvim
+  export VISUAL=nvim
+  export EDITOR=nvim
+  alias vim=nvim
+else
+    echo does not exist
+fi
 #disable tmux in fzf
 export FZF_TMUX=1
 #  use extended search  all the time
