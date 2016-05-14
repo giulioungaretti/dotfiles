@@ -28,16 +28,17 @@
 " }}}
 " MAPPING {{{
   map , <Leader>
+  nmap d :quit<CR>
   " unset maps
   nmap w <Nop>
   nmap W <Nop>
   nmap u <Nop>
   nmap a <Nop>
+  nmap x :quit<CR>
   " movement
   nmap j 5<Down>
   nmap k 10<Up>
   " vimium like keymap
-  nmap d <C-d>
   nmap u <C-u>
   nmap J :tabprevious<CR>
   nmap K :tabnext<CR>
