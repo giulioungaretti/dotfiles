@@ -41,21 +41,18 @@ map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 " s{char}{char} to move to {char}{char}
 nmap s <Plug>(easymotion-overwin-f2)
-" better incremental search
-Plug 'haya14busa/incsearch.vim'
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
 " snip engine
 Plug 'SirVer/ultisnips'
 " snippets
 Plug 'honza/vim-snippets'
-" neomake
-Plug 'benekastah/neomake'
-" and run neomake on save
-autocmd! BufWritePost * Neomake
-" open location list if errors are there
-let g:neomake_open_list=1
+" check syntax
+Plug 'scrooloose/syntastic'
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_python_exec = '/path/to/python3'
+let g:syntastic_python_checkers = ['pylint']
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 "Plug 'ryanoasis/vim-devicons'
@@ -90,7 +87,7 @@ nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
 nnoremap <silent> K :call SearchWordWithAg()<CR>
 vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
 nnoremap <silent> <leader>gl :Commits<CR>
-nnoremap <silent> <leader>ga :BCommits<CR>
+nnoremap <silent> <leader>gb :BCommits<CR>
 " Rainbow paranthesis
 Plug 'junegunn/rainbow_parentheses.vim'
 " headers
@@ -101,9 +98,6 @@ Plug 'vim-scripts/CursorLineCurrentWindow'
 Plug 'aperezdc/vim-template'
 " align table
 Plug 'godlygeek/tabular'
-" eyecany bar
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 " send line to tmux
 Plug 'ervandew/screen'
 " tmux seamless movement
@@ -536,17 +530,6 @@ command! Header call EightHeader( 78, 'right', 1, ['', '-', ''], '', '\=" ".s:st
 let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
 let g:email = "giulioungaretti@me.com"
-" airline
-let g:airline_powerline_fonts = 1
-" smart  tab bar
-let g:airline#extensions#tabline#enabled = 0
-" use simple separators
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_left_sep='  '
-let g:airline_right_sep='  '
-" exclude airline from preview windows
-let g:airline_exclude_preview = 1
 " gutter & fugitive git bindings
 " open diff
 nnoremap <leader>gd :Gdiff<CR>
@@ -555,7 +538,7 @@ nnoremap <leader>ga :Git add %:p<CR><CR>
 " status
 nnoremap <leader>gs :Gstatus<CR>
 " commit added files
-nnoremap <leader>gc :Gcommit -q<CR>
+nnoremap <leader>gc :Gcommit -q -v<CR>
 " add and commit current file
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 " this should turn off the annoying random highlight
@@ -577,4 +560,106 @@ let g:tagbar_sort = 0
 "}}}
 autocmd! bufwritepost init.vim source %
 au VimLeave * :!clear
+
+"statusline setup
+set statusline+=%-3.3n
+set statusline+=%f\                          " file name
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+set statusline+=%{&fileformat}]              " file format
+set statusline+=%*
+
+"display a warning if fileformat isnt unix
+set statusline+=%#warningmsg#
+set statusline+=%{&ff!='unix'?'['.&ff.']':''}
+set statusline+=%*
+
+"display a warning if file encoding isnt utf-8
+set statusline+=%#warningmsg#
+set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
+set statusline+=%*
+
+set statusline+=%h      "help file flag
+
+"read only flag
+set statusline+=%#identifier#
+set statusline+=%r
+set statusline+=%*
+
+"modified flag
+set statusline+=%#warningmsg#
+set statusline+=%m
+set statusline+=%*
+
+"display a warning if &et is wrong, or we have mixed-indenting
+set statusline+=%#error#
+set statusline+=%{StatuslineTabWarning()}
+set statusline+=%*
+
+set statusline+=%{StatuslineTrailingSpaceWarning()}
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+"display a warning if &paste is set
+set statusline+=%#error#
+set statusline+=%{&paste?'[paste]':''}
+set statusline+=%*
+
+set statusline+=%=      "left/right separator
+set statusline+=%c:     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set laststatus=2
+
+"recalculate the trailing whitespace warning when idle, and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+
+"return '[\s]' if trailing white space is detected
+"return '' otherwise
+function! StatuslineTrailingSpaceWarning()
+    if !exists("b:statusline_trailing_space_warning")
+
+        if !&modifiable
+            let b:statusline_trailing_space_warning = ''
+            return b:statusline_trailing_space_warning
+        endif
+
+        if search('\s\+$', 'nw') != 0
+            let b:statusline_trailing_space_warning = '[\s]'
+        else
+            let b:statusline_trailing_space_warning = ''
+        endif
+    endif
+    return b:statusline_trailing_space_warning
+endfunction
+
+"recalculate the tab warning flag when idle and after writing
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+
+"return '[&et]' if &et is set wrong
+"return '[mixed-indenting]' if spaces and tabs are used to indent
+"return an empty string if everything is fine
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let b:statusline_tab_warning = ''
+
+        if !&modifiable
+            return b:statusline_tab_warning
+        endif
+
+        let tabs = search('^\t', 'nw') != 0
+
+        "find spaces that arent used as alignment in the first indent column
+        let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
+
+        if tabs && spaces
+            let b:statusline_tab_warning =  '[mixed-indenting]'
+        elseif (spaces && !&et) || (tabs && &et)
+            let b:statusline_tab_warning = '[&et]'
+        endif
+    endif
+    return b:statusline_tab_warning
+endfunction
+
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
