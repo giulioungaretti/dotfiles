@@ -106,41 +106,14 @@
   ignorekeys add 'www.google.com/reader'
   ignorekeys add 'http://localhost:8888'
 "}}}
-" THEME {{{
-hi Normal background: #121112; color:#D0CFD0;
-hi CmdLine background: #121112; color:#D0CFD0;
-hi CompGroup background: #121112; color:#D0CFD0;
-hi CompTitle background: #1c1b1c; font-weight: bold;
-hi CompTitle>* color: #D0CFD0; padding: 1px 0.5ex;
-hi CompItem background:#121112; color:#D0CFD0;
-hi CompItem[selected] color: #77438F; background: #262426;
-hi CompDesc width: 500px; max-width: 500px; color: #465457;
-hi CompMsg margin-left: 16px;
-hi ErrorMsg background: #D7005F; color: #D0CFD0; font-weight: bold;
-hi Filter color: #77438F; background: #262426;
-hi StatusLine color: #D0CFD0; background: transparent; font-weight: normal;
-hi Hint font-family: terminus; font-size: 10px; font-weight: bold; color: white; background-color: red; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 1px 0px 1px;
-hi Hint::after content: attr(number);
-hi HintActive background-color: #88FF00; color: black;
-hi HintElem background-color: yellow; color: black;
-hi HintImage opacity: .5;
-hi URL text-decoration: none; color: #87FF00;
-hi ModeMsg color: white; background: #3E6700; border-radius: 1px; padding: 0px 5px;
-hi PromptText color: white; background: #860EFF;
-hi MoreMsg background-color: #121112; color: #87FF00;
-hi Tag color: #005F87;
-hi InfoMsg background: #121112; color: #87FF00;
-hi WarningMsg background: #121112; color: #D7005F;
-hi Null color: #005F87;
-hi Number color: #005F87;
-hi NonText color: #B973FF; min-height: 16px; padding-left: 2px;
-hi Title background-color: #D7005F; color: #D0CFD0; font-weight: bold;
-hi Indicator color: #D7005F;
-hi Hint               text-transform: uppercase; font-family : "Helvetica Neue", "Helvetica", "Arial", "Sans"; font-weight: bold; font-size: 11px; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); color: #302505; padding: 1px 3px 0px 3px; background: -moz-linear-gradient(top, #FFF785, #FFC542); border: 1px #E3BE23 solid; border-radius: 2px; -moz-box-shadow: 0 3px 7px 0px rgba(0,0,0,0.3);
+
+
+# monochrome white hints
+hi Hint               text-transform: uppercase; font-family : "Helvetica Neue", "Helvetica", "Arial", "Sans"; font-weight: bold; font-size: 11px; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); color: #302505; padding: 1px 3px 0px 3px; background: -moz-linear-gradient(top, #FFFFFF, #B6B6B6); border: 1px #B6B6B6 solid; border-radius: 2px; -moz-box-shadow: 0 3px 7px 0px rgba(0,0,0,0.3);
 hi HintElem           background-color: inherit !important;
 hi HintActive	        background-color: inherit !important;
 hi HintImage          opacity: .7 !important;
-" }}}
+
 "{{{
 command! -nargs=0 -description="Tile Tabs..." sp emenu Tile.Tile New Tab.Above
 command! -nargs=0 -description="Tile Tabs..." vs emenu Tile.Tile New Tab.Right
