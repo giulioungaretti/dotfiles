@@ -28,6 +28,7 @@ endif
 
 " api blueprint syntax hilight
 Plug 'kylef/apiblueprint.vim'
+" sane pair mappings [l, ]l
 Plug 'Tpope/vim-unimpaired'
 " easymotion
 Plug 'easymotion/vim-easymotion'
@@ -40,9 +41,14 @@ map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 " s{char}{char} to move to {char}{char}
 nmap s <Plug>(easymotion-overwin-f2)
-" snip enging
+" better incremental search
+Plug 'haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+" snip engine
 Plug 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
+" snippets
 Plug 'honza/vim-snippets'
 " neomake
 Plug 'benekastah/neomake'
@@ -66,13 +72,15 @@ Plug 'junegunn/fzf.vim'
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
-imap <c-x><c-k> <plug>(fzf-complete-word)
+" complete word from dictionary
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 imap <c-x><c-p> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
 nnoremap <silent> <leader><space> :Files<CR>
-nnoremap <silent> <leader>a :Buffers<CR>
-nnoremap <silent> <leader>A :Windows<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>W :Windows<CR>
 nnoremap <silent> <leader>; :BLines<CR>
 nnoremap <silent> <leader>. :Lines<CR>
 nnoremap <silent> <leader>o :BTags<CR>
@@ -373,7 +381,6 @@ map Q gq
 set timeoutlen=1000 ttimeoutlen=0
 "Extend word designators
 set iskeyword-=.                    " '.' is an end of word designator
-set iskeyword-=_                    " '_' is an end of word designator
 set iskeyword-=-                    " '_' is an end of word designator
 " no backup and swap files.
 set nobackup
@@ -393,7 +400,7 @@ set smartcase
 " better mouse interaction is no mouse integration
 set mouse=""
 "folding
-set foldenable  " enable folding
+set nofoldenable  " enable folding
 set foldnestmax=10  " max 10 nested fold allowed
 set foldmethod=syntax " fold based on indent level
 "reload on save
