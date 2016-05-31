@@ -284,5 +284,3 @@ endif
 " Enable omni completion.
 set omnifunc=syntaxcomplete#Complete
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
-
-
