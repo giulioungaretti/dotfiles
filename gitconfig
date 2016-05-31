@@ -1,6 +1,6 @@
 [user]
 	name = giulio ungaretti
-	email = giulioungaretti@me.com
+	email = giulio.ungaretti@gmail..com
 [push]
 	default = matching
 [alias]
@@ -23,6 +23,7 @@
 	d = difftool
 [github]
 	user = giulioungaretti
+	email = giulio.ungaretti@gmail..com
 [core]
 	excludesfile = /Users/giulio/.gitignore_global
 [filter "lfs"]
