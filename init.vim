@@ -25,7 +25,8 @@ if s:uname == "Linux\n"
     :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
     :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
-
+" regain focus events in tmux
+Plug 'tmux-plugins/vim-tmux-focus-events'
 " api blueprint syntax hilight
 Plug 'kylef/apiblueprint.vim'
 " sane pair mappings [l, ]l
@@ -49,7 +50,7 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/syntastic'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = '/path/to/python3'
 let g:syntastic_python_checkers = ['pylint']
@@ -75,7 +76,7 @@ imap <c-x><c-p> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-nnoremap <silent> <leader><space> :Files<CR>
+nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>W :Windows<CR>
 nnoremap <silent> <leader>; :BLines<CR>
@@ -144,8 +145,7 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'morhetz/gruvbox'
+Plug 'chriskempson/base16-vim'
 Plug 'antonshulgin/vim.colors'
 " zen writing
 Plug 'junegunn/goyo.vim'
@@ -309,39 +309,14 @@ set expandtab
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-colorscheme  PaperColor
+colorscheme base16-apathy
 set background=dark
+
+
+" maybe ? really wut?
 let g:gitgutter_override_sign_column_highlight = 0
 highlight clear signcolumn
 set noshowmode
-function! Light()
-    set background=light
-    colorscheme monokromatik
-    if exists(':AirlineRefresh')
-        :AirlineTheme monochrome
-        :AirlineRefresh
-    endif
-endfunction
-
-function! Dark()
-    set background=dark
-    colorscheme kitamorkonom
-    if exists(':AirlineRefresh')
-        :AirlineTheme powerlineish
-        :AirlineRefresh
-    endif
-endfunction
-function! ToggleSyntax()
-    if exists("g:syntax_on")
-        syntax off
-    else
-        syntax enable
-    endif
-endfunction
-map <silent><leader>bgf :call ToggleSyntax()<cr>
-"" map functions to bgl and bgd
-map <silent><leader>bgl :call Light()<cr>
-map  <silent><leader>bgd :call Dark()<cr>
 set mousehide "Hide when characters are typed
 " color of the current line number
 nnoremap <silent><leader>oo :set relativenumber!<cr>
@@ -507,13 +482,24 @@ command! Wqa wqa
 "------------------------------------------------------------------- Plug ins
 "{{{
 map <C-p> :NERDTreeToggle<CR>
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 " UNDO
 if has("persistent_undo")
     set undodir=$HOME/.undodir/
     set undofile
 endif
 " zen mode with Goyo
-nnoremap <silent><Leader>f :Goyo <CR>
+nnoremap <silent><Leader>F :Goyo <CR>
 " open task list for todo single file
 map <leader>td <Plug>TaskList
 " open task list for todo in current folder and subfolder
@@ -661,4 +647,43 @@ function! StatuslineTabWarning()
     return b:statusline_tab_warning
 endfunction
 
+
+
+function s:CheckColorScheme()
+  let g:base16colorspace=256
+
+  let s:config_file = expand('~/.vim/.base16')
+
+  if filereadable(s:config_file)
+    let s:config = readfile(s:config_file, '', 2)
+
+    if s:config[1] =~# '^dark\|light$'
+      execute 'set background=' . s:config[1]
+    else
+      echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
+    endif
+
+    if filereadable(expand('~/.nvim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
+      execute 'color base16-' . s:config[0]
+    else
+      echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+    endif
+  else " default
+    set background=dark
+    color base16-tomorrow
+  endif
+
+
+endfunction
+
+if v:progname !=# 'vi'
+  if has('autocmd')
+    augroup WincentAutocolor
+      autocmd!
+      autocmd FocusGained * call s:CheckColorScheme()
+    augroup END
+  endif
+
+  call s:CheckColorScheme()
+endif
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
