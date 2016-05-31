@@ -39,6 +39,8 @@ alias rwx='chmod 700'
 alias r--='chmod 644'
 alias r-x='chmod 755'
 #}}}
+#source colors
+source "$HOME/dotfiles/color"
 # OS awareness # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
         if [ -f ~/.ubuntualias ]; then
