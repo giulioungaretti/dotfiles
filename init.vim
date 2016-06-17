@@ -180,6 +180,8 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
+Plug 'tmhedberg/SimpylFold'
+let g:SimpylFold_docstring_preview = 1
 " screen stuff
 let g:ScreenImpl = "Tmux"
 " Open an IPython3 shell.
@@ -284,7 +286,14 @@ Plug 'mephux/vim-jsfmt', { 'do': 'npm install -g jsfmt' }
 " like go fmt
 let g:js_fmt_autosave = 0
 " }}}
-" All of your Plugs must be added before the following line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+:let g:airline_theme='base16'
+" always show bar
+set laststatus=2
+" don't show mode
+set noshowmode
+let g:airline_powerline_fonts = 1
 call plug#end()
 "}}}
 " -------------------------------------------------------------------- Visual
@@ -311,12 +320,9 @@ set lazyredraw
 " theme {{{
 colorscheme base16-apathy
 set background=dark
-
-
 " maybe ? really wut?
 let g:gitgutter_override_sign_column_highlight = 0
 highlight clear signcolumn
-set noshowmode
 set mousehide "Hide when characters are typed
 " color of the current line number
 nnoremap <silent><leader>oo :set relativenumber!<cr>
@@ -547,107 +553,105 @@ autocmd! bufwritepost init.vim source %
 au VimLeave * :!clear
 
 "statusline setup
-set statusline+=%-3.3n
-set statusline+=%f\                          " file name
-set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
-set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
-set statusline+=%{&fileformat}]              " file format
-set statusline+=%*
+"set statusline+=%-3.3n
+"set statusline+=%f\                          " file name
+"set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+"set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+"set statusline+=%{&fileformat}]              " file format
+"set statusline+=%*
 
-"display a warning if fileformat isnt unix
-set statusline+=%#warningmsg#
-set statusline+=%{&ff!='unix'?'['.&ff.']':''}
-set statusline+=%*
+""display a warning if fileformat isnt unix
+"set statusline+=%#warningmsg#
+"set statusline+=%{&ff!='unix'?'['.&ff.']':''}
+"set statusline+=%*
 
-"display a warning if file encoding isnt utf-8
-set statusline+=%#warningmsg#
-set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
-set statusline+=%*
+""display a warning if file encoding isnt utf-8
+"set statusline+=%#warningmsg#
+"set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
+"set statusline+=%*
 
-set statusline+=%h      "help file flag
+"set statusline+=%h      "help file flag
 
-"read only flag
-set statusline+=%#identifier#
-set statusline+=%r
-set statusline+=%*
+""read only flag
+"set statusline+=%#identifier#
+"set statusline+=%r
+"set statusline+=%*
 
-"modified flag
-set statusline+=%#warningmsg#
-set statusline+=%m
-set statusline+=%*
+""modified flag
+"set statusline+=%#warningmsg#
+"set statusline+=%m
+"set statusline+=%*
 
-"display a warning if &et is wrong, or we have mixed-indenting
-set statusline+=%#error#
-set statusline+=%{StatuslineTabWarning()}
-set statusline+=%*
+""display a warning if &et is wrong, or we have mixed-indenting
+"set statusline+=%#error#
+"set statusline+=%{StatuslineTabWarning()}
+"set statusline+=%*
 
-set statusline+=%{StatuslineTrailingSpaceWarning()}
+"set statusline+=%{StatuslineTrailingSpaceWarning()}
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-"display a warning if &paste is set
-set statusline+=%#error#
-set statusline+=%{&paste?'[paste]':''}
-set statusline+=%*
+""display a warning if &paste is set
+"set statusline+=%#error#
+"set statusline+=%{&paste?'[paste]':''}
+"set statusline+=%*
 
-set statusline+=%=      "left/right separator
-set statusline+=%c:     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set laststatus=0
+"set statusline+=%=      "left/right separator
+"set statusline+=%c:     "cursor column
+"set statusline+=%l/%L   "cursor line/total lines
+"set laststatus=2
 
-"recalculate the trailing whitespace warning when idle, and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+""recalculate the trailing whitespace warning when idle, and after saving
+"autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 
 "return '[\s]' if trailing white space is detected
 "return '' otherwise
-function! StatuslineTrailingSpaceWarning()
-    if !exists("b:statusline_trailing_space_warning")
+"function! StatuslineTrailingSpaceWarning()
+    "if !exists("b:statusline_trailing_space_warning")
 
-        if !&modifiable
-            let b:statusline_trailing_space_warning = ''
-            return b:statusline_trailing_space_warning
-        endif
+        "if !&modifiable
+            "let b:statusline_trailing_space_warning = ''
+            "return b:statusline_trailing_space_warning
+        "endif
 
-        if search('\s\+$', 'nw') != 0
-            let b:statusline_trailing_space_warning = '[\s]'
-        else
-            let b:statusline_trailing_space_warning = ''
-        endif
-    endif
-    return b:statusline_trailing_space_warning
-endfunction
+        "if search('\s\+$', 'nw') != 0
+            "let b:statusline_trailing_space_warning = '[\s]'
+        "else
+            "let b:statusline_trailing_space_warning = ''
+        "endif
+    "endif
+    "return b:statusline_trailing_space_warning
+"endfunction
 
-"recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+""recalculate the tab warning flag when idle and after writing
+"autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
 
-"return '[&et]' if &et is set wrong
-"return '[mixed-indenting]' if spaces and tabs are used to indent
-"return an empty string if everything is fine
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let b:statusline_tab_warning = ''
+""return '[&et]' if &et is set wrong
+""return '[mixed-indenting]' if spaces and tabs are used to indent
+""return an empty string if everything is fine
+"function! StatuslineTabWarning()
+    "if !exists("b:statusline_tab_warning")
+        "let b:statusline_tab_warning = ''
 
-        if !&modifiable
-            return b:statusline_tab_warning
-        endif
+        "if !&modifiable
+            "return b:statusline_tab_warning
+        "endif
 
-        let tabs = search('^\t', 'nw') != 0
+        "let tabs = search('^\t', 'nw') != 0
 
-        "find spaces that arent used as alignment in the first indent column
-        let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
+        ""find spaces that arent used as alignment in the first indent column
+        "let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
 
-        if tabs && spaces
-            let b:statusline_tab_warning =  '[mixed-indenting]'
-        elseif (spaces && !&et) || (tabs && &et)
-            let b:statusline_tab_warning = '[&et]'
-        endif
-    endif
-    return b:statusline_tab_warning
-endfunction
-
-
+        "if tabs && spaces
+            "let b:statusline_tab_warning =  '[mixed-indenting]'
+        "elseif (spaces && !&et) || (tabs && &et)
+            "let b:statusline_tab_warning = '[&et]'
+        "endif
+    "endif
+    "return b:statusline_tab_warning
+"endfunction
 
 function s:CheckColorScheme()
   let g:base16colorspace=256
@@ -681,9 +685,11 @@ if v:progname !=# 'vi'
     augroup WincentAutocolor
       autocmd!
       autocmd FocusGained * call s:CheckColorScheme()
+      autocmd FocusGained * AirlineRefresh
     augroup END
   endif
 
   call s:CheckColorScheme()
 endif
-" vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
+
+"vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
