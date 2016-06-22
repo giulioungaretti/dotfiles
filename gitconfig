@@ -1,11 +1,10 @@
 [user]
-	name = giulio ungaretti
-	email = giulio.ungaretti@gmail.com
+	name = Giulio Ungaretti
+	email = giulioungaretti@me.com
 [push]
 	default = matching
 [alias]
 	co = checkout
-    save = !git add -A && git commit -m 'SAVEPOINT'
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
@@ -23,7 +22,7 @@
 	d = difftool
 [github]
 	user = giulioungaretti
-	email = giulio.ungaretti@gmail.com
+	email = giulioungaretti@me.com
 [core]
 	excludesfile = /Users/giulio/.gitignore_global
 [filter "lfs"]

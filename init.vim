@@ -57,12 +57,10 @@ let g:syntastic_python_checkers = ['pylint']
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 "Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 " Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
 Plug 'jszakmeister/vim-togglecursor'
-" nice start page
-Plug 'mhinz/vim-startify'
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -167,7 +165,7 @@ let g:elm_format_autosave = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 "python {{{
 "# turn on virtualenvs
-Plug 'jmcantrell/vim-virtualenv'
+Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
 " jedi autocpmletion and smart code fu
 Plug 'davidhalter/jedi-vim'
 let g:jedi#force_py_version = 3
@@ -208,6 +206,7 @@ let g:go_term_mode = "vsplit"
 " fold by sytax and style
 " set style for go files
 au FileType go set foldmethod=indent foldnestmax=10
+au FileType go set nolist
 " match gofmt style
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
@@ -549,115 +548,13 @@ let g:tagbar_autoclose  = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 "}}}
+" reload  nvim o save
 autocmd! bufwritepost init.vim source %
-au VimLeave * :!clear
-
-"statusline setup
-"set statusline+=%-3.3n
-"set statusline+=%f\                          " file name
-"set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
-"set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
-"set statusline+=%{&fileformat}]              " file format
-"set statusline+=%*
-
-""display a warning if fileformat isnt unix
-"set statusline+=%#warningmsg#
-"set statusline+=%{&ff!='unix'?'['.&ff.']':''}
-"set statusline+=%*
-
-""display a warning if file encoding isnt utf-8
-"set statusline+=%#warningmsg#
-"set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
-"set statusline+=%*
-
-"set statusline+=%h      "help file flag
-
-""read only flag
-"set statusline+=%#identifier#
-"set statusline+=%r
-"set statusline+=%*
-
-""modified flag
-"set statusline+=%#warningmsg#
-"set statusline+=%m
-"set statusline+=%*
-
-""display a warning if &et is wrong, or we have mixed-indenting
-"set statusline+=%#error#
-"set statusline+=%{StatuslineTabWarning()}
-"set statusline+=%*
-
-"set statusline+=%{StatuslineTrailingSpaceWarning()}
-
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-""display a warning if &paste is set
-"set statusline+=%#error#
-"set statusline+=%{&paste?'[paste]':''}
-"set statusline+=%*
-
-"set statusline+=%=      "left/right separator
-"set statusline+=%c:     "cursor column
-"set statusline+=%l/%L   "cursor line/total lines
-"set laststatus=2
-
-""recalculate the trailing whitespace warning when idle, and after saving
-"autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
-
-"return '[\s]' if trailing white space is detected
-"return '' otherwise
-"function! StatuslineTrailingSpaceWarning()
-    "if !exists("b:statusline_trailing_space_warning")
-
-        "if !&modifiable
-            "let b:statusline_trailing_space_warning = ''
-            "return b:statusline_trailing_space_warning
-        "endif
-
-        "if search('\s\+$', 'nw') != 0
-            "let b:statusline_trailing_space_warning = '[\s]'
-        "else
-            "let b:statusline_trailing_space_warning = ''
-        "endif
-    "endif
-    "return b:statusline_trailing_space_warning
-"endfunction
-
-""recalculate the tab warning flag when idle and after writing
-"autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
-
-""return '[&et]' if &et is set wrong
-""return '[mixed-indenting]' if spaces and tabs are used to indent
-""return an empty string if everything is fine
-"function! StatuslineTabWarning()
-    "if !exists("b:statusline_tab_warning")
-        "let b:statusline_tab_warning = ''
-
-        "if !&modifiable
-            "return b:statusline_tab_warning
-        "endif
-
-        "let tabs = search('^\t', 'nw') != 0
-
-        ""find spaces that arent used as alignment in the first indent column
-        "let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
-
-        "if tabs && spaces
-            "let b:statusline_tab_warning =  '[mixed-indenting]'
-        "elseif (spaces && !&et) || (tabs && &et)
-            "let b:statusline_tab_warning = '[&et]'
-        "endif
-    "endif
-    "return b:statusline_tab_warning
-"endfunction
+"au VimLeave * :!clear
 
 function s:CheckColorScheme()
   let g:base16colorspace=256
-
   let s:config_file = expand('~/.vim/.base16')
-
   if filereadable(s:config_file)
     let s:config = readfile(s:config_file, '', 2)
 
@@ -676,8 +573,6 @@ function s:CheckColorScheme()
     set background=dark
     color base16-tomorrow
   endif
-
-
 endfunction
 
 if v:progname !=# 'vi'
@@ -686,10 +581,11 @@ if v:progname !=# 'vi'
       autocmd!
       autocmd FocusGained * call s:CheckColorScheme()
       autocmd FocusGained * AirlineRefresh
+      autocmd VimResized * execute "normal! \<c-w>="
     augroup END
   endif
-
-  call s:CheckColorScheme()
 endif
-
+" use global pyhton3 
+" no idea how this works with venvs
+let g:python3_host_prog = "/usr/local/bin/python3"
 "vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78

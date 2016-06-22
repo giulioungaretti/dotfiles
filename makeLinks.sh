@@ -25,7 +25,7 @@ if [ !  "~/.vim/autoload/plug.vim " ]; then
 fi
 
 
-if [! "~/.tmux/plugins/tpm~/.tmux/plugins/tpm" ]; then
-        echo 'set up tmux plugins'
- 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
+echo 'set up tmux plugins'
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+sh -s /bin/zsh 
