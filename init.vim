@@ -143,7 +143,7 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
-Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim', { 'commit': '9daeb991ee51977c3deea4b45846abfab34e9439' }
 Plug 'antonshulgin/vim.colors'
 " zen writing
 Plug 'junegunn/goyo.vim'
