@@ -149,7 +149,9 @@ Plug 'antonshulgin/vim.colors'
 Plug 'junegunn/goyo.vim'
 " highlighcolors
 Plug 'chrisbra/Colorizer'
-"----------------------------------------------------------- language specifci
+"----------------------------------------------------------- language specific
+"ƛ
+" {{{
 "elixir
 Plug 'elixir-lang/vim-elixir'
 " elm
@@ -163,6 +165,10 @@ au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
+" }}}
+
+
+
 "python {{{
 "# turn on virtualenvs
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
