@@ -3,7 +3,7 @@
 #
 
 BASE16_DIR=~/.zsh/base16-shell
-BASE16_CONFIG=~/.vim/.base16
+BASE16_CONFIG=~/.nvim/.base16
 
 color() {
   BACKGROUND="$1"
