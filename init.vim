@@ -9,7 +9,7 @@ call plug#begin('~/.nvim/plugged')
 " --------------------------------------------------------------------- Plugs
 " {{{
 if s:uname == "Darwin\n"
-    " use global pyhton3 
+    " use global pyhton3
     " no idea how this works with venvs
     let g:python3_host_prog = "/usr/local/bin/python3"
     "Mac specific plug ins
@@ -31,7 +31,7 @@ if s:uname == "Linux\n"
     :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
     :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
-"mange rst 
+"mange rst
 Plug 'Rykka/riv.vim'
 let qcodes = { 'path': '~/Hack/python/Qcodes/docs',}
 let g:riv_projects = [qcodes]
@@ -159,7 +159,9 @@ Plug 'morhetz/gruvbox'
 Plug 'junegunn/goyo.vim'
 " highlighcolors
 Plug 'chrisbra/Colorizer'
-"----------------------------------------------------------- language specifci
+"----------------------------------------------------------- language specific
+"ƛ
+" {{{
 "elixir
 Plug 'elixir-lang/vim-elixir'
 " elm
@@ -173,6 +175,10 @@ au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
+" }}}
+
+
+
 "python {{{
 "# turn on virtualenvs
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
