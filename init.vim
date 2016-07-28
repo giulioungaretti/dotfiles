@@ -2,13 +2,16 @@
 " {{{
 " grab os name
 let s:uname = system("uname -s")
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"set termguicolors
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 call plug#begin('~/.nvim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 " {{{
 if s:uname == "Darwin\n"
+    " use global pyhton3 
+    " no idea how this works with venvs
+    let g:python3_host_prog = "/usr/local/bin/python3"
     "Mac specific plug ins
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
@@ -17,6 +20,9 @@ if s:uname == "Darwin\n"
 endif
 if s:uname == "Linux\n"
     " Do linux stuff here
+    " use global pyhton3
+    " no idea how this works with venvs
+    let g:python3_host_prog = "/usr/bin/python3"
     set clipboard=unnamedplus
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
@@ -25,6 +31,10 @@ if s:uname == "Linux\n"
     :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
     :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
+"mange rst 
+Plug 'Rykka/riv.vim'
+let qcodes = { 'path': '~/Hack/python/Qcodes/docs',}
+let g:riv_projects = [qcodes]
 " regain focus events in tmux
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " api blueprint syntax hilight
@@ -52,7 +62,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_python_exec = '/path/to/python3'
+let g:syntastic_python_python_exec = '/usr/bin/python3'
 let g:syntastic_python_checkers = ['pylint']
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
@@ -143,8 +153,8 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
-Plug 'chriskempson/base16-vim'
-Plug 'antonshulgin/vim.colors'
+Plug 'chriskempson/base16-vim', { 'commit': '0554ca5b2147623d399acca786c50fa5f101155d' }
+Plug 'morhetz/gruvbox'
 " zen writing
 Plug 'junegunn/goyo.vim'
 " highlighcolors
@@ -301,6 +311,7 @@ call plug#end()
 syntax on
 " show grammar on gitcommit
 autocmd FileType gitcommit setlocal spell
+autocmd FileType rst setlocal spell
 " hide curret line
 " set cursorline
 "remove ugly ass  split separator
@@ -317,9 +328,6 @@ set expandtab
 " redraw only when we need to
 set lazyredraw
 " theme {{{
-colorscheme base16-apathy
-set background=dark
-" maybe ? really wut?
 let g:gitgutter_override_sign_column_highlight = 0
 highlight clear signcolumn
 set mousehide "Hide when characters are typed
@@ -554,23 +562,20 @@ autocmd! bufwritepost init.vim source %
 
 function s:CheckColorScheme()
   let g:base16colorspace=256
-  let s:config_file = expand('~/.vim/.base16')
+  let s:config_file = expand('~/.nvim/.base16')
   if filereadable(s:config_file)
     let s:config = readfile(s:config_file, '', 2)
-
     if s:config[1] =~# '^dark\|light$'
       execute 'set background=' . s:config[1]
     else
       echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
     endif
-
     if filereadable(expand('~/.nvim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
       execute 'color base16-' . s:config[0]
     else
       echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
     endif
   else " default
-    set background=dark
     color base16-tomorrow
   endif
 endfunction
@@ -585,7 +590,4 @@ if v:progname !=# 'vi'
     augroup END
   endif
 endif
-" use global pyhton3 
-" no idea how this works with venvs
-let g:python3_host_prog = "/usr/local/bin/python3"
 "vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78

@@ -7,7 +7,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 #}}}
 # Exports # {{{
-export TERM=screen-256color
+export TERM=xterm-256color
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 if [ -x  "$(command -v nvim)" ]; then
@@ -50,40 +50,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         if [ -f ~/.osxalias ]; then
                 source ~/.osxalias
         fi
-	# ssh color change tab
-	# iTerm2 tab color commands
-	# http://code.google.com/p/iterm2/wiki/ProprietaryEscapeCodes
-	if [[ -n "$ITERM_SESSION_ID" ]]; then
-	    tab-color() {
-		echo -ne "\033]6;1;bg;red;brightness;$1\a"
-		echo -ne "\033]6;1;bg;green;brightness;$2\a"
-		echo -ne "\033]6;1;bg;blue;brightness;$3\a"
-	    }
-	    tab-red() { tab-color 255 0 0 }
-	    tab-green() { tab-color 0 255 0 }
-	    tab-blue() { tab-color 0 0 255 }
-	    tab-reset() { echo -ne "\033]6;1;bg;*;default\a" }
-
-	    function iterm2_tab_precmd() {
-		tab-reset
-	    }
-
-	    function iterm2_tab_preexec() {
-		if [[ "$1" =~ "^ssh " ]]; then
-		    if [[ "$1" =~ "prod" ]]; then
-			tab-color 255 160 160
-		    else
-			tab-color 160 255 160
-		    fi
-		else
-		    tab-color 031 031 031
-		fi
-	    }
-
-	    autoload -U add-zsh-hook
-	    add-zsh-hook precmd  iterm2_tab_precmd
-	    add-zsh-hook preexec iterm2_tab_preexec
-	fi
 fi
 #}}}
 # vi mode {{{
@@ -129,10 +95,6 @@ bindkey '^N' history-search-forward
 # Edit in vim
 bindkey -M vicmd v edit-command-line
 
-# Allow in
-#bindkey -M vicmd 'ciw' 'bcw'
-#bindkey -M vicmd 'diw' 'bdw'
-
 # Stop weird behavior when hitting escape multiple times
 noop () {}
 zle -N noop
@@ -145,6 +107,13 @@ if [ -f /usr/local/bin/agb ]; then
 fi
 if [ -f /usr/local/bin/dgb ]; then
         alias dgb="source /usr/local/bin/dgb"
+fi
+DIR=$HOME"/bin"
+if [ -f $DIR/agb ]; then
+        alias agb="source $DIR/agb"
+fi
+if [ -f $DIR/dgb ]; then
+        alias dgb="source $DIR/dgb"
 fi
 #}}}
 #------------------------------------------------------------------- fzf  {{{
@@ -185,13 +154,6 @@ fkill() {
         fi
 }
 #}}}
-DIR=$HOME"/bin"
-if [ -f $DIR/agb ]; then
-        alias agb="source $DIR/agb"
-fi
-if [ -f $DIR/dgb ]; then
-        alias dgb="source $DIR/dgb"
-fi
 zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 alias ll='ls -lG'
 function print_dcs

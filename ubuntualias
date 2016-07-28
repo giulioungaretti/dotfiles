@@ -13,8 +13,10 @@ alias irssi="mosh giulio@188.166.36.190 -- screen -rd"
 #}}}
 #-------------------------------------------------------------------- source
 #{{{
-if [ -f /usr/bin/virtualenvwrapper.sh ]; then
-	source /usr/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME=$HOME/Hack/python/Envs
+if [ -f .local/bin/virtualenvwrapper.sh ]; then
+	source .local/bin/virtualenvwrapper.sh
 fi
 # }}}
 # vim: foldmethod=marker:foldlevel=0: filetype=zsh

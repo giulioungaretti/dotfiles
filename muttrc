@@ -22,7 +22,7 @@ set imap_pipeline_depth=0
 # refresh syn mailbox
 bind index G imap-fetch-mail
 ## Add mailboxes
-mailboxes =Inbox =Sent =Trash =Danish =Home =Recepits
+mailboxes =Inbox =Sent =Trash =Danish =Home =Recepits =Archive
 macro index \cb |urlview 'call urlview to extract URLs out of a message'
 macro index \ea "<enter-command>unset resolve<enter><clear-flag>N<enter-command>set resolve<enter><save-message>=Trash<enter><sync-mailbox>" "mark read and delete"
 macro index,pager A "<save-message>=Archive<enter>" "Archive Message"

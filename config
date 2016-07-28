@@ -7,10 +7,12 @@
 #######################################################################
 #                            27 Oct 2015                              #
 #######################################################################
-exec --no-startup-id gnome-settings-daemon
+#exec --no-startup-id gnome-settings-daemon
+#exec --no-startup-id unity-settings-daemon
 set $mod Mod4
 focus_follows_mouse no
-font pango:Hack 12 14
+#font pango:PragmataPro\ for\ Powerline 14 14
+font pango:Ubuntu 12 12
 exec --no-startup-id nitrogen --restore
 # new window default border
 new_window pixel 1
@@ -45,7 +47,7 @@ bindsym $mod+q kill
 bindsym $MOD+Tab focus right
 # dmenu
 # bindsym $mod+space exec rofi -show run
-bindsym $mod+space exec rofi -show run -terminal termite  -eh 1  -bw 1 -bc "#555555" -bg "#222222" -hlbg "#222222" -hlfg "#fabd2f" -fg "#ffffff" -font "Terminus 15"
+bindsym $mod+space exec rofi -show run  -font "Ubuntu 12" -terminal termite -location 1 -eh 1  -bw 1 -bc "#555555" -bg "#222222" -hlbg "#222222" -hlfg "#fabd2f" -fg "#ffffff"  -width 100 -fixed-num-lines 1 
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -142,7 +144,7 @@ bindsym $mod+r mode "resize"
 bar {
         tray_output none
                 status_command i3status
-                font pango:Hack 8 8
+                font pango:Ubuntu 12 12
                 position top
                 mode dock
                 colors {

@@ -4,6 +4,9 @@ URxvt*termName: rxvt-256color
 URxvt.perl-ext-common:clipboard,keyboard-select,font-size
 URxvt.keysym.M-y: perl:keyboard-select:activate
 URxvt.keysym.M-s: perl:keyboard-select:search
+URxvt.scrollBar:        false
+URxvt.imLocale:         en_US.UTF-8
+URxvt.cursorBlink:      true
 !----------------------------------------------------- increase size font{{{
 URxvt.keysym.C-+:     font-size:increase
 URxvt.keysym.C--:   font-size:decrease
@@ -15,12 +18,9 @@ Xft.hinting:   true
 Xft.hintstyle: hintfull
 Xft.antialias: true
 Xft.rgba:      rgb
-Xft.dpi:       96
+!Xft.dpi:       144
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
-URxvt.scrollBar:        false
-URxvt.imLocale:         en_US.UTF-8
-URxvt.cursorBlink:      true
 !}}}
 !--------------------------------------------------------------- cliboard {{{
 URxvt.clipboard.autocopy: true
@@ -86,3 +86,18 @@ rofi.color-window:                   argb:ee333333, #1aa,#1aa
 ! Separator style (none, dash, solid)
 rofi.separator-style:                none
 ! vim: set fdm=marker
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+! Use extended color scheme
+rofi.color-enabled:                  true
+! Color scheme for normal row
+rofi.color-normal:                   argb:00000000,  #D8DEE9 , argb:00000000,  #FAC863 ,  #1B2B34
+! Color scheme for urgent row
+rofi.color-urgent:                   argb:00000000,  #F99157 , argb:00000000,  #F99157 ,  #1B2B34
+! Color scheme for active row
+rofi.color-active:                   argb:00000000,  #6699CC , argb:00000000,  #6699CC ,  #1B2B34
+! Color scheme window
+rofi.color-window:                   argb:ee222222,  #FAC863 ,  #FAC863
+! Separator style (none, dash, solid)
+rofi.separator-style:                solid
