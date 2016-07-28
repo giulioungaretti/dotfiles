@@ -18,14 +18,14 @@ rm -f ~/.README.md
 
 echo done
 
-if [ !  "~/.vim/autoload/plug.vim " ]; then
-        echo 'set up plug'
-        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
+echo 'set up plug'
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 
+echo 'set zsh as shell'
+chsh -s /bin/zsh 
+echo 'getting zpreso'
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 echo 'set up tmux plugins'
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-sh -s /bin/zsh 

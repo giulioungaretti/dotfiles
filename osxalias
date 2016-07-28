@@ -40,4 +40,6 @@ _gopath () {
     fi
   done
 }
+# fix colors on iterm
+export TERM=xterm-256color
 # vim: foldmethod=marker:foldlevel=0: filetype=zsh
