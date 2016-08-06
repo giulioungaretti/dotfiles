@@ -45,6 +45,20 @@ Plug 'Tpope/vim-unimpaired'
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1
+
+function! ToggleNoise()
+    let current_filetype = &filetype
+    if current_filetype == "gitcommit"
+        syntax enable
+    else
+        syntax off
+     endif
+endfunction
+
+" manually reduce noise
+map <F7> :call ToggleNoise() <CR>
+" automatically reudce noise
+autocmd Bufenter *  call ToggleNoise()
 "" JK motions: Line motions
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
@@ -313,8 +327,6 @@ call plug#end()
 "}}}
 " -------------------------------------------------------------------- Visual
 "{{{
-" turn on syntax highlight
-syntax on
 " show grammar on gitcommit
 autocmd FileType gitcommit setlocal spell
 autocmd FileType rst setlocal spell
@@ -565,7 +577,6 @@ let g:tagbar_sort = 0
 " reload  nvim o save
 autocmd! bufwritepost init.vim source %
 "au VimLeave * :!clear
-
 function s:CheckColorScheme()
   let g:base16colorspace=256
   let s:config_file = expand('~/.nvim/.base16')
@@ -596,4 +607,8 @@ if v:progname !=# 'vi'
     augroup END
   endif
 endif
+
+syntax off <Bar>
+
+
 "vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
