@@ -12,17 +12,10 @@
 set nocompatible              " be iMproved, required
 " grab os name
 let s:uname = system("uname -s")
-call plug#begin('~/.vim/plugged')
 "}}}
 " --------------------------------------------------------------------- Plugs
 " {{{
 if s:uname == "Darwin\n"
-    "Mac specific plug ins
-    " search in osx dictionary
-    Plug 'jonhiggs/MacDict.vim'
-    Plug 'rizzatti/dash.vim'
-    :nmap <silent> <leader>d <Plug>DashSearch
-    " search in osx dictionary
     " this should make it work with osx/tmux/madness
     set clipboard+=unnamed
 endif
@@ -31,10 +24,6 @@ if s:uname == "Linux\n"
     set clipboard=unnamedplus
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
-    " look up documentation
-    Plug 'KabbAmine/zeavim.vim'
-    :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
-    :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
 " -------------------------------------------------------------------- Visual
 "{{{
