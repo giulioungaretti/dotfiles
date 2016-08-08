@@ -1,11 +1,6 @@
-" ---------------------------------------------------------------------- init
-" {{{
-" grab os name
+" grab OS name
 let s:uname = system("uname -s")
-"set termguicolors
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 call plug#begin('~/.nvim/plugged')
-"}}}
 " --------------------------------------------------------------------- Plugs
 " {{{
 if s:uname == "Darwin\n"
@@ -35,6 +30,11 @@ endif
 Plug 'Rykka/riv.vim'
 let qcodes = { 'path': '~/Hack/python/Qcodes/docs',}
 let g:riv_projects = [qcodes]
+" make search great again
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+Plug 'haya14busa/incsearch.vim'
 " regain focus events in tmux
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " api blueprint syntax hilight
@@ -107,6 +107,7 @@ imap <c-x><c-p> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
+nnoremap <silent>; :Commands <cr>
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>W :Windows<CR>
@@ -334,191 +335,6 @@ set noshowmode
 let g:airline_powerline_fonts = 1
 call plug#end()
 "}}}
-" -------------------------------------------------------------------- Visual
-"{{{
-" show grammar on gitcommit
-autocmd FileType gitcommit setlocal spell
-autocmd FileType rst setlocal spell
-" hide curret line
-" set cursorline
-"remove ugly ass  split separator
-set fillchars=""
-" visual autocomplete for command menu
-set wildmenu
-" ignore pattern for wildmenu
-set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
-set list " show hidden characters
-set list listchars=tab:»·,trail:·
-set tabstop=4
-set shiftwidth=4
-set expandtab
-" redraw only when we need to
-set lazyredraw
-" theme {{{
-let g:gitgutter_override_sign_column_highlight = 0
-highlight clear signcolumn
-set mousehide "Hide when characters are typed
-" color of the current line number
-nnoremap <silent><leader>oo :set relativenumber!<cr>
-"}}}
-" ------------------------------------------------------------------ Settings
-"{{{
-"The above command will change the 'completeopt' option so that Vim's popup menu doesn't select the first completion item, but rather just inserts the longest common text of all matches; and the menu will come up even if there's only one match. (The longest setting is responsible for the former effect and the menuone is responsible for the latter.)
-set completeopt=longest,menuone
-"change the behavior of the <Enter> key when the popup menu is visible. In that case the Enter key will simply select the highlighted menu item, just as <C-Y> does.
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-"make <C-N> work the way it normally does; however, when the menu appears, the <Down> key will be simulated. What this accomplishes is it keeps a menu item always highlighted. This way you can keep typing characters to narrow the matches, and the nearest match will be selected so that you can hit Enter at any time to insert it. In the above mappings, the second one is a little more exotic: it simulates <C-X><C-O> to bring up the omni completion menu, then it simulates <C-N><C-P> to remove the longest common text, and finally it simulates <Down> again to keep a match highlighted.
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-            \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-            \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-" vim-sensible
-set autoindent
-set backspace=indent,eol,start
-set complete-=i
-set smarttab
-set nrformats-=octal
-" use bash as shell
-set shell=/bin/sh
-" Don't use Ex mode, use Q for formatting
-map Q gq
-" zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
-set timeoutlen=1000 ttimeoutlen=0
-"Extend word designators
-set iskeyword-=.                    " '.' is an end of word designator
-set iskeyword-=-                    " '_' is an end of word designator
-" no backup and swap files.
-set nobackup
-set noswapfile
-" special mode line at end of file
-set modelines=1
-" md files as markdown
-autocmd BufRead,BufNew *.md set filetype=markdown
-" highlight as you type
-" smart case when searching
-set ignorecase
-set incsearch
-nnoremap <silent><esc> :noh<return><esc>
-" highlight matching [{()}]
-set showmatch
-set smartcase
-" better mouse interaction is no mouse integration
-set mouse=""
-"folding
-set nofoldenable  " enable folding
-set foldnestmax=10  " max 10 nested fold allowed
-set foldmethod=syntax " fold based on indent level
-"reload on save
-autocmd! bufwritepost .vimrc source %
-autocmd! bufwritepost vimrc source %
-autocmd! bufwritepost init.vim source %
-" always start terminal in insert mode
-autocmd BufWinEnter,WinEnter term://* startinsert
-" scroll the view port faster
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>"
-"}}}
-"-------------------------------------------------------------------- Aliases
-"{{{
-" bare vim
-" run os command and get results in quickfix window.
-command! -nargs=+ Run :cexpr system('<args>') | copen
-command! -nargs=+ SS :bufdo vimgrepadd <f-args> % | copen
-command! -nargs=* SA :!grep -n -R <f-args> | copen
-" Call a user function (example of <f-args>)
-com! -nargs=* SR call SearchReplaceBuffers(<f-args>)
-:function! SearchReplaceBuffers(search, replace)
-:exec "bufdo! %s/" . a:search . "/" . a:replace . "/ge"
-:endfunction
-" leader
-map <space> <leader>
-" redo last colon command
-nmap @@ @:
-nmap <silent>; :Commands <cr>
-" Toggle paste mode.
-function! TogglePasteMode()
-    if &paste
-        set nopaste
-    else
-        set paste
-    endif
-endfunction
-nnoremap <leader>p :call TogglePasteMode()<CR>
-" move to right
-inoremap l;  <Esc>la
-" fullscreen
-function! Fullscreen()
-    let line = line(".")+0
-    tabedit %
-    call cursor(line,0 )
-endfunction
-
-function! Minimze()
-    let line = line(".")+0
-    tabclose
-    call cursor(line,0 )
-endfunction
-"
-" tabs shortcuts
-map <leader>tn :tabnew<CR>
-nnoremap <silent><C-W>m :call Fullscreen() <CR>
-nnoremap <silent><C-W>c :call Minimze() <CR>
-"jk/kj to  to esc
-inoremap jk <Esc>
-inoremap kj <Esc>
-" Move visual block
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
-" merge line below
-" merge and split
-nnoremap M mzJ`z
-" Split line (sister to [M]merge lines above)
-" The normal use of S is covered by cc, so don't worry about shadowing it.
-nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
-" split right and below instead of default opposite
-set splitbelow
-set splitright
-" folds
-nnoremap <silent> z1 :set foldlevel=1<CR>
-nnoremap <silent> z2 :set foldlevel=2<CR>
-nnoremap <silent> z3 :set foldlevel=3<CR>
-nnoremap <silent> z4 :set foldlevel=4<CR>
-nnoremap <silent> z5 :set foldlevel=5<CR>
-nnoremap <silent> z5 :set foldlevel=6<CR>
-nnoremap <silent> z5 :set foldlevel=7<CR>
-" turn on and off spell checking.
-map <F10> :setlocal spell! spelllang=en_us<CR>
-"buffers
-" nice maximize split and go back to normal layout
-nnoremap <silent><C-W><C-d> :bnext<CR>
-nnoremap <silent><C-W><C-a> :bprevious<CR>
-" If the current buffer has never been saved, it will have no name,
-" call the file browser to save it, otherwise just save it.
-command! -nargs=0 -bar Update if &modified
-            \|    if empty(bufname('%'))
-                \|        browse confirm write
-                \|    else
-                    \|        confirm write
-                    \|    endif
-                    \|endif
-nnoremap <silent> <leader>w :<C-u>Update<CR>
-nnoremap <silent> <leader>q :q<CR>
-nnoremap <C-q> :bd <CR>
-"}}}
-"--------------------------------------------------------------- common typos
-"{{{
-command! Q q
-command! Qq q
-command! W w
-command! Ww w
-command! Qa qa
-command! Wa wa
-command! Wq wq
-command! Wqa wqa
-"}}}
 "------------------------------------------------------------------- Plug ins
 "{{{
 map <C-p> :NERDTreeToggle<CR>
@@ -583,9 +399,135 @@ let g:tagbar_autoclose  = 1
 " sort tags by file order and not by alphabetical order
 let g:tagbar_sort = 0
 "}}}
-" reload  nvim o save
-autocmd! bufwritepost init.vim source %
-"au VimLeave * :!clear
+"--------------------------------------------------------------- common typos
+"{{{
+command! Q q
+command! Qq q
+command! W w
+command! Ww w
+command! Qa qa
+command! Wa wa
+command! Wq wq
+command! Wqa wqa
+"}}}
+"-------------------------------------------------------------------- Aliases
+"{{{
+" bare vim
+" run os command and get results in quickfix window.
+"command! -nargs=+ Run :cexpr system('<args>') | copen
+"command! -nargs=+ SS :bufdo vimgrepadd <f-args> % | copen
+"command! -nargs=* SA :!grep -n -R <f-args> | copen
+"" Call a user function (example of <f-args>)
+"com! -nargs=* SR call SearchReplaceBuffers(<f-args>)
+":function! SearchReplaceBuffers(search, replace)
+":exec "bufdo! %s/" . a:search . "/" . a:replace . "/ge"
+":endfunction
+" leader
+map <space> <leader>
+" redo last colon command
+" nmap @@ @:
+" Toggle paste mode.
+function! TogglePasteMode()
+    if &paste
+        set nopaste
+    else
+        set paste
+    endif
+endfunction
+nnoremap <leader>p :call TogglePasteMode()<CR>
+" move to right
+inoremap l;  <Esc>la
+" fullscreen
+function! Fullscreen()
+    let line = line(".")+0
+    tabedit %
+    call cursor(line,0 )
+endfunction
+
+function! Minimze()
+    let line = line(".")+0
+    tabclose
+    call cursor(line,0 )
+endfunction
+
+" tabs shortcuts
+map <leader>tn :tabnew<CR>
+
+nnoremap <silent><C-W>m :call Fullscreen() <CR>
+nnoremap <silent><C-W>c :call Minimze() <CR>
+
+"jk/kj to  to esc
+inoremap jk <Esc>
+inoremap kj <Esc>
+
+" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" merge and split
+" merge line below
+nnoremap M mzJ`z
+" Split line (sister to [M]merge lines above)
+" The normal use of S is covered by cc, so don't worry about shadowing it.
+nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+" split right and below instead of default opposite
+set splitbelow
+set splitright
+" folds
+nnoremap <silent> z1 :set foldlevel=1<CR>
+nnoremap <silent> z2 :set foldlevel=2<CR>
+nnoremap <silent> z3 :set foldlevel=3<CR>
+nnoremap <silent> z4 :set foldlevel=4<CR>
+nnoremap <silent> z5 :set foldlevel=5<CR>
+nnoremap <silent> z5 :set foldlevel=6<CR>
+nnoremap <silent> z5 :set foldlevel=7<CR>
+" turn on and off spell checking.
+map <F10> :setlocal spell! spelllang=en_us<CR>
+"buffers
+" nice maximize split and go back to normal layout
+nnoremap <silent><C-W><C-d> :bnext<CR>
+nnoremap <silent><C-W><C-a> :bprevious<CR>
+" If the current buffer has never been saved, it will have no name,
+" call the file browser to save it, otherwise just save it.
+command! -nargs=0 -bar Update if &modified
+            \|    if empty(bufname('%'))
+                \|        browse confirm write
+                \|    else
+                    \|        confirm write
+                    \|    endif
+                    \|endif
+nnoremap <silent> <leader>w :<C-u>Update<CR>
+nnoremap <silent> <leader>q :q<CR>
+nnoremap <C-q> :bd <CR>
+"}}}
+" -------------------------------------------------------------------- Visual
+"{{{
+" show grammar on gitcommit
+autocmd FileType gitcommit setlocal spell
+autocmd FileType rst setlocal spell
+" hide curret line
+" set cursorline
+"remove ugly ass  split separator
+set fillchars=""
+" visual autocomplete for command menu
+set wildmenu
+" ignore pattern for wildmenu
+set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
+set list " show hidden characters
+set list listchars=tab:»·,trail:·
+set tabstop=4
+set shiftwidth=4
+set expandtab
+" redraw only when we need to
+set lazyredraw
+au VimLeave * :!clear
+let g:gitgutter_override_sign_column_highlight = 0
+highlight clear signcolumn
+set mousehide "Hide when characters are typed
+"color of the current line number
+nnoremap <silent><leader>oo :set relativenumber!<cr>
+
+"theme {{{
 function s:CheckColorScheme()
   let g:base16colorspace=256
   let s:config_file = expand('~/.nvim/.base16')
@@ -609,15 +551,71 @@ endfunction
 if v:progname !=# 'vi'
   if has('autocmd')
     augroup WincentAutocolor
-      autocmd!
-      autocmd FocusGained * call s:CheckColorScheme()
-      autocmd FocusGained * AirlineRefresh
-      autocmd VimResized * execute "normal! \<c-w>="
+       autocmd!
+       autocmd FocusGained * call s:CheckColorScheme()
+       autocmd FocusGained * AirlineRefresh
+       autocmd VimResized * execute "normal! \<c-w>="
     augroup END
   endif
 endif
+"}}}
+"}}}
+" ------------------------------------------------------------------ Settings
+"{{{
+"The above command will change the 'completeopt' option so that Vim's popup menu doesn't select the first completion item, but rather just inserts the longest common text of all matches; and the menu will come up even if there's only one match. (The longest setting is responsible for the former effect and the menuone is responsible for the latter.)
+set completeopt=longest,menuone
+"change the behavior of the <Enter> key when the popup menu is visible. In that case the Enter key will simply select the highlighted menu item, just as <C-Y> does.
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-syntax off <Bar>
+"make <C-N> work the way it normally does; however, when the menu appears, the <Down> key will be simulated. What this accomplishes is it keeps a menu item always highlighted. This way you can keep typing characters to narrow the matches, and the nearest match will be selected so that you can hit Enter at any time to insert it. In the above mappings, the second one is a little more exotic: it simulates <C-X><C-O> to bring up the omni completion menu, then it simulates <C-N><C-P> to remove the longest common text, and finally it simulates <Down> again to keep a match highlighted.
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+            \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+            \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
+" vim-sensible
+syntax on
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set smarttab
+set nrformats-=octal
+" use bash as shell
+set shell=/bin/sh
+" Don't use Ex mode, use Q for formatting
+map Q gq
+" zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
+set timeoutlen=1000 ttimeoutlen=0
+"Extend word designators
+set iskeyword-=.                    " '.' is an end of word designator
+set iskeyword-=-                    " '_' is an end of word designator
+" no backup and swap files.
+set nobackup
+set noswapfile
+" special mode line at end of file
+set modelines=1
+" md files as markdown
+autocmd BufRead,BufNew *.md set filetype=markdown
+" highlight as you type
+" smart case when searching
+set ignorecase
+set incsearch
+" nnoremap <silent><esc> :noh<return><esc>
+" highlight matching [{()}]
+set showmatch
+set smartcase
+" better mouse interaction is no mouse integration
+set mouse=""
+"folding
+set nofoldenable  " enable folding
+set foldnestmax=10  " max 10 nested fold allowed
+set foldmethod=syntax " fold based on indent level
+" scroll the view port faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>"
+" }}}
+"reload on save
+autocmd! bufwritepost vimrc source %
+autocmd! bufwritepost .vimrc source %
 "vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
