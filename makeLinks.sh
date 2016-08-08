@@ -9,10 +9,8 @@ for f in ~/dotfiles/*
 do
     echo "symlinking: "$f
     if [[ "$f" == "init.vim" ]]; then
-        echo 'nvim'
         ln -sf "$f" "$HOME/.config/nvim/${f##*/}"
     elif [[ "$f" == "config" ]]; then
-        echo 'i3'
         ln -sf "$f" "$HOME/.config/i3/${f##*/}"
     else
         ln -sf "$f" "$HOME/.${f##*/}"
