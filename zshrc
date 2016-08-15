@@ -10,14 +10,17 @@ fi
 export TERM=xterm-256color
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-if [ -x  "$(command -v nvim)" ]; then
-  export GIT_EDITOR=nvim
-  export VISUAL=nvim
-  export EDITOR=nvim
-  alias vim=nvim
-else
-    echo does not exist
-fi
+#if [ -x  "$(command -v nvim)" ]; then
+#  export GIT_EDITOR=nvim
+#  export VISUAL=nvim
+#  export EDITOR=nvim
+#  alias vim=nvim
+#else
+#  export GIT_EDITOR=nvim
+#  export VISUAL=nvim
+#  export EDITOR=nvim
+#  alias vim=nvim
+#fi
 #disable tmux in fzf
 export FZF_TMUX=1
 #  use extended search  all the time

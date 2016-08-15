@@ -2,8 +2,9 @@
 # Colors
 #
 
-BASE16_DIR=~/.zsh/base16-shell
-BASE16_CONFIG=~/.nvim/.base16
+BASE16_DIR=~/.zsh/base16-shell/scripts
+BASE16_CONFIG=~/.vim/.base16
+
 
 color() {
   BACKGROUND="$1"
@@ -19,14 +20,20 @@ color() {
   fi
 
   case "$BACKGROUND" in
-  dark|light)
-    FILE="$BASE16_DIR/base16-$SCHEME.$BACKGROUND.sh"
+  dark|light|new)
+    FILE="$BASE16_DIR/base16-$SCHEME-$BACKGROUND.sh"
     if [[ -x "$FILE" ]]; then
       echo "$SCHEME" >! "$BASE16_CONFIG"
       echo "$BACKGROUND" >> "$BASE16_CONFIG"
       "$FILE"
+    elif  [[ $BACKGROUND == 'new' ]]; then
+      FILE="$BASE16_DIR/base16-$SCHEME.sh"
+      echo "$SCHEME" >! "$BASE16_CONFIG"
+      echo "" >> "$BASE16_CONFIG"
+      "$FILE"
     else
       echo "Scheme '$SCHEME' not found in $BASE16_DIR"
+      echo "only default|google|grayscale|harmonic16|solarized have dark / light"
       return 1
     fi
     ;;
@@ -42,7 +49,11 @@ color() {
       ;;
 
   *)
-    echo 'Unknown subcommand: use one of {dark,light,help}'
+    FILE="$BASE16_DIR/base16-$SCHEME.sh"
+    if [[ -x "$FILE" ]]; then
+      echo "$SCHEME" >! "$BASE16_CONFIG"
+      "$FILE"
+    fi
     ;;
   esac
 
@@ -56,6 +67,10 @@ light() {
   color light "$1"
 }
 
+new() {
+  color new "$1"
+}
+
 if [[ -s "$BASE16_CONFIG" ]]; then
   SCHEME=$(head -1 "$BASE16_CONFIG")
   BACKGROUND=$(sed -n -e '2 p' "$BASE16_CONFIG")
@@ -63,10 +78,12 @@ if [[ -s "$BASE16_CONFIG" ]]; then
     dark "$SCHEME"
   elif [ "$BACKGROUND" = 'light' ]; then
     light "$SCHEME"
+  elif [ "$BACKGROUND" = '' ]; then
+    new "$SCHEME"
   else
     echo "error: unknown background type in $BASE16_CONFIG"
   fi
 else
   # Default.
-  dark tomorrow
+  pico
 fi

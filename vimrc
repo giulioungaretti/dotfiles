@@ -1,6 +1,6 @@
 " grab OS name
 let s:uname = system("uname -s")
-call plug#begin('~/.nvim/plugged')
+call plug#begin('~/.vim/plugged')
 " --------------------------------------------------------------------- Plugs
 " {{{
 if s:uname == "Darwin\n"
@@ -177,13 +177,16 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
-Plug 'chriskempson/base16-vim', { 'commit': '0554ca5b2147623d399acca786c50fa5f101155d' }
+" Plug 'chriskempson/base16-vim', { 'commit': '0554ca5b2147623d399acca786c50fa5f101155d' }
+Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
 " zen writing
 Plug 'junegunn/goyo.vim'
 " highlighcolors
 Plug 'chrisbra/Colorizer'
 "----------------------------------------------------------- language specific
+" 👓  interactive code pad
+Plug 'metakirby5/codi.vim'
 "ƛ
 " {{{
 "elixir
@@ -200,11 +203,8 @@ au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 " }}}
-
-
-
-"python {{{
-"# turn on virtualenvs
+" python {{{
+" turn on virtualenvs
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
 " jedi autocpmletion and smart code fu
 Plug 'davidhalter/jedi-vim'
@@ -224,7 +224,7 @@ let g:SimpylFold_docstring_preview = 1
 let g:ScreenImpl = "Tmux"
 " Open an IPython3 shell.
 autocmd FileType python map <LocalLeader>p :IPython!<CR>
-"autocmd FileType python map <LocalLeader>p :IPython!  <CR>
+" autocmd FileType python map <LocalLeader>p :IPython!  <CR>
 " Close whichever shell is running.
 autocmd FileType python map <LocalLeader>q :ScreenQuit<CR>
 " Send current line to python and move to next line.
@@ -530,21 +530,24 @@ nnoremap <silent><leader>oo :set relativenumber!<cr>
 "theme {{{
 function s:CheckColorScheme()
   let g:base16colorspace=256
-  let s:config_file = expand('~/.nvim/.base16')
+  let s:config_file = expand('~/.vim/.base16')
   if filereadable(s:config_file)
     let s:config = readfile(s:config_file, '', 2)
     if s:config[1] =~# '^dark\|light$'
-      execute 'set background=' . s:config[1]
+        if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
+          execute 'color base16-' . s:config[0] . '-' . s:config[1]
+        else
+          echoerr 'Bad scheme ' . s:config[0] . .s:config[1] ' in ' . s:config_file
+        endif
     else
-      echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
-    endif
-    if filereadable(expand('~/.nvim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
-      execute 'color base16-' . s:config[0]
-    else
-      echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+        if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
+          execute 'color base16-' . s:config[0]
+        else
+          echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+        endif
     endif
   else " default
-    color base16-tomorrow
+    color pico
   endif
 endfunction
 
@@ -557,6 +560,10 @@ if v:progname !=# 'vi'
        autocmd VimResized * execute "normal! \<c-w>="
     augroup END
   endif
+endif
+if has('gui_running')
+    autocmd GUIEnter * call s:CheckColorScheme()
+    autocmd GUIEnter * AirlineRefresh
 endif
 "}}}
 "}}}
