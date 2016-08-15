@@ -58,6 +58,8 @@ function! ColorGitStuff()
     let current_filetype = &filetype
     if current_filetype == "gitcommit"
         syntax enable
+    elif current_filetype == "git"
+        syntax enable
     else
         syntax off
      endif
