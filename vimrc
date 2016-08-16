@@ -58,6 +58,8 @@ function! ColorGitStuff()
     let current_filetype = &filetype
     if current_filetype == "gitcommit"
         syntax enable
+    elseif current_filetype == "git"
+        syntax enable
     else
         syntax off
      endif
@@ -333,6 +335,8 @@ set laststatus=2
 " don't show mode
 set noshowmode
 let g:airline_powerline_fonts = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
 call plug#end()
 "}}}
 "------------------------------------------------------------------- Plug ins
@@ -523,6 +527,7 @@ set lazyredraw
 au VimLeave * :!clear
 let g:gitgutter_override_sign_column_highlight = 0
 highlight clear signcolumn
+highlight SignColumn ctermbg=0
 set mousehide "Hide when characters are typed
 "color of the current line number
 nnoremap <silent><leader>oo :set relativenumber!<cr>
@@ -546,6 +551,8 @@ function s:CheckColorScheme()
           echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
         endif
     endif
+    highlight SignColumn ctermbg=0
+    hi VertSplit  ctermbg=NONE
   else " default
     color pico
   endif
