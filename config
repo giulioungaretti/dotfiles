@@ -7,22 +7,22 @@
 #######################################################################
 #                            27 Oct 2015                              #
 #######################################################################
-#exec --no-startup-id gnome-settings-daemon
+exec --no-startup-id gnome-settings-daemon
 #exec --no-startup-id unity-settings-daemon
 set $mod Mod4
 focus_follows_mouse no
-#font pango:PragmataPro\ for\ Powerline 14 14
-font pango:Ubuntu 12 12
+font pango:PragmataPro\ for\ Powerline 10 10
+#font pango:Ubuntu 12 12
 exec --no-startup-id nitrogen --restore
 # new window default border
 new_window pixel 1
-new_float pixel 1
+new_float pixel 0
 #######################################################################
 #                            colors                                   #
 #######################################################################
 # class border backgr. text indicator
 # LIGHTER #fabd2f RED ACTIVE BORDER
-client.focused         #fabd2f #fabd2f #111111  #1d1f21
+client.focused          #fabd2f #fabd2f  #111111 #1d1f21
 client.focused_inactive #282828 #686868 #585858 #1d1f21
 client.unfocused        #282828 #282828 #585858 #1d1f21
 client.urgent           #fabd2f #fabd2f #d8d8d8 #fabd2f
@@ -42,12 +42,11 @@ bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+q kill
-
 #tab switching
 bindsym $MOD+Tab focus right
 # dmenu
 # bindsym $mod+space exec rofi -show run
-bindsym $mod+space exec rofi -show run  -font "Ubuntu 12" -terminal termite -location 1 -eh 1  -bw 1 -bc "#555555" -bg "#222222" -hlbg "#222222" -hlfg "#fabd2f" -fg "#ffffff"  -width 100 -fixed-num-lines 1 
+bindsym $mod+space exec rofi -show run  -font "Ubuntu 12" -terminal termite -location 1 -eh 1  -bw 1 -bc "#555555" -bg "#222222" -hlbg "#222222" -hlfg "#fabd2f" -fg "#ffffff"  -width 100 -fixed-num-lines 1
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -88,8 +87,8 @@ bindsym $mod+v split h
 # switch to workspace
 bindsym $mod+1 workspace 1: ~
 bindsym $mod+2 workspace 2: www
-bindsym $mod+3 workspace 3: org
-bindsym $mod+4 workspace 4: code
+bindsym $mod+3 workspace 3: code
+bindsym $mod+4 workspace 4: docs
 bindsym $mod+5 workspace 5: music
 bindsym $mod+6 workspace 6: chat
 bindsym $mod+7 workspace 7
@@ -100,8 +99,8 @@ bindsym $mod+0 workspace 10
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1: ~
 bindsym $mod+Shift+2 move container to workspace 2: www
-bindsym $mod+Shift+3 move container to workspace 3: org
-bindsym $mod+Shift+4 move container to workspace 4: code
+bindsym $mod+Shift+3 move container to workspace 3: code
+bindsym $mod+Shift+4 move container to workspace 4: docs
 bindsym $mod+Shift+5 move container to workspace 5: music
 bindsym $mod+Shift+6 move container to workspace 6: chat
 bindsym $mod+Shift+7 move container to workspace 7
@@ -110,33 +109,44 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 assign [class="Firefox"] 2: www
+assign [class="^Spotify$"] 5: music
 
 # move workspace around displays
-bindsym $mod+m move workspace to output right
+# bindsym $mod+m move workspace to output right
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # EXIT I3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym $mod+comma resize shrink width 10 px or 10 ppt
-bindsym $mod+plus resize grow height 10 px or 10 ppt
-bindsym $mod+minus  resize shrink height 10 px or 10 ppt
-bindsym $mod+period resize grow width 10 px or 10 ppt
 
-# resize window (you can also use the mouse for that)
+#######################################################################
+#                            float                                    #
+#######################################################################
+
 mode "resize" {
-# These bindings trigger as soon as you enter the resize mode
-#
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
         bindsym k resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
-# back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+        # back to normal: Enter or Escape
+        bindsym return mode "default"
+        bindsym escape mode "default"
+        bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
+
+mode "move" {
+    bindsym k move up 20px
+    bindsym h move left 20px
+    bindsym j move down 20px
+    bindsym l move right 20px
+    bindsym return mode "default"
+    bindsym escape mode "default"
+    bindsym $mod+m mode "default"
+}
+
+bindsym $mod+m focus floating; mode "move"
 
 #######################################################################
 #                            status                                   #
@@ -144,16 +154,16 @@ bindsym $mod+r mode "resize"
 bar {
         tray_output none
                 status_command i3status
-                font pango:Ubuntu 12 12
+                font pango:PragmataPro\ for\ Powerline 10 10
                 position top
                 mode dock
                 colors {
-                        background #1d1f21
-                        statusline #b8b8b8
-                        separator #585838
-                        focused_workspace  #1d1f21 #fabd2f #ffffff
-                        active_workspace   #1d1f21 #1d1f21 #fabd2f
-                        inactive_workspace #1d1f21 #1d1f21 #b8b8b8
-                        urgent_workspace   #2f343a #8ec07c  #ffffff
+                        background #000000
+                        #statusline #b8b8b8
+                        separator #000000
+                        focused_workspace  #000000  #BA8BAF #ffffff
+                        #active_workspace   #000000  #000000  #fabd2f
+                        inactive_workspace #000000  #000000  #b8b8b8
+                        #urgent_workspace   #2f343a #8ec07c  #ffffff
                 }
 }
