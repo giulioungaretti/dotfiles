@@ -79,6 +79,10 @@ nmap s <Plug>(easymotion-overwin-f2)
 Plug 'SirVer/ultisnips'
 " snippets
 Plug 'honza/vim-snippets'
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " check syntax
 Plug 'scrooloose/syntastic'
 let g:syntastic_always_populate_loc_list = 1
