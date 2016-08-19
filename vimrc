@@ -181,9 +181,9 @@ Plug 'mattn/webapi-vim'
 " use silver searcher
 Plug 'rking/ag.vim'"
 " colorschemes
-" Plug 'chriskempson/base16-vim', { 'commit': '0554ca5b2147623d399acca786c50fa5f101155d' }
 Plug 'chriskempson/base16-vim'
-Plug 'morhetz/gruvbox'
+highlight SignColumn ctermbg=0
+hi VertSplit  ctermbg=0
 " zen writing
 Plug 'junegunn/goyo.vim'
 " highlighcolors
@@ -554,9 +554,9 @@ function s:CheckColorScheme()
         endif
     endif
     highlight SignColumn ctermbg=0
-    hi VertSplit  ctermbg=NONE
-  else " default
-    color pico
+    hi VertSplit  ctermbg=0
+  else
+    color base16-pico
   endif
 endfunction
 
