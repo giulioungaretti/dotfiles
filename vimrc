@@ -179,7 +179,7 @@ Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
 " use silver searcher
-Plug 'rking/ag.vim'"
+" Plug 'rking/ag.vim'"
 " colorschemes
 Plug 'chriskempson/base16-vim'
 highlight SignColumn ctermbg=0
