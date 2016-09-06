@@ -199,9 +199,14 @@ export PYENV_ROOT="${HOME}/.pyenv"
 if [ -d "${PYENV_ROOT}" ]; then
     export PATH="${PYENV_ROOT}/bin:${PATH}"
     eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
 fi
+eval "$(pyenv virtualenv-init -)"
+j
 zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
+
+alias irssi='TERM=screen-256color irssi'
+
 # vim: foldmethod=marker
-#
