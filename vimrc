@@ -87,10 +87,14 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 Plug 'scrooloose/syntastic'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
+let g:elm_syntastic_show_warnings = 1
+
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+j
 let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
 let g:syntastic_python_checkers = ['pylint']
+
 "yapf gofmt for python {{{
 function! YAPF() range
   " Determine range to format.
@@ -223,6 +227,7 @@ au FileType elm nmap <leader>e <Plug>(elm-error-detail)
 au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
+let g:elm_syntastic_show_warnings = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 " }}}
 " python {{{
@@ -350,6 +355,7 @@ let g:js_fmt_autosave = 0
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 :let g:airline_theme='base16'
+let loaded_matchparen = 1
 " always show bar
 set laststatus=2
 " don't show mode
