@@ -205,3 +205,4 @@ zle -N zle-line-finish
 zle -N zle-keymap-select
 # vim: foldmethod=marker
 #
+eval "$(pyenv virtualenv-init -)"
