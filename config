@@ -7,9 +7,13 @@
 #######################################################################
 #                            27 Oct 2015                              #
 #######################################################################
+exec --no-startup-id unity-settings-daemon
 exec --no-startup-id gnome-settings-daemon
-#exec --no-startup-id unity-settings-daemon
+exec --no-startup-id gnome-sound-applet
+exec --no-startup-id gnome-screensaver
+exec --no-startup-id xautolock -time 20 -locker "gnome-screensaver-command --lock" &
 set $mod Mod4
+set $alt Mod1
 focus_follows_mouse no
 font pango:PragmataPro\ for\ Powerline 10 10
 #font pango:Ubuntu 12 12
@@ -115,6 +119,7 @@ assign [class="^Spotify$"] 5: music
 # bindsym $mod+m move workspace to output right
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+bindsym $alt+l exec "gnome-screensaver-command --lock"
 # EXIT I3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -122,6 +127,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 #######################################################################
 #                            float                                    #
 #######################################################################
+#
+floating_minimum_size 900 x 1200
+floating_maximum_size -1 x -1
 
 mode "resize" {
         bindsym h resize shrink width 10 px or 10 ppt
@@ -167,3 +175,5 @@ bar {
                         #urgent_workspace   #2f343a #8ec07c  #ffffff
                 }
 }
+gaps inner 3
+gaps outer 6
