@@ -2,7 +2,7 @@
 	name = Giulio Ungaretti
 	email = giulioungaretti@me.com
 [push]
-	default = matching
+	default = simple
 [alias]
 	co = checkout
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
