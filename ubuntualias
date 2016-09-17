@@ -9,7 +9,7 @@ export WORKON_HOME=$HOME/Hack/python/Envs
 # ------------------------------------------------------------------- Aliases
  # {{{
 alias feh='/usr/bin/feh -Z'
-alias irssi="mosh giulio@188.166.36.190 -- screen -rd"
+alias fresh='apt list --upgradable'
 #}}}
 #-------------------------------------------------------------------- source
 #{{{
