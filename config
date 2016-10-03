@@ -26,10 +26,10 @@ new_float pixel 0
 #######################################################################
 # class border backgr. text indicator
 # LIGHTER #fabd2f RED ACTIVE BORDER
-client.focused          #fabd2f #fabd2f  #111111 #1d1f21
+client.focused          #C43177 #C43177  #111111 #1d1f21
 client.focused_inactive #282828 #686868 #585858 #1d1f21
 client.unfocused        #282828 #282828 #585858 #1d1f21
-client.urgent           #fabd2f #fabd2f #d8d8d8 #fabd2f
+client.urgent           #C43177 # #d8d8d8 #C43177
 # CHANGING BORDER STYLE
 bindsym $mod+t border normal
 bindsym $mod+y border pixel 1
