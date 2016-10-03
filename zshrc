@@ -7,7 +7,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 #}}}
 # Exports # {{{
-export TERM=xterm-256color
+[[ $TMUX = "" ]] && export TERM="xterm-256color"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 #if [ -x  "$(command -v nvim)" ]; then
