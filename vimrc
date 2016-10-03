@@ -18,6 +18,8 @@ if s:uname == "Linux\n"
     " use global pyhton3
     " no idea how this works with venvs
     let g:python3_host_prog = "/usr/bin/python3"
+    " use sys wide syntastic
+    let g:syntastic_python_python_exec = '/usr/bin/python3'
     set clipboard=unnamedplus
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
@@ -66,7 +68,10 @@ endfunction
 " manually reduce noise
 map <F7> :call ToggleSyntax() <CR>
 " automatically reudce noise
-autocmd Bufenter *  call ColorGitStuff()
+autocmd BufEnter *  call ColorGitStuff()
+autocmd TabEnter *  call ColorGitStuff()
+autocmd WinEnter *  call ColorGitStuff()
+autocmd BufAdd *  call ColorGitStuff()
 
 "" JK motions: Line motions
 map <Leader>l <Plug>(easymotion-lineforward)
@@ -91,10 +96,8 @@ let g:elm_syntastic_show_warnings = 1
 
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-j
-let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
-let g:syntastic_python_checkers = ['pylint']
-
+"let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
+let g:syntastic_python_checkers = ['flake8']
 "yapf gofmt for python {{{
 function! YAPF() range
   " Determine range to format.
@@ -112,7 +115,7 @@ function! YAPF() range
   call cursor(a:firstline, 1)
 endfunction
 " }}}
- autocmd FileType python nnoremap <C-P> :call YAPF()<cr>
+" autocmd FileType python nnoremap <C-P> :call YAPF()<cr>
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 "Plug 'ryanoasis/vim-devicons'
@@ -142,11 +145,28 @@ nnoremap <silent> <leader>. :Lines<CR>
 nnoremap <silent> <leader>o :BTags<CR>
 nnoremap <silent> <leader>O :Tags<CR>
 nnoremap <silent> <leader>? :History<CR>
-nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+" seach current dir with Ag
+nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>
 nnoremap <silent> K :call SearchWordWithAg()<CR>
 vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
 nnoremap <silent> <leader>gl :Commits<CR>
 nnoremap <silent> <leader>gb :BCommits<CR>
+function! SearchWordWithAg()
+    execute 'Ag' expand('<cword>')
+endfunction
+
+function! SearchVisualSelectionWithAg() range
+    let old_reg = getreg('"')
+    let old_regtype = getregtype('"')
+    let old_clipboard = &clipboard
+    set clipboard&
+    normal! ""gvy
+    let selection = getreg('"')
+    call setreg('"', old_reg, old_regtype)
+    let &clipboard = old_clipboard
+    execute 'Ag' selection
+endfunction
+
 " Rainbow paranthesis
 Plug 'junegunn/rainbow_parentheses.vim'
 " headers
@@ -200,8 +220,6 @@ Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 " required
 Plug 'mattn/webapi-vim'
-" use silver searcher
-" Plug 'rking/ag.vim'"
 " colorschemes
 Plug 'chriskempson/base16-vim'
 highlight SignColumn ctermbg=0
@@ -245,6 +263,7 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
+let g:jedi#show_call_signatures  = 2
 Plug 'tmhedberg/SimpylFold'
 let g:SimpylFold_docstring_preview = 1
 " screen stuff
@@ -557,7 +576,11 @@ highlight SignColumn ctermbg=0
 set mousehide "Hide when characters are typed
 "color of the current line number
 nnoremap <silent><leader>oo :set relativenumber!<cr>
-
+" we don't need no hilighted matching partentheses
+" NoMatchParen is a command to the loaded plugin to ask it to stop matching.
+" Setting "loaded_matchparen", on the other hand, stops the plugin from
+" ever loading (by making it think that it's already running).
+let loaded_matchparen = 1
 "theme {{{
 function s:CheckColorScheme()
   let g:base16colorspace=256
@@ -567,20 +590,27 @@ function s:CheckColorScheme()
     if s:config[1] =~# '^dark\|light$'
         if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
           execute 'color base16-' . s:config[0] . '-' . s:config[1]
+          highlight SignColumn ctermbg=0
+          hi VertSplit  ctermbg=0
+          syntax off
         else
           echoerr 'Bad scheme ' . s:config[0] . .s:config[1] ' in ' . s:config_file
         endif
     else
         if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
           execute 'color base16-' . s:config[0]
+          highlight SignColumn ctermbg=0
+          hi VertSplit  ctermbg=0
+          syntax off
         else
           echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
         endif
     endif
-    highlight SignColumn ctermbg=0
-    hi VertSplit  ctermbg=0
   else
     color base16-pico
+    highlight SignColumn ctermbg=0
+    hi VertSplit  ctermbg=0
+    syntax off
   endif
 endfunction
 
@@ -589,6 +619,7 @@ if v:progname !=# 'vi'
     augroup WincentAutocolor
        autocmd!
        autocmd FocusGained * call s:CheckColorScheme()
+       autocmd BufEnter * call s:CheckColorScheme()
        autocmd FocusGained * AirlineRefresh
        autocmd VimResized * execute "normal! \<c-w>="
     augroup END
