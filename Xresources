@@ -32,7 +32,7 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.url-launcher: firefox
 
 !! colors and font
-URxvt.font: xft:Hack:size=15
+URxvt.font: xft:Hack:size=10
 URxvt.iso14755: False
 #define base00 #1d1f21
 #define base01 #282828
@@ -101,3 +101,40 @@ rofi.color-active:                   argb:00000000,  #6699CC , argb:00000000,  #
 rofi.color-window:                   argb:ee222222,  #FAC863 ,  #FAC863
 ! Separator style (none, dash, solid)
 rofi.separator-style:                solid
+
+! this cool stuff from redditz
+*faceName: leggie
+*faceSize: 12
+*font: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
+*boldFont: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
+*.cursorColor: #71888b
+*.scrollBar: false
+
+!sets the background to black and foreground to white for other terminals relying on Xresources
+*background: #d4f1ed
+*foreground: #71888b
+
+! black
+*color0: #d4f1ed
+*color8: #2f2f31
+! red
+*color1: #dc7058
+*color9: #aa5744
+! green
+*color2: #84b37d
+*color10: #5f8059
+! yellow
+*color3: #f98528
+*color11: #c76b20
+! blue
+*color4: #3382dc
+*color12: #2865aa
+! magenta
+*color5: #db9b96
+*color13: #a97874
+! cyan
+*color6: #7EACAD
+*color14: #587879
+! white
+*color7:  #a8a682 
+*color15: #79775e
