@@ -32,7 +32,7 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.url-launcher: firefox
 
 !! colors and font
-URxvt.font: xft:Hack:size=10
+URxvt.font: xft:haxor-narrow:size=10
 URxvt.iso14755: False
 #define base00 #1d1f21
 #define base01 #282828
@@ -103,12 +103,12 @@ rofi.color-window:                   argb:ee222222,  #FAC863 ,  #FAC863
 rofi.separator-style:                solid
 
 ! this cool stuff from redditz
-*faceName: leggie
-*faceSize: 12
-*font: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
-*boldFont: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
-*.cursorColor: #71888b
-*.scrollBar: false
+faceName: leggie
+faceSize: 12
+font: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
+boldFont: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
+.cursorColor: #71888b
+.scrollBar: false
 
 !sets the background to black and foreground to white for other terminals relying on Xresources
 *background: #d4f1ed
@@ -138,3 +138,24 @@ rofi.separator-style:                solid
 ! white
 *color7:  #a8a682 
 *color15: #79775e
+
+! rofi ----------------------------------------------------------------
+ rofi.background:  #151515
+ rofi.foreground:  #F5F5F5
+ rofi.highlightfg: #F5F5F5
+ rofi.bordercolor: #6A9FB5
+ rofi.padding: 50
+ rofi.borderwidth: 1
+ rofi.separator-style: none
+ rofi.opacity: 100
+ rofi.font: leggie 12
+ rofi.location: 0
+ rofi.hmode: false
+ rofi.fuzzy: true
+ rofi.fullscreen: false
+ rofi.eh: 2
+ rofi.line-margin: 7
+ rofi.hide-scrollbar: true
+ rofi.width: -50
+ rofi.lines: 10
+ rofi.fixed-num-lines: 10
