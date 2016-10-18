@@ -1,6 +1,5 @@
-" grab OS name
-let s:uname = system("uname -s")
 call plug#begin('~/.vim/plugged')
+let s:uname = system("uname -s") " grab os name
 " --------------------------------------------------------------------- Plugs
 " {{{
 if s:uname == "Darwin\n"
@@ -28,6 +27,10 @@ if s:uname == "Linux\n"
     :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
     :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
+" Text objects, folding, and more for Python and other indented languages.
+Plug 'tweekmonster/braceless.vim'
+"  enable for python only with autoident, folding, and hilight current level
+autocmd FileType python BracelessEnable +indent +fold +highlight
 "mange rst
 Plug 'Rykka/riv.vim'
 let qcodes = { 'path': '~/Hack/python/Qcodes/docs',}
@@ -96,7 +99,7 @@ let g:elm_syntastic_show_warnings = 1
 
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-"let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
+let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
 let g:syntastic_python_checkers = ['flake8']
 "yapf gofmt for python {{{
 function! YAPF() range
@@ -248,9 +251,12 @@ let g:elm_format_autosave = 1
 let g:elm_syntastic_show_warnings = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 " }}}
-" python {{{
+ "---------------------------------------------------------------- python {{{
 " turn on virtualenvs
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
+" auto docstrings 
+Plug 'heavenshell/vim-pydocstring'
+let g:pydocstring_enable_mapping = 0
 " jedi autocpmletion and smart code fu
 Plug 'davidhalter/jedi-vim'
 let g:jedi#force_py_version = 3
@@ -264,8 +270,10 @@ let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
 let g:jedi#show_call_signatures  = 2
-Plug 'tmhedberg/SimpylFold'
-let g:SimpylFold_docstring_preview = 1
+" don't auto complete
+let g:jedi#popup_on_dot = 0
+" Plug 'tmhedberg/SimpylFold'
+" let g:SimpylFold_docstring_preview = 1
 " screen stuff
 let g:ScreenImpl = "Tmux"
 " Open an IPython3 shell.
@@ -374,7 +382,6 @@ let g:js_fmt_autosave = 0
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 :let g:airline_theme='base16'
-let loaded_matchparen = 1
 " always show bar
 set laststatus=2
 " don't show mode
@@ -581,6 +588,8 @@ nnoremap <silent><leader>oo :set relativenumber!<cr>
 " Setting "loaded_matchparen", on the other hand, stops the plugin from
 " ever loading (by making it think that it's already running).
 let loaded_matchparen = 1
+let loaded_matchparen = 1
+Plug 'Raimondi/delimitMate'
 "theme {{{
 function s:CheckColorScheme()
   let g:base16colorspace=256
@@ -689,4 +698,5 @@ nnoremap <C-y> 3<C-y>"
 "reload on save
 autocmd! bufwritepost vimrc source %
 autocmd! bufwritepost .vimrc source %
+
 "vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
