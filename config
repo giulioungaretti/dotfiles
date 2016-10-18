@@ -19,7 +19,7 @@ font pango:PragmataPro\ for\ Powerline 10 10
 #font pango:Ubuntu 12 12
 exec --no-startup-id nitrogen --restore
 # new window default border
-new_window pixel 1
+new_window pixel 4
 new_float pixel 0
 #######################################################################
 #                            colors                                   #
@@ -32,7 +32,7 @@ client.unfocused        #282828 #282828 #585858 #1d1f21
 client.urgent           #C43177 # #d8d8d8 #C43177
 # CHANGING BORDER STYLE
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 1
+bindsym $mod+y border pixel 4
 bindsym $mod+u border none
 #######################################################################
 #                            bindings                                 #
@@ -50,7 +50,9 @@ bindsym $mod+q kill
 bindsym $MOD+Tab focus right
 # dmenu
 # bindsym $mod+space exec rofi -show run
-bindsym $mod+space exec rofi -show run  -font "Ubuntu 12" -terminal termite -location 1 -eh 1  -bw 1 -bc "#555555" -bg "#222222" -hlbg "#222222" -hlfg "#fabd2f" -fg "#ffffff"  -width 100 -fixed-num-lines 1
+# bindsym $mod+space exec rofi -show run  -font "Ubuntu 12" -terminal termite -location 1 -eh 1  -bw 1 -bc "#555555" -bg "#222222" -hlbg "#222222" -hlfg "#fabd2f" -fg "#ffffff"  -width 100 -fixed-num-lines 1
+bindsym $mod+space  exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -p \\"run ↠ \\"'"
+ bindsym Control+$mod+space exec "launch_script"
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -137,8 +139,8 @@ mode "resize" {
         bindsym k resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
         # back to normal: Enter or Escape
-        bindsym return mode "default"
-        bindsym escape mode "default"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
 
@@ -149,8 +151,8 @@ mode "move" {
     bindsym h move left 20px
     bindsym j move down 20px
     bindsym l move right 20px
-    bindsym return mode "default"
-    bindsym escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
     bindsym $mod+m mode "default"
 }
 
@@ -169,11 +171,11 @@ bar {
                         background #000000
                         #statusline #b8b8b8
                         separator #000000
-                        focused_workspace  #000000  #BA8BAF #ffffff
+                        focused_workspace  #000000  #C43177 #ffffff
                         #active_workspace   #000000  #000000  #fabd2f
                         inactive_workspace #000000  #000000  #b8b8b8
                         #urgent_workspace   #2f343a #8ec07c  #ffffff
                 }
 }
-gaps inner 3
+gaps inner 4
 gaps outer 6
