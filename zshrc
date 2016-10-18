@@ -208,5 +208,5 @@ zle -N zle-line-finish
 zle -N zle-keymap-select
 
 alias irssi='TERM=screen-256color irssi'
-
+PURE_PROMPT_SYMBOL=%
 # vim: foldmethod=marker
