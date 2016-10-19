@@ -193,6 +193,14 @@ function zle-line-finish
 {
   set_cursor_shape 0 # block cursor
 }
+
+
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
+
+alias irssi='TERM=screen-256color irssi'
+
 # pyenv
 export PYENV_ROOT="${HOME}/.pyenv"
 
@@ -201,12 +209,4 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
-eval "$(pyenv virtualenv-init -)"
 
-zle -N zle-line-init
-zle -N zle-line-finish
-zle -N zle-keymap-select
-
-alias irssi='TERM=screen-256color irssi'
-PURE_PROMPT_SYMBOL=%
-# vim: foldmethod=marker
