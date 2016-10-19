@@ -12,11 +12,11 @@ exec --no-startup-id gnome-settings-daemon
 exec --no-startup-id gnome-sound-applet
 exec --no-startup-id gnome-screensaver
 exec --no-startup-id xautolock -time 20 -locker "gnome-screensaver-command --lock" &
-set $mod Mod4
-set $alt Mod1
+set $mod Mod1
+set $alt Mod4
 focus_follows_mouse no
-font pango:PragmataPro\ for\ Powerline 10 10
-#font pango:Ubuntu 12 12
+#font pango:PragmataPro\ for\ Powerline 10 10
+font pango:Ubuntu 16 16
 exec --no-startup-id nitrogen --restore
 # new window default border
 new_window pixel 4
@@ -164,7 +164,8 @@ bindsym $mod+m focus floating; mode "move"
 bar {
         tray_output none
                 status_command i3status
-                font pango:PragmataPro\ for\ Powerline 10 10
+#               h1h f pango:PragmataPro\ for\ Powerline 10 10
+                font pango:Ubuntu 16 16
                 position top
                 mode dock
                 colors {
