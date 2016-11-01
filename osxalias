@@ -1,10 +1,7 @@
 #-------------------------------------------------------------------- Aliases
 #{{{
-alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
 export VISUAL=vim
 export EDITOR=vim
-alias start='tmuxifier load-session my-awesome-session'
-alias ghub="mosh giulio@188.166.36.190-- screen -dr"
 #}}}
 #-------------------------------------------------------------------- Exports
 # {{{
@@ -15,31 +12,4 @@ export PATH=$PATH:$GOPATH/bin
 # add home/bin to path
 export PATH=$PATH:$HOME/bin
 #}}}
-# python env{{{
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-export WORKON_HOME=$HOME/Hack/python/Envs
-source /usr/local/bin/virtualenvwrapper.sh
-#}}}
 #
-# Bash wrapper to change directory to the output of gocd
-gocd () {
-  if dir=$($GOPATH/bin/gocd $1); then
-    cd "$dir"
-  fi
-}
-autoload -U bashcompinit && bashcompinit
-# Optional tab completion wrapper for $GOPATH/src
-_gopath () {
-  local cur
-  COMPREPLY=()
-  cur=${COMP_WORDS[COMP_CWORD]}
-  k=0
-  for j in $( compgen -f "$GOPATH/src/$cur" ); do
-    if [ -d "$j" ]; then
-      COMPREPLY[k++]=${j#$GOPATH/src/}
-    fi
-  done
-}
-# fix colors on iterm
-export TERM=xterm-256color
-# vim: foldmethod=marker:foldlevel=0: filetype=zsh

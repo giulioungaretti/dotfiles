@@ -20,9 +20,7 @@ zstyle ':prezto:load' pmodule \
   'environment' \
   'history' \
   'completion' \
-  'osx'\
-  'syntax-highlighting' \
-  'history-substring-search' \
+  'tmux' \
   'prompt'
 
 #
@@ -66,6 +64,6 @@ zstyle ':prezto:module:prompt' theme 'pure'
  zstyle ':prezto:module:syntax-highlighting' highlighters \
    'main' \
    'brackets' \
-   'pattern' \
-   #'cursor' \
-   #'root'
+   'pattern'
+#
+# zstyle ':prezto:module:tmux:auto-start' local 'yes'

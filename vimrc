@@ -91,26 +91,9 @@ let g:elm_syntastic_show_warnings = 1
 
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-j
 let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
 let g:syntastic_python_checkers = ['pylint']
 
-"yapf gofmt for python {{{
-function! YAPF() range
-  " Determine range to format.
-  let l:line_ranges = a:firstline . '-' . a:lastline
-  let l:cmd = 'yapf --lines=' . l:line_ranges
-
-  " Call YAPF with the current buffer
-  let l:formatted_text = system(l:cmd, join(getline(1, '$'), "\n") . "\n")
-
-  " Update the buffer.
-  execute '1,' . string(line('$')) . 'delete'
-  call setline(1, split(l:formatted_text, "\n"))
-
-  " Reset cursor to first line of the formatted range.
-  call cursor(a:firstline, 1)
-endfunction
 " }}}
  autocmd FileType python nnoremap <C-P> :call YAPF()<cr>
 " add session stufff for tmux ressurect
@@ -335,23 +318,6 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 0
 "}}}
-" --------------------------------------------------------------------------js
-" {{{{
-au BufNewFile,BufRead *.js setlocal noet ts=2 sw=2 sts=2 expandtab
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
-" emmet
-Plug 'mattn/emmet-vim'
-Plug 'mxw/vim-jsx'
-let g:jsx_ext_required = 0
-" better js syntax
-Plug 'othree/yajs.vim'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'gavocanov/vim-js-indent'
-let g:neomake_javascript_enabled_makers = ['eslint']
-Plug 'mephux/vim-jsfmt', { 'do': 'npm install -g jsfmt' }
-" like go fmt
-let g:js_fmt_autosave = 0
-" }}}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 :let g:airline_theme='base16'
