@@ -1,146 +1,120 @@
-*customization: -color
-Xterm*termName: xterm-256color
-URxvt*termName: rxvt-256color
-URxvt.perl-ext-common:clipboard,keyboard-select,font-size
-URxvt.keysym.M-y: perl:keyboard-select:activate
-URxvt.keysym.M-s: perl:keyboard-select:search
-URxvt.scrollBar:        false
-URxvt.imLocale:         en_US.UTF-8
-URxvt.cursorBlink:      true
-!----------------------------------------------------- increase size font{{{
-URxvt.keysym.C-+:     font-size:increase
-URxvt.keysym.C--:   font-size:decrease
-URxvt.keysym.M-S-Up:   font-size:incglobal
-URxvt.keysym.M-S-Down: font-size:decglobal
-!}}}
-!------------------------------------------------------------------ Fonts {{{
-Xft.hinting:   true
-Xft.hintstyle: hintfull
-Xft.antialias: true
-Xft.rgba:      rgb
-!Xft.dpi:       144
-Xft.autohint: 0
-Xft.lcdfilter:  lcddefault
-!}}}
-!--------------------------------------------------------------- cliboard {{{
-URxvt.clipboard.autocopy: true
-URxvt.keysym.M-c:   perl:clipboard:copy
-URxvt.keysym.M-v:   perl:clipboard:paste
-URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
-!URxvt.clipboard.copycmd:  xclip -i -selection clipboard
-!URxvt.clipboard.pastecmd: xclip -o -selection clipboard
-URxvt.url-launcher: firefox
+!*customization: -color
+!Xterm*termName: xterm-256color
+!URxvt*termName: rxvt-256color
+!URxvt.perl-ext-common:clipboard,keyboard-select,font-size
+!URxvt.keysym.M-y: perl:keyboard-select:activate
+!URxvt.keysym.M-s: perl:keyboard-select:search
+!URxvt.scrollBar:        false
+!URxvt.imLocale:         en_US.UTF-8
+!URxvt.cursorBlink:      true
+!!----------------------------------------------------- increase size font{{{
+!URxvt.keysym.C-+:     font-size:increase
+!URxvt.keysym.C--:   font-size:decrease
+!URxvt.keysym.M-S-Up:   font-size:incglobal
+!URxvt.keysym.M-S-Down: font-size:decglobal
+!!}}}
+!!------------------------------------------------------------------ Fonts {{{
+!Xft.hinting:   true
+!Xft.hintstyle: hintfull
+!Xft.antialias: true
+!Xft.rgba:      rgb
+!!Xft.dpi:       220
+!Xft.autohint: 0
+!Xft.lcdfilter:  lcddefault
+!!}}}
+!!--------------------------------------------------------------- cliboard {{{
+!URxvt.clipboard.autocopy: true
+!URxvt.keysym.M-c:   perl:clipboard:copy
+!URxvt.keysym.M-v:   perl:clipboard:paste
+!URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+!!URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+!!URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+!URxvt.url-launcher: firefox
 
-!! colors and font
-URxvt.font: xft:haxor-narrow:size=10
-URxvt.iso14755: False
-#define base00 #1d1f21
-#define base01 #282828
-#define base02 #383838
-#define base03 #585858
-#define base04 #b8b8b8
-#define base05 #d8d8d8
-#define base06 #e8e8e8
-#define base07 #f8f8f8
-#define base08 #ab4642
-#define base09 #dc9656
-#define base0A #f7ca88
-#define base0B #a1b56c
-#define base0C #86c1b9
-#define base0D #7cafc2
-#define base0E #ba8baf
-#define base0F #a16946
+!!! colors and font
+!URxvt.font: xft:haxor-narrow:size=10
+!URxvt.iso14755: False
+!#define base00 #1d1f21
+!#define base01 #282828
+!#define base02 #383838
+!#define base03 #585858
+!#define base04 #b8b8b8
+!#define base05 #d8d8d8
+!#define base06 #e8e8e8
+!#define base07 #f8f8f8
+!#define base08 #ab4642
+!#define base09 #dc9656
+!#define base0A #f7ca88
+!#define base0B #a1b56c
+!#define base0C #86c1b9
+!#define base0D #7cafc2
+!#define base0E #ba8baf
+!#define base0F #a16946
 
-*.foreground:   base05
-*.background:   base00
-*.cursorColor:  base05
-*.color0:       base00
-*.color1:       base08
-*.color2:       base0B
-*.color3:       base0A
-*.color4:       base0D
-*.color5:       base0E
-*.color6:       base0C
-*.color7:       base05
-*.color8:       base03
-*.color9:       base09
-*.color10:      base01
-*.color11:      base02
-*.color12:      base04
-*.color13:      base06
-*.color14:      base0F
-*.color15:      base07
-! ------------------------------------------------------------------------------
-! ROFI Color theme
-! ------------------------------------------------------------------------------
-! Use extended color scheme
-rofi.color-enabled:                  true
-! Color scheme for normal row
-rofi.color-normal:                   argb:00000000, #1aa, argb:11FFFFFF, #1aa,#333
-! Color scheme for urgent row
-rofi.color-urgent:                   argb:00000000, #f99, argb:11FFFFFF, #f99,#333
-! Color scheme for active row
-rofi.color-active:                   argb:00000000, #aa1, argb:11FFFFFF, #aa1,#333
-! Color scheme window
-rofi.color-window:                   argb:ee333333, #1aa,#1aa
-! Separator style (none, dash, solid)
-rofi.separator-style:                none
-! vim: set fdm=marker
-! ------------------------------------------------------------------------------
-! ROFI Color theme
-! ------------------------------------------------------------------------------
-! Use extended color scheme
-rofi.color-enabled:                  true
-! Color scheme for normal row
-rofi.color-normal:                   argb:00000000,  #D8DEE9 , argb:00000000,  #FAC863 ,  #1B2B34
-! Color scheme for urgent row
-rofi.color-urgent:                   argb:00000000,  #F99157 , argb:00000000,  #F99157 ,  #1B2B34
-! Color scheme for active row
-rofi.color-active:                   argb:00000000,  #6699CC , argb:00000000,  #6699CC ,  #1B2B34
-! Color scheme window
-rofi.color-window:                   argb:ee222222,  #FAC863 ,  #FAC863
-! Separator style (none, dash, solid)
-rofi.separator-style:                solid
+!*.foreground:   base05
+!*.background:   base00
+!*.cursorColor:  base05
+!*.color0:       base00
+!*.color1:       base08
+!*.color2:       base0B
+!*.color3:       base0A
+!*.color4:       base0D
+!*.color5:       base0E
+!*.color6:       base0C
+!*.color7:       base05
+!*.color8:       base03
+!*.color9:       base09
+!*.color10:      base01
+!*.color11:      base02
+!*.color12:      base04
+!*.color13:      base06
+!*.color14:      base0F
+!*.color15:      base07
+!! ------------------------------------------------------------------------------
+!! ROFI Color theme
+!! ------------------------------------------------------------------------------
+!! Use extended color scheme
+!rofi.color-enabled:                  true
+!! Color scheme for normal row
+!!rofi.color-normal:                   argb:00000000,  #D8DEE9 , argb:00000000,  #FAC863 ,  #1B2B34
+!!! Color scheme for urgent row
+!!rofi.color-urgent:                   argb:00000000,  #F99157 , argb:00000000,  #F99157 ,  #1B2B34
+!!! Color scheme for active row
+!!rofi.color-active:                   argb:00000000,  #6699CC , argb:00000000,  #6699CC ,  #1B2B34
+!!! Color scheme window
+!!rofi.color-window:                   argb:ee222222,  #FAC863 ,  #FAC863
 
-! this cool stuff from redditz
-faceName: leggie
-faceSize: 12
-font: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
-boldFont: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
-.cursorColor: #71888b
-.scrollBar: false
+!!sets the background to black and foreground to white for other terminals relying on Xresources
+!*background: #d4f1ed
+!*foreground: #71888b
 
-!sets the background to black and foreground to white for other terminals relying on Xresources
-*background: #d4f1ed
-*foreground: #71888b
-
-! black
-*color0: #d4f1ed
-*color8: #2f2f31
-! red
-*color1: #dc7058
-*color9: #aa5744
-! green
-*color2: #84b37d
-*color10: #5f8059
-! yellow
-*color3: #f98528
-*color11: #c76b20
-! blue
-*color4: #3382dc
-*color12: #2865aa
-! magenta
-*color5: #db9b96
-*color13: #a97874
-! cyan
-*color6: #7EACAD
-*color14: #587879
-! white
-*color7:  #a8a682 
-*color15: #79775e
+!! black
+!*color0: #d4f1ed
+!*color8: #2f2f31
+!! red
+!*color1: #dc7058
+!*color9: #aa5744
+!! green
+!*color2: #84b37d
+!*color10: #5f8059
+!! yellow
+!*color3: #f98528
+!*color11: #c76b20
+!! blue
+!*color4: #3382dc
+!*color12: #2865aa
+!! magenta
+!*color5: #db9b96
+!*color13: #a97874
+!! cyan
+!*color6: #7EACAD
+!*color14: #587879
+!! white
+!*color7:  #a8a682 
+!*color15: #79775e
 
 ! rofi ----------------------------------------------------------------
- rofi.background:  #151515
+ rofi.background:  #000000
  rofi.foreground:  #F5F5F5
  rofi.highlightfg: #F5F5F5
  rofi.bordercolor: #6A9FB5
@@ -148,7 +122,7 @@ boldFont: -wiktorb-leggie-medium-*-*-*-12-*-*-*-*-*-*-*
  rofi.borderwidth: 1
  rofi.separator-style: none
  rofi.opacity: 100
- rofi.font: leggie 12
+ rofi.font: input 13
  rofi.location: 0
  rofi.hmode: false
  rofi.fuzzy: true

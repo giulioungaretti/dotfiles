@@ -82,7 +82,9 @@ bindkey -v
 # Multi-level undo
 bindkey -M vicmd 'u' undo
 bindkey -M vicmd '^R' redo
-
+#
+setopt HIST_IGNORE_DUPS 
+setopt SHARE_HISTORY 
 # Allow backspacing past where you started in insert mode
 bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
@@ -210,3 +212,7 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv virtualenv-init -)"
 fi
 
+
+
+export NVM_DIR="/home/unga/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

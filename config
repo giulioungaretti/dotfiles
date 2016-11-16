@@ -4,26 +4,32 @@
 #                                 | |    \ \
 #                                _| |.___/ /
 #                               (_)_|\____/
-#######################################################################
-#                            27 Oct 2015                              #
-#######################################################################
+#
+#
 exec --no-startup-id unity-settings-daemon
-exec --no-startup-id gnome-settings-daemon
-exec --no-startup-id gnome-sound-applet
-exec --no-startup-id gnome-screensaver
-exec --no-startup-id xautolock -time 20 -locker "gnome-screensaver-command --lock" &
-set $mod Mod1
-set $alt Mod4
-focus_follows_mouse no
-#font pango:PragmataPro\ for\ Powerline 10 10
-font pango:Ubuntu 16 16
+exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id nitrogen --restore
+
+set $mod Mod4
+set $alt Mod1
+
+focus_follows_mouse no
+
 # new window default border
+
 new_window pixel 4
 new_float pixel 0
+
+gaps inner 1
+gaps outer 1
+
+popup_during_fullscreen smart
+
 #######################################################################
 #                            colors                                   #
 #######################################################################
+font pango:Input\ Mono\ Narrow  12 12
+
 # class border backgr. text indicator
 # LIGHTER #fabd2f RED ACTIVE BORDER
 client.focused          #C43177 #C43177  #111111 #1d1f21
@@ -37,6 +43,12 @@ bindsym $mod+u border none
 #######################################################################
 #                            bindings                                 #
 #######################################################################
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
 # binds and shortuchts
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -48,11 +60,8 @@ bindsym $mod+Return exec gnome-terminal
 bindsym $mod+q kill
 #tab switching
 bindsym $MOD+Tab focus right
-# dmenu
-# bindsym $mod+space exec rofi -show run
-# bindsym $mod+space exec rofi -show run  -font "Ubuntu 12" -terminal termite -location 1 -eh 1  -bw 1 -bc "#555555" -bg "#222222" -hlbg "#222222" -hlfg "#fabd2f" -fg "#ffffff"  -width 100 -fixed-num-lines 1
 bindsym $mod+space  exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -p \\"run ↠ \\"'"
- bindsym Control+$mod+space exec "launch_script"
+#\bindsym Control+$mod+space exec "launch_script"
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -92,9 +101,9 @@ bindsym $mod+o split v
 bindsym $mod+v split h
 # switch to workspace
 bindsym $mod+1 workspace 1: ~
-bindsym $mod+2 workspace 2: www
-bindsym $mod+3 workspace 3: code
-bindsym $mod+4 workspace 4: docs
+bindsym $mod+2 workspace 2: src
+bindsym $mod+3 workspace 3: www
+bindsym $mod+4 workspace 4: mail
 bindsym $mod+5 workspace 5: music
 bindsym $mod+6 workspace 6: chat
 bindsym $mod+7 workspace 7
@@ -104,9 +113,9 @@ bindsym $mod+0 workspace 10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1: ~
-bindsym $mod+Shift+2 move container to workspace 2: www
-bindsym $mod+Shift+3 move container to workspace 3: code
-bindsym $mod+Shift+4 move container to workspace 4: docs
+bindsym $mod+Shift+2 move container to workspace 2: src
+bindsym $mod+Shift+3 move container to workspace 3: www
+bindsym $mod+Shift+4 move container to workspace 4: mail
 bindsym $mod+Shift+5 move container to workspace 5: music
 bindsym $mod+Shift+6 move container to workspace 6: chat
 bindsym $mod+Shift+7 move container to workspace 7
@@ -114,24 +123,28 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-assign [class="Firefox"] 2: www
-assign [class="^Spotify$"] 5: music
+assign [class="Firefox"] 3: www
+assign [class="Evolution"] 4: mail
+assign [class="Spotify"] 5: music
+for_window [class="Spotify"] move to workspace 5: music
+for_window [class="Slack"] move to workspace 6: chat
+
 
 # move workspace around displays
 # bindsym $mod+m move workspace to output right
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-bindsym $alt+l exec "gnome-screensaver-command --lock"
+bindsym $mod+Delete exec "gnome-screensaver-command --lock"
 # EXIT I3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 
 #######################################################################
-#                            float                                    #
+#                            modes                                    #
 #######################################################################
-#
-floating_minimum_size 900 x 1200
-floating_maximum_size -1 x -1
+ 
+#floating_minimum_size 900 x 1200
+#floating_maximum_size -1 x -1
 
 mode "resize" {
         bindsym h resize shrink width 10 px or 10 ppt
@@ -158,14 +171,24 @@ mode "move" {
 
 bindsym $mod+m focus floating; mode "move"
 
+#change keyboard layout
+set $keyboardMode "keyboard d=dk, u=us"
+bindsym $mod+Shift+i mode $keyboardMode
+mode $keyboardMode {
+    bindsym d exec "setxkbmap dk", mode "default"
+    bindsym u exec "setxkbmap us", mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 #######################################################################
 #                            status                                   #
 #######################################################################
 bar {
         tray_output none
-                status_command i3status
-#               h1h f pango:PragmataPro\ for\ Powerline 10 10
-                font pango:Ubuntu 16 16
+        status_command i3blocks
+                font pango:Input\ Mono\ Narrow  11 11
                 position top
                 mode dock
                 colors {
@@ -178,5 +201,11 @@ bar {
                         #urgent_workspace   #2f343a #8ec07c  #ffffff
                 }
 }
-gaps inner 4
-gaps outer 6
+
+
+bindsym XF86MonBrightnessDown exec --no-startup-id sudo ~/dotfiles/bin/brdown
+bindsym XF86MonBrightnessUp exec --no-startup-id sudo ~/dotfiles/bin/brup
+
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
