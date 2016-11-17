@@ -11,7 +11,8 @@ if s:uname == "Darwin\n"
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
     " this should make it work with osx/tmux/madness
-    set clipboard+=unnamed
+    "set clipboard+=unnamed
+    set clipboard=unnamed
 endif
 if s:uname == "Linux\n"
     " Do linux stuff here

@@ -8,9 +8,9 @@ fi
 export TERM=xterm-256color
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export GIT_EDITOR=nvim
-export VISUAL=nvim
-export EDITOR=nvim
+export GIT_EDITOR=vim
+export VISUAL=vim
+export EDITOR=vim
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #disable tmux in fzf
 export FZF_TMUX=1
