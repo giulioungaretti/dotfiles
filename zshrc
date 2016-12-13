@@ -207,12 +207,13 @@ alias irssi='TERM=screen-256color irssi'
 export PYENV_ROOT="${HOME}/.pyenv"
 
 if [ -d "${PYENV_ROOT}" ]; then
-    export PATH="${PYENV_ROOT}/bin:${PATH}"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+   export PATH="${PYENV_ROOT}/bin:${PATH}"
+   eval "$(pyenv init -)"
+   # this is really slow for some reasons
+   #eval "$(pyenv virtualenv-init -)"
 fi
 
 
 
-export NVM_DIR="/home/unga/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#export NVM_DIR="/home/unga/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
