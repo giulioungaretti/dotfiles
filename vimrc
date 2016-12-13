@@ -238,6 +238,11 @@ Plug 'metakirby5/codi.vim'
 " {{{
 "elixir
 Plug 'elixir-lang/vim-elixir'
+" erlang
+" omnifunc!
+Plug 'vim-erlang/vim-erlang-omnicomplete'
+" compiler
+Plug 'vim-erlang/vim-erlang-compiler'
 " elm
 Plug 'elmcast/elm-vim'
 au FileType elm nmap <leader>b <Plug>(elm-make)
