@@ -17,11 +17,11 @@ focus_follows_mouse no
 
 # new window default border
 
-new_window pixel 4
-new_float pixel 0
+new_window pixel 6
+new_float pixel 6
 
-gaps inner 1
-gaps outer 1
+gaps inner 2
+gaps outer 10
 
 popup_during_fullscreen smart
 
@@ -38,8 +38,15 @@ client.unfocused        #282828 #282828 #585858 #1d1f21
 client.urgent           #C43177 # #d8d8d8 #C43177
 # CHANGING BORDER STYLE
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 4
+bindsym $mod+y border pixel 6
 bindsym $mod+u border none
+
+# Title bar format
+# We first set the titlebar font size to a large size to get a good padding amount.
+# We then use pango markup to force i3 to print with the desired font.
+# This gives us large titlebars with a small font. :P
+font pango:lemon 15
+for_window [class=".*"] title_format "<span font='Lemon 7'> > %title</span>"
 #######################################################################
 #                            bindings                                 #
 #######################################################################
@@ -189,8 +196,9 @@ bar {
         tray_output none
         status_command i3blocks
                 font pango:Input\ Mono\ Narrow  11 11
-                position top
+                position bottom
                 mode dock
+                modifier $alt
                 colors {
                         background #000000
                         #statusline #b8b8b8
@@ -202,10 +210,50 @@ bar {
                 }
 }
 
+# bar toggle, hide or show 
+bindsym $mod+b bar mode toggle
 
-bindsym XF86MonBrightnessDown exec --no-startup-id sudo ~/dotfiles/bin/brdown
-bindsym XF86MonBrightnessUp exec --no-startup-id sudo ~/dotfiles/bin/brup
+#######################################################################
+#                            Media player controls                    #
+#######################################################################
 
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+set $mediamode "Track ▸n ◂p ■t"
+bindsym $mod+Shift+p mode $mediamode
+mode $mediamode {
+    bindsym p exec exec playerctl previous
+    bindsym n exec exec playerctl next
+    bindsym t exec exec playerctl play-pause
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+#######################################################################
+#                       Sreen brightness controls                     #
+#######################################################################
+
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
+#######################################################################
+#                           Audio controls                            #
+#######################################################################
+#
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume @DEFAULT_SINK@ -10%
-bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume @DEFAULT_SINK@ -7%
+bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +7%
+
+set $audiomode "Volume: ▲k ▼j"
+bindsym $mod+Shift+v mode $audiomode
+mode $audiomode {
+    bindsym k exec pactl set-sink-volume @DEFAULT_SINK@ +7%
+    bindsym j exec pactl set-sink-volume @DEFAULT_SINK@ -7%
+    bindsym m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
