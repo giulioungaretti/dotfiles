@@ -170,6 +170,7 @@ function! SearchVisualSelectionWithAg() range
     execute 'Ag' selection
 endfunction
 
+Plug 'dylanaraps/wal'
 " Rainbow paranthesis
 Plug 'junegunn/rainbow_parentheses.vim'
 " headers
@@ -707,3 +708,4 @@ autocmd! bufwritepost vimrc source %
 autocmd! bufwritepost .vimrc source %
 
 "vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
+colorscheme wal
