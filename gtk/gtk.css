@@ -1,0 +1,10 @@
+/*
+ * gtk.css
+ *  add padding to gnome-terminal
+ */
+VteTerminal,
+TerminalScreen {
+    padding: 10px 10px 10px 10px;
+    -VteTerminal-inner-border: 10px 10px 10px 10px;
+}
+
