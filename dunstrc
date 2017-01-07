@@ -1,0 +1,51 @@
+[global]
+font = Hack 19
+allow_markup = yes
+format = "%s\n%b"
+sort = yes
+indicate_hidden = yes
+alignment = right
+bounce_freq = 0
+show_age_threshold = 60
+word_wrap = yes
+ignore_newline = no
+geometry = "0+15+55"
+shrink = no
+transparency = 0
+idle_threshold = 120
+monitor = 0
+follow = keyboard
+sticky_history = yes
+history_length = 20
+show_indicators = yes
+line_height = 0
+separator_height = 2
+padding = 20
+horizontal_padding = 20
+separator_color = foreground
+startup_notification = false
+dmenu = /usr/bin/dmenu -p dunst:
+browser = /usr/bin/firefox -new-tab
+icon_position = off
+icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+
+[shortcuts]
+close = ctrl+space
+close_all = ctrl+shift+space
+history = ctrl+grave
+context = ctrl+shift+period
+
+[urgency_low]
+background = "#C43177"
+foreground = "#282828"
+timeout = 10
+
+[urgency_normal]
+background = "#C43177"
+foreground = "#282828"
+timeout = 10
+
+[urgency_critical]
+background = "#cc241d"
+foreground = "#282828"
+timeout = 0
