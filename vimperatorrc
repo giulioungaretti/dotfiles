@@ -21,7 +21,7 @@
   " turn off the freakin' bell
   set novisualbell
  " remove the chrome
-  set gui=none,tabs
+  set gui=noaddons,nobookmarks,nomenu,nonavigation,tabs
   " enable animation
   set animations
   set editor='bash -lc "gvim -f \$*" gvim '
@@ -75,7 +75,8 @@ hi HintImage          opacity: .7 !important;
 
 "{{{
 command! -nargs=0 -description="Tile Tabs..." sp emenu Tile.Tile New Tab.Above
-command! -nargs=0 -description="Tile Tabs..." vs emenu Tile.Tile New Tab.Right
+command! -nargs=0 -description="Tile Tabs..." vnew emenu Tile.Tile New Tab.Right
+command! -nargs=0 -description="Tile Tabs..." vs emenu Tile.Tile Tab.Right
 command! -nargs=0 -description="Sync now"     sync emenu Tools.Sync Now
 "}}}"
 " vim: set fdm=marker:

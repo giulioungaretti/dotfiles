@@ -1,6 +1,0 @@
-!keycode 22 = backslash
-!keycode 51 shift = BackSpace bar
-! remap hhkb japanese char
-keysym Muhenkan = F12
-! this add natural moouse scrolling 
-pointer = 1 2 3 5 4 6 7 8 9 10 11 12

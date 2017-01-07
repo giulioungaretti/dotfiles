@@ -170,6 +170,7 @@ function! SearchVisualSelectionWithAg() range
     execute 'Ag' selection
 endfunction
 
+Plug 'dylanaraps/wal'
 " Rainbow paranthesis
 Plug 'junegunn/rainbow_parentheses.vim'
 " headers
@@ -238,6 +239,11 @@ Plug 'metakirby5/codi.vim'
 " {{{
 "elixir
 Plug 'elixir-lang/vim-elixir'
+" erlang
+" omnifunc!
+Plug 'vim-erlang/vim-erlang-omnicomplete'
+" compiler
+Plug 'vim-erlang/vim-erlang-compiler'
 " elm
 Plug 'elmcast/elm-vim'
 au FileType elm nmap <leader>b <Plug>(elm-make)
@@ -389,6 +395,8 @@ set noshowmode
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
+let g:airline_section_y =''
+let g:airline_section_z = ''
 call plug#end()
 "}}}
 "------------------------------------------------------------------- Plug ins
@@ -700,3 +708,4 @@ autocmd! bufwritepost vimrc source %
 autocmd! bufwritepost .vimrc source %
 
 "vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
+colorscheme wal
