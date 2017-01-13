@@ -11,13 +11,6 @@ export LANG=en_US.UTF-8
 export GIT_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#disable tmux in fzf
-export FZF_TMUX=1
-#  use extended search  all the time
-export FZF_DEFAULT_OPTS="--extended"
-#}}}
-#
 
 # Aliases {{{
 alias server='python3 -m http.server'
@@ -149,5 +142,13 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
-eval "$(pyenv virtualenv-init -)"
+#eval "$(pyenv virtualenv-init -)"
+#
+#FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#disable tmux in fzf
+export FZF_TMUX=1
+#  use extended search  all the time
+export FZF_DEFAULT_OPTS="--extended"
 
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

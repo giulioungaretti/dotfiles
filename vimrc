@@ -126,7 +126,7 @@ nnoremap <silent> <leader>. :Lines<CR>
 nnoremap <silent> <leader>o :BTags<CR>
 nnoremap <silent> <leader>O :Tags<CR>
 nnoremap <silent> <leader>? :History<CR>
-nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>
 nnoremap <silent> K :call SearchWordWithAg()<CR>
 vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
 nnoremap <silent> <leader>gl :Commits<CR>
@@ -203,6 +203,7 @@ Plug 'metakirby5/codi.vim'
 Plug 'elixir-lang/vim-elixir'
 " elm
 Plug 'elmcast/elm-vim'
+Plug 'bitterjug/vim-tagbar-ctags-elm'
 au FileType elm nmap <leader>b <Plug>(elm-make)
 au FileType elm nmap <leader>m <Plug>(elm-make-main)
 au FileType elm nmap <leader>t <Plug>(elm-test)
