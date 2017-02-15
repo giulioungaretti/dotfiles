@@ -1,5 +1,7 @@
 call plug#begin('~/.vim/plugged')
 let s:uname = system("uname -s") " grab os name
+" colors
+set t_Co=256
 " --------------------------------------------------------------------- Plugs
 " {{{
 if s:uname == "Darwin\n"
@@ -206,6 +208,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'chiel92/vim-autoformat'
 "autoformat code with F6
 noremap <F6> :Autoformat<CR><CR>
+let g:formatter_yapf_style = 'google'
 " autoclose
 Plug 'Townk/vim-autoclose'
 " sublime like mutiple cursors
@@ -259,6 +262,7 @@ au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 " }}}
  "---------------------------------------------------------------- python {{{
 " turn on virtualenvs
+Plug 'alfredodeza/pytest.vim'
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
 " auto docstrings 
 Plug 'heavenshell/vim-pydocstring'

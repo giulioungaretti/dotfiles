@@ -9,6 +9,7 @@
 exec --no-startup-id unity-settings-daemon
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id redshift-gtk
 
 set $mod Mod4
 set $alt Mod1
@@ -20,7 +21,7 @@ focus_follows_mouse no
 new_window pixel 6
 new_float pixel 6
 
-gaps inner 2
+gaps inner 7
 gaps outer 10
 
 popup_during_fullscreen smart
@@ -65,10 +66,14 @@ bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+q kill
+# TODO remove this maybe ?
 #tab switching
 bindsym $MOD+Tab focus right
+
 bindsym $mod+space  exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -p \\"run ↠ \\"'"
-#\bindsym Control+$mod+space exec "launch_script"
+# search google
+bindsym $mod+g exec echo "" | rofi -dmenu -p "Search:" | xargs -I{} xdg-open https://www.google.de/search?q={}
+
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -257,3 +262,7 @@ mode $audiomode {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+# Launchers
+bindsym $alt+space exec "rofi -show window"
+bindsym $mod+i exec "i3_controller"

@@ -2,6 +2,7 @@
 ## Receive options
 set imap_user='giulioungaretti'
 set folder=imaps://mail.me.com:993/
+source .mutt/passwords
 set spoolfile = +Inbox
 set postponed = +Drafts
 set record = +Sent

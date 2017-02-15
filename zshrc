@@ -41,9 +41,14 @@ alias rw-='chmod 600'
 alias rwx='chmod 700'
 alias r--='chmod 644'
 alias r-x='chmod 755'
+alias irssi='TERM=screen-256color irssi'
+alias ll='ls -lG'
+
 #}}}
+
 #source colors
 source "$HOME/dotfiles/color"
+
 # OS awareness # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
         if [ -f ~/.ubuntualias ]; then
@@ -160,7 +165,6 @@ fkill() {
 }
 #}}}
 zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-alias ll='ls -lG'
 function print_dcs
 {
   print -n -- "\EP$1;\E$2\E\\"
@@ -201,7 +205,6 @@ zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
 
-alias irssi='TERM=screen-256color irssi'
 
 # pyenv
 export PYENV_ROOT="${HOME}/.pyenv"
@@ -217,3 +220,4 @@ fi
 
 #export NVM_DIR="/home/unga/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
