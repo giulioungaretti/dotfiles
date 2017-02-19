@@ -154,6 +154,13 @@ function! SearchVisualSelectionWithAg() range
     execute 'Ag' selection
 endfunction
 
+" todo and notes fzf powered
+" open task list for todo in current folder and subfolder
+noremap <Leader>tl  :Ag TODO <CR>
+" open task list for note in current folder and subfolder
+noremap <Leader>nl :Ag NOTE <CR>
+" }}} 
+
 " headers
 Plug 'bimbalaszlo/vim-eightheader'
 " hide cursorline inactive buffer
@@ -166,15 +173,6 @@ Plug 'godlygeek/tabular'
 Plug 'ervandew/screen'
 " tmux seamless movement
 Plug 'christoomey/vim-tmux-navigator'
-" todo
-" tasklist leader-t
-Plug 'TaskList.vim'
-" open task list for todo single file
-map <leader>td <Plug>TaskList
-" open task list for todo in current folder and subfolder
-noremap <Leader>tl  :Ag TODO <CR>
-" open task list for note in current folder and subfolder
-noremap <Leader>nl :Ag NOTE <CR>
 " remove and highlight trailing spaces
 Plug 'bronson/vim-trailing-whitespace'
 " indent highlight
@@ -399,12 +397,6 @@ if has("persistent_undo")
 endif
 " zen mode with Goyo
 nnoremap <silent><Leader>F :Goyo <CR>
-" open task list for todo single file
-map <leader>td <Plug>TaskList
-" open task list for todo in current folder and subfolder
-noremap <Leader>tl  :Ag TODO <CR>
-" open task list for note in current folder and subfolder
-noremap <Leader>nl :Ag NOTE <CR>
 "templates
 let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
