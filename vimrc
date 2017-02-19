@@ -44,8 +44,6 @@ map g/ <Plug>(incsearch-stay)
 Plug 'haya14busa/incsearch.vim'
 " regain focus events in tmux
 Plug 'tmux-plugins/vim-tmux-focus-events'
-" api blueprint syntax hilight
-Plug 'kylef/apiblueprint.vim'
 " sane pair mappings [l, ]l
 Plug 'Tpope/vim-unimpaired'
 " easymotion
