@@ -1,9 +1,11 @@
 call plug#begin('~/.vim/plugged')
+
+" TODO remove
+let g:email = "giulioungaretti@me.com"
+
 let s:uname = system("uname -s") " grab os name
-" colors
-set t_Co=256
-" --------------------------------------------------------------------- Plugs
-" {{{
+
+" OS specfic settings {{{
 if s:uname == "Darwin\n"
     " use global pyhton3
     " no idea how this works with venvs
@@ -14,6 +16,7 @@ if s:uname == "Darwin\n"
     " this should make it work with osx/tmux/madness
     set clipboard+=unnamed
 endif
+
 if s:uname == "Linux\n"
     " Do linux stuff here
     " use global pyhton3
@@ -29,10 +32,10 @@ if s:uname == "Linux\n"
     :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
     :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
-" Text objects, folding, and more for Python and other indented languages.
-Plug 'tweekmonster/braceless.vim'
-"  enable for python only with autoident, folding, and hilight current level
-autocmd FileType python BracelessEnable +indent +fold +highlight
+" }}}
+" General plugs {{{
+" inserts matching parens
+Plug 'Raimondi/delimitMate'
 
 " make search great again
 Plug 'haya14busa/incsearch.vim'
@@ -96,8 +99,8 @@ let g:elm_syntastic_show_warnings = 1
 
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
-let g:syntastic_python_checkers = ['flake8']
+
+
 
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
@@ -105,14 +108,33 @@ Plug 'tpope/vim-obsession'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
 Plug 'jszakmeister/vim-togglecursor'
+" send line to tmux
+Plug 'ervandew/screen'
+" tmux seamless movement
+Plug 'christoomey/vim-tmux-navigator'
 
 "Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+map <C-p> :NERDTreeToggle<CR>
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 " fzf
+" {{{ 
+" install and update fzf binary
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
@@ -134,10 +156,14 @@ nnoremap <silent> <leader>O :Tags<CR>
 nnoremap <silent> <leader>? :History<CR>
 " seach current dir with Ag
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>
+
 nnoremap <silent> K :call SearchWordWithAg()<CR>
-vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
+" TODO conflict with move line in visualmode
+" vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
+
 nnoremap <silent> <leader>gl :Commits<CR>
 nnoremap <silent> <leader>gb :BCommits<CR>
+
 function! SearchWordWithAg()
     execute 'Ag' expand('<cword>')
 endfunction
@@ -165,16 +191,22 @@ noremap <Leader>nl :Ag NOTE <CR>
 Plug 'bimbalaszlo/vim-eightheader'
 " hide cursorline inactive buffer
 Plug 'vim-scripts/CursorLineCurrentWindow'
+
 " templates for empty files
 Plug 'aperezdc/vim-template'
+" templates
+let  g:templates_directory = '/Users/giulio/dotfiles/templates'
+let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
+
 " align table
 Plug 'godlygeek/tabular'
-" send line to tmux
-Plug 'ervandew/screen'
-" tmux seamless movement
-Plug 'christoomey/vim-tmux-navigator'
 " remove and highlight trailing spaces
 Plug 'bronson/vim-trailing-whitespace'
+"remove trailing white spaces with f5
+noremap <F5> :FixWhitespace <CR><CR>
+" ignore trailing whitespaces  mkd
+let g:extra_whitespace_ignored_filetypes = ['mkd']
+
 " indent highlight
 Plug 'Yggdroot/indentLine'
 " auto-format code
@@ -186,33 +218,80 @@ let g:formatter_yapf_style = 'google'
 Plug 'Townk/vim-autoclose'
 " sublime like mutiple cursors
 Plug 'terryma/vim-multiple-cursors'
+" press esc to go back to normal mode instead of quitting multi cursor
+let g:multi_cursor_exit_from_insert_mode=0
+
 " add git gutter
 Plug 'airblade/vim-gitgutter'
+" stick to defualt theme
+let g:gitgutter_override_sign_column_highlight = 0
+" this should turn off the annoying random highlight
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
+
+
 " nerd commenter
 Plug 'scrooloose/nerdcommenter'
 " fuGITve
 Plug 'tpope/vim-fugitive'
+" open diff
+nnoremap <leader>gd :Gdiff<CR>
+" add current file
+nnoremap <leader>ga :Git add %:p<CR><CR>
+" status
+nnoremap <leader>gs :Gstatus<CR>
+" commit added files
+nnoremap <leader>gc :Gcommit -q -v<CR>
+" add and commit current file
+nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
+
 " new command ds, cs, and yss i
 Plug 'tpope/vim-surround'
 " structure of  file
 Plug 'majutsushi/tagbar'
+" tagbar autofous on open
+nmap <c-t> :TagbarToggle  <CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose  = 1
+" sort tags by file order and not by alphabetical order
+let g:tagbar_sort = 0
+
 " add :Gist command
 Plug 'mattn/gist-vim'
-" required
+" required by gist
 Plug 'mattn/webapi-vim'
+
 " colorschemes
 Plug 'chriskempson/base16-vim'
 highlight SignColumn ctermbg=0
 hi VertSplit  ctermbg=0
+
 " zen writing
 Plug 'junegunn/goyo.vim'
-" highlighcolors
+" enter zen mode
+nnoremap <silent><Leader>F :Goyo <CR>
+
+" color colors  hex
 Plug 'chrisbra/Colorizer'
-"----------------------------------------------------------- language specific
-" 👓  interactive code pad
+
+" vim airline and status
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+:let g:airline_theme='base16'
+" always show bar
+set laststatus=2
+" don't show mode
+set noshowmode
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_section_y =''
+let g:airline_section_z = ''
+" }}}
+" language specific {{{ 
+" interactive code pad for some languages
 Plug 'metakirby5/codi.vim'
-"ƛ
-" {{{
+"ƛ {{{
 "elixir
 Plug 'elixir-lang/vim-elixir'
 " erlang
@@ -233,7 +312,13 @@ let g:elm_format_autosave = 1
 let g:elm_syntastic_show_warnings = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 " }}}
- "---------------------------------------------------------------- python {{{
+" python  {{{
+" Text objects, folding, and more for Python and other indented languages.
+Plug 'tweekmonster/braceless.vim'
+"  enable for python only with autoident, folding 
+autocmd FileType python BracelessEnable +indent +fold
+let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
+let g:syntastic_python_checkers = ['flake8']
 " turn on virtualenvs
 Plug 'alfredodeza/pytest.vim'
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
@@ -274,7 +359,7 @@ autocmd FileType python map <LocalLeader>cr :call g:ScreenShellSend("\r")<CR>
 autocmd FileType python map <LocalLeader>L
             \ :call g:ScreenShellSend('!clear')<CR>
 "}}}
-"-------------------------------------------------------------------------golang {{{
+" golang {{{
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'garyburd/go-explorer'
 " open in term
@@ -345,8 +430,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 0
 "}}}
-" --------------------------------------------------------------------------js
-" {{{{
+" js {{{
 au BufNewFile,BufRead *.js setlocal noet ts=2 sw=2 sts=2 expandtab
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 " emmet
@@ -362,141 +446,64 @@ Plug 'mephux/vim-jsfmt', { 'do': 'npm install -g jsfmt' }
 " like go fmt
 let g:js_fmt_autosave = 0
 " }}}
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-:let g:airline_theme='base16'
-" always show bar
-set laststatus=2
-" don't show mode
-set noshowmode
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-let g:airline_section_y =''
-let g:airline_section_z = ''
+" }}}
 call plug#end()
-"}}}
-"------------------------------------------------------------------- Plug ins
-"{{{
-map <C-p> :NERDTreeToggle<CR>
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
-" UNDO
-if has("persistent_undo")
-    set undodir=$HOME/.undodir/
-    set undofile
-endif
-" zen mode with Goyo
-nnoremap <silent><Leader>F :Goyo <CR>
-"templates
-let  g:templates_directory = '/Users/giulio/dotfiles/templates'
-let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
-let g:email = "giulioungaretti@me.com"
-" gutter & fugitive git bindings
-" open diff
-nnoremap <leader>gd :Gdiff<CR>
-" add current file
-nnoremap <leader>ga :Git add %:p<CR><CR>
-" status
-nnoremap <leader>gs :Gstatus<CR>
-" commit added files
-nnoremap <leader>gc :Gcommit -q -v<CR>
-" add and commit current file
-nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
-" this should turn off the annoying random highlight
-let g:gitgutter_realtime = 1
-let g:gitgutter_eager = 1
-" multiple cursors
-" press esc to go back to normal mode instead of quitting multi cursor
-let g:multi_cursor_exit_from_insert_mode=0
-
-"remove trailing white spaces with f5
-noremap <F5> :FixWhitespace <CR><CR>
-" ignore trailing whitespaces  mkd
-let g:extra_whitespace_ignored_filetypes = ['mkd']
-
-" tagbar autofous on open
-nmap <c-t> :TagbarToggle  <CR>
-let g:tagbar_autofocus = 1
-let g:tagbar_autoclose  = 1
-" sort tags by file order and not by alphabetical order
-let g:tagbar_sort = 0
-"}}}
+" theme {{{
 
 " colors
 set t_Co=256
 
-let g:gitgutter_override_sign_column_highlight = 0
 highlight clear signcolumn
 highlight SignColumn ctermbg=0
-set mousehide "Hide when characters are typed
-"color of the current line number
-nnoremap <silent><leader>oo :set relativenumber!<cr>
-" we don't need no hilighted matching partentheses
-" NoMatchParen is a command to the loaded plugin to ask it to stop matching.
-" Setting "loaded_matchparen", on the other hand, stops the plugin from
-" ever loading (by making it think that it's already running).
-let loaded_matchparen = 1
-let loaded_matchparen = 1
-Plug 'Raimondi/delimitMate'
-"theme {{{
-function s:CheckColorScheme()
-  let g:base16colorspace=256
-  let s:config_file = expand('~/.vim/.base16')
-  if filereadable(s:config_file)
-    let s:config = readfile(s:config_file, '', 2)
-    if s:config[1] =~# '^dark\|light$'
-        if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
-          execute 'color base16-' . s:config[0] . '-' . s:config[1]
-          highlight SignColumn ctermbg=0
-          hi VertSplit  ctermbg=0
-          syntax off
+
+function! s:CheckColorScheme()
+    let g:base16colorspace=256
+    let s:config_file = expand('~/.vim/.base16')
+    if filereadable(s:config_file)
+        let s:config = readfile(s:config_file, '', 2)
+        if s:config[1] =~# '^dark\|light$'
+            if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
+                execute 'color base16-' . s:config[0] . '-' . s:config[1]
+                highlight SignColumn ctermbg=0
+                hi VertSplit  ctermbg=0
+                syntax off
+            else
+                echoerr 'Bad scheme ' . s:config[0] . .s:config[1] ' in ' . s:config_file
+            endif
         else
-          echoerr 'Bad scheme ' . s:config[0] . .s:config[1] ' in ' . s:config_file
+            if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
+                execute 'color base16-' . s:config[0]
+                highlight SignColumn ctermbg=0
+                hi VertSplit  ctermbg=0
+                syntax off
+            else
+                echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+            endif
         endif
     else
-        if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
-          execute 'color base16-' . s:config[0]
-          highlight SignColumn ctermbg=0
-          hi VertSplit  ctermbg=0
-          syntax off
-        else
-          echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
-        endif
+        color base16-pico
+        highlight SignColumn ctermbg=0
+        hi VertSplit  ctermbg=0
+        syntax off
     endif
-  else
-    color base16-pico
-    highlight SignColumn ctermbg=0
-    hi VertSplit  ctermbg=0
-    syntax off
-  endif
 endfunction
 
 if v:progname !=# 'vi'
-  if has('autocmd')
-    augroup AutoColor
-       autocmd!
-       autocmd FocusGained * call s:CheckColorScheme()
-       autocmd BufEnter * call s:CheckColorScheme()
-       autocmd FocusGained * AirlineRefresh
-       autocmd VimResized * execute "normal! \<c-w>="
-    augroup END
-  endif
+    if has('autocmd')
+        augroup AutoColor
+            autocmd!
+            autocmd FocusGained * call s:CheckColorScheme()
+            autocmd BufEnter * call s:CheckColorScheme()
+            autocmd FocusGained * AirlineRefresh
+            autocmd VimResized * execute "normal! \<c-w>="
+        augroup END
+    endif
 endif
 if has('gui_running')
     autocmd GUIEnter * call s:CheckColorScheme()
     autocmd GUIEnter * AirlineRefresh
 endif
-"}}}
+
 " load mappings
 source $HOME/dotfiles/vimMaps
 
