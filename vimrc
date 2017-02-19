@@ -154,9 +154,6 @@ function! SearchVisualSelectionWithAg() range
     execute 'Ag' selection
 endfunction
 
-Plug 'dylanaraps/wal'
-" Rainbow paranthesis
-Plug 'junegunn/rainbow_parentheses.vim'
 " headers
 Plug 'bimbalaszlo/vim-eightheader'
 " hide cursorline inactive buffer
@@ -408,11 +405,6 @@ map <leader>td <Plug>TaskList
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
-" heading creator
-let g:EightHeader_comment   = 'call NERDComment( "n", "comment" )'
-let g:EightHeader_uncomment = 'call NERDComment( "n", "uncomment" )'
-" create heading from selected text
-command! Header call EightHeader( 78, 'right', 1, ['', '-', ''], '', '\=" ".s:str." "' ) '] )
 "templates
 let  g:templates_directory = '/Users/giulio/dotfiles/templates'
 let  g:pydocstring_templates_dir = '/Users/giulio/dotfiles/templates/docstrings/'
