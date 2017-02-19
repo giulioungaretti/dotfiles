@@ -33,10 +33,7 @@ endif
 Plug 'tweekmonster/braceless.vim'
 "  enable for python only with autoident, folding, and hilight current level
 autocmd FileType python BracelessEnable +indent +fold +highlight
-"mange rst
-Plug 'Rykka/riv.vim'
-let qcodes = { 'path': '~/Hack/python/Qcodes/docs',}
-let g:riv_projects = [qcodes]
+
 " make search great again
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
