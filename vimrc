@@ -672,8 +672,6 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>"
 " }}}
 "reload on save
-autocmd! bufwritepost vimrc source %
 autocmd! bufwritepost .vimrc source %
 
 "vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
-colorscheme wal
