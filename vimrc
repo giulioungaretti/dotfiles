@@ -35,10 +35,11 @@ Plug 'tweekmonster/braceless.vim'
 autocmd FileType python BracelessEnable +indent +fold +highlight
 
 " make search great again
+Plug 'haya14busa/incsearch.vim'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-Plug 'haya14busa/incsearch.vim'
+
 " regain focus events in tmux
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " sane pair mappings [l, ]l
