@@ -187,10 +187,6 @@ Plug 'godlygeek/tabular'
 Plug 'ervandew/screen'
 " tmux seamless movement
 Plug 'christoomey/vim-tmux-navigator'
-" TODO This is a (hopefully) temporary workaround for neovim#2048.
-if has('nvim')
-    nmap <silent><bs> :<c-u>TmuxNavigateLeft<cr>
-endif
 " todo
 " tasklist leader-t
 Plug 'TaskList.vim'
