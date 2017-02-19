@@ -418,10 +418,12 @@ let g:gitgutter_eager = 1
 " multiple cursors
 " press esc to go back to normal mode instead of quitting multi cursor
 let g:multi_cursor_exit_from_insert_mode=0
+
 "remove trailing white spaces with f5
 noremap <F5> :FixWhitespace <CR><CR>
-" ignore trailing whitespaces on unite and mkd filetype
-let g:extra_whitespace_ignored_filetypes = ['unite', 'mkd','org', 'calendar']
+" ignore trailing whitespaces  mkd
+let g:extra_whitespace_ignored_filetypes = ['mkd']
+
 " tagbar autofous on open
 nmap <c-t> :TagbarToggle  <CR>
 let g:tagbar_autofocus = 1
