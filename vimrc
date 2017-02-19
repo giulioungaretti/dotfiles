@@ -40,8 +40,7 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-" regain focus events in tmux
-Plug 'tmux-plugins/vim-tmux-focus-events'
+
 " sane pair mappings [l, ]l
 Plug 'Tpope/vim-unimpaired'
 " easymotion
@@ -102,11 +101,15 @@ let g:syntastic_python_checkers = ['flake8']
 
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
+" regain focus events in tmux
+Plug 'tmux-plugins/vim-tmux-focus-events'
+" Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
+Plug 'jszakmeister/vim-togglecursor'
+
 "Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
-" Fix tmux (limited to iTerm, Konsole, and xterm) im cursor shape.
-Plug 'jszakmeister/vim-togglecursor'
+
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
