@@ -1,4 +1,8 @@
 call plug#begin('~/.vim/plugged')
+    let g:manualSyntax="True"
+
+" colors
+set t_Co=256
 
 " TODO remove
 let g:email = "giulioungaretti@me.com"
@@ -50,31 +54,6 @@ Plug 'Tpope/vim-unimpaired'
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1
-
-function! ToggleSyntax()
-    if exists("g:syntax_on")
-        syntax off
-    else
-        syntax on
-     endif
-endfunction
-
-function! ColorGitStuff()
-    let current_filetype = &filetype
-    if current_filetype == "gitcommit"
-        syntax enable
-    else
-        syntax off
-     endif
-endfunction
-
-" manually reduce noise
-map <F7> :call ToggleSyntax() <CR>
-" automatically reudce noise
-autocmd BufEnter *  call ColorGitStuff()
-autocmd TabEnter *  call ColorGitStuff()
-autocmd WinEnter *  call ColorGitStuff()
-autocmd BufAdd *  call ColorGitStuff()
 
 "" JK motions: Line motions
 map <Leader>l <Plug>(easymotion-lineforward)
@@ -450,11 +429,6 @@ let g:js_fmt_autosave = 0
 call plug#end()
 " theme {{{
 
-" colors
-set t_Co=256
-
-highlight clear signcolumn
-highlight SignColumn ctermbg=0
 
 function! s:CheckColorScheme()
     let g:base16colorspace=256
@@ -466,7 +440,6 @@ function! s:CheckColorScheme()
                 execute 'color base16-' . s:config[0] . '-' . s:config[1]
                 highlight SignColumn ctermbg=0
                 hi VertSplit  ctermbg=0
-                syntax off
             else
                 echoerr 'Bad scheme ' . s:config[0] . .s:config[1] ' in ' . s:config_file
             endif
@@ -475,7 +448,6 @@ function! s:CheckColorScheme()
                 execute 'color base16-' . s:config[0]
                 highlight SignColumn ctermbg=0
                 hi VertSplit  ctermbg=0
-                syntax off
             else
                 echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
             endif
@@ -484,7 +456,6 @@ function! s:CheckColorScheme()
         color base16-pico
         highlight SignColumn ctermbg=0
         hi VertSplit  ctermbg=0
-        syntax off
     endif
 endfunction
 
@@ -492,16 +463,63 @@ if v:progname !=# 'vi'
     if has('autocmd')
         augroup AutoColor
             autocmd!
-            autocmd FocusGained * call s:CheckColorScheme()
-            autocmd BufEnter * call s:CheckColorScheme()
-            autocmd FocusGained * AirlineRefresh
+            autocmd FocusGained,BufEnter,VimEnter * call s:CheckColorScheme()
+            autocmd FocusGained,vimEnter * AirlineRefresh
             autocmd VimResized * execute "normal! \<c-w>="
         augroup END
     endif
 endif
+
 if has('gui_running')
     autocmd GUIEnter * call s:CheckColorScheme()
     autocmd GUIEnter * AirlineRefresh
 endif
+
+" automatically reudce noise
+autocmd BufEnter *  call ColorGitStuff()
+autocmd TabEnter *  call ColorGitStuff()
+autocmd WinEnter *  call ColorGitStuff()
+autocmd BufAdd *  call ColorGitStuff()
+
+let first = "true"
+let manualSyntax = "False"
+syntax off
+
+function! ToggleSyntax()
+    if exists("g:syntax_on")
+        syntax off
+    else
+        syntax on
+     endif
+endfunction
+
+function! ManualToggleSyntax()
+    if g:manualSyntax == "True"
+        let g:manualSyntax = "False"
+    else
+        let g:manualSyntax = "True"
+    endif
+    call ToggleSyntax()
+endfunction
+
+function! ColorGitStuff()
+    let current_filetype = &filetype
+    if current_filetype == "gitcommit"
+        if  exists("g:syntax_on")
+            let g:yolo = 1
+        else
+             syntax enable
+        endif
+    else
+        if g:manualSyntax == "False"
+            if current_filetype != "gitcommit"
+                syntax off
+            endif
+        endif
+    endif
+endfunction
+
+" manually reduce noise
+map <F7> :call ManualToggleSyntax() <CR>
 
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
