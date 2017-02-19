@@ -103,24 +103,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
 let g:syntastic_python_checkers = ['flake8']
-"yapf gofmt for python {{{
-function! YAPF() range
-  " Determine range to format.
-  let l:line_ranges = a:firstline . '-' . a:lastline
-  let l:cmd = 'yapf --lines=' . l:line_ranges
 
-  " Call YAPF with the current buffer
-  let l:formatted_text = system(l:cmd, join(getline(1, '$'), "\n") . "\n")
-
-  " Update the buffer.
-  execute '1,' . string(line('$')) . 'delete'
-  call setline(1, split(l:formatted_text, "\n"))
-
-  " Reset cursor to first line of the formatted range.
-  call cursor(a:firstline, 1)
-endfunction
-" }}}
-" autocmd FileType python nnoremap <C-P> :call YAPF()<cr>
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 "Plug 'ryanoasis/vim-devicons'
