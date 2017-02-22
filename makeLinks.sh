@@ -38,4 +38,4 @@ chsh -s $(which zsh)
 echo 'set up colors'
 git clone https://github.com/chriskempson/base16-shell.git $HOME/.zsh/base16-shell
 chmod +x $HOME/.zsh/base16-shell/scripts/*.sh
-touch $HOME/.config/nvim/.base16
+touch $HOME/.vim/.base16
