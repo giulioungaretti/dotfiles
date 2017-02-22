@@ -1,30 +1,39 @@
-# Executes commands at the start of an interactive session.
-#
-# Source. {{{
-# Prezto
+# Prezto {{{
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
         source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
-#}}}
+# }}}
+# Source {{{
+#source colors
+source "$HOME/dotfiles/color"
+
+# OS awareness # {{{
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        if [ -f ~/.ubuntualias ]; then
+                source ~/.ubuntualias
+        fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+        if [ -f ~/.osxalias ]; then
+                source ~/.osxalias
+        fi
+fi
+
+# }}}
+# }}}
+# options {{{
+setopt HIST_IGNORE_DUPS 
+setopt SHARE_HISTORY 
+# }}}
 # Exports # {{{
 [[ $TMUX = "" ]] && export TERM="xterm-256color"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-#if [ -x  "$(command -v nvim)" ]; then
-#  export GIT_EDITOR=nvim
-#  export VISUAL=nvim
-#  export EDITOR=nvim
-#  alias vim=nvim
-#else
-#  export GIT_EDITOR=nvim
-#  export VISUAL=nvim
-#  export EDITOR=nvim
-#  alias vim=nvim
-#fi
 #disable tmux in fzf
 export FZF_TMUX=1
 #  use extended search  all the time
 export FZF_DEFAULT_OPTS="--extended"
+# pyenv
+export PYENV_ROOT="${HOME}/.pyenv"
 #}}}
 # Aliases {{{
 alias server='python3 -m http.server'
@@ -43,22 +52,6 @@ alias r--='chmod 644'
 alias r-x='chmod 755'
 alias irssi='TERM=screen-256color irssi'
 alias ll='ls -lG'
-
-#}}}
-
-#source colors
-source "$HOME/dotfiles/color"
-
-# OS awareness # {{{
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        if [ -f ~/.ubuntualias ]; then
-                source ~/.ubuntualias
-        fi
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-        if [ -f ~/.osxalias ]; then
-                source ~/.osxalias
-        fi
-fi
 #}}}
 # vi mode {{{
 # fix vim mode on commmand line {{{
@@ -68,35 +61,16 @@ fi
 # 10ms for key sequences
 KEYTIMEOUT=11
 export KEYTIMEOUT
-#}}}
+
 # remap jj to nesc
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey -M viins 'kj' vi-cmd-mode
-# add missing vim hotkeys
-# fixes backspace deletion issues
-# http://zshwiki.org/home/zle/vi-mode
-bindkey -a u undo
-bindkey -a '^R' redo
-bindkey '^?' backward-delete-char
-bindkey '^H' backward-delete-char
-bindkey -v
-# history search in vim mode
-# http://zshwiki.org./home/zle/bindkeys#why_isn_t_control-r_working_anymore
-bindkey -M viins '^s' history-incremental-search-backward
+# edit in vim 
 bindkey -v
 # Multi-level undo
 bindkey -M vicmd 'u' undo
 bindkey -M vicmd '^R' redo
-#
-setopt HIST_IGNORE_DUPS 
-setopt SHARE_HISTORY 
-# Allow backspacing past where you started in insert mode
-bindkey '^?' backward-delete-char
-bindkey '^H' backward-delete-char
 
-# Incrememntal search
-bindkey -M vicmd '/' history-incremental-search-backward
-bindkey -M viins '^R' history-incremental-search-backward
 
 # Allow Ctrl-P and Ctrl-N in insert mode
 bindkey '^P' history-search-backward
@@ -111,22 +85,7 @@ zle -N noop
 bindkey -M vicmd '\E' noop
 #}}}
 #}}}
-#------------------------------------------------------- gb tooling helpers.{{{
-if [ -f /usr/local/bin/agb ]; then
-        alias agb="source /usr/local/bin/agb"
-fi
-if [ -f /usr/local/bin/dgb ]; then
-        alias dgb="source /usr/local/bin/dgb"
-fi
-DIR=$HOME"/bin"
-if [ -f $DIR/agb ]; then
-        alias agb="source $DIR/agb"
-fi
-if [ -f $DIR/dgb ]; then
-        alias dgb="source $DIR/dgb"
-fi
-#}}}
-#------------------------------------------------------------------- fzf  {{{
+# fzf  {{{
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #List all vagrant boxes available in the system including its status, and try to access the selected one via ssh
 vs(){
@@ -164,6 +123,7 @@ fkill() {
         fi
 }
 #}}}
+# cosmetic cursors {{{  
 zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 function print_dcs
 {
@@ -204,11 +164,8 @@ function zle-line-finish
 zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
-
-
-# pyenv
-export PYENV_ROOT="${HOME}/.pyenv"
-
+# }}}
+# version managers {{{
 if [ -d "${PYENV_ROOT}" ]; then
    export PATH="${PYENV_ROOT}/bin:${PATH}"
    eval "$(pyenv init -)"
@@ -221,3 +178,6 @@ fi
 #export NVM_DIR="/home/unga/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 # export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+
+# }}}
+# vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
