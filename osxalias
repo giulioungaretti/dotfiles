@@ -4,6 +4,7 @@ alias ghub="mosh giulio@188.166.36.190-- screen -dr"
 #}}}
 #-------------------------------------------------------------------- Exports
 # {{{
+export COPYSHELL="reattach-to-user-namespace -l ${SHELL}"
 export VISUAL=vim
 export EDITOR=vim
 #  go path variables{{{
