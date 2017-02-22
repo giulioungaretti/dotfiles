@@ -70,7 +70,7 @@ bindsym $mod+q kill
 #tab switching
 bindsym $MOD+Tab focus right
 
-bindsym $mod+space  exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -p \\"run ↠ \\"'"
+bindsym $mod+space  exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -p \\"Run ↠ \\"'"
 # search google
 bindsym $mod+g exec echo "" | rofi -dmenu -p "Search:" | xargs -I{} xdg-open https://www.google.de/search?q={}
 
@@ -159,10 +159,18 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 #floating_maximum_size -1 x -1
 
 mode "resize" {
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+        bindsym h resize shrink left 7 px or 7 ppt
+        bindsym Shift+h resize grow   left 7 px or 7 ppt
+
+        bindsym j resize shrink down 7 px or 7 ppt
+        bindsym Shift+j resize grow   down 7 px or 7 ppt
+
+        bindsym Shift+k resize shrink up 7 px or 7 ppt
+        bindsym k resize grow   up 7 px or 7 ppt
+
+        bindsym l resize shrink right 7 px or 7 ppt
+        bindsym Shift+l resize grow   right 7 px or 7 ppt
+
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
