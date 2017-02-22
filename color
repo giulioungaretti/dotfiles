@@ -62,23 +62,26 @@ color() {
 dark() {
   color dark "$1"
   # This should be "Default"
-  profile_id=b1dcc9dd-5262-4d8d-a863-c897e6d979b9
-
-  dconf write /org/gnome/terminal/legacy/profiles:/:$profile_id/bold-color-same-as-fg "true"
+  if [[ "$OSTYPE" == "linux-gnu" ]]; then
+      profile_id=b1dcc9dd-5262-4d8d-a863-c897e6d979b9
+      dconf write /org/gnome/terminal/legacy/profiles:/:$profile_id/bold-color-same-as-fg "true"
+  fi
 }
 
 light() {
   color light "$1"
-  profile_id=b1dcc9dd-5262-4d8d-a863-c897e6d979b9
-
-  dconf write /org/gnome/terminal/legacy/profiles:/:$profile_id/bold-color-same-as-fg "false"
+  if [[ "$OSTYPE" == "linux-gnu" ]]; then
+      profile_id=b1dcc9dd-5262-4d8d-a863-c897e6d979b9
+      dconf write /org/gnome/terminal/legacy/profiles:/:$profile_id/bold-color-same-as-fg "false"
+  fi
 }
 
 new() {
   color new "$1"
-  profile_id=b1dcc9dd-5262-4d8d-a863-c897e6d979b9
-
-  dconf write /org/gnome/terminal/legacy/profiles:/:$profile_id/bold-color-same-as-fg "true"
+  if [[ "$OSTYPE" == "linux-gnu" ]]; then
+      profile_id=b1dcc9dd-5262-4d8d-a863-c897e6d979b9
+      dconf write /org/gnome/terminal/legacy/profiles:/:$profile_id/bold-color-same-as-fg "true"
+  fi
 }
 
 if [[ -s "$BASE16_CONFIG" ]]; then
