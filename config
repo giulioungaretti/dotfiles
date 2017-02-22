@@ -9,6 +9,7 @@
 exec --no-startup-id unity-settings-daemon
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id redshift-gtk
 
 set $mod Mod4
 set $alt Mod1
@@ -20,7 +21,7 @@ focus_follows_mouse no
 new_window pixel 6
 new_float pixel 6
 
-gaps inner 2
+gaps inner 7
 gaps outer 10
 
 popup_during_fullscreen smart
@@ -65,10 +66,14 @@ bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+q kill
+# TODO remove this maybe ?
 #tab switching
 bindsym $MOD+Tab focus right
-bindsym $mod+space  exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -p \\"run ↠ \\"'"
-#\bindsym Control+$mod+space exec "launch_script"
+
+bindsym $mod+space  exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -p \\"Run ↠ \\"'"
+# search google
+bindsym $mod+g exec echo "" | rofi -dmenu -p "Search:" | xargs -I{} xdg-open https://www.google.de/search?q={}
+
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -154,10 +159,18 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 #floating_maximum_size -1 x -1
 
 mode "resize" {
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+        bindsym h resize shrink left 7 px or 7 ppt
+        bindsym Shift+h resize grow   left 7 px or 7 ppt
+
+        bindsym j resize shrink down 7 px or 7 ppt
+        bindsym Shift+j resize grow   down 7 px or 7 ppt
+
+        bindsym Shift+k resize shrink up 7 px or 7 ppt
+        bindsym k resize grow   up 7 px or 7 ppt
+
+        bindsym l resize shrink right 7 px or 7 ppt
+        bindsym Shift+l resize grow   right 7 px or 7 ppt
+
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -257,3 +270,7 @@ mode $audiomode {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+# Launchers
+bindsym $alt+space exec "rofi -show window"
+bindsym $mod+i exec "i3_controller"

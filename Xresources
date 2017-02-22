@@ -70,19 +70,6 @@
 !*.color13:      base06
 !*.color14:      base0F
 !*.color15:      base07
-!! ------------------------------------------------------------------------------
-!! ROFI Color theme
-!! ------------------------------------------------------------------------------
-!! Use extended color scheme
-!rofi.color-enabled:                  true
-!! Color scheme for normal row
-!!rofi.color-normal:                   argb:00000000,  #D8DEE9 , argb:00000000,  #FAC863 ,  #1B2B34
-!!! Color scheme for urgent row
-!!rofi.color-urgent:                   argb:00000000,  #F99157 , argb:00000000,  #F99157 ,  #1B2B34
-!!! Color scheme for active row
-!!rofi.color-active:                   argb:00000000,  #6699CC , argb:00000000,  #6699CC ,  #1B2B34
-!!! Color scheme window
-!!rofi.color-window:                   argb:ee222222,  #FAC863 ,  #FAC863
 
 !!sets the background to black and foreground to white for other terminals relying on Xresources
 !*background: #d4f1ed
@@ -114,13 +101,8 @@
 !*color15: #79775e
 
 ! rofi ----------------------------------------------------------------
- rofi.background:  #000000
- rofi.foreground:  #F5F5F5
- rofi.highlightfg: #F5F5F5
- rofi.bordercolor: #6A9FB5
  rofi.padding: 50
  rofi.borderwidth: 1
- rofi.separator-style: none
  rofi.opacity: 100
  rofi.font: input 13
  rofi.location: 0
@@ -133,3 +115,19 @@
  rofi.width: -50
  rofi.lines: 10
  rofi.fixed-num-lines: 10
+
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+! Use extended color scheme
+rofi.color-enabled:                  true
+! Color scheme for normal row
+rofi.color-normal:                   #ffffff,#525d76,#f5f5f5,#C43177,#ffffff
+! Color scheme for urgent row
+rofi.color-urgent:                   #ffffff,#dc322f,#f5f5f5,#C43177,#dc322f
+! Color scheme for active row
+rofi.color-active:                   #ffffff,#c2cad0,#f5f5f5,#C43177,#c2cad0
+! Color scheme window
+rofi.color-window:                   #ffffff,#f5f5f5
+! Separator style (none, dash, solid)
+rofi.separator-style:                solid
