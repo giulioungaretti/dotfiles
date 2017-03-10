@@ -237,6 +237,12 @@ let g:tagbar_sort = 0
 
 " add :Gist command
 Plug 'mattn/gist-vim'
+" Private by default
+let g:gist_post_private = 1
+" Mac:  
+let g:gist_clip_command = 'pbcopy'
+" Linux:  
+let g:gist_clip_command = 'xclip -selection clipboard'
 " required by gist
 Plug 'mattn/webapi-vim'
 
