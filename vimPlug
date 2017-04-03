@@ -11,9 +11,6 @@ let s:uname = system("uname -s") " grab os name
 
 " OS specfic settings {{{
 if s:uname == "Darwin\n"
-    " use global pyhton3
-    " no idea how this works with venvs
-    let g:python3_host_prog = "/usr/local/bin/python3"
     "Mac specific plug ins
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
@@ -22,10 +19,6 @@ if s:uname == "Darwin\n"
 endif
 
 if s:uname == "Linux\n"
-    " Do linux stuff here
-    " use global pyhton3
-    " no idea how this works with venvs
-    let g:python3_host_prog = "/usr/bin/python3"
     " use sys wide syntastic
     let g:syntastic_python_python_exec = '/usr/bin/python3'
     set clipboard=unnamedplus
@@ -277,8 +270,14 @@ let g:airline_section_z = ''
 " interactive code pad for some languages
 Plug 'metakirby5/codi.vim'
 "ƛ {{{
+"f#
+Plug 'fsharp/vim-fsharp', {
+      \ 'for': 'fsharp',
+      \ 'do':  'make fsautocomplete',
+      \}
 "elixir
 Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim'
 " erlang
 " omnifunc!
 Plug 'vim-erlang/vim-erlang-omnicomplete'
@@ -313,6 +312,19 @@ let g:pydocstring_enable_mapping = 0
 " jedi autocpmletion and smart code fu
 Plug 'davidhalter/jedi-vim'
 let g:jedi#force_py_version = 3
+Plug 'lambdalisue/vim-pyenv'
+
+function! s:jedi_auto_force_py_version() abort
+  let major_version = pyenv#python#get_internal_major_version()
+  call jedi#force_py_version(major_version)
+endfunction
+
+augroup vim-pyenv-custom-augroup
+  autocmd! *
+  autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+  autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+augroup END
+
 " defaultjs
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#use_splits_not_buffers = "right"
@@ -414,6 +426,10 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 0
+" enable syntastic 
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:go_list_type = "quickfix"
 "}}}
 " js {{{
 au BufNewFile,BufRead *.js setlocal noet ts=2 sw=2 sts=2 expandtab
