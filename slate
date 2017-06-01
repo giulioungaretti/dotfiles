@@ -1,6 +1,0 @@
-config windowHintsIgnoreHiddenWindows true
-config windowHintsShowIcons false
-config windowHintsSpread false
-#direction = right|left|up|above|down|below|behind
-# app = an app name surrounded by quotes
-#bind k:ctrl:cmd focus above
