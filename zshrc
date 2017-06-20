@@ -170,7 +170,7 @@ if [ -d "${PYENV_ROOT}" ]; then
    export PATH="${PYENV_ROOT}/bin:${PATH}"
    eval "$(pyenv init -)"
    # this is really slow for some reasons
-   #eval "$(pyenv virtualenv-init -)"
+   eval "$(pyenv virtualenv-init -)"
 fi
 
 
