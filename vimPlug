@@ -22,12 +22,6 @@ if s:uname == "Darwin\n"
 endif
 
 if s:uname == "Linux\n"
-    " Do linux stuff here
-    " use global pyhton3
-    " no idea how this works with venvs
-    let g:python3_host_prog = "/usr/bin/python3"
-    " use sys wide syntastic
-    let g:syntastic_python_python_exec = '/usr/bin/python3'
     set clipboard=unnamedplus
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
@@ -71,16 +65,7 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " check syntax
-Plug 'scrooloose/syntastic'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:elm_syntastic_show_warnings = 1
-
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-
-
+Plug 'w0rp/ale'
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 " regain focus events in tmux
@@ -294,7 +279,6 @@ au FileType elm nmap <leader>e <Plug>(elm-error-detail)
 au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
-let g:elm_syntastic_show_warnings = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 " }}}
 " python  {{{
@@ -302,8 +286,6 @@ au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 Plug 'tweekmonster/braceless.vim'
 "  enable for python only with autoident, folding 
 autocmd FileType python BracelessEnable +indent +fold
-let g:syntastic_python_python_exec = '~/.pyenv/shims/python'
-let g:syntastic_python_checkers = ['flake8']
 " turn on virtualenvs
 Plug 'alfredodeza/pytest.vim'
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
