@@ -36,7 +36,7 @@ set showmatch
 " better mouse interaction is no mouse integration
 set mouse=""
 "Hide when characters are typed
-set mousehide 
+set mousehide
 
 "folding
 set nofoldenable  " enable folding
@@ -63,7 +63,7 @@ set wildmenu
 set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
 
 " show hidden characters
-set list " 
+set list "
 set list listchars=tab:»·,trail:·
 
 set tabstop=4
@@ -158,7 +158,7 @@ nnoremap <silent> z4 :set foldlevel=4<CR>
 nnoremap <silent> z5 :set foldlevel=5<CR>
 nnoremap <silent> z5 :set foldlevel=6<CR>
 nnoremap <silent> z5 :set foldlevel=7<CR>
-" turn on and off spell checking 
+" turn on and off spell checking
 map <F10> :setlocal spell! spelllang=en_us<CR>
 
 " buffers
