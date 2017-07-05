@@ -63,6 +63,7 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " check syntax
 Plug 'w0rp/ale'
+let g:ale_lint_on_text_changed = 'normal'
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 " regain focus events in tmux
@@ -244,7 +245,8 @@ Plug 'chrisbra/Colorizer'
 " vim airline and status
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-:let g:airline_theme='base16'
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
 " always show bar
 set laststatus=2
 " don't show mode
@@ -412,10 +414,6 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 0
-" enable syntastic 
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-let g:go_list_type = "quickfix"
 "}}}
 " js {{{
 au BufNewFile,BufRead *.js setlocal noet ts=2 sw=2 sts=2 expandtab
