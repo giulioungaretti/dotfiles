@@ -28,7 +28,7 @@ setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 # }}}
 # Exports # {{{
-[[ $TMUX = "" ]] && export TERM="xterm-256color"
+[[ $TMUX = "" ]] && export TERM="xterm-256color-italic"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 #disable tmux in fzf
