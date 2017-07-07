@@ -16,6 +16,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         if [ -f ~/.osxalias ]; then
                 source ~/.osxalias
         fi
+    if [ -f $(brew --prefix)/etc/brew-wrap ];then
+      source $(brew --prefix)/etc/brew-wrap
+    fi
 fi
 
 # }}}
