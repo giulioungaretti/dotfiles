@@ -12,13 +12,16 @@ do
         ln -sf "$f" "$HOME/.config/nvim/${f##*/}"
     elif [[ "$f" == "config" ]]; then
         ln -sf "$f" "$HOME/.config/i3/${f##*/}"
+    elif [[ "$f" == "Brewfile" ]] ; then
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            ln -sf "$f" "$HOME/.brewfile/${f##*/}"
+        fi
     else
         ln -sf "$f" "$HOME/.${f##*/}"
     fi
 done
 
 echo removing
-
 rm -f ~/.makeLinks.sh
 rm -f ~/.README.md
 
@@ -39,3 +42,4 @@ echo 'set up colors'
 git clone https://github.com/chriskempson/base16-shell.git $HOME/.zsh/base16-shell
 chmod +x $HOME/.zsh/base16-shell/scripts/*.sh
 touch $HOME/.vim/.base16
+mkdir $HOME/.undodir/
