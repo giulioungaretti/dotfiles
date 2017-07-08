@@ -2,13 +2,16 @@
 # tap repositories and their packages
 
 tap caskroom/cask
+cask 1password
+cask alfred
+cask iterm2
 cask skype
 cask spotify
-cask iterm2
 
 tap homebrew/core
 brew autoconf
 brew ctags
+brew dfu-programmer
 brew elm
 brew elm-format
 brew fish
@@ -17,14 +20,21 @@ brew gdbm
 brew gettext
 brew git
 brew glib
+brew gmp
 brew go
+brew htop
 brew httpie
 brew icu4c
 brew irssi
 brew jq
 brew libevent
 brew libffi
+brew libmpc
+brew libusb
+brew libusb-compat
+brew mas
 brew mobile-shell
+brew mpfr
 brew node
 brew oniguruma
 brew openssl
@@ -49,10 +59,17 @@ brew wget
 brew xz
 brew yarn
 brew zsh
-brew mas
+
+tap osx-cross/avr
+brew avr-binutils
+brew avr-gcc
+brew avr-libc
 
 tap rcmdnk/file
 brew brew-file
+
+# Cask applications
+cask WhatsApp
 
 # App Store applications
 appstore 918858936 Airmail 3 (3.3.2)
