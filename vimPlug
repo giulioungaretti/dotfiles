@@ -118,36 +118,15 @@ nnoremap <silent> <leader>O :Tags<CR>
 nnoremap <silent> <leader>? :History<CR>
 " seach current dir with Ag
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>
-
-nnoremap <silent> K :call SearchWordWithAg()<CR>
-" TODO conflict with move line in visualmode
-" vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
-
 nnoremap <silent> <leader>gl :Commits<CR>
 nnoremap <silent> <leader>gb :BCommits<CR>
-
-function! SearchWordWithAg()
-    execute 'Ag' expand('<cword>')
-endfunction
-
-function! SearchVisualSelectionWithAg() range
-    let old_reg = getreg('"')
-    let old_regtype = getregtype('"')
-    let old_clipboard = &clipboard
-    set clipboard&
-    normal! ""gvy
-    let selection = getreg('"')
-    call setreg('"', old_reg, old_regtype)
-    let &clipboard = old_clipboard
-    execute 'Ag' selection
-endfunction
 
 " todo and notes fzf powered
 " open task list for todo in current folder and subfolder
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
-" }}} 
+" }}}
 
 " headers
 Plug 'bimbalaszlo/vim-eightheader'
