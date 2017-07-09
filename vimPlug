@@ -278,6 +278,13 @@ Plug 'slashmili/alchemist.vim'
 Plug 'vim-erlang/vim-erlang-omnicomplete'
 " compiler
 Plug 'vim-erlang/vim-erlang-compiler'
+augroup erlang
+  au!
+  au BufNewFile,BufRead *.erl setlocal tabstop=4
+  au BufNewFile,BufRead *.erl setlocal shiftwidth=4
+  au BufNewFile,BufRead *.erl setlocal softtabstop=4
+  au BufNewFile,BufRead relx.config setlocal filetype=erlang
+augroup END
 " elm
 Plug 'elmcast/elm-vim'
 au FileType elm nmap <leader>b <Plug>(elm-make)
