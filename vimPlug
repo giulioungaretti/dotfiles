@@ -173,8 +173,8 @@ let g:extra_whitespace_ignored_filetypes = ['mkd']
 Plug 'Yggdroot/indentLine'
 let g:indentLine_char = '⋮'
 let g:indentLine_color_term='gray'
-
 Plug 'junegunn/rainbow_parentheses.vim'
+
 " auto-format code
 Plug 'chiel92/vim-autoformat'
 "autoformat code with F6
