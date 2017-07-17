@@ -14,6 +14,9 @@ if s:uname == "Darwin\n"
     "Mac specific plug ins
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
+    " look up stuff on dash
+    Plug 'rizzatti/dash.vim'
+    :nmap <silent> <leader>d <Plug>DashSearch
     " this should make it work with osx/tmux/madness
     set clipboard=unnamed
 endif
@@ -64,6 +67,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " check syntax
 Plug 'w0rp/ale'
 let g:ale_lint_on_text_changed = 'normal'
+let g:ale_sign_error = '⤫'
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 " regain focus events in tmux
@@ -303,11 +307,11 @@ augroup vim-pyenv-custom-augroup
 augroup END
 
 " defaultjs
-let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_command = "<leader>dv"
 let g:jedi#use_splits_not_buffers = "right"
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = "K"
+let g:jedi#documentation_command = "<leader>d"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
@@ -349,9 +353,9 @@ au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
 au FileType go nmap <Leader>i <Plug>(go-info)
-"Open the relevant Godoc for the word under the cursor with <leader>gd or open it vertically with <leader>gv
-au FileType go nmap <Leader>gd <Plug>(go-doc)<cr><C-w>k<cr>
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)<cr><C-w>h<cr>
+"Open the relevant Godoc for the word under the cursor with <leader>do or open it vertically with <leader>d
+au FileType go nmap <Leader>do <Plug>(go-doc)<cr><C-w>k<cr>
+au FileType go nmap <Leader>d <Plug>(go-doc-vertical)<cr><C-w>h<cr>
 "Or open the Godoc in browser
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
