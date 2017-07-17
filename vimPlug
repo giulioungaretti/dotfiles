@@ -397,13 +397,8 @@ let g:tagbar_type_go = {
             \ 'ctagsbin'  : 'gotags',
             \ 'ctagsargs' : '-sort -silent'
             \ }
-" Enable syntax highting on everything
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_auto_type_info = 0
+let g:go_auto_sameids = 1
+let g:go_auto_type_info = 1
 "}}}
 " js {{{
 au BufNewFile,BufRead *.js setlocal noet ts=2 sw=2 sts=2 expandtab
