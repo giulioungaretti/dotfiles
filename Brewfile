@@ -4,9 +4,12 @@
 tap caskroom/cask
 cask 1password
 cask alfred
+cask dropbox
 cask iterm2
 cask skype
 cask spotify
+cask torbrowser
+
 
 tap homebrew/core
 brew autoconf
@@ -42,6 +45,7 @@ brew openssl@1.1
 brew pcre
 brew pcre2
 brew pkg-config
+brew postgresql
 brew protobuf
 brew pyenv
 brew pyenv-virtualenv
