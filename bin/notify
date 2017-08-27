@@ -1,0 +1,7 @@
+#!/bin/bash
+# source:
+# https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-applescript-or-shel
+# send notification
+# usage:
+# $notify "message"
+/usr/bin/osascript -e "display notification \"$*\""
