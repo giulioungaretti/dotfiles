@@ -14,13 +14,13 @@ if spotify_state is equal to "playing" then
   tell application "Spotify"
     set track_name to name of current track
     set artist_name to artist of current track
-    return track_name & " - #[bold]" & artist_name & "#[nobold]"
+    return  & track_name & " - #[bold]" & artist_name & "#[nobold]"
   end tell
 else if itunes_state is equal to "playing" then
   tell application "iTunes"
     set track_name to name of current track
     set artist_name to artist of current track
-    return track_name & " - #[bold]" & artist_name & "#[nobold]"
+    return " ♫" & track_name & " - #[bold]" & artist_name & "#[nobold]"
   end tell
 else
   return " ♫ "

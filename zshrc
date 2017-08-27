@@ -176,8 +176,19 @@ if [ -d "${PYENV_ROOT}" ]; then
    eval "$(pyenv virtualenv-init -)"
 fi
 
+# use vim with obseeesion
+function vim() {
+  if test $# -gt 0; then
+    env vim "$@"
+  elif test -f Session.vim; then
+    env vim -S
+  else
+    env vim -c Obsession
+  fi
+}
 
 
+source ~/dotfiles/SECRETS.sh
 #export NVM_DIR="/home/unga/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 # export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

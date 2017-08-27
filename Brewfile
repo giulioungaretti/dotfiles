@@ -4,12 +4,19 @@
 tap caskroom/cask
 cask 1password
 cask alfred
-cask dropbox
-cask iterm2
+cask atom
+cask google-chrome
+cask menubar-colors
+cask postman
 cask skype
 cask spotify
 cask torbrowser
+cask vagrant
+cask virtualbox
+cask visual-studio-code
 
+tap caskroom/versions
+cask iterm2-beta
 
 tap homebrew/core
 brew autoconf
@@ -17,6 +24,7 @@ brew ctags
 brew dfu-programmer
 brew elm
 brew elm-format
+brew entr
 brew fish
 brew fzf
 brew gdbm
@@ -25,6 +33,7 @@ brew git
 brew glib
 brew gmp
 brew go
+brew gotags
 brew htop
 brew httpie
 brew icu4c
@@ -37,6 +46,7 @@ brew libusb
 brew libusb-compat
 brew mas
 brew mobile-shell
+brew mono
 brew mpfr
 brew node
 brew oniguruma
@@ -53,6 +63,7 @@ brew python
 brew python3
 brew readline
 brew reattach-to-user-namespace
+brew shellcheck
 brew sqlite
 brew the_silver_searcher
 brew tmux
@@ -66,11 +77,17 @@ brew zsh
 
 tap osx-cross/avr
 brew avr-binutils
-brew avr-gcc
-brew avr-libc
 
 tap rcmdnk/file
 brew brew-file
+
+tap universal-ctags/universal-ctags
+brew universal-ctags
+
+tap universal-ctags/universal-ctags
+
+# Other Homebrew packages
+brew postgres
 
 # Cask applications
 cask WhatsApp

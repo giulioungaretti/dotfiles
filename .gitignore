@@ -4,3 +4,5 @@
 Session.vim
 # golang coverage tests temp files
 coverage.out
+# secrets
+SECRETS.sh

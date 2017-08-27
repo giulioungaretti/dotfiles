@@ -11,7 +11,9 @@ do
     if [[ "$f" == "init.vim" ]]; then
         ln -sf "$f" "$HOME/.config/nvim/${f##*/}"
     elif [[ "$f" == "config" ]]; then
-        ln -sf "$f" "$HOME/.config/i3/${f##*/}"
+        if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	    ln -sf "$f" "$HOME/.config/i3/${f##*/}"
+	fi
     elif [[ "$f" == "Brewfile" ]] ; then
         if [[ "$OSTYPE" == "darwin"* ]]; then
             ln -sf "$f" "$HOME/.brewfile/${f##*/}"

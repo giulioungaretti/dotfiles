@@ -1,8 +1,6 @@
 call plug#begin('~/.vim/plugged')
-    let g:manualSyntax="True"
-
 " colors
-set t_Co=256
+" set t_Co=256
 
 " TODO remove
 let g:email = "giulioungaretti@me.com"
@@ -15,8 +13,8 @@ if s:uname == "Darwin\n"
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
     " look up stuff on dash
-    Plug 'rizzatti/dash.vim'
-    :nmap <silent> <leader>d <Plug>DashSearch
+    "Plug 'rizzatti/dash.vim'
+    "nmap <silent> <leader>d <Plug>DashSearch
     " this should make it work with osx/tmux/madness
     set clipboard=unnamed
 endif
@@ -66,8 +64,10 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " check syntax
 Plug 'w0rp/ale'
-let g:ale_lint_on_text_changed = 'normal'
+" pop list open
+let g:ale_open_list = 1
 let g:ale_sign_error = '⤫'
+let g:ale_lint_on_text_changed = 'never'
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 " regain focus events in tmux
@@ -96,7 +96,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 
 " fzf
-" {{{ 
+" {{{
 " install and update fzf binary
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -208,15 +208,16 @@ let g:tagbar_sort = 0
 Plug 'mattn/gist-vim'
 " Private by default
 let g:gist_post_private = 1
-" Mac:  
+" Mac:
 let g:gist_clip_command = 'pbcopy'
-" Linux:  
+" Linux:
 let g:gist_clip_command = 'xclip -selection clipboard'
 " required by gist
 Plug 'mattn/webapi-vim'
 
 " colorschemes
 Plug 'chriskempson/base16-vim'
+Plug 'ayu-theme/ayu-vim'
 Plug 'giulioungaretti/rilasso'
 " Plug 'junegunn/rainbow_parentheses.vim'
 
@@ -243,7 +244,7 @@ let g:airline_right_sep=''
 let g:airline_section_y =''
 let g:airline_section_z = ''
 " }}}
-" language specific {{{ 
+" language specific {{{
 " interactive code pad for some languages
 Plug 'metakirby5/codi.vim'
 "ƛ {{{
@@ -276,18 +277,19 @@ au FileType elm nmap <leader>r <Plug>(elm-repl)
 au FileType elm nmap <leader>e <Plug>(elm-error-detail)
 au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
+Plug 'bitterjug/vim-tagbar-ctags-elm'
 let g:elm_format_autosave = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
 " }}}
 " python  {{{
 " Text objects, folding, and more for Python and other indented languages.
 Plug 'tweekmonster/braceless.vim'
-"  enable for python only with autoident, folding 
+"  enable for python only with autoident, folding
 autocmd FileType python BracelessEnable +indent +fold
 " turn on virtualenvs
 Plug 'alfredodeza/pytest.vim'
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
-" auto docstrings 
+" auto docstrings
 Plug 'heavenshell/vim-pydocstring'
 let g:pydocstring_enable_mapping = 0
 " jedi autocpmletion and smart code fu
@@ -340,6 +342,7 @@ autocmd FileType python map <LocalLeader>L
 " golang {{{
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'garyburd/go-explorer'
+let g:ale_linters = {'go': ['go build','gofmt']}
 " open in term
 let g:go_term_enabled = 1
 let g:go_term_mode = "vsplit"
@@ -354,8 +357,8 @@ au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
 au FileType go nmap <Leader>i <Plug>(go-info)
 "Open the relevant Godoc for the word under the cursor with <leader>do or open it vertically with <leader>d
-au FileType go nmap <Leader>do <Plug>(go-doc)<cr><C-w>k<cr>
-au FileType go nmap <Leader>d <Plug>(go-doc-vertical)<cr><C-w>h<cr>
+"au FileType go nmap <Leader>do<Plug>(go-doc)<cr><C-w>k<cr>
+"au FileType go nmap <Leader>dh<Plug>(go-doc-vertical)<cr><C-w>h<cr>
 "Or open the Godoc in browser
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 "Run commands, such as go run with <leader>r for the current file or go build and go test for the current package with <leader>b and <leader>t. Display a beautiful annotated source code to see which functions are covered with <leader>c.
@@ -374,38 +377,38 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 let g:go_fmt_command = "goimports"
 " tabar tags
 let g:tagbar_type_go = {
-            \ 'ctagstype' : 'go',
-            \ 'kinds'     : [
-            \ 'p:package',
-            \ 'i:imports:1',
-            \ 'c:constants',
-            \ 'v:variables',
-            \ 't:types',
-            \ 'n:interfaces',
-            \ 'w:fields',
-            \ 'e:embedded',
-            \ 'm:methods',
-            \ 'r:constructor',
-            \ 'f:functions'
-            \ ],
-            \ 'sro' : '.',
-            \ 'kind2scope' : {
-            \ 't' : 'ctype',
-            \ 'n' : 'ntype'
-            \ },
-            \ 'scope2kind' : {
-            \ 'ctype' : 't',
-            \ 'ntype' : 'n'
-            \ },
-            \ 'ctagsbin'  : 'gotags',
-            \ 'ctagsargs' : '-sort -silent'
-            \ }
-let g:go_auto_sameids = 1
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+" remove this is annyoing as fuck let g:go_auto_sameids = 1
 let g:go_auto_type_info = 1
 "}}}
 " js {{{
 au BufNewFile,BufRead *.js setlocal noet ts=2 sw=2 sts=2 expandtab
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+" Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 " emmet
 Plug 'mattn/emmet-vim'
 Plug 'mxw/vim-jsx'
@@ -421,6 +424,16 @@ let g:js_fmt_autosave = 0
 " }}}
 " }}}
 call plug#end()
-colo rilasso
+" set Vim-specific sequences for RGB colors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors     " enable true colors support
+let ayucolor="light"  " for light version of theme
+colo ayu
+" theme overwrites
+highlight Comment cterm=italic
+hi TabLineFill cterm=none ctermfg=red
+hi TabLine     cterm=none ctermfg=white
+hi TabLineSel  cterm=bold ctermfg=red
 let g:airline_theme='aurora'
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
