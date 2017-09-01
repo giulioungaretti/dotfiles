@@ -64,12 +64,13 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " check syntax
 Plug 'w0rp/ale'
+let g:ale_sign_error = '⤫'
 " pop list open
 let g:ale_open_list = 1
-let g:ale_sign_error = '⤫'
+" run linters only at save
 let g:ale_lint_on_text_changed = 'never'
 " Set this. Airline will handle the rest.
-let g:airline#extensions#ale#enabled = 1
+"let g:airline#extensions#ale#enabled = 1
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 " regain focus events in tmux
@@ -427,6 +428,9 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 Plug 'mephux/vim-jsfmt', { 'do': 'npm install -g jsfmt' }
 " like go fmt
 let g:js_fmt_autosave = 0
+"css {{{
+au BufNewFile,BufRead *.css setlocal noet ts=2 sw=2 sts=2 expandtab
+"}}}
 " }}}
 " }}}
 call plug#end()
@@ -479,5 +483,5 @@ endfunction
 
 nnoremap <S-h> :call ToggleHiddenAll()<CR>
 :call ToggleHiddenAll()
-let g:loaded_airline = 1
+let g:loaded_airline = 0
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
