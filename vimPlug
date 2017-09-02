@@ -1,6 +1,4 @@
 call plug#begin('~/.vim/plugged')
-" colors
-" set t_Co=256
 
 " TODO remove
 let g:email = "giulioungaretti@me.com"
@@ -12,9 +10,6 @@ if s:uname == "Darwin\n"
     "Mac specific plug ins
     " search in osx dictionary
     Plug 'jonhiggs/MacDict.vim'
-    " look up stuff on dash
-    "Plug 'rizzatti/dash.vim'
-    "nmap <silent> <leader>d <Plug>DashSearch
     " this should make it work with osx/tmux/madness
     set clipboard=unnamed
 endif
@@ -23,10 +18,6 @@ if s:uname == "Linux\n"
     set clipboard=unnamedplus
     " sync vim clipboard to x clipboard
     autocmd VimLeave * call system("xsel -ib", getreg('+'))
-    " look up documentation
-    Plug 'KabbAmine/zeavim.vim'
-    :nmap <silent> <leader>d <Plug>Zeavim           " <leader>z (NORMAL mode)
-    :vmap <silent> <leader>d<Plug>ZVVisSelection   " <leader>z (VISUAL mode)
 endif
 " }}}
 " General plugs {{{
@@ -70,7 +61,7 @@ let g:ale_open_list = 1
 " run linters only at save
 let g:ale_lint_on_text_changed = 'never'
 " Set this. Airline will handle the rest.
-"let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 " add session stufff for tmux ressurect
 Plug 'tpope/vim-obsession'
 " regain focus events in tmux
@@ -446,43 +437,4 @@ highlight Comment cterm=italic
 hi TabLineFill cterm=none ctermfg=red
 hi TabLine     cterm=none ctermfg=white
 hi TabLineSel  cterm=bold ctermfg=red
-
-hi GitGutterAdd  ctermfg=gray cterm=none ctermbg=red
-hi GitGutterChange  ctermfg=gray
-hi GitGutterDelete  ctermfg=gray
-hi GitGutterChangeDelete  ctermfg=gray
-
-
-set statusline+=%=      "left/right separator
-set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
-set statusline+=%{&ff}] "file format
-set statusline+=%h      "help file flag
-set statusline+=%m      "modified flag
-set statusline+=%r      "read only flag
-set statusline+=%y      "filetype
-set statusline+=%c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ %P    "percent through file
-
-let s:hidden_all = 0
-function! ToggleHiddenAll()
-    if s:hidden_all  == 0
-        let s:hidden_all = 1
-        set noshowmode
-        set noruler
-        set laststatus=0
-        set noshowcmd
-
-    else
-        let s:hidden_all = 0
-        set showmode
-        set ruler
-        set laststatus=2
-        set showcmd
-    endif
-endfunction
-
-nnoremap <S-h> :call ToggleHiddenAll()<CR>
-:call ToggleHiddenAll()
-let g:loaded_airline = 0
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
