@@ -186,12 +186,7 @@ function vim() {
     env vim -c Obsession
   fi
 }
-
-
-source ~/dotfiles/SECRETS.sh
-#export NVM_DIR="/home/unga/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-# export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
-
+# source secrets file if exist
+[ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
 # }}}
 # vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
