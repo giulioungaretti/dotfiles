@@ -395,9 +395,8 @@ let g:go_auto_type_info = 1
 "}}}
 " js {{{
 au BufNewFile,BufRead *.js setlocal noet ts=2 sw=2 sts=2 expandtab
-" Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 " emmet
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'mxw/vim-jsx'
 let g:jsx_ext_required = 0
 " better js syntax
