@@ -163,18 +163,6 @@ Plug 'terryma/vim-multiple-cursors'
 " press esc to go back to normal mode instead of quitting multi cursor
 let g:multi_cursor_exit_from_insert_mode=0
 
-" add git gutter
-"Plug 'airblade/vim-gitgutter'
-"" stick to defualt theme
-"let g:gitgutter_override_sign_column_highlight = 0
-"" this should turn off the annoying random highlight
-""let g:gitgutter_realtime = 1
-""let g:gitgutter_eager = 1
-"" If you experience a lag, you can trade speed for accuracy:
-"let g:gitgutter_realtime = 0
-"let g:gitgutter_eager = 0
-
-
 " nerd commenter
 Plug 'scrooloose/nerdcommenter'
 " fuGITve
