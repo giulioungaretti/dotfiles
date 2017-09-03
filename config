@@ -6,47 +6,34 @@
 #                               (_)_|\____/
 #
 #
-exec --no-startup-id unity-settings-daemon
-exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id redshift-gtk
 
-set $mod Mod4
-set $alt Mod1
+set $mod Mod1
+set $alt Mod4
 
 focus_follows_mouse no
 
 # new window default border
 
-new_window pixel 6
-new_float pixel 6
+new_window pixel 2
+new_float pixel 2
 
-gaps inner 7
+gaps inner 10
 gaps outer 10
 
 popup_during_fullscreen smart
 
-#######################################################################
-#                            colors                                   #
-#######################################################################
-font pango:Input\ Mono\ Narrow  12 12
-
-# class border backgr. text indicator
-# LIGHTER #fabd2f RED ACTIVE BORDER
-client.focused          #C43177 #C43177  #111111 #1d1f21
-client.focused_inactive #282828 #686868 #585858 #1d1f21
-client.unfocused        #282828 #282828 #585858 #1d1f21
-client.urgent           #C43177 # #d8d8d8 #C43177
 # CHANGING BORDER STYLE
 bindsym $mod+t border normal
-bindsym $mod+y border pixel 6
+bindsym $mod+y border pixel 3
 bindsym $mod+u border none
 
 # Title bar format
 # We first set the titlebar font size to a large size to get a good padding amount.
 # We then use pango markup to force i3 to print with the desired font.
 # This gives us large titlebars with a small font. :P
-font pango:lemon 15
+font pango:lemon 8
 for_window [class=".*"] title_format "<span font='Lemon 7'> > %title</span>"
 #######################################################################
 #                            bindings                                 #
@@ -62,17 +49,14 @@ bindsym $mod+minus scratchpad show
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec  gnome-terminal
 
 # kill focused window
 bindsym $mod+q kill
-# TODO remove this maybe ?
-#tab switching
-bindsym $MOD+Tab focus right
 
-bindsym $mod+space  exec "i3-dmenu-desktop --dmenu='rofi -dmenu -i -p \\"Run ↠ \\"'"
-# search google
-bindsym $mod+g exec echo "" | rofi -dmenu -p "Search:" | xargs -I{} xdg-open https://www.google.de/search?q={}
+bindsym $mod+d exec dmenu_run
+bindsym $mod+space exec i3-dmenu-desktop
+
 
 #### layouts
 # enter fullscreen mode for the focused container
@@ -93,7 +77,7 @@ bindsym $mod+p focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-bindsym $mod+d focus child
+# bindsym $mod+d focus child
 # change folcus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -203,30 +187,6 @@ mode $keyboardMode {
 }
 
 #######################################################################
-#                            status                                   #
-#######################################################################
-bar {
-        tray_output none
-        status_command i3blocks
-                font pango:Input\ Mono\ Narrow  11 11
-                position bottom
-                mode dock
-                modifier $alt
-                colors {
-                        background #000000
-                        #statusline #b8b8b8
-                        separator #000000
-                        focused_workspace  #000000  #C43177 #ffffff
-                        #active_workspace   #000000  #000000  #fabd2f
-                        inactive_workspace #000000  #000000  #b8b8b8
-                        #urgent_workspace   #2f343a #8ec07c  #ffffff
-                }
-}
-
-# bar toggle, hide or show 
-bindsym $mod+b bar mode toggle
-
-#######################################################################
 #                            Media player controls                    #
 #######################################################################
 
@@ -271,6 +231,13 @@ mode $audiomode {
     bindsym Escape mode "default"
 }
 
-# Launchers
-bindsym $alt+space exec "rofi -show window"
-bindsym $mod+i exec "i3_controller"
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+# start in hidden mode show with mod4
+bar {
+	mode hide
+        status_command i3status
+	modifier Mod4
+}
+# toggle mode just in case
+bindsym $mod+b bar mode toggle
