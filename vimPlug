@@ -277,7 +277,8 @@ augroup erlang
 augroup END
 " elm
 Plug 'elmcast/elm-vim'
-au FileType elm nmap <leader>b <Plug>(elm-make)
+let g:elm_setup_keybindings = 0
+au FileType elm nmap <leader>B <Plug>(elm-make)
 au FileType elm nmap <leader>m <Plug>(elm-make-main)
 au FileType elm nmap <leader>t <Plug>(elm-test)
 au FileType elm nmap <leader>r <Plug>(elm-repl)
