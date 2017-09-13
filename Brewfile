@@ -6,6 +6,8 @@ cask 1password
 cask alfred
 cask atom
 cask google-chrome
+cask hyper
+cask macvim
 cask menubar-colors
 cask postman
 cask skype
@@ -17,6 +19,8 @@ cask visual-studio-code
 
 tap caskroom/versions
 cask iterm2-beta
+
+tap d12frosted/emacs-plus
 
 tap homebrew/core
 brew autoconf
@@ -38,16 +42,22 @@ brew htop
 brew httpie
 brew icu4c
 brew irssi
+brew jemalloc
 brew jq
 brew libevent
 brew libffi
 brew libmpc
+brew libtermkey
 brew libusb
 brew libusb-compat
+brew libuv
+brew libvterm
 brew mas
 brew mobile-shell
 brew mono
 brew mpfr
+brew msgpack
+brew neovim
 brew node
 brew oniguruma
 brew openssl
@@ -68,6 +78,7 @@ brew sqlite
 brew the_silver_searcher
 brew tmux
 brew tree
+brew unibilium
 brew vim --with-python3
 brew watch
 brew wget
