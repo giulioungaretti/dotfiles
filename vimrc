@@ -178,7 +178,7 @@ au VimLeave * :!clear
 " NoMatchParen is a command to the loaded plugin to ask it to stop matching.
 " Setting "loaded_matchparen", on the other hand, stops the plugin from
 " ever loading (by making it think that it's already running).
-let loaded_matchparen = 1
+let loaded_matchparen = 0
 
 " change the 'completeopt' option so that Vim's popup menu doesn't select the first completion item, but rather just inserts the longest common text of all matches; and the menu will come up even if there's only one match. (The longest setting is responsible for the former effect and the menuone is responsible for the latter.)
 set completeopt=longest,menuone
@@ -193,46 +193,54 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
             \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " }}}
-"
-" load mappings
 
+set noshowmode
+" OS specfic settings
+
+let s:uname = system("uname -s") " grab os name
+
+if s:uname == "Darwin\n"
+    set clipboard=unnamed
+endif
+
+if s:uname == "Linux\n"
+    set clipboard=unnamedplus
+endif
+
+" reload on save
+autocmd! bufwritepost .vimrc source %
+autocmd! bufwritepost vimrc source %
+" tmux 
+function! TmuxMove(direction)
+        let wnr = winnr()
+        silent! execute 'wincmd ' . a:direction
+        " If the winnr is still the same after we moved, it is the last pane
+        if wnr == winnr()
+                call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
+        end
+endfunction
+
+nnoremap <silent> <c-h> :call TmuxMove('h')<cr>
+nnoremap <silent> <c-j> :call TmuxMove('j')<cr>
+nnoremap <silent> <c-k> :call TmuxMove('k')<cr>
+nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 if filereadable(glob("~/.vimPlug"))
     source  $HOME/.vimPlug
 endif
 
-"reload on save
-autocmd! bufwritepost .vimrc source %
+" Make Vim to handle long lines nicely.
+set wrap
+set textwidth=79
+set formatoptions=qrn1
+" Do not show stupid q: window
+map q: :q
+map qq :q <CR>
 
-function! Wipeout()
-  " list of *all* buffer numbers
-  let l:buffers = range(1, bufnr('$'))
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set cul
+    autocmd WinLeave * set nocul
+augroup END
 
-  " what tab page are we in?
-  let l:currentTab = tabpagenr()
-  try
-    " go through all tab pages
-    let l:tab = 0
-    while l:tab < tabpagenr('$')
-      let l:tab += 1
-
-      " go through all windows
-      let l:win = 0
-      while l:win < winnr('$')
-        let l:win += 1
-        " whatever buffer is in this window in this tab, remove it from
-        " l:buffers list
-        let l:thisbuf = winbufnr(l:win)
-        call remove(l:buffers, index(l:buffers, l:thisbuf))
-      endwhile
-    endwhile
-
-    " if there are any buffers left, delete them
-    if len(l:buffers)
-      execute 'bwipeout' join(l:buffers)
-    endif
-  finally
-    " go back to our original tab page
-    execute 'tabnext' l:currentTab
-  endtry
-endfunction
+autocmd FileType qf wincmd J
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
