@@ -8,6 +8,7 @@
 #
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id redshift-gtk
+exec --no-startup-id  nohup mons -a > /dev/null 2>&1 &
 
 set $mod Mod1
 set $alt Mod4
@@ -60,8 +61,9 @@ bindsym $mod+Return exec  gnome-terminal
 # kill focused window
 bindsym $mod+q kill
 
-bindsym $mod+d exec dmenu_run
-#bindsym $mod+space exec i3-dmenu-desktop
+#bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec i3-dmenu-desktop
+
 bindsym $mod+g exec --no-startup-id ~/bin/dmenu_search.sh
 
 #### layouts
@@ -229,7 +231,7 @@ bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume @DEFAUL
 set $audiomode "Volume: ▲k ▼j"
 bindsym $mod+Shift+v mode $audiomode
 mode $audiomode {
-    bindsym k exec pactl set-sink-volume @DE FAULT_SINK@ +7%
+    bindsym k exec pactl set-sink-volume @DEFAULT_SINK@ +7%
     bindsym j exec pactl set-sink-volume @DEFAULT_SINK@ -7%
     bindsym m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
     # back to normal: Enter or Escape
