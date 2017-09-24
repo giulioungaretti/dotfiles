@@ -16,7 +16,6 @@ if [ -f $sysmodmap ]; then
 fi
 
 if [ -f "$userresources" ]; then
-    echo "yolo"
     xrdb -merge "$userresources"
 fi
 
