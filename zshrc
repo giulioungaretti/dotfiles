@@ -4,9 +4,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 # }}}
 # Source {{{
-#source colors
-source "$HOME/dotfiles/color"
-
 # OS awareness # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
         if [ -f ~/.ubuntualias ]; then
