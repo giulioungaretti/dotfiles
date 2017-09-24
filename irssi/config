@@ -47,6 +47,7 @@ aliases = {
   ATAG = "WINDOW SERVER";
   UNSET = "set -clear";
   RESET = "set -default";
+  znc = "msg *status";
 };
 
 statusbar = {
@@ -215,16 +216,16 @@ servers = (
     address = "188.166.36.190";
     chatnet = "freenode";
     port = "5000";
-    password="yolo";
+    password = "unga/freenode:$PASSOWRD";
     use_ssl = "yes";
     ssl_verify = "no";
     autoconnect = "yes";
   },
   {
     address = "188.166.36.190";
-    chatnet = "slack";
+    chatnet = "amie";
     port = "5000";
-    password="yolo";
+    password = "unga/amie:$PASSWORD";
     use_ssl = "yes";
     ssl_verify = "no";
     autoconnect = "yes";
@@ -233,200 +234,7 @@ servers = (
 
 chatnets = {
   freenode = { type = "IRC"; nick = "unga"; };
-  slack = { type = "IRC"; };
+  amie = { type = "IRC"; };
 };
 ignores = ( { level = "JOINS PARTS QUITS"; } );
 logs = { };
-
-
-
-
-
-windows = {
-  1 = { name = "hilight"; sticky = "yes"; };
-  2 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
-  3 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "##fsharp";
-        tag = "freenode";
-      }
-    );
-  };
-  4 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#elixir-lang";
-        tag = "freenode";
-      }
-    );
-  };
-  5 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#elm";
-        tag = "freenode";
-      }
-    );
-  };
-  6 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#fedora";
-        tag = "freenode";
-      }
-    );
-  };
-  7 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#erlang";
-        tag = "freenode";
-      }
-    );
-  };
-  8 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#python";
-        tag = "freenode";
-      }
-    );
-  };
-  9 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#vim";
-        tag = "freenode";
-      }
-    );
-  };
-  10 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#zeromq";
-        tag = "freenode";
-      }
-    );
-  };
-  11 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#118";
-        tag = "slack";
-      }
-    );
-  };
-  12 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#build-status";
-        tag = "slack";
-      }
-    );
-  };
-  13 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#data_handling";
-        tag = "slack";
-      }
-    );
-  };
-  14 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#dev";
-        tag = "slack";
-      }
-    );
-  };
-  15 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#general";
-        tag = "slack";
-      }
-    );
-  };
-  16 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#git-bot";
-        tag = "slack";
-      }
-    );
-  };
-  17 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#office_hours";
-        tag = "slack";
-      }
-    );
-  };
-  18 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#qdev";
-        tag = "slack";
-      }
-    );
-  };
-  19 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#urandom";
-        tag = "slack";
-      }
-    );
-  };
-  20 = {
-    items = (
-      {
-        type = "QUERY";
-        chat_type = "IRC";
-        name = "william";
-        tag = "slack";
-      }
-    );
-  };
-};
-mainwindows = {
-  6 = { first_line = "5"; lines = "40"; };
-  1 = { first_line = "2"; lines = "3"; };
-};
