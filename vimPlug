@@ -69,7 +69,6 @@ nnoremap <silent> <leader>gb :BCommits<CR>
 noremap <Leader>tl  :Ag TODO <CR>
 " open task list for note in current folder and subfolder
 noremap <Leader>nl :Ag NOTE <CR>
-
 " open diff
 nnoremap <leader>gd :Gdiff<CR>
 " add current file
