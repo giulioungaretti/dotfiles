@@ -16,38 +16,58 @@ cask torbrowser
 cask vagrant
 cask virtualbox
 cask visual-studio-code
+cask whatsapp
+
+tap caskroom/fonts
 
 tap caskroom/versions
 cask iterm2-beta
 
-tap d12frosted/emacs-plus
-
 tap homebrew/core
 brew autoconf
+brew automake
+brew cairo
 brew ctags
 brew dfu-programmer
 brew elm
 brew elm-format
 brew entr
 brew fish
+brew fontconfig
+brew freetype
 brew fzf
 brew gdbm
+brew gdk-pixbuf
 brew gettext
 brew git
 brew glib
 brew gmp
+brew gnu-sed
+brew gnutls
 brew go
+brew gobject-introspection
 brew gotags
+brew graphite2
+brew harfbuzz
 brew htop
 brew httpie
 brew icu4c
+brew imagemagick@6
 brew irssi
 brew jemalloc
+brew jpeg
 brew jq
+brew libcroco
 brew libevent
 brew libffi
 brew libmpc
+brew libpng
+brew librsvg
+brew libtasn1
 brew libtermkey
+brew libtiff
+brew libtool
+brew libunistring
 brew libusb
 brew libusb-compat
 brew libuv
@@ -58,12 +78,16 @@ brew mono
 brew mpfr
 brew msgpack
 brew neovim
+brew nettle
 brew node
 brew oniguruma
 brew openssl
 brew openssl@1.1
+brew p11-kit
+brew pango
 brew pcre
 brew pcre2
+brew pixman
 brew pkg-config
 brew postgresql
 brew protobuf
@@ -75,6 +99,7 @@ brew readline
 brew reattach-to-user-namespace
 brew shellcheck
 brew sqlite
+brew texinfo
 brew the_silver_searcher
 brew tmux
 brew tree
@@ -93,25 +118,19 @@ tap rcmdnk/file
 brew brew-file
 
 tap universal-ctags/universal-ctags
-brew universal-ctags
-
-tap universal-ctags/universal-ctags
-
-# Other Homebrew packages
-brew postgres
-
-# Cask applications
-cask WhatsApp
+brew universal-ctags --HEAD
 
 # App Store applications
-appstore 918858936 Airmail 3 (3.3.2)
-appstore 1091189122 Bear (1.2.1)
-appstore 409183694 Keynote (7.2)
+appstore 918858936 Airmail 3 (3.5)
+appstore 1091189122 Bear (1.3)
+appstore 1173932628 Drop (1.02)
+appstore 409183694 Keynote (7.3)
 appstore 441258766 Magnet (2.1.0)
-appstore 784801555 Microsoft OneNote (15.35.1)
-appstore 409203825 Numbers (4.2)
-appstore 409201541 Pages (6.2)
+appstore 784801555 Microsoft OneNote (15.38)
+appstore 409203825 Numbers (4.3)
+appstore 409201541 Pages (6.3)
 appstore 568494494 Pocket (1.6.2)
-appstore 803453959 Slack (2.6.2)
+appstore 803453959 Slack (2.8.0)
 appstore 1153157709 Speedtest (1.3)
 appstore 585829637 Todoist (7.0.2)
+appstore 497799835 Xcode (9.0)
