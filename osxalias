@@ -13,5 +13,7 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 # add home/bin to path
 export PATH=$PATH:$HOME/bin
+# add  haskell bin tools to path
+export PATH="/Users/unga/.local/bin":${PATH}
 #}}}
 #
