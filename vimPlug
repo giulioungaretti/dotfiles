@@ -38,8 +38,6 @@ map g/ <Plug>(incsearch-stay)
 let g:ale_set_quickfix= 1
 let g:ale_open_list = 1
 let g:airline#extensions#ale#enabled=0
-" run linters only at save
-
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
