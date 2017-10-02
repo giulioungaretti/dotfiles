@@ -2,21 +2,25 @@
 # tap repositories and their packages
 
 tap caskroom/cask
-cask 1password
-cask alfred
-cask atom
-cask google-chrome
-cask hyper
-cask macvim
-cask menubar-colors
-cask postman
-cask skype
-cask spotify
 cask torbrowser
-cask vagrant
+cask atom
 cask virtualbox
 cask visual-studio-code
+cask spotify
+cask macvim
+cask skype
+cask postman
+cask menubar-colors
+cask vagrant
+cask 1password
+cask google-chrome
+cask hyper
 cask whatsapp
+cask alfred
+
+tap caskroom/cask
+
+tap caskroom/cask
 
 tap caskroom/fonts
 
@@ -49,6 +53,7 @@ brew gobject-introspection
 brew gotags
 brew graphite2
 brew harfbuzz
+brew haskell-stack
 brew htop
 brew httpie
 brew icu4c
@@ -72,8 +77,8 @@ brew libusb
 brew libusb-compat
 brew libuv
 brew libvterm
+brew libyaml
 brew mas
-brew mobile-shell
 brew mono
 brew mpfr
 brew msgpack
@@ -87,6 +92,7 @@ brew p11-kit
 brew pango
 brew pcre
 brew pcre2
+brew perl
 brew pixman
 brew pkg-config
 brew postgresql
@@ -95,8 +101,10 @@ brew pyenv
 brew pyenv-virtualenv
 brew python
 brew python3
+brew ranger
 brew readline
 brew reattach-to-user-namespace
+brew ruby
 brew shellcheck
 brew sqlite
 brew texinfo
@@ -104,7 +112,8 @@ brew the_silver_searcher
 brew tmux
 brew tree
 brew unibilium
-brew vim --with-python3
+brew unrar
+brew vim
 brew watch
 brew wget
 brew xz
@@ -119,6 +128,9 @@ brew brew-file
 
 tap universal-ctags/universal-ctags
 brew universal-ctags --HEAD
+
+# Other Homebrew packages
+brew mobile-shell
 
 # App Store applications
 appstore 918858936 Airmail 3 (3.5)
