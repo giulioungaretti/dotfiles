@@ -1,7 +1,8 @@
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 " make search great again
 Plug 'haya14busa/incsearch.vim'
 Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -12,17 +13,18 @@ Plug 'tpope/vim-fugitive'
 " elm
 Plug 'elmcast/elm-vim'
 Plug 'bitterjug/vim-tagbar-ctags-elm'
+"  haskell
+Plug 'neovimhaskell/haskell-vim'
+Plug 'parsonsmatt/intero-neovim'
+Plug 'alx741/vim-hindent'
 " go
 Plug 'fatih/vim-go', { 'for': 'go' }
 " theme
-Plug 'ayu-theme/ayu-vim'
-call plug#end()
+Plug 'chriskempson/base16-vim'
+set termguicolors     " enable true colors support
 " set Vim-specific sequences for RGB colors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set termguicolors     " enable true colors support
-let ayucolor="light"  " for light version of theme
-colo ayu
 " theme overwrites
 highlight Comment cterm=italic
 hi TabLineFill cterm=none ctermfg=red

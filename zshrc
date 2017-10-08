@@ -170,19 +170,9 @@ if [ -d "${PYENV_ROOT}" ]; then
    export PATH="${PYENV_ROOT}/bin:${PATH}"
    eval "$(pyenv init -)"
    # this is really slow for some reasons
-   eval "$(pyenv virtualenv-init -)"
+   # eval "$(pyenv virtualenv-init -)"
 fi
 
-# use vim with obseeesion
-function vim() {
-  if test $# -gt 0; then
-    env vim "$@"
-  elif test -f Session.vim; then
-    env vim -S
-  else
-    env vim -c Obsession
-  fi
-}
 # source secrets file if exist
 [ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
 # }}}
