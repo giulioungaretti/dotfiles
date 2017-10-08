@@ -21,6 +21,8 @@ Plug 'alx741/vim-hindent'
 Plug 'fatih/vim-go', { 'for': 'go' }
 " theme
 Plug 'chriskempson/base16-vim'
+call plug#end()
+colorscheme base16-pop
 set termguicolors     " enable true colors support
 " set Vim-specific sequences for RGB colors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -40,6 +42,7 @@ map g/ <Plug>(incsearch-stay)
 let g:ale_set_quickfix= 1
 let g:ale_open_list = 1
 let g:airline#extensions#ale#enabled=0
+"fzf{{{
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
@@ -63,7 +66,6 @@ nnoremap <silent> <leader>? :History<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>
 nnoremap <silent> <leader>gl :Commits<CR>
 nnoremap <silent> <leader>gb :BCommits<CR>
-
 " todo and notes fzf powered
 " open task list for todo in current folder and subfolder
 noremap <Leader>tl  :Ag TODO <CR>
@@ -79,7 +81,8 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit -q -v<CR>
 " add and commit current file
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
-
+"}}}
+"elm {{{
 let g:elm_setup_keybindings = 0
 let g:elm_detailed_complete = 1
 au FileType elm nmap <leader>B <Plug>(elm-make)
@@ -91,7 +94,8 @@ au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
 au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
-
+"}}}
+"go{{{
 let g:ale_linters = {'go': ['go build','gofmt']}
 " open in term
 let g:go_term_enabled = 1
@@ -156,4 +160,11 @@ let g:tagbar_type_go = {
 " remove this is annyoing as fuck let g:go_auto_sameids = 1
 let g:go_auto_type_info = 1
 "}}}
+"" haskell {{{
+let g:ale_linters.haskell = ['stack-ghc-mod', 'hlint']
+" Prefer starting Intero manually (faster startup times)
+let g:intero_start_immediately = 0
+" Use ALE (works even when not using Intero)
+let g:intero_use_neomake = 0
+" }}}
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
