@@ -29,7 +29,7 @@ popup_during_fullscreen smart
 # LIGHTER #fabd2f RED ACTIVE BORDER
 client.focused          #C43177 #C43177  #111111 #1d1f21
 client.focused_inactive #282828 #fefefe #585858 #1d1f21
-client.unfocused        #282828 #fefefe #585858 #1d1f21
+client.unfocused        #282828 #000000 #585858 #1d1f21
 client.urgent           #C43177 #fabd2f #d8d8d8 #C43177
 # CHANGING BORDER STYLE
 bindsym $mod+t border normal

@@ -204,11 +204,9 @@ servers = (
     use_ssl = "yes";
     ssl_verify = "no";
     autoconnect = "yes";
-  });
+  }
+);
 
-chatnets = {
-  freenode = { type = "IRC"; nick = "unga"; };
-  amie = { type = "IRC"; };
-};
+chatnets = { freenode = { type = "IRC"; nick = "unga"; }; };
 ignores = ( { level = "JOINS PARTS QUITS"; } );
 logs = { };

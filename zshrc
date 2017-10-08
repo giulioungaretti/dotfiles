@@ -172,7 +172,7 @@ if [ -d "${PYENV_ROOT}" ]; then
    # this is really slow for some reasons
    # eval "$(pyenv virtualenv-init -)"
 fi
-
+export PATH="$HOME/n/bin/":${PATH}
 # source secrets file if exist
 [ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
 # }}}
