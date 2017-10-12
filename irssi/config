@@ -200,7 +200,7 @@ servers = (
     address = "188.166.36.190";
     chatnet = "freenode";
     port = "5000";
-    password = "unga/freenode:asdrubale";
+    password = "unga/freenode:$PASSWORD";
     use_ssl = "yes";
     ssl_verify = "no";
     autoconnect = "yes";
@@ -210,3 +210,51 @@ servers = (
 chatnets = { freenode = { type = "IRC"; nick = "unga"; }; };
 ignores = ( { level = "JOINS PARTS QUITS"; } );
 logs = { };
+windows = {
+  1 = { name = "hilight"; sticky = "yes"; };
+  2 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
+  3 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#elm";
+        tag = "freenode";
+      }
+    );
+  };
+  4 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#go-nuts";
+        tag = "freenode";
+      }
+    );
+  };
+  5 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#haskell";
+        tag = "freenode";
+      }
+    );
+  };
+  6 = {
+    items = (
+      {
+        type = "QUERY";
+        chat_type = "IRC";
+        name = "*status";
+        tag = "freenode";
+      }
+    );
+  };
+};
+mainwindows = {
+  6 = { first_line = "9"; lines = "43"; };
+  1 = { first_line = "1"; lines = "8"; };
+};
