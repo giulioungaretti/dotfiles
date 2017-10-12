@@ -20,7 +20,6 @@ Plug 'alx741/vim-hindent'
 Plug 'eagletmt/neco-ghc'
 " go
 Plug 'fatih/vim-go', { 'for': 'go' }
-" roll with less colors 
 Plug 'chriskempson/base16-vim'
 call plug#end()
 
