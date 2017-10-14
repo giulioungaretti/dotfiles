@@ -1,32 +1,6 @@
 
 # tap repositories and their packages
 
-tap caskroom/cask
-cask torbrowser
-cask atom
-cask virtualbox
-cask visual-studio-code
-cask spotify
-cask macvim
-cask skype
-cask postman
-cask menubar-colors
-cask vagrant
-cask 1password
-cask google-chrome
-cask hyper
-cask whatsapp
-cask alfred
-
-tap caskroom/cask
-
-tap caskroom/cask
-
-tap caskroom/fonts
-
-tap caskroom/versions
-cask iterm2-beta
-
 tap homebrew/core
 brew autoconf
 brew automake
@@ -119,6 +93,28 @@ brew wget
 brew xz
 brew yarn
 brew zsh
+
+tap caskroom/cask
+cask torbrowser
+cask atom
+cask virtualbox
+cask visual-studio-code
+cask spotify
+cask macvim
+cask skype
+cask postman
+cask menubar-colors
+cask vagrant
+cask 1password
+cask google-chrome
+cask hyper
+cask whatsapp
+cask alfred
+
+tap caskroom/fonts
+
+tap caskroom/versions
+cask iterm2-beta
 
 tap osx-cross/avr
 brew avr-binutils

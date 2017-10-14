@@ -180,5 +180,8 @@ export PATH="$HOME/n/bin/":${PATH}
 export PATH="$HOME/.local/bin":${PATH}
 # source secrets file if exist
 [ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
+
+BASE16_SHELL=$HOME/.zsh/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 # }}}
 # vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
