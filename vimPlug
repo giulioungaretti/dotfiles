@@ -1,6 +1,13 @@
 call plug#begin('~/.local/share/nvim/plugged')
 " make search great again
 Plug 'haya14busa/incsearch.vim'
+Plug 'easymotion/vim-easymotion'
+let g:EasyMotion_do_mapping = 0
+ "" JK motions: Line motions
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
