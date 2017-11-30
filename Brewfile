@@ -10,7 +10,6 @@ brew dfu-programmer
 brew elm
 brew elm-format
 brew entr
-brew fish
 brew fontconfig
 brew freetype
 brew fzf
@@ -52,8 +51,10 @@ brew libusb-compat
 brew libuv
 brew libvterm
 brew libyaml
+brew luajit
 brew mas
 brew mono
+brew mosh
 brew mpfr
 brew msgpack
 brew neovim
@@ -66,7 +67,6 @@ brew p11-kit
 brew pango
 brew pcre
 brew pcre2
-brew perl
 brew pixman
 brew pkg-config
 brew postgresql
@@ -87,7 +87,7 @@ brew tmux
 brew tree
 brew unibilium
 brew unrar
-brew vim
+brew vim --with-python3
 brew watch
 brew wget
 brew xz
@@ -125,20 +125,17 @@ brew brew-file
 tap universal-ctags/universal-ctags
 brew universal-ctags --HEAD
 
-# Other Homebrew packages
-brew mobile-shell
-
 # App Store applications
-appstore 918858936 Airmail 3 (3.5)
-appstore 1091189122 Bear (1.3)
+appstore 918858936 Airmail 3 (3.5.3)
+appstore 1091189122 Bear (1.3.1)
 appstore 1173932628 Drop (1.02)
-appstore 409183694 Keynote (7.3)
+appstore 409183694 Keynote (7.3.1)
 appstore 441258766 Magnet (2.1.0)
-appstore 784801555 Microsoft OneNote (15.38)
-appstore 409203825 Numbers (4.3)
-appstore 409201541 Pages (6.3)
-appstore 568494494 Pocket (1.6.2)
-appstore 803453959 Slack (2.8.0)
+appstore 784801555 Microsoft OneNote (15.40)
+appstore 409203825 Numbers (4.3.1)
+appstore 409201541 Pages (6.3.1)
+appstore 568494494 Pocket (1.6.6)
+appstore 803453959 Slack (2.8.2)
 appstore 1153157709 Speedtest (1.3)
-appstore 585829637 Todoist (7.0.2)
-appstore 497799835 Xcode (9.0)
+appstore 585829637 Todoist (7.0.5)
+appstore 1278508951 Trello (2.10.0)
