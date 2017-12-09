@@ -75,8 +75,8 @@ set statusline +=%2*%m%*                "modified flag
 set statusline +=\   
 set statusline +=%{LinterStatus()}
 
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+"nmap <silent> <C-K> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-J> <Plug>(ale_next_wrap)
 
 "fzf{{{
 " Mapping selecting mappings

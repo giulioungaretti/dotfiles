@@ -6,6 +6,7 @@ brew autoconf
 brew automake
 brew cairo
 brew ctags
+brew dep
 brew dfu-programmer
 brew elm
 brew elm-format
@@ -101,7 +102,10 @@ cask virtualbox
 cask visual-studio-code
 cask spotify
 cask macvim
+cask vlc
 cask skype
+cask transmission
+cask db-browser-for-sqlite
 cask postman
 cask menubar-colors
 cask vagrant
@@ -124,6 +128,9 @@ brew brew-file
 
 tap universal-ctags/universal-ctags
 brew universal-ctags --HEAD
+
+# Other Homebrew packages
+brew ImageMagick
 
 # App Store applications
 appstore 918858936 Airmail 3 (3.5.3)
