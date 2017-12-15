@@ -35,8 +35,14 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " theme overwrites
 highlight Comment cterm=italic
-hi VertSplit   ctermbg=0  ctermfg=16 guifg=white guibg=#000000
-hi SignColumn   ctermbg=0  ctermfg=16 guifg=white guibg=#000000
+hi TabLineFill cterm=none ctermfg=red
+hi TabLine     cterm=none ctermfg=white
+hi TabLineSel  cterm=bold ctermfg=red
+hi StatusLineNC   ctermbg=15  ctermfg=0 guifg=white guibg=#000000
+hi VertSplit   ctermbg=15  ctermfg=0 guifg=white guibg=#000000
+hi StatusLine   ctermbg=red ctermfg=0 guifg=orange guibg=#000000
+hi CursorLine term=none cterm=none ctermbg=0
+hi SignColumn ctermbg=0
 " serch mappings
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
