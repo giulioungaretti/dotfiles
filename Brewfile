@@ -54,7 +54,6 @@ brew libvterm
 brew libyaml
 brew luajit
 brew mas
-brew mono
 brew mosh
 brew mpfr
 brew msgpack
@@ -98,28 +97,20 @@ brew zsh
 
 tap caskroom/cask
 cask torbrowser
-cask atom
 cask virtualbox
 cask visual-studio-code
 cask spotify
-cask macvim
 cask vlc
 cask skype
 cask transmission
 cask db-browser-for-sqlite
 cask postman
-cask menubar-colors
 cask vagrant
 cask 1password
 cask google-chrome
 cask hyper
 cask whatsapp
 cask alfred
-
-tap caskroom/fonts
-
-tap caskroom/versions
-cask iterm2-beta
 
 tap osx-cross/avr
 brew avr-binutils
@@ -145,5 +136,4 @@ appstore 409201541 Pages (6.3.1)
 appstore 568494494 Pocket (1.6.6)
 appstore 803453959 Slack (2.8.2)
 appstore 1153157709 Speedtest (1.3)
-appstore 585829637 Todoist (7.0.5)
 appstore 1278508951 Trello (2.10.0)
