@@ -1,7 +1,4 @@
 # Sets Prezto options.
-# Giulios Macbook Air
-# 2014-08-04
-
 
 #
 # General
@@ -24,6 +21,7 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'prompt' \
   'tmux' \
+  'editor'\
 
 #
 # Editor
