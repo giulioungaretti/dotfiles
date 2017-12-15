@@ -89,6 +89,7 @@ brew tree
 brew unibilium
 brew unrar
 brew vim --with-python3
+brew wakeonlan
 brew watch
 brew wget
 brew xz
