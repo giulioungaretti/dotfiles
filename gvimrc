@@ -1,4 +1,5 @@
-set guifont=PragmataPro\ for\ Powerline:h13
+set macligatures
+set guifont=Monoid:h13
 set guioptions-=r
 set guioptions-=L
 set guioptions-=T
