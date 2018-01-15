@@ -52,8 +52,8 @@ let g:ale_set_quickfix= 1
 let g:ale_open_list = 1
 let g:airline#extensions#ale#enabled=0
 " Set this in your vimrc file to disabling highlighting
-let g:ale_set_highlights = 0
-let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 1
+let g:ale_sign_column_always = 0
 
 
 function! LinterStatus() abort
@@ -78,7 +78,7 @@ set statusline +=%{LinterStatus()}
 
 "nmap <silent> <C-K> <Plug>(ale_previous_wrap)
 "nmap <silent> <C-J> <Plug>(ale_next_wrap)
-
+nmap gh <Plug>(ale_detail)
 "fzf{{{
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -98,6 +98,8 @@ nnoremap <silent> <leader>; :BLines<CR>
 nnoremap <silent> <leader>. :Lines<CR>
 nnoremap <silent> <leader>o :BTags<CR>
 nnoremap <silent> <leader>O :Tags<CR>
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules --exclude=test --exclude=elm-stuff --exclude=vis.js' 
 nnoremap <silent> <leader>? :History<CR>
 " seach current dir with Ag
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>
@@ -212,4 +214,7 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " becasue incsearch does not work with nvim
 nnoremap <CR> :noh<CR><CR>
 " }}}
+" NOTE: there seems to be no real consensus on this. Maybe it makes things
+" faster myabe not, who knows ? 
+set lazyredraw
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
