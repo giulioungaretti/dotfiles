@@ -12,6 +12,7 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'w0rp/ale'
+let g:ale_fix_on_save=1
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " fix cursor shape
@@ -122,6 +123,13 @@ nnoremap <leader>gc :Gcommit -q -v<CR>
 " add and commit current file
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 "}}}
+" js{{{
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fixers['json'] = ['prettier']
+let g:ale_fixers['css'] = ['prettier']
+let g:ale_fixers['html'] = ['htmlint']
+" }}}
 "elm {{{
 let g:elm_setup_keybindings = 0
 let g:elm_detailed_complete = 1
