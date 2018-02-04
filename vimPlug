@@ -1,4 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
+"
+Plug 'chrisbra/Colorizer'
 " make search great again
 Plug 'haya14busa/incsearch.vim'
 Plug 'easymotion/vim-easymotion'
@@ -41,8 +43,8 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " theme overwrites
 colorscheme acme
-" color git stuff anyway 
-hi Todo           cterm=NONE              ctermfg=0
+" TODO:  color git stuff anyway 
+hi Todo           cterm=Bold           ctermbg=81
 hi DiffAdd        cterm=Bold              ctermfg=green    ctermbg=0
 hi DiffChange     cterm=Bold              ctermfg=yellow   ctermbg=0
 hi DiffDelete     cterm=Bold              ctermfg=red      ctermbg=0

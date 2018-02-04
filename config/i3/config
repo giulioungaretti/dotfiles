@@ -56,13 +56,13 @@ bindsym $mod+minus scratchpad show
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec exec --no-startup-id `kitty --single-instance`
 
 # kill focused window
 bindsym $mod+q kill
 
 #bindsym $mod+d exec dmenu_run
-bindsym $mod+d exec i3-dmenu-desktop
+bindsym $mod+d exec exec --no-startup-id i3-dmenu-desktop
 
 bindsym $mod+g exec --no-startup-id ~/bin/dmenu_search.sh
 
