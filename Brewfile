@@ -28,7 +28,6 @@ brew gotags
 brew graphite2
 brew harfbuzz
 brew haskell-stack
-brew htop
 brew httpie
 brew icu4c
 brew imagemagick@6
@@ -63,6 +62,7 @@ brew node
 brew oniguruma
 brew openssl
 brew openssl@1.1
+brew optipng
 brew p11-kit
 brew pango
 brew pcre
@@ -100,6 +100,7 @@ cask torbrowser
 cask virtualbox
 cask visual-studio-code
 cask spotify
+cask plex-media-server
 cask vlc
 cask skype
 cask transmission
@@ -111,6 +112,11 @@ cask google-chrome
 cask hyper
 cask whatsapp
 cask alfred
+
+tap crisidev/homebrew-chunkwm
+
+tap koekeishiya/formulae
+brew skhd
 
 tap osx-cross/avr
 brew avr-binutils

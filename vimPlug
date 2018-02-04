@@ -11,10 +11,14 @@ map <Leader>h <Plug>(easymotion-linebackward)
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'scrooloose/nerdcommenter'
 Plug 'w0rp/ale'
 let g:ale_fix_on_save=1
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+Plug 'craigemery/vim-autotag'
+let g:autotagTagsFile="tags"
 " fix cursor shape
 Plug 'jszakmeister/vim-togglecursor'
 " fuGITve
@@ -49,6 +53,9 @@ hi diffRemoved cterm=bold ctermfg=DarkRed
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+" lint on leave insert or save(default)
+let g:ale_lint_on_insert_leave=1
+let g:ale_lint_on_text_changed='never'
 " pop list open and use quickfix
 let g:ale_set_quickfix= 1
 let g:ale_open_list = 1
@@ -101,7 +108,7 @@ nnoremap <silent> <leader>. :Lines<CR>
 nnoremap <silent> <leader>o :BTags<CR>
 nnoremap <silent> <leader>O :Tags<CR>
 " [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules --exclude=test --exclude=elm-stuff --exclude=vis.js' 
+let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=vendor --exclude=node_modules --exclude=test --exclude=elm-stuff --exclude=vis.js' 
 nnoremap <silent> <leader>? :History<CR>
 " seach current dir with Ag
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>

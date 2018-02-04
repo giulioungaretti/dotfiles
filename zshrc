@@ -32,7 +32,6 @@ export LANG=en_US.UTF-8
 #disable tmux in fzf
 export FZF_TMUX=1
 #  use extended search  all the time
-export FZF_DEFAULT_OPTS="--extended"
 # pyenv
 export PYENV_ROOT="${HOME}/.pyenv"
 #}}}
@@ -60,7 +59,7 @@ alias ll='ls -lG'
 # https://coderwall.com/p/h63etq
 # https://github.com/pda/dotzsh/blob/master/keyboard.zsh#L10
 # 10ms for key sequences
-KEYTIMEOUT=11
+KEYTIMEOUT=21
 export KEYTIMEOUT
 
 # remap jj to nesc

@@ -246,15 +246,25 @@ windows = {
   6 = {
     items = (
       {
-        type = "QUERY";
+        type = "CHANNEL";
         chat_type = "IRC";
-        name = "*status";
+        name = "#erlang";
+        tag = "freenode";
+      }
+    );
+  };
+  7 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#elixir-lang";
         tag = "freenode";
       }
     );
   };
 };
 mainwindows = {
-  6 = { first_line = "9"; lines = "43"; };
-  1 = { first_line = "1"; lines = "8"; };
+  2 = { first_line = "11"; lines = "54"; };
+  1 = { first_line = "1"; lines = "10"; };
 };
