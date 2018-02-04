@@ -10,6 +10,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
         if [ -f ~/.ubuntualias ]; then
                 source ~/.ubuntualias
         fi
+        export PATH="$(yarn global bin):$PATH"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         if [ -f ~/.osxalias ]; then
                 source ~/.osxalias
@@ -29,6 +30,8 @@ setopt SHARE_HISTORY
 [[ $TMUX = "" ]] && export TERM="xterm-256color-italic"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+export VISUAL=vim
 #disable tmux in fzf
 export FZF_TMUX=1
 #  use extended search  all the time
