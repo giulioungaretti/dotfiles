@@ -87,41 +87,34 @@ render_timer: false
 # and cursor.background colors, otherwise invert the colors of the cursor.
 custom_cursor_colors: false
 
-# Base16 Pop 256 - alacritty color config
-# Chris Kempson (http://chriskempson.com)
+# acme plan 9 colors
 colors:
   # Default colors
   primary:
-    background: '0x000000'
-    foreground: '0xd0d0d0'
-
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0x000000'
-    cursor: '0xd0d0d0'
+    background: '0xffffe0'
+    foreground: '0x424242'
 
   # Normal colors
   normal:
-    black:   '0x000000'
-    red:     '0xeb008a'
-    green:   '0x37b349'
-    yellow:  '0xf8ca12'
-    blue:    '0x0e5a94'
-    magenta: '0xb31e8d'
-    cyan:    '0x00aabb'
-    white:   '0xd0d0d0'
+    black:   '0x424242'
+    red:     '0xb85c57'
+    green:   '0x57864e'
+    yellow:  '0x8f7734'
+    blue:    '0x2a8dc5'
+    magenta: '0x8888c7'
+    cyan:    '0x6aa7a8'
+    white:   '0x999957'
 
   # Bright colors
   bright:
-    black:   '0x505050'
-    red:     '0xeb008a'
-    green:   '0x37b349'
-    yellow:  '0xf8ca12'
-    blue:    '0x0e5a94'
-    magenta: '0xb31e8d'
-    cyan:    '0x00aabb'
-    white:   '0xd0d0d0'
-
+    black:   '0xeeeea7'
+    red:     '0xf2acaa'
+    green:   '0x98ce8f'
+    yellow:  '0xb7b19c'
+    blue:    '0xa6dcf8'
+    magenta: '0xd0d1f7'
+    cyan:    '0xb0eced'
+    white:   '0xffffec'
 # Visual Bell
 #
 # Any time the BEL code is received, Alacritty "rings" the visual bell. Once
