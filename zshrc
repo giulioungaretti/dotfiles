@@ -180,6 +180,7 @@ export PATH="$HOME/n/bin/":${PATH}
 
 # add  haskell bin tools to path
 export PATH="$HOME/.local/bin":${PATH}
+
 # source secrets file if exist
 [ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
 # }}}
@@ -187,5 +188,10 @@ function chpwd {
     if [ -f $(pwd)/.workspace.json ]; then
         python ~/dotfiles/bin/watch
     fi
+}
+#magic tmux temp session
+function  ta (){
+    local NEW_SESSION=$(uuidgen)
+    tmux new-session -t $1 -s $NEW_SESSION; echo "DONE";  tmux kill-session -t $NEW_SESSION
 }
 # vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
