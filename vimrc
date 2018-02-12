@@ -41,7 +41,8 @@ set mousehide
 "folding
 set nofoldenable  " enable folding
 set foldnestmax=10  " max 10 nested fold allowed
-set foldmethod=syntax " fold based on indent level
+set foldmethod=indent " fold based on indent level
+" automatic fold save and restore on buf leave enter (per window)
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 " scroll the view port faster
@@ -207,9 +208,6 @@ if s:uname == "Linux\n"
     set clipboard=unnamedplus
 endif
 
-" reload on save
-autocmd! bufwritepost .vimrc source %
-autocmd! bufwritepost vimrc source %
 " tmux 
 function! TmuxMove(direction)
         let wnr = winnr()
@@ -224,23 +222,28 @@ nnoremap <silent> <c-h> :call TmuxMove('h')<cr>
 nnoremap <silent> <c-j> :call TmuxMove('j')<cr>
 nnoremap <silent> <c-k> :call TmuxMove('k')<cr>
 nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
-if filereadable(glob("~/.vimPlug"))
-    source  $HOME/.vimPlug
-endif
 
 " Make Vim to handle long lines nicely.
 set wrap
 set textwidth=79
 set formatoptions=qrn1
+
 " Do not show stupid q: window
 map q: :q
 map qq :q <CR>
 
+" only hilights the row in the current active window
 augroup BgHighlight
     autocmd!
     autocmd WinEnter * set cul
     autocmd WinLeave * set nocul
 augroup END
 
-autocmd FileType qf wincmd J
+" reload on save
+autocmd! bufwritepost .vimrc source %
+autocmd! bufwritepost vimrc source %
+
+if filereadable(glob("~/.vimPlug"))
+    source  $HOME/.vimPlug
+endif
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
