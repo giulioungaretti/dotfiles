@@ -1,4 +1,4 @@
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.vim/plugged')
 "
 Plug 'chrisbra/Colorizer'
 " make search great again
@@ -121,7 +121,12 @@ nnoremap <silent> <leader>O :Tags<CR>
 let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=vendor --exclude=node_modules --exclude=test --exclude=elm-stuff --exclude=vis.js' 
 nnoremap <silent> <leader>? :History<CR>
 " seach current dir with Ag
+"autocmd! VimEnter * command! -nargs=* -complete=file Ag :call fzf#vim#ag_raw(<q-args>)
+command! -bang -nargs=+ -complete=dir Agf call fzf#vim#ag_raw(<q-args>,
+\                     fzf#vim#with_preview('right:50%:hidden', '?'),
+\                     <bang>0)
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>
+nnoremap <silent> <leader>h :execute 'Agf ' . input('Ag/')<CR>
 nnoremap <silent> <leader>gl :Commits<CR>
 nnoremap <silent> <leader>gb :BCommits<CR>
 " todo and notes fzf powered
@@ -146,6 +151,7 @@ let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['json'] = ['prettier']
 let g:ale_fixers['css'] = ['prettier']
 let g:ale_fixers['html'] = ['htmlint']
+let g:ale_fixers['python'] = ['yapf']
 " }}}
 "elm {{{
 let g:elm_setup_keybindings = 0
@@ -158,7 +164,7 @@ au FileType elm nmap <leader>e <Plug>(elm-error-detail)
 au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
-au BufNewFile,BufRead *.elm setlocal noet ts=2 sw=2 sts=2 expandtab
+autocmd FileType elm setlocal shiftwidth=2 softtabstop=2
 "}}}
 "go{{{
 let g:ale_linters = {'go': ['go build','gofmt']}
@@ -170,7 +176,7 @@ let g:go_term_mode = "vsplit"
 au FileType go set foldmethod=indent foldnestmax=10
 au FileType go set nolist
 " match gofmt style
-au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+au FileType go setlocal noet ts=4 sw=4 sts=4
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
@@ -231,14 +237,13 @@ let g:go_auto_type_info = 1
 let g:ale_linters.haskell = ['stack-ghc-mod', 'hlint']
 " Use ALE (works even when not using Intero)
 let g:intero_use_neomake = 0
-
 let g:necoghc_use_stack=1
 let g:necoghc_debug=1
 let g:haskellmode_completion_ghc = 1
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-"This unsets the last search pattern register by hitting return
-" becasue incsearch does not work with nvim
-nnoremap <CR> :noh<CR><CR>
+" }}}
+" python  {{{
+
 function! s:jedi_auto_force_py_version() abort
   let major_version = pyenv#python#get_internal_major_version()
   call jedi#force_py_version(major_version)
@@ -251,7 +256,7 @@ augroup vim-pyenv-custom-augroup
 augroup END
 " }}}
 " NOTE: there seems to be no real consensus on this. Maybe it makes things
-" faster myabe not, who knows ? 
+" faster myabe not, who knows?
 set lazyredraw
+call plug#end()
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
-"
