@@ -19,8 +19,6 @@ let g:ale_fix_on_save=1
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
-Plug 'craigemery/vim-autotag'
-let g:autotagTagsFile="tags"
 " fix cursor shape
 Plug 'jszakmeister/vim-togglecursor'
 " fuGITve
