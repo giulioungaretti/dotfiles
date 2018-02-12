@@ -37,6 +37,16 @@ Plug 'eagletmt/neco-ghc'
 Plug 'fatih/vim-go', { 'for': 'go' }
 " theme
 Plug 'plan9-for-vimspace/acme-colors'
+
+" turn on virtualenvs
+Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
+Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
+let g:pydocstring_enable_mapping = 0
+" jedi autocpmletion and smart code fu
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+let g:jedi#force_py_version = 3
+Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
+
 call plug#end()
 " set Vim-specific sequences for RGB colors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -231,6 +241,16 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 "This unsets the last search pattern register by hitting return
 " becasue incsearch does not work with nvim
 nnoremap <CR> :noh<CR><CR>
+function! s:jedi_auto_force_py_version() abort
+  let major_version = pyenv#python#get_internal_major_version()
+  call jedi#force_py_version(major_version)
+endfunction
+
+augroup vim-pyenv-custom-augroup
+  autocmd! *
+  autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+  autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+augroup END
 " }}}
 " NOTE: there seems to be no real consensus on this. Maybe it makes things
 " faster myabe not, who knows ? 
