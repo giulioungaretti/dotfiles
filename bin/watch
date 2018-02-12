@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+""" watch does so much magic """
+import json
+import os
+from subprocess import run, CalledProcessError, DEVNULL
+import sys
+
+
+def main():
+    "run main program"
+    try:
+        with open("./.workspace.json") as file:
+            j = json.load(file)
+    except FileNotFoundError:
+        sys.exit(0)
+
+    cmd = j["startcmd"]
+    name = "{}_task".format(os.getcwd())
+    exec_string = "exec -a {} {} &".format(name, cmd)
+
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "kill":
+            try:
+                run("pkill -f {}".format(name), shell=True, check=True)
+                sys.exit(0)
+            except CalledProcessError:
+                print("name {} not fund in process list".format(name))
+                sys.exit(1)
+
+    print(f"Workspace definition found: executing {cmd}")
+    try:
+        run("pkill -f {}".format(name), shell=True, check=True)
+
+    except CalledProcessError:
+        run(exec_string,
+            shell=True,
+            check=True,
+            stdout=DEVNULL,
+            stderr=DEVNULL)
+
+
+if __name__ == "__main__":
+    main()
+
+# vim:  ft=python

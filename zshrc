@@ -183,4 +183,9 @@ export PATH="$HOME/.local/bin":${PATH}
 # source secrets file if exist
 [ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
 # }}}
+function chpwd {
+    if [ -f $(pwd)/.workspace.json ]; then
+        python ~/dotfiles/bin/watch
+    fi
+}
 # vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78
