@@ -1,5 +1,4 @@
 #!/bin/sh
-
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -22,7 +21,6 @@ fi
 if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
-xrandr --dpi 180
 # make gnome stuff nice again
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 # fix gnome-dbus-systemd wathever problem
@@ -34,4 +32,5 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
   unset f
 fi
 
+xrandr --dpi 192
 exec i3
