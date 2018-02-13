@@ -17,11 +17,11 @@ focus_follows_mouse no
 
 # new window default border
 
-new_window pixel 1
-new_float pixel 1
+new_window pixel 3
+new_float pixel 3
 
-gaps inner 10
-gaps outer 10
+gaps inner 5
+gaps outer 5
 
 popup_during_fullscreen smart
 
@@ -56,13 +56,13 @@ bindsym $mod+minus scratchpad show
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec exec --no-startup-id `kitty --single-instance`
+bindsym $mod+Return exec --no-startup-id `kitty --single-instance`
 
 # kill focused window
 bindsym $mod+q kill
 
 #bindsym $mod+d exec dmenu_run
-bindsym $mod+d exec exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 bindsym $mod+g exec --no-startup-id ~/bin/dmenu_search.sh
 
@@ -127,7 +127,7 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-assign [class="Chromium"] 3: www
+assign [class="Google-chrome"] 3: www
 assign [class="Evolution"] 4: mail
 assign [class="Spotify"] 5: music
 for_window [class="Spotify"] move to workspace 5: music
