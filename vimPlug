@@ -23,7 +23,8 @@ let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
 Plug 'jszakmeister/vim-togglecursor'
 " fuGITve
 Plug 'tpope/vim-fugitive'
-
+" 
+Plug 'sheerun/vim-polyglot'
 " elm
 Plug 'elmcast/elm-vim'
 "  haskell
@@ -164,7 +165,7 @@ au FileType elm nmap <leader>e <Plug>(elm-error-detail)
 au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
-autocmd FileType elm setlocal shiftwidth=2 softtabstop=2
+"au FileType elm set foldmethod=indent foldnestmax=10
 "}}}
 "go{{{
 let g:ale_linters = {'go': ['go build','gofmt']}
@@ -173,10 +174,10 @@ let g:go_term_enabled = 1
 let g:go_term_mode = "vsplit"
 " fold by sytax and style
 " set style for go files
-au FileType go set foldmethod=indent foldnestmax=10
-au FileType go set nolist
+"au FileType go set foldmethod=indent foldnestmax=10
+"au FileType go set nolist
 " match gofmt style
-au FileType go setlocal noet ts=4 sw=4 sts=4
+"au FileType go setlocal noet ts=4 sw=4 sts=4
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s
 au FileType go nmap <Leader>s <Plug>(go-implements)
 "Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
