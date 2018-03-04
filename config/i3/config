@@ -17,21 +17,23 @@ focus_follows_mouse no
 
 # new window default border
 
-new_window pixel 3
-new_float pixel 3
+new_window pixel 1
+new_float pixel 1
 
-gaps inner 5
+gaps inner 8
 gaps outer 5
 
 popup_during_fullscreen smart
 
-# class border backgr. text indicator
-# LIGHTER #fabd2f RED ACTIVE BORDER
-client.focused          #C43177 #C43177  #111111 #1d1f21
-client.focused_inactive #282828 #fefefe #585858 #1d1f21
-client.unfocused        #282828 #000000 #585858 #1d1f21
-client.urgent           #C43177 #fabd2f #d8d8d8 #C43177
-# CHANGING BORDER STYLE
+# class                 border  backgr. text    indicator child_border
+client.focused          #2a2a2a #fafafa #2a2a2a #e4e4e4   #2a2a2a
+client.focused_inactive #e4e4e4 #fafafa #2a2a2a #e4e4e4   #e4e4e4
+client.unfocused        #e4e4e4 #fafafa #2a2a2a #e4e4e4   #e4e4e4
+client.urgent           #f5aca4 #f5aca4 #ffffff #f5aca4   #f5aca4
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+# change border style
 bindsym $mod+t border normal
 bindsym $mod+y border pixel 1
 bindsym $mod+u border none
@@ -250,13 +252,13 @@ bar {
                 mode dock
                 modifier $alt
                 colors {
-                        background #000000
-                        #statusline #b8b8b8
-                        separator #000000
-                        focused_workspace  #000000  #C43177 #ffffff
-                        #active_workspace   #000000  #000000  #fabd2f
-                        inactive_workspace #000000  #000000  #b8b8b8
-                        #urgent_workspace   #2f343a #8ec07c  #ffffff
+                        background #fafafa
+                        separator #fafafa
+                        statusline #2a2a2a
+                        focused_workspace  #fafafa  #fafafa #2a2a2a
+                        active_workspace   #fafafa  #fafafa  #dfcfeb
+                        inactive_workspace #fafafa  #fafafa  #b8b8b8
+                        urgent_workspace   #facfd4  #f5aca4  #ffffff
                 }
 }
 # toggle mode just in case
