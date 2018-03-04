@@ -1,5 +1,4 @@
 call plug#begin('~/.vim/plugged')
-"
 Plug 'chrisbra/Colorizer'
 " make search great again
 Plug 'haya14busa/incsearch.vim'
@@ -64,27 +63,21 @@ let g:airline#extensions#ale#enabled=0
 " Set this in your vimrc file to disabling highlighting
 let g:ale_set_highlights = 1
 let g:ale_sign_column_always = 0
-
-
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
-
     let l:all_errors = l:counts.error + l:counts.style_error
     let l:all_non_errors = l:counts.total - l:all_errors
-
-    return l:counts.total == 0 ? 'OK' : printf(
-    \   '%dW %dE',
-    \   all_non_errors,
-    \   all_errors
-    \)
+    return l:counts.total == 0 ? '' : printf( '%dW %dE', all_non_errors, all_errors)
 endfunction
-set statusline=
-set statusline +=%5*%{&ff}%*            "file format
-set statusline +=%3*%y%*                "file type
-set statusline +=%4*\ %<%F%*            "full path
-set statusline +=%2*%m%*                "modified flag
-set statusline +=\   
+
+set laststatus=2            " set the bottom status bar
 set statusline +=%{LinterStatus()}
+set statusline+=%F                            " current file path
+set statusline+=\                             " blank space
+set statusline+=%y                            " filetype
+set statusline+=\                             " blank space
+set statusline+=%m                            " modified flag [+]
+set statusline+=\                             " blank space
 
 "nmap <silent> <C-K> <Plug>(ale_previous_wrap)
 "nmap <silent> <C-J> <Plug>(ale_next_wrap)
