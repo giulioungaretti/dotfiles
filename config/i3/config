@@ -252,12 +252,11 @@ bar {
                 mode dock
                 modifier $alt
                 colors {
-                        background #fafafa
-                        separator #fafafa
-                        statusline #2a2a2a
-                        focused_workspace  #fafafa  #fafafa #2a2a2a
-                        active_workspace   #fafafa  #fafafa  #dfcfeb
-                        inactive_workspace #fafafa  #fafafa  #b8b8b8
+                        background #2a2a2a
+                        separator #2a2a2a
+                        active_workspace  #2a2a2a  #2a2a2a  #ffffff
+                        focused_workspace   #2a2a2a  #fac8a8  #2a2a2a
+                        inactive_workspace #2a2a2a  #2a2a2a  #909090
                         urgent_workspace   #facfd4  #f5aca4  #ffffff
                 }
 }
