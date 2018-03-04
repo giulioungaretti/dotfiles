@@ -1,4 +1,3 @@
-" Just the best settings {{{
 syntax on
 set autoindent
 set backspace=indent,eol,start
@@ -168,7 +167,7 @@ nnoremap <silent><C-W><C-d> :bnext<CR>
 nnoremap <silent><C-W><C-a> :bprevious<CR>
 
 " current line number
-nnoremap <silent><leader>oo :set relativenumber!<cr>
+nnoremap <silent><leader>rl :set relativenumber!<cr>
 
 " redraw only when we need to
 set lazyredraw
