@@ -4,6 +4,7 @@
 tap homebrew/core
 brew autoconf
 brew automake
+brew bash
 brew cairo
 brew ctags
 brew dep
@@ -14,13 +15,15 @@ brew entr
 brew fontconfig
 brew freetype
 brew fzf
+brew gawk
+brew gcc
 brew gdbm
 brew gdk-pixbuf
 brew gettext
 brew git
 brew glib
 brew gmp
-brew gnu-sed
+brew gnu-sed --with-default-names
 brew gnutls
 brew go
 brew gobject-introspection
@@ -30,8 +33,10 @@ brew harfbuzz
 brew haskell-stack
 brew httpie
 brew icu4c
+brew imagemagick
 brew imagemagick@6
 brew irssi
+brew isl
 brew jemalloc
 brew jpeg
 brew jq
@@ -74,7 +79,6 @@ brew protobuf
 brew pyenv
 brew pyenv-virtualenv
 brew python
-brew python3
 brew ranger
 brew readline
 brew reattach-to-user-namespace
@@ -93,6 +97,7 @@ brew watch
 brew wget
 brew xz
 brew yarn
+brew zlib
 brew zsh
 
 tap caskroom/cask
@@ -110,6 +115,7 @@ cask vagrant
 cask 1password
 cask google-chrome
 cask hyper
+cask soundcleod
 cask whatsapp
 cask alfred
 
@@ -129,6 +135,7 @@ brew universal-ctags --HEAD
 
 # Other Homebrew packages
 brew ImageMagick
+brew python3
 
 # App Store applications
 appstore 918858936 Airmail 3 (3.5.3)
