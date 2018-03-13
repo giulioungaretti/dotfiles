@@ -34,7 +34,7 @@ Plug 'eagletmt/neco-ghc'
 " go
 Plug 'fatih/vim-go', { 'for': 'go' }
 " theme
-Plug 'nightsense/shoji'
+Plug 'giulioungaretti/shoji'
 " turn on virtualenvs
 Plug 'jmcantrell/vim-virtualenv' , { 'for': 'python' }
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
@@ -102,10 +102,9 @@ nnoremap <silent> <leader>. :Lines<CR>
 nnoremap <silent> <leader>o :BTags<CR>
 nnoremap <silent> <leader>O :Tags<CR>
 " [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=vendor --exclude=node_modules --exclude=test --exclude=elm-stuff --exclude=vis.js' 
+let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=vendor --exclude=node_modules --exclude=test --exclude=elm-stuff --exclude=vis.js --exclude=elm.js' 
 nnoremap <silent> <leader>? :History<CR>
 " seach current dir with Ag
-"autocmd! VimEnter * command! -nargs=* -complete=file Ag :call fzf#vim#ag_raw(<q-args>)
 command! -bang -nargs=+ -complete=dir Agf call fzf#vim#ag_raw(<q-args>,
 \                     fzf#vim#with_preview('right:50%:hidden', '?'),
 \                     <bang>0)
@@ -215,4 +214,7 @@ augroup END
 " faster myabe not, who knows?
 set lazyredraw
 call plug#end()
+let &t_SI="\033[4 q" " start insert mode
+let &t_EI="\033[1 q" " end insert mode
+
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
