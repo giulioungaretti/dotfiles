@@ -41,7 +41,6 @@ Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
 let g:pydocstring_enable_mapping = 0
 " jedi autocpmletion and smart code fu
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-let g:jedi#force_py_version = 3
 Plug 'lambdalisue/vim-pyenv', { 'for': 'python' }
 call plug#end()
 colorscheme shoji_shiro
@@ -198,17 +197,17 @@ let g:haskellmode_completion_ghc = 1
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " }}}
 " python  {{{
+" TOOD: this I don't knowhwatit odes
+"function! s:jedi_auto_force_py_version() abort
+  "let major_version = pyenv#python#get_internal_major_version()
+  "call jedi#force_py_version(major_version)
+"endfunction
 
-function! s:jedi_auto_force_py_version() abort
-  let major_version = pyenv#python#get_internal_major_version()
-  call jedi#force_py_version(major_version)
-endfunction
-
-augroup vim-pyenv-custom-augroup
-  autocmd! *
-  autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
-  autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
-augroup END
+"augroup vim-pyenv-custom-augroup
+  "autocmd! *
+  "autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+  "autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+"augroup END
 " }}}
 " NOTE: there seems to be no real consensus on this. Maybe it makes things
 " faster myabe not, who knows?
