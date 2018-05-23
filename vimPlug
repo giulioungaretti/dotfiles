@@ -25,7 +25,7 @@ Plug 'tpope/vim-fugitive'
 " 
 Plug 'sheerun/vim-polyglot'
 " elm
-Plug 'elmcast/elm-vim'
+Plug 'elmcast/elm-vim', { 'branch': 'unstable' }
 "  haskell
 Plug 'neovimhaskell/haskell-vim'
 Plug 'parsonsmatt/intero-neovim'
