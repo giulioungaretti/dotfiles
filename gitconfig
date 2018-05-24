@@ -31,7 +31,7 @@
 	smudge = git-lfs smudge %f
 	required = true
 [commit]
-	template = ~/.git_commit_msg.txt
+	template = ~/dotfiles/git_commit_msg.txt
 [diff]
 	tool = vimdiff
 [difftool]
