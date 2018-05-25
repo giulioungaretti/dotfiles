@@ -173,12 +173,8 @@ if [ -d "$HOME/.pyenv" ]; then
    export PATH="$HOME/.pyenv/bin":${PATH}
    eval "$(pyenv init -)"
 fi
-# add n stuff to path
-export PATH="$HOME/n/bin/":${PATH}
-
 # add  haskell bin tools to path
 export PATH="$HOME/.local/bin":${PATH}
-
 # source secrets file if exist
 [ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
 # }}}
