@@ -65,6 +65,9 @@ set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
 " show hidden characters
 set list "
 set list listchars=tab:»·,trail:·
+autocmd FileType go set nolist
+autocmd FileType make set nolist
+
 
 set tabstop=4
 set shiftwidth=4
@@ -74,7 +77,6 @@ set expandtab
 if has("persistent_undo")
     " unix only
     " TODO use vim's mkdir
-    " !mkdir -p $HOME/.undodir/
     set undodir=$HOME/.undodir/
     set undofile
 endif
