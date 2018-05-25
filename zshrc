@@ -168,7 +168,7 @@ zle -N zle-line-finish
 zle -N zle-keymap-select
 # }}}
 # version managers {{{
-if [ -d "${PYENV_ROOT}" ]; then
+
 if [ -d "$HOME/.pyenv" ]; then
    export PATH="$HOME/.pyenv/bin":${PATH}
    eval "$(pyenv init -)"
@@ -177,7 +177,10 @@ fi
 export PATH="$HOME/.local/bin":${PATH}
 # source secrets file if exist
 [ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
+# add home/bin to path
+export PATH="$HOME/bin":${PATH}
 # }}}
+ 
 # automatric pipenv shell if pipfile exists
 function auto_pipenv_shell {
     if [ ! -n "${PIPENV_ACTIVE+1}" ]; then
@@ -188,7 +191,7 @@ function auto_pipenv_shell {
 }
 function chpwd {
     if [ -f $(pwd)/.workspace.json ]; then
-        python ~/dotfiles/bin/watch
+        watch
     fi
     auto_pipenv_shell
 }
