@@ -35,8 +35,7 @@ export VISUAL=vim
 #disable tmux in fzf
 export FZF_TMUX=1
 #  use extended search  all the time
-# pyenv
-export PYENV_ROOT="${HOME}/.pyenv"
+#
 #}}}
 # Aliases {{{
 alias server='python3 -m http.server'
@@ -170,7 +169,8 @@ zle -N zle-keymap-select
 # }}}
 # version managers {{{
 if [ -d "${PYENV_ROOT}" ]; then
-   export PATH="${PYENV_ROOT}/bin:${PATH}"
+if [ -d "$HOME/.pyenv" ]; then
+   export PATH="$HOME/.pyenv/bin":${PATH}
    eval "$(pyenv init -)"
    # this is really slow for some reasons
    # eval "$(pyenv virtualenv-init -)"
