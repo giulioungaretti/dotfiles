@@ -172,8 +172,6 @@ if [ -d "${PYENV_ROOT}" ]; then
 if [ -d "$HOME/.pyenv" ]; then
    export PATH="$HOME/.pyenv/bin":${PATH}
    eval "$(pyenv init -)"
-   # this is really slow for some reasons
-   # eval "$(pyenv virtualenv-init -)"
 fi
 # add n stuff to path
 export PATH="$HOME/n/bin/":${PATH}
@@ -184,10 +182,19 @@ export PATH="$HOME/.local/bin":${PATH}
 # source secrets file if exist
 [ -f ~/dotfiles/SECRETS.sh ]  && source ~/dotfiles/SECRETS.sh
 # }}}
+# automatric pipenv shell if pipfile exists
+function auto_pipenv_shell {
+    if [ ! -n "${PIPENV_ACTIVE+1}" ]; then
+        if [ -f "Pipfile" ] ; then
+            pipenv shell
+        fi
+    fi
+}
 function chpwd {
     if [ -f $(pwd)/.workspace.json ]; then
         python ~/dotfiles/bin/watch
     fi
+    auto_pipenv_shell
 }
 #magic tmux temp session
 function  ta (){
