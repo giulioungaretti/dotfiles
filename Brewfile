@@ -6,7 +6,6 @@ brew autoconf
 brew automake
 brew bash
 brew cairo
-brew ctags
 brew dep
 brew dfu-programmer
 brew elm
@@ -14,6 +13,7 @@ brew elm-format
 brew entr
 brew fontconfig
 brew freetype
+brew fswatch
 brew fzf
 brew gawk
 brew gcc
@@ -43,6 +43,7 @@ brew jq
 brew libcroco
 brew libevent
 brew libffi
+brew libidn2
 brew libmpc
 brew libpng
 brew librsvg
@@ -58,6 +59,7 @@ brew libvterm
 brew libyaml
 brew luajit
 brew mas
+brew mono
 brew mosh
 brew mpfr
 brew msgpack
@@ -72,12 +74,13 @@ brew p11-kit
 brew pango
 brew pcre
 brew pcre2
+brew perl
+brew pipenv
 brew pixman
 brew pkg-config
 brew postgresql
 brew protobuf
 brew pyenv
-brew pyenv-virtualenv
 brew python
 brew ranger
 brew readline
@@ -91,7 +94,7 @@ brew tmux
 brew tree
 brew unibilium
 brew unrar
-brew vim --with-python3
+brew vim
 brew wakeonlan
 brew watch
 brew wget
@@ -100,29 +103,36 @@ brew yarn
 brew zlib
 brew zsh
 
+tap homebrew/services
+
 tap caskroom/cask
-cask torbrowser
-cask virtualbox
-cask visual-studio-code
-cask spotify
-cask plex-media-server
-cask vlc
-cask skype
-cask transmission
-cask db-browser-for-sqlite
-cask postman
-cask vagrant
 cask 1password
+cask alfred
+cask db-browser-for-sqlite
 cask google-chrome
 cask hyper
+cask macvim
+cask plex-media-server
+cask postman
+cask skype
 cask soundcleod
+cask spotify
+cask torbrowser
+cask transmission
+cask vagrant
+cask virtualbox
+cask visual-studio-code
+cask vlc
 cask whatsapp
-cask alfred
 
-tap crisidev/homebrew-chunkwm
+tap caskroom/fonts
+
+tap caskroom/versions
+cask iterm2-beta
+
+tap crisidev/chunkwm
 
 tap koekeishiya/formulae
-brew skhd
 
 tap osx-cross/avr
 brew avr-binutils
@@ -133,20 +143,21 @@ brew brew-file
 tap universal-ctags/universal-ctags
 brew universal-ctags --HEAD
 
-# Other Homebrew packages
-brew ImageMagick
-brew python3
-
 # App Store applications
-appstore 918858936 Airmail 3 (3.5.3)
-appstore 1091189122 Bear (1.3.1)
+appstore 918858936 Airmail 3 (3.5.4)
+appstore 973134470 Be Focused (1.7)
 appstore 1173932628 Drop (1.02)
+appstore 992115977 Image2Icon (2.8.1)
 appstore 409183694 Keynote (7.3.1)
 appstore 441258766 Magnet (2.1.0)
-appstore 784801555 Microsoft OneNote (15.40)
+appstore 784801555 Microsoft OneNote (16.10)
+appstore 1295203466 Microsoft Remote Desktop (10.1.5)
+appstore 1173152781 Notebook (3.1.1)
 appstore 409203825 Numbers (4.3.1)
 appstore 409201541 Pages (6.3.1)
-appstore 568494494 Pocket (1.6.6)
-appstore 803453959 Slack (2.8.2)
+appstore 639968404 Parcel (3.1)
+appstore 568494494 Pocket (1.7.1)
+appstore 880001334 Reeder (3.1.2)
+appstore 803453959 Slack (3.0.5)
 appstore 1153157709 Speedtest (1.3)
-appstore 1278508951 Trello (2.10.0)
+appstore 1278508951 Trello (2.10.2)
