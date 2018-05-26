@@ -20,10 +20,13 @@ focus_follows_mouse no
 new_window pixel 1
 new_float pixel 1
 
-gaps inner 8
-gaps outer 5
+gaps inner 1
+gaps outer 1
 
 popup_during_fullscreen smart
+
+# force border on all windows (this is to fix gnome/gtk3 client side decorations)
+for_window [class=".*"] border pixel 2
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #2a2a2a #fafafa #2a2a2a #e4e4e4   #2a2a2a
@@ -71,6 +74,14 @@ bindsym $mod+g exec --no-startup-id ~/bin/dmenu_search.sh
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
+
+# external
+bindsym $mod+x move workspace to output DP1-1
+# internal
+bindsym $mod+i move workspace to output eDP1
+
+bindsym $mod+Ctrl+greater move workspace to output top
+bindsym $mod+Ctrl+less move workspace to output bottom
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -129,11 +140,17 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-assign [class="Google-chrome"] 3: www
+#assign [class="Google-chrome"] 3: www
 assign [class="Evolution"] 4: mail
 assign [class="Spotify"] 5: music
 for_window [class="Spotify"] move to workspace 5: music
 for_window [class="Slack"] move to workspace 6: chat
+
+for_window [class="Nitrogen"] floating enable
+
+# run chromium in magic full screen mode
+assign [instance="^google-chrome$"] 3: www
+for_window [instance="^google-chrome$"] exec "sh -c 'sleep .2; i3-msg \[instance=google-chrome\] fullscreen disable'"
 
 
 # move workspace around displays
@@ -247,17 +264,17 @@ mode $audiomode {
 bar {
         tray_output none
         status_command i3blocks
-                font pango:monoid 10 10
+                font pango:monoid 8 10
                 position bottom
                 mode dock
                 modifier $alt
                 colors {
                         background #2a2a2a
-                        separator #2a2a2a
-                        active_workspace  #2a2a2a  #2a2a2a  #ffffff
-                        focused_workspace   #2a2a2a  #fac8a8  #2a2a2a
+                        separator  #2a2a2a
+                        active_workspace   #2a2a2a  #2a2a2a  #ffffff
+                        focused_workspace  #2a2a2a  #fac8a8  #2a2a2a
                         inactive_workspace #2a2a2a  #2a2a2a  #909090
-                        urgent_workspace   #facfd4  #f5aca4  #ffffff
+                        urgent_workspace   #2a2a2a  #f5aca4  #2a2a2a
                 }
 }
 # toggle mode just in case
