@@ -45,8 +45,7 @@ bindsym $mod+u border none
 # We first set the titlebar font size to a large size to get a good padding amount.
 # We then use pango markup to force i3 to print with the desired font.
 # This gives us large titlebars with a small font. :P
-font pango:monoid 12
-#for_window [class=".*"] title_format "<span font='artwiz lemon 7'> > %title</span>"
+font pango:mplus 12
 #######################################################################
 #                            bindings                                 #
 #######################################################################
@@ -264,7 +263,7 @@ mode $audiomode {
 bar {
         tray_output none
         status_command i3blocks
-                font pango:monoid 8 10
+                font pango:mplus 8 10
                 position bottom
                 mode dock
                 modifier $alt
