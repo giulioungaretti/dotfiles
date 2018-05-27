@@ -197,17 +197,30 @@ settings = {
 keyboard = ( );
 servers = (
   {
-    address = "188.166.36.190";
-    chatnet = "freenode";
-    port = "5000";
-    password = "unga/freenode:asdrubale";
-    use_ssl = "yes";
+    address = "irc.freenode.net";
+    chatnet = "Freenode";
+    port = "6667";
+    use_ssl = "no";
     ssl_verify = "no";
     autoconnect = "yes";
   }
 );
 
-chatnets = { freenode = { type = "IRC"; nick = "unga"; }; };
+channels = (
+  { name = "#elm"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#go-nuts"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#rust-beginners"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#haskell"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#elixir-lang"; chatnet = "Freenode"; autojoin = "Yes"; }
+);
+
+chatnets = {
+  freenode = {
+    type = "IRC";
+    nick = "unga";
+    autosendcmd = "/msg nickserv identify unga PWD ;wait 500";
+  };
+};
 ignores = ( { level = "JOINS PARTS QUITS"; } );
 logs = { };
 windows = {
@@ -218,7 +231,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#elm";
+        name = "#haskell";
         tag = "freenode";
       }
     );
@@ -238,26 +251,6 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#haskell";
-        tag = "freenode";
-      }
-    );
-  };
-  6 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#erlang";
-        tag = "freenode";
-      }
-    );
-  };
-  7 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
         name = "#elixir-lang";
         tag = "freenode";
       }
@@ -265,6 +258,6 @@ windows = {
   };
 };
 mainwindows = {
-  2 = { first_line = "11"; lines = "54"; };
-  1 = { first_line = "1"; lines = "10"; };
+  2 = { first_line = "6"; lines = "32"; };
+  1 = { first_line = "1"; lines = "5"; };
 };
