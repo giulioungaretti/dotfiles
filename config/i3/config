@@ -69,8 +69,6 @@ bindsym $mod+q kill
 #bindsym $mod+d exec dmenu_run
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-bindsym $mod+g exec --no-startup-id ~/bin/dmenu_search.sh
-
 #### layouts
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
