@@ -161,7 +161,7 @@ let g:go_term_mode = "vsplit"
 " fold by sytax and style
 " set style for go files
 "au FileType go set foldmethod=indent foldnestmax=10
-"au FileType go set nolist
+au FileType go set nolist
 " match gofmt style
 "au FileType go setlocal noet ts=4 sw=4 sts=4
 "Show a list of interfaces which is implemented by the type under your cursor with <leader>s

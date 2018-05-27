@@ -7,9 +7,7 @@ fi
 
 # OS awareness # {{{
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        if [ -f ~/.ubuntualias ]; then
-                source ~/.ubuntualias
-        fi
+        source ~/dotfiles/ubuntualias
         export PATH="$(yarn global bin):$PATH"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         if [ -f ~/.osxalias ]; then
