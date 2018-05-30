@@ -31,6 +31,7 @@ brew gotags
 brew graphite2
 brew harfbuzz
 brew haskell-stack
+brew htop
 brew httpie
 brew icu4c
 brew imagemagick
@@ -106,11 +107,35 @@ brew zsh
 tap homebrew/services
 
 tap caskroom/cask
+
+tap caskroom/fonts
+
+tap caskroom/versions
+
+tap crisidev/chunkwm
+brew chunkwm
+
+tap crisidev/homebrew-chunkwm
+
+tap koekeishiya/formulae
+brew skhd
+
+tap osx-cross/avr
+brew avr-binutils
+
+tap rcmdnk/file
+brew brew-file
+
+tap universal-ctags/universal-ctags
+brew universal-ctags --HEAD
+
+# Other Cask applications
 cask 1password
 cask alfred
 cask db-browser-for-sqlite
 cask google-chrome
 cask hyper
+cask iterm2-beta
 cask macvim
 cask plex-media-server
 cask postman
@@ -124,24 +149,6 @@ cask virtualbox
 cask visual-studio-code
 cask vlc
 cask whatsapp
-
-tap caskroom/fonts
-
-tap caskroom/versions
-cask iterm2-beta
-
-tap crisidev/chunkwm
-
-tap koekeishiya/formulae
-
-tap osx-cross/avr
-brew avr-binutils
-
-tap rcmdnk/file
-brew brew-file
-
-tap universal-ctags/universal-ctags
-brew universal-ctags --HEAD
 
 # App Store applications
 appstore 918858936 Airmail 3 (3.5.4)

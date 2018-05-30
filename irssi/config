@@ -218,7 +218,7 @@ chatnets = {
   freenode = {
     type = "IRC";
     nick = "unga";
-    autosendcmd = "/msg nickserv identify unga PWD ;wait 500";
+    autosendcmd = "/msg nickserv identify unga adrubale ;wait 500";
   };
 };
 ignores = ( { level = "JOINS PARTS QUITS"; } );
