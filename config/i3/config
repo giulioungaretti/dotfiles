@@ -27,11 +27,11 @@ popup_during_fullscreen smart
 for_window [class=".*"] border pixel 2
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #2a2a2a #fafafa #2a2a2a #e4e4e4   #2a2a2a
-client.focused_inactive #e4e4e4 #fafafa #2a2a2a #e4e4e4   #e4e4e4
+client.focused          #2a2a2a #2a2a2a #e4e4e4 #e4e4e4   #2a2a2a
+client.focused_inactive #e4e4e4 #e4e4e4 #2a2a2a #ff0000   #e4e4e4
 client.unfocused        #e4e4e4 #fafafa #2a2a2a #e4e4e4   #e4e4e4
 client.urgent           #f5aca4 #f5aca4 #ffffff #f5aca4   #f5aca4
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #f5a
 
 client.background       #ffffff
 # change border style
@@ -43,7 +43,8 @@ bindsym $mod+u border none
 # We first set the titlebar font size to a large size to get a good padding amount.
 # We then use pango markup to force i3 to print with the desired font.
 # This gives us large titlebars with a small font. :P
-font pango:mplus 12
+font pango:iosevka 14
+for_window [class=".*"] title_format "<span font='iosevka 10'> %title</span>"
 #######################################################################
 #                            bindings                                 #
 #######################################################################
@@ -63,8 +64,8 @@ bindsym $mod+Return exec --no-startup-id `kitty --single-instance`
 # kill focused window
 bindsym $mod+q kill
 
-#bindsym $mod+d exec dmenu_run
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# rofi with emoji selector
+bindsym $mod+d exec --no-startup-id rofi -show combi -modi combi -combi-modi drun#window#ssh#emoji:rofiemoji.sh -show-icons -terminal kitty -dpi 180
 
 #### layouts
 # enter fullscreen mode for the focused container
@@ -262,7 +263,6 @@ bar {
                 font pango:mplus 8 10
                 position bottom
                 mode dock
-                modifier $alt
                 colors {
                         background #2a2a2a
                         separator  #2a2a2a
