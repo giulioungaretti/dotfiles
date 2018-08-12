@@ -1,9 +1,0 @@
-# reduce brigthnss
-# retina macbook
-# val=$(cat /sys/class/backlight/gmux_backlight/brightness)
-# dell xps 13
-val=$(cat  /sys/class/backlight/intel_backlight/brightness) 
-up=$(($val - 10))
-if [ "$up" -le  930 ]; then
-        echo $up  |  tee  /sys/class/backlight/intel_backlight/brightness
-fi
