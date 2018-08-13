@@ -64,8 +64,8 @@ bindsym $mod+Return exec --no-startup-id `kitty --single-instance`
 # kill focused window
 bindsym $mod+q kill
 
-# rofi with emoji selector
-bindsym $mod+d exec --no-startup-id rofi -show combi -modi combi -combi-modi drun#window#ssh#emoji:rofiemoji.sh -show-icons -terminal kitty -dpi 180
+# rofi with emoji selector (https://github.com/nkoehring/rofiemoji)
+bindsym $mod+d exec --no-startup-id rofi -show combi -modi combi -combi-modi drun#run#window#ssh#emoji:rofiemoji.sh#sound:sound_output.sh#montior:monitor.sh#history:history.sh -show-icons -terminal kitty -dpi 180
 
 #### layouts
 # enter fullscreen mode for the focused container
