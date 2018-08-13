@@ -152,7 +152,7 @@ for_window [instance="^google-chrome$"] exec "sh -c 'sleep .2; i3-msg \[instance
 # bindsym $mod+m move workspace to output right
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-bindsym $mod+Delete exec "gnome-screensaver-command --lock"
+bindsym $mod+Delete exec "xset dpms 10 && i3lock-next  && xset dpms 300"
 # EXIT I3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
