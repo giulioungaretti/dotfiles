@@ -118,7 +118,7 @@ then
     # Call xrandr
     ${COMMANDS[$SEL]}
     # restore background with nitrogen
-    nitrogen  --restore  2>1 > /dev/null 
+    nitrogen  --restore  > /dev/null 2>&1
     exit $?
 fi
 gen_entries
