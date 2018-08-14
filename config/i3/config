@@ -7,6 +7,7 @@
 #
 #
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id redshift
 
 set $mod Mod1
 set $alt Mod4
@@ -65,7 +66,7 @@ bindsym $mod+Return exec --no-startup-id `kitty --single-instance`
 bindsym $mod+q kill
 
 # rofi with emoji selector (https://github.com/nkoehring/rofiemoji)
-bindsym $mod+d exec --no-startup-id rofi -show combi -modi combi -combi-modi drun#run#window#ssh#emoji:rofiemoji.sh#sound:sound_output.sh#montior:monitor.sh#history:history.sh -show-icons -terminal kitty -dpi 180
+bindsym $mod+d exec --no-startup-id rofi -show combi -modi combi -combi-modi drun#run#window#ssh#emoji:rofiemoji.sh#sound:sound_output.sh#montior:monitor.sh#history:history.sh  -terminal kitty -dpi 180
 
 #### layouts
 # enter fullscreen mode for the focused container
@@ -259,16 +260,16 @@ mode $audiomode {
 bar {
         tray_output none
         status_command i3blocks
-                font pango:mplus 8 10
+                font pango: iosevka 8 10
                 position bottom
                 mode dock
                 colors {
-                        background #2a2a2a
-                        separator  #2a2a2a
-                        active_workspace   #2a2a2a  #2a2a2a  #ffffff
-                        focused_workspace  #2a2a2a  #fac8a8  #2a2a2a
-                        inactive_workspace #2a2a2a  #2a2a2a  #909090
-                        urgent_workspace   #2a2a2a  #f5aca4  #2a2a2a
+                        background #000000
+                        separator  #000000
+                        active_workspace   #000000  #000000  #ffffff
+                        focused_workspace  #000000  #ffffff  #000000
+                        inactive_workspace #000000  #000000  #909090
+                        urgent_workspace   #000000  #f5aca4  #000000
                 }
 }
 # toggle mode just in case
