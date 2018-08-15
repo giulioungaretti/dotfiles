@@ -6,7 +6,7 @@ set smarttab
 set nrformats-=octal
 
 " use bash as shell
-set shell=/bin/sh
+set shell=/usr/bin/fish
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
