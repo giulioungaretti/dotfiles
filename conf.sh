@@ -16,5 +16,8 @@ ln -sf ~/dotfiles/vimPlug ~/.vimPlug
 # then tmux
 ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# add italic support in tmux and terminal
+tic -x tmux.terminfo
+tic xterm-256color-italic.terminfo
 # add fish
 # add other folders 
