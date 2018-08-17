@@ -35,7 +35,6 @@ gnome-documents 3.28.1-1
 gnome-font-viewer 3.28.0-1
 gnome-icon-theme 3.12.0-4
 gnome-terminal 3.28.2-1
-gnome-tweaks 3.28.1-1
 go 2:1.10.3-1
 google-chrome 68.0.3440.106-1
 grub 2.03.0-7.1

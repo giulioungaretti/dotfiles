@@ -9,8 +9,8 @@
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id redshift
 
-set $mod Mod1
-set $alt Mod4
+set $mod Mod4
+set $alt Mod1
 
 focus_follows_mouse no
 
@@ -66,7 +66,7 @@ bindsym $mod+Return exec --no-startup-id `kitty --single-instance`
 bindsym $mod+q kill
 
 # rofi with emoji selector (https://github.com/nkoehring/rofiemoji)
-bindsym $mod+d exec --no-startup-id rofi -show combi -modi combi -combi-modi drun#run#window#ssh#emoji:rofiemoji.sh#sound:sound_output.sh#montior:monitor.sh#history:history.sh  -terminal kitty -dpi 180
+bindsym $mod+d exec --no-startup-id rofi -show combi -modi combi -combi-modi drun#run#window#ssh#emoji:rofiemoji.sh#sound:sound_output.sh#montior:monitor.sh -show-icons -terminal kitty -dpi 180
 
 #### layouts
 # enter fullscreen mode for the focused container
@@ -227,6 +227,8 @@ mode $mediamode {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+bindsym $mod+F10 exec  xrandr --output eDP1 --auto &  nitrogen  --restore  > /dev/null 2>&1
 
 #######################################################################
 #                       Sreen brightness controls                     #

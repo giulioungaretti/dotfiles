@@ -22,6 +22,7 @@ if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
 # start dunst deamon
-dunst > /dev/null 2>&1  &
+ dunst > /dev/null 2>&1  &
 xrandr --dpi 192
 exec i3
+#exec gnome-session

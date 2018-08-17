@@ -169,6 +169,14 @@ statusbar = {
         barend = { priority = "100"; alignment = "right"; };
       };
     };
+    awl_1 = {
+      placement = "top";
+      items = {
+        barstart = { priority = "100"; };
+        awl_1 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
   };
 };
 
@@ -218,7 +226,7 @@ chatnets = {
   freenode = {
     type = "IRC";
     nick = "unga";
-    autosendcmd = "/msg nickserv identify unga adrubale ;wait 500";
+    autosendcmd = "/msg nickserv identify unga asdrubale ;wait 500";
   };
 };
 ignores = ( { level = "JOINS PARTS QUITS"; } );
