@@ -208,6 +208,7 @@ endif
 if s:uname == "Linux\n"
     set clipboard=unnamedplus
 endif
+set clipboard=unnamedplus
 
 " tmux 
 function! TmuxMove(direction)
