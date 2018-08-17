@@ -36,5 +36,5 @@ function fish_user_key_bindings
         bind \t '__fzf_complete'
     end
     ### fzf ###
-	bind -M insert \cf accept-autosuggestion
+    bind -M insert \cn accept-autosuggestion
 end

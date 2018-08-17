@@ -1,4 +1,14 @@
+fisherman/await
+fisherman/fnm
 fisherman/fzf
+fisherman/get_file_age
+fisherman/git_util
+fisherman/host_info
+fisherman/humanize_duration
+fisherman/last_job_id
+fisherman/menu
+fisherman/mono
 fisherman/pipenv
-giulioungaretti/pure
+fisherman/pwd_info
+fisherman/pwd_is_home
 fisherman/pyenv
