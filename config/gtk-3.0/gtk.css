@@ -1,7 +1,7 @@
 /*
- * gtk.css
- *  add padding to gnome-terminal
- */
+gtk.css
+add padding to gnome-terminal
+*/
 vte-terminal {
     padding: 20px 20px 20px 20px;
 }
