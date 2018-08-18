@@ -5,9 +5,6 @@ set complete-=i
 set smarttab
 set nrformats-=octal
 
-" use bash as shell
-set shell=/usr/bin/fish
-
 " Don't use Ex mode, use Q for formatting
 map Q gq
 " zero msec timeout  http://www.johnhawthorn.com/2012/09/vi-escape-delays/
@@ -208,7 +205,6 @@ endif
 if s:uname == "Linux\n"
     set clipboard=unnamedplus
 endif
-set clipboard=unnamedplus
 
 " tmux 
 function! TmuxMove(direction)
