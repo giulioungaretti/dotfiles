@@ -25,4 +25,3 @@ fi
  dunst > /dev/null 2>&1  &
 xrandr --dpi 192
 exec i3
-#exec gnome-session

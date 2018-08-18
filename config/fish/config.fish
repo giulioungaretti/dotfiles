@@ -10,3 +10,4 @@ set -g fish_emoji_width 2
 # pyenv-root
 set -x PYENV_ROOT $HOME/.pyenv
 status --is-interactive; and source (pyenv init -|psub)
+set -x GOPATH $HOME/go
