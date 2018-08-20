@@ -157,7 +157,15 @@ let g:elm_format_autosave = 1
 "au FileType elm set foldmethod=indent foldnestmax=10
 "}}}
 "go{{{
-let g:ale_linters = {'go': ['go build','gofmt']}
+call ale#linter#Define('go', {
+\   'name': 'revive',
+\   'output_stream': 'both',
+\   'executable': 'revive',
+\   'read_buffer': 0,
+\   'command': 'revive %t',
+\   'callback': 'ale#handlers#unix#HandleAsWarning',
+\})
+let g:ale_linters = {'go': ['go build','gofmt', 'revive']}
 " open in term
 let g:go_term_enabled = 1
 let g:go_term_mode = "vsplit"
@@ -220,6 +228,9 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " NOTE: there seems to be no real consensus on this. Maybe it makes things
 " faster myabe not, who knows?
 set lazyredraw
+" sql {{{
+" requires this: https://github.com/darold/pgFormatter
+au FileType sql set formatprg=/usr/bin/site_perl/pg_format\ -b
 call plug#end()
 let &t_SI="\033[4 q" " start insert mode
 let &t_EI="\033[1 q" " end insert mode
