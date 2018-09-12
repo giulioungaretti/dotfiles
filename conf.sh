@@ -6,7 +6,7 @@ ln -sf ~/dotfiles/git_commit_msg.txt ~/.git_commit_msg.txt
 # first rule vim
 ln -sf ~/dotfiles/vimrc ~/.vimrc
 # then rule inputrc based stuff
-ln -s ~/dotfiles/inputrc ~/.inputrc
+ln -sf ~/dotfiles/inputrc ~/.inputrc
 # make sure undodir exits
 mkdir -p "$HOME/.undodir/"
 # install plugin manager
@@ -21,3 +21,7 @@ tic -x tmux.terminfo
 tic xterm-256color-italic.terminfo
 # add fish
 # add other folders 
+ln -s ~/dotfiles/config/fish/config.fish ~/.config/fish/
+ln -s ~/dotfiles/config/fish/fishfile  ~/.config/fish/
+ln -s ~/dotfiles/config/fish/conf.d/* ~/.config/fish/conf.d/
+ln -s ~/dotfiles/config/fish/functions/* ~/.config/fish/functions/
