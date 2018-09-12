@@ -21,3 +21,5 @@ tic -x tmux.terminfo
 tic xterm-256color-italic.terminfo
 # add fish
 # add other folders 
+mkdir -p /home/unga/go/bin
+mkdir -p /home/unga/.local/bin/
