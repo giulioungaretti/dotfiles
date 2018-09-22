@@ -1,4 +1,3 @@
-set -x fish_cursor_default block
 set -x fish_cursor_visual block
 set -x fish_cursor_insert line
 set -x fish_cursor_replace_one underscore
@@ -10,12 +9,13 @@ set -x PYENV_ROOT $HOME/.pyenv
 status --is-interactive; and source (pyenv init -|psub)
 set -x GOPATH $HOME/go
 set -Ux EDITOR vim
+set -x LC_ALL en_US.UTF-8
 
 function __node_binpath_cwd -v PWD
                                set -l node_modules_path "$PWD/node_modules/.bin"
                                if test -e "$node_modules_path"
                                      set -g __node_binpath "$node_modules_path"
-                                     set -x PATH $PATH $__node_binpath
+                                     set -x PATH $__node_binpath $PATH
                                else
                                      set -q __node_binpath
                                        and set -l index (contains -i -- $__node_binpath $PATH)
@@ -24,4 +24,3 @@ function __node_binpath_cwd -v PWD
                                end
                          end
 __node_binpath_cwd $PWD
-
