@@ -80,8 +80,8 @@ set statusline+=\                             " blank space
 set statusline+=%m                            " modified flag [+]
 set statusline+=\                             " blank space
 
-"nmap <silent> <C-K> <Plug>(ale_previous_wrap)
-"nmap <silent> <C-J> <Plug>(ale_next_wrap)
+nmap <silent> <C-,> <Plug>(ale_previous_wrap)
+nmap <silent> <C-.> <Plug>(ale_next_wrap)
 nmap gh <Plug>(ale_detail)
 "fzf{{{
 " Mapping selecting mappings
@@ -209,7 +209,7 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " python  {{{
 " use black
 let g:ale_fixers['python'] = ['yapf', 'isort']
-let g:ale_linters.python = ['mypy', 'prospector', 'pyls']
+let g:ale_linters.python = ['mypy', 'pylint', 'pyls']
 
 " always use pipenv
 let g:ale_python_auto_pipenv = 1
@@ -220,7 +220,8 @@ set lazyredraw
 " sql {{{
 " requires this: https://github.com/darold/pgFormatter
 au FileType sql set formatprg=/usr/bin/site_perl/pg_format\ -b
-call plug#end()
+nmap     F <Plug>CtrlSFPrompt
+vmap     F <Plug>CtrlSFVwordPath
 let &t_SI="\033[4 q" " start insert mode
 let &t_EI="\033[1 q" " end insert mode
 
