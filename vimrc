@@ -173,12 +173,6 @@ set lazyredraw
 " clean screen up
 au VimLeave * :!clear
 
-" we don't need no hilighted matching partentheses
-" NoMatchParen is a command to the loaded plugin to ask it to stop matching.
-" Setting "loaded_matchparen", on the other hand, stops the plugin from
-" ever loading (by making it think that it's already running).
-let loaded_matchparen = 0
-
 " change the 'completeopt' option so that Vim's popup menu doesn't select the first completion item, but rather just inserts the longest common text of all matches; and the menu will come up even if there's only one match. (The longest setting is responsible for the former effect and the menuone is responsible for the latter.)
 set completeopt=longest,menuone
 "change the behavior of the <Enter> key when the popup menu is visible. In that case the Enter key will simply select the highlighted menu item, just as <C-Y> does.
