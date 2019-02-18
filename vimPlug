@@ -1,4 +1,8 @@
 call plug#begin('~/.vim/plugged')
+" Intelligently reopen files at your last edit position
+Plug 'farmergreg/vim-lastplace'
+" Focus mode with goyo
+Plug 'junegunn/goyo.vim'
 " Track the engine.
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
@@ -8,7 +12,7 @@ Plug 'chrisbra/Colorizer'
 Plug 'haya14busa/incsearch.vim'
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0
- "" JK motions: Line motions
+"" JK motions: Line motions
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
@@ -30,11 +34,6 @@ Plug 'junegunn/gv.vim'
 Plug 'sodapopcan/vim-twiggy'
 " elm
 Plug 'elmcast/elm-vim'
-"  haskell
-Plug 'neovimhaskell/haskell-vim'
-Plug 'parsonsmatt/intero-neovim'
-Plug 'alx741/vim-hindent'
-Plug 'eagletmt/neco-ghc'
 " go
 Plug 'fatih/vim-go', { 'for': 'go' }
 " theme
@@ -53,17 +52,23 @@ hi FoldColumn ctermbg=231
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+let g:ale_set_signs = 0
+hi link ALEErrorLine ErrorMsg
+hi link ALEWarningLine WarningMsg
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_delay = 0
 " lint on leave insert or save(default)
 let g:ale_fix_on_save=1
 let g:ale_completion_enabled = 1
 let g:ale_lint_on_insert_leave=1
-let g:ale_lint_on_text_changed='never'
 " pop list open and use quickfix
 let g:ale_set_quickfix= 1
 let g:ale_open_list = 1
 " Set this in your vimrc file to disabling highlighting
 let g:ale_set_highlights = 1
 let g:ale_sign_column_always = 0
+
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
     let l:all_errors = l:counts.error + l:counts.style_error
@@ -117,9 +122,7 @@ nnoremap <silent> <leader>gl :Commits<CR>
 nnoremap <silent> <leader>gb :BCommits<CR>
 " todo and notes fzf powered
 " open task list for todo in current folder and subfolder
-noremap <Leader>tl  :Ag TODO <CR>
-" open task list for note in current folder and subfolder
-noremap <Leader>nl :Ag NOTE <CR>
+noremap <Leader>tl  :Ag "TODO\|NOTE\|FIXME" <CR>
 " open diff
 nnoremap <leader>gd :Gdiff<CR>
 " add current file
@@ -136,6 +139,7 @@ let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['json'] = ['prettier']
 let g:ale_fixers['css'] = ['prettier']
+let g:ale_fixers['scss'] = ['prettier']
 " }}}
 "elm {{{
 let g:elm_setup_keybindings = 0
@@ -148,7 +152,6 @@ au FileType elm nmap <leader>e <Plug>(elm-error-detail)
 au FileType elm nmap <leader>d <Plug>(elm-show-docs)
 au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
-"au FileType elm set foldmethod=indent foldnestmax=10
 "}}}
 "go{{{
 call ale#linter#Define('go', {
@@ -198,13 +201,8 @@ let g:go_fmt_fail_silently = 0
 let g:go_auto_type_info = 1
 "}}}
 "" haskell {{{
-let g:ale_linters.haskell = ['stack-ghc-mod', 'hlint']
-" Use ALE (works even when not using Intero)
-let g:intero_use_neomake = 0
-let g:necoghc_use_stack=1
-let g:necoghc_debug=1
-let g:haskellmode_completion_ghc = 1
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:ale_fixers['haskell'] = ['stylish-haskell']
+let g:ale_linters.haskell = ['hie']
 " }}}
 " python  {{{
 " use black
@@ -219,7 +217,7 @@ let g:ale_python_auto_pipenv = 1
 set lazyredraw
 " sql {{{
 " requires this: https://github.com/darold/pgFormatter
-au FileType sql set formatprg=/usr/bin/site_perl/pg_format\ -b
+au FileType sql setl formatprg=/usr/local/bin/pg_format\ -
 nmap     F <Plug>CtrlSFPrompt
 vmap     F <Plug>CtrlSFVwordPath
 let &t_SI="\033[4 q" " start insert mode

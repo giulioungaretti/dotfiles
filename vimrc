@@ -39,8 +39,8 @@ set nofoldenable  " enable folding
 set foldnestmax=10  " max 10 nested fold allowed
 set foldmethod=indent " fold based on indent level
 " automatic fold save and restore on buf leave enter (per window)
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+"autocmd BufWinLeave *.* mkview
+"autocmd BufWinEnter *.* silent loadview
 " scroll the view port faster
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>"
