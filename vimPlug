@@ -8,8 +8,14 @@ Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 Plug 'chrisbra/Colorizer'
-" make search great again
+
+" make search better 
 Plug 'haya14busa/incsearch.vim'
+" serch mappings
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0
 "" JK motions: Line motions
@@ -17,42 +23,14 @@ map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
+
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'scrooloose/nerdcommenter'
+
 Plug 'w0rp/ale'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'dyng/ctrlsf.vim'
-let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
-" fix cursor shape
-Plug 'jszakmeister/vim-togglecursor'
-" fuGITve
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
-Plug 'sodapopcan/vim-twiggy'
-" elm
-Plug 'elmcast/elm-vim'
-" go
-Plug 'fatih/vim-go', { 'for': 'go' }
-" theme
-Plug 'giulioungaretti/shoji'
-" turn on virtualenvs
-Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
-let g:pydocstring_enable_mapping = 0
-Plug 'davidhalter/jedi-vim'
-call plug#end()
-colorscheme shoji_shiro
-" make UI white/gray
-hi SignColumn ctermbg=254
-hi VertSplit  ctermbg=231
-hi FoldColumn ctermbg=231
-" serch mappings
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-let g:ale_set_signs = 0
+" options
 hi link ALEErrorLine ErrorMsg
 hi link ALEWarningLine WarningMsg
 let g:ale_lint_on_text_changed = 'normal'
@@ -61,34 +39,33 @@ let g:ale_lint_delay = 0
 " lint on leave insert or save(default)
 let g:ale_fix_on_save=1
 let g:ale_completion_enabled = 1
-let g:ale_lint_on_insert_leave=1
 " pop list open and use quickfix
 let g:ale_set_quickfix= 1
 let g:ale_open_list = 1
-" Set this in your vimrc file to disabling highlighting
 let g:ale_set_highlights = 1
 let g:ale_sign_column_always = 0
-
-function! LinterStatus() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? '' : printf( '%dW %dE', all_non_errors, all_errors)
-endfunction
-
-set laststatus=2            " set the bottom status bar
-set statusline +=%{LinterStatus()}
-set statusline+=%F                            " current file path
-set statusline+=\                             " blank space
-set statusline+=%y                            " filetype
-set statusline+=\                             " blank space
-set statusline+=%m                            " modified flag [+]
-set statusline+=\                             " blank space
-
+let g:ale_set_signs = 0
 nmap <silent> <C-,> <Plug>(ale_previous_wrap)
 nmap <silent> <C-.> <Plug>(ale_next_wrap)
 nmap gh <Plug>(ale_detail)
-"fzf{{{
+" language specific
+let g:ale_fixers = {}
+" web stuff
+let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fixers['json'] = ['prettier']
+let g:ale_fixers['css'] = ['prettier']
+let g:ale_fixers['scss'] = ['prettier']
+
+let g:ale_linters = {'go': ['go build','gofmt', 'revive']}
+let g:ale_fixers['haskell'] = ['stylish-haskell']
+let g:ale_linters.haskell = ['hie']
+let g:ale_fixers['python'] = ['yapf', 'isort']
+let g:ale_linters.python = ['mypy', 'pylint', 'pyls']
+" always use pipenv
+let g:ale_python_auto_pipenv = 1
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
@@ -98,7 +75,6 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 imap <c-x><c-p> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-
 nnoremap <silent>; :Commands <cr>
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
@@ -114,7 +90,6 @@ nnoremap <silent> <leader>? :History<CR>
 command! -bang -nargs=+ -complete=dir Agf call fzf#vim#ag_raw(<q-args>,
 \                     fzf#vim#with_preview('right:50%:hidden', '?'),
 \                     <bang>0)
-
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR> <CR>
 nmap     <leader>? <Plug>CtrlSFCwordPath <CR>
 nnoremap <silent> <leader>h :execute 'Agf ' . input('Ag/')<CR>
@@ -123,6 +98,61 @@ nnoremap <silent> <leader>gb :BCommits<CR>
 " todo and notes fzf powered
 " open task list for todo in current folder and subfolder
 noremap <Leader>tl  :Ag "TODO\|NOTE\|FIXME" <CR>
+let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+
+
+Plug 'dyng/ctrlsf.vim'
+" fix cursor shape
+Plug 'jszakmeister/vim-togglecursor'
+" fuGITve
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
+Plug 'sodapopcan/vim-twiggy'
+" elm
+Plug 'elmcast/elm-vim'
+" go
+Plug 'fatih/vim-go', { 'for': 'go' }
+" turn on virtualenvs
+Plug 'heavenshell/vim-pydocstring', { 'for': 'python' }
+let g:pydocstring_enable_mapping = 0
+Plug 'davidhalter/jedi-vim'
+
+
+" theme
+Plug 'giulioungaretti/shoji'
+Plug 'robertmeta/nofrils'
+" make UI white/gray
+call plug#end()
+colorscheme shoji_shiro
+hi SignColumn ctermbg=254
+hi VertSplit  ctermbg=231
+hi FoldColumn ctermbg=231
+
+
+
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? '' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
+
+
+set laststatus=2            " set the bottom status bar
+set statusline=%{LinterStatus()}
+set statusline+=%F                            " current file path
+set statusline+=\                             " blank space
+set statusline+=%y                            " filetype
+set statusline+=\                             " blank space
+set statusline+=%m                            " modified flag [+]
+set statusline+=\                             " blank space
+
 " open diff
 nnoremap <leader>gd :Gdiff<CR>
 " add current file
@@ -135,11 +165,6 @@ nnoremap <leader>gc :Gcommit -q -v<CR>
 nnoremap <leader>gt :Gcommit -v -q  %:p<CR>
 "}}}
 " js{{{
-let g:ale_fixers = {}
-let g:ale_fixers['javascript'] = ['prettier']
-let g:ale_fixers['json'] = ['prettier']
-let g:ale_fixers['css'] = ['prettier']
-let g:ale_fixers['scss'] = ['prettier']
 " }}}
 "elm {{{
 let g:elm_setup_keybindings = 0
@@ -154,15 +179,6 @@ au FileType elm nmap <leader>w <Plug>(elm-browse-docs)
 let g:elm_format_autosave = 1
 "}}}
 "go{{{
-call ale#linter#Define('go', {
-\   'name': 'revive',
-\   'output_stream': 'both',
-\   'executable': 'revive',
-\   'read_buffer': 0,
-\   'command': 'revive %t',
-\   'callback': 'ale#handlers#unix#HandleAsWarning',
-\})
-let g:ale_linters = {'go': ['go build','gofmt', 'revive']}
 " open in term
 let g:go_term_enabled = 1
 let g:go_term_mode = "vsplit"
@@ -201,16 +217,10 @@ let g:go_fmt_fail_silently = 0
 let g:go_auto_type_info = 1
 "}}}
 "" haskell {{{
-let g:ale_fixers['haskell'] = ['stylish-haskell']
-let g:ale_linters.haskell = ['hie']
 " }}}
 " python  {{{
 " use black
-let g:ale_fixers['python'] = ['yapf', 'isort']
-let g:ale_linters.python = ['mypy', 'pylint', 'pyls']
 
-" always use pipenv
-let g:ale_python_auto_pipenv = 1
 " }}}
 " NOTE: there seems to be no real consensus on this. Maybe it makes things
 " faster myabe not, who knows?
@@ -223,4 +233,14 @@ vmap     F <Plug>CtrlSFVwordPath
 let &t_SI="\033[4 q" " start insert mode
 let &t_EI="\033[1 q" " end insert mode
 
+" go
+"
+call ale#linter#Define('go', {
+\   'name': 'revive',
+\   'output_stream': 'both',
+\   'executable': 'revive',
+\   'read_buffer': 0,
+\   'command': 'revive %t',
+\   'callback': 'ale#handlers#unix#HandleAsWarning',
+\})
 " vim: foldmethod=marker sw=4 ts=4 sts=4 et tw=78 ft=vim
