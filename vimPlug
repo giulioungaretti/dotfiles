@@ -57,8 +57,10 @@ let g:ale_fixers['css'] = ['prettier']
 let g:ale_fixers['scss'] = ['prettier']
 
 let g:ale_linters = {'go': ['go build','gofmt', 'revive']}
+
 let g:ale_fixers['haskell'] = ['stylish-haskell']
 let g:ale_linters.haskell = ['hie']
+
 let g:ale_fixers['python'] = ['yapf', 'isort']
 let g:ale_linters.python = ['mypy', 'pylint', 'pyls']
 " always use pipenv
@@ -216,12 +218,6 @@ let g:go_fmt_fail_silently = 0
 " remove this is annyoing as fuck let g:go_auto_sameids = 1
 let g:go_auto_type_info = 1
 "}}}
-"" haskell {{{
-" }}}
-" python  {{{
-" use black
-
-" }}}
 " NOTE: there seems to be no real consensus on this. Maybe it makes things
 " faster myabe not, who knows?
 set lazyredraw
