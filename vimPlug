@@ -122,7 +122,6 @@ Plug 'davidhalter/jedi-vim'
 
 " theme
 Plug 'giulioungaretti/shoji'
-Plug 'robertmeta/nofrils'
 " make UI white/gray
 call plug#end()
 colorscheme shoji_shiro
