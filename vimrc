@@ -79,17 +79,6 @@ if has("persistent_undo")
 endif
 " }}}
 
-" Common typos {{{
-command! Q q
-command! Qq q
-command! W w
-command! Ww w
-command! Qa qa
-command! Wa wa
-command! Wq wq
-command! Wqa wqa
-"}}}
-
 " Aliases {{{
 " leader
 map <space> <leader>
@@ -125,13 +114,6 @@ endfunction
 
 nnoremap <silent><C-W>m :call Fullscreen() <CR>
 nnoremap <silent><C-W>c :call Minimze() <CR>
-
-" tabs shortcuts
-map <leader>tn :tabnew<CR>
-
-"jk/kj to  to esc
-inoremap jk <Esc>
-inoremap kj <Esc>
 
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
@@ -219,10 +201,6 @@ nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 set wrap
 set textwidth=79
 set formatoptions=qrn1
-
-" Do not show stupid q: window
-map q: :q
-map qq :q <CR>
 
 " only hilights the row in the current active window
 augroup BgHighlight
